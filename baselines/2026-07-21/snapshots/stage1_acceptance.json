@@ -1,0 +1,105 @@
+{
+  "phase1_passed": false,
+  "phase2_passed": false,
+  "failed_phase1": [
+    "scene_test_gate20_auroc_ge_0.88",
+    "top1_gate20_above_best_fixed",
+    "strict_top1_ge_0.35"
+  ],
+  "failed_phase2": [
+    "best_of_n_oracle_gate20_ge_0.75",
+    "critic_top1_gate20_ge_0.60",
+    "strict_top1_ge_0.50"
+  ],
+  "best_fixed": {
+    "gate15": {
+      "strategy": "s3_pointzf_l003",
+      "rate": 0.42105263471603394,
+      "variant_count": 38
+    },
+    "gate20": {
+      "strategy": "s2_local15_l005",
+      "rate": 0.3076923191547394,
+      "variant_count": 39
+    },
+    "strict": {
+      "strategy": "s2_local15_l005",
+      "rate": 0.07692307978868484,
+      "variant_count": 39
+    }
+  },
+  "five_seed_metrics": {
+    "gate15_auroc": {
+      "mean": 0.7908928571428571,
+      "ci95_half_width": 0.01380230336302604
+    },
+    "gate15_auprc": {
+      "mean": 0.6434821862611233,
+      "ci95_half_width": 0.017298025571346718
+    },
+    "gate15_ece": {
+      "mean": 0.10375244355259032,
+      "ci95_half_width": 0.0074646790180531025
+    },
+    "gate20_auroc": {
+      "mean": 0.8793863468881892,
+      "ci95_half_width": 0.011036131739841599
+    },
+    "gate20_auprc": {
+      "mean": 0.602649484580053,
+      "ci95_half_width": 0.015727316707259822
+    },
+    "gate20_brier": {
+      "mean": 0.10705516486052362,
+      "ci95_half_width": 0.0015385166500113514
+    },
+    "gate20_ece": {
+      "mean": 0.05419560536885491,
+      "ci95_half_width": 0.013283635730968746
+    },
+    "mainlobe_auroc": {
+      "mean": 0.90603550295858,
+      "ci95_half_width": 0.012638028153584634
+    },
+    "strict_auroc": {
+      "mean": 0.9132777777777777,
+      "ci95_half_width": 0.018054224361183473
+    },
+    "rank_gate20_top1": {
+      "mean": 0.25128206312656404,
+      "ci95_half_width": 0.024620516184474764
+    },
+    "rank_strict_top1": {
+      "mean": 0.05128205306828022,
+      "ci95_half_width": 0.03178494596710871
+    },
+    "conservative_gate20_top1": {
+      "mean": 0.22564103305339814,
+      "ci95_half_width": 0.04020513201504961
+    },
+    "oracle_gate20": {
+      "mean": 0.41025641025641024,
+      "ci95_half_width": 0.0
+    },
+    "oracle_strict": {
+      "mean": 0.10256410256410256,
+      "ci95_half_width": 0.0
+    }
+  },
+  "launch_guard": {
+    "created_at": "2026-07-14 10:13:27",
+    "stage1_passed": false,
+    "stage2_passed": false,
+    "small_hfss_smoke_allowed": true,
+    "large_hfss_allowed": false,
+    "eep_16_port_smoke_allowed": true,
+    "eep_256_port_allowed": false,
+    "reason": "Candidate oracle and strict top-1 remain below acceptance thresholds; only reviewed near-boundary shortlists and a 16-port EEP smoke may run."
+  },
+  "outputs": {
+    "report": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\multitask_dataset\\stage1_acceptance_v2_20260714\\STAGE1_REPORT.md",
+    "breakdown": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\multitask_dataset\\stage1_acceptance_v2_20260714\\fullwave_breakdown_k_ratio_scan_separation.csv",
+    "ablation": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\multitask_dataset\\stage1_acceptance_v2_20260714\\stage1_ablation_table.csv",
+    "launch_guard": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\multitask_dataset\\stage1_acceptance_v2_20260714\\launch_guard.json"
+  }
+}

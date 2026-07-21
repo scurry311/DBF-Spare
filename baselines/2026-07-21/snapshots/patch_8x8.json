@@ -1,0 +1,28 @@
+{
+  "created_at": "2026-07-17 09:51:58",
+  "metric": {
+    "name": "grounded_patch_8x8",
+    "side": 8,
+    "build_return_code": 0,
+    "solve_return_code": 0,
+    "profile": "hfss_outputs\\grounded_patch_direct_8x8_eep_gate_20260717_run02\\grounded_patch_8x8\\grounded_patch_8x8.aedtresults\\URA_GroundedPatch_10GHz.results\\DV330_S327_V0.profile",
+    "pass_count": 22,
+    "final_delta_s": 0.0345254,
+    "converged": true,
+    "small_mesh_segment_count": 578,
+    "touchstone_exists": true,
+    "port_topology_warning_count": 0,
+    "passive_rl_min_db": 7.318269754635858,
+    "passive_rl_median_db": 7.66590154135392,
+    "passive_rl_10db_port_pass_rate": 0.0,
+    "series_match_inductance_nh": 0.533,
+    "series_match_q": 50.0,
+    "series_match_resistance_ohm": 0.6697875537453438,
+    "matched_passive_rl_min_db": 10.930745594790718,
+    "matched_passive_rl_median_db": 11.829622838843928,
+    "matched_passive_rl_10db_port_pass_rate": 1.0,
+    "gate_pass": 1
+  },
+  "decision": "allow_16x16_grounded_patch",
+  "training_started": false
+}

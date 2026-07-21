@@ -1,0 +1,61 @@
+{
+  "created_at": "2026-07-14 09:47:56",
+  "dataset_dir": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\multitask_dataset",
+  "out_dir": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\multitask_dataset\\stage1_fullwave_residual_dataset_v2_20260714",
+  "scanned_metric_runs": 94,
+  "accepted_metric_runs": 82,
+  "raw_complete_variant_rows": 2027,
+  "deduplicated_variant_rows": 2019,
+  "duplicate_rows_removed": 8,
+  "incomplete_rows_rejected": 0,
+  "missing_teacher_rows_rejected": 42,
+  "variant_count": 2019,
+  "unique_scene_count": 265,
+  "split_variant_counts": {
+    "train": 1417,
+    "val": 290,
+    "test": 312
+  },
+  "split_scene_counts": {
+    "train": 190,
+    "val": 36,
+    "test": 39
+  },
+  "gate_rates": {
+    "gate15": 0.355126291513443,
+    "gate20": 0.21149083971977234,
+    "mainlobe_gate": 0.1718672662973404,
+    "strict_engineering_gate": 0.04853888228535652
+  },
+  "hard_negative_count": 918,
+  "strategy_counts": {
+    "iso_lcmv_zf_fullwave_task_mvp_20260630": 15,
+    "iso_lcmv_zf_fullwave_retry_v1_20260630": 9,
+    "s1_local20_l003": 250,
+    "s2_local15_l005": 249,
+    "s3_pointzf_l003": 246,
+    "s4_stronglocal28_l008": 250,
+    "a1_structlocal20_proj": 250,
+    "a2_strictlocal25_proj": 250,
+    "a3_relaxedlocal15_proj": 250,
+    "a4_pointzf_control": 250
+  },
+  "thresholds": {
+    "psll_max_db": 0.0,
+    "nearest_iso_min_db": 25.0,
+    "local15_min_db": 15.0,
+    "local20_min_db": 20.0,
+    "mainlobe_drop_max_db": 0.5,
+    "mainlobe_spread_max_db": 3.0,
+    "pointing_error_max_deg": 3.0,
+    "condition_max": 100000000.0,
+    "max_channel_amplitude": 0.0
+  },
+  "elapsed_s": 160.03239703178406,
+  "outputs": {
+    "npz": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\multitask_dataset\\stage1_fullwave_residual_dataset_v2_20260714\\fullwave_residual_dataset_v2.npz",
+    "csv": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\multitask_dataset\\stage1_fullwave_residual_dataset_v2_20260714\\fullwave_residual_dataset_v2.csv",
+    "distribution": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\multitask_dataset\\stage1_fullwave_residual_dataset_v2_20260714\\dataset_distribution.csv",
+    "scene_split": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\multitask_dataset\\stage1_fullwave_residual_dataset_v2_20260714\\scene_split_manifest.json"
+  }
+}

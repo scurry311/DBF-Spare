@@ -1,0 +1,5 @@
+{
+  "allow": false,
+  "accepted_sample_indices": [],
+  "reason": "16x16 resource smoke used only two adaptive passes and is not converged; its S256, EEP and pattern metrics validate the pipeline only."
+}

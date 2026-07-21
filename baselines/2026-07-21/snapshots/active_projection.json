@@ -1,0 +1,43 @@
+{
+  "created_at": "2026-07-17 02:21:53",
+  "method": "target-response-preserving reflected-power LCMV gradient plus sequential SOC-violation projection",
+  "case_count": 2400,
+  "iterations": 80,
+  "return_loss_requirement_db": 10.0,
+  "mask_pruning": {
+    "amplitude_relative_db": -12.0,
+    "mean_active_count_before": 192.0,
+    "mean_active_count_after": 163.61958333333334,
+    "mean_active_count_reduction": 28.380416666666665,
+    "mean_ratio_before": 0.75,
+    "mean_ratio_after": 0.6391389973958334
+  },
+  "initial": {
+    "all_active_10db_pass_rate": 0.015,
+    "all_significant_10db_pass_rate": 0.015,
+    "total_10db_pass_rate": 0.60125,
+    "total_rl_mean_db": 10.68747241618852
+  },
+  "projected": {
+    "all_active_10db_pass_count": 1034,
+    "all_active_10db_pass_rate": 0.43083333333333335,
+    "all_significant_10db_pass_count": 1034,
+    "all_significant_10db_pass_rate": 0.43083333333333335,
+    "total_10db_pass_rate": 0.8204166666666667,
+    "engineering_10db_gate_pass_count": 942,
+    "engineering_10db_gate_pass_rate": 0.3925,
+    "worst_active_return_loss_min_db": 8.673270984957345,
+    "worst_significant_return_loss_min_db": 8.673270984957345,
+    "total_rl_mean_db": 11.27623824225868,
+    "target_response_error_max": 2.842896006764384e-10
+  },
+  "hard_gate_passed": false,
+  "new_fullwave_labels_allowed": false,
+  "outputs": {
+    "weights": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\grounded_patch_active_rl_projection_20260717_run04_prune12_strong\\projected_source_weights.npz",
+    "case_metrics": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\grounded_patch_active_rl_projection_20260717_run04_prune12_strong\\projected_active_return_case_metrics.csv",
+    "group_summary": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\grounded_patch_active_rl_projection_20260717_run04_prune12_strong\\projected_active_return_group_summary.csv",
+    "failures": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\grounded_patch_active_rl_projection_20260717_run04_prune12_strong\\projected_active_return_failures.csv",
+    "eligible": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\grounded_patch_active_rl_projection_20260717_run04_prune12_strong\\projected_active_return_eligible.csv"
+  }
+}

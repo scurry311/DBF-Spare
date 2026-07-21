@@ -1,0 +1,19 @@
+{
+  "created_at": "2026-07-17 10:30:38",
+  "expected_case_count": 3,
+  "complete_case_count": 3,
+  "all_cases_passed": true,
+  "all_shapes_passed_after_complex_scale": true,
+  "complex_nmse_max": 3.019452092870023e-12,
+  "magnitude_rmse_db_max": 1.8042703231913038e-05,
+  "complex_correlation_min": 0.9999980926513672,
+  "scale_corrected_complex_nmse_max": 3.019452092870023e-12,
+  "best_fit_scale_magnitude_range": [
+    1.0,
+    1.0
+  ],
+  "allow_256_port_export": false,
+  "next_gate": "Keep the 256-port export blocked until 50-100 full-array HFSS cases confirm reconstruction error.",
+  "metrics_csv": "hfss_outputs\\grounded_patch_eep256_resource_smoke_20260717_run01\\superposition_validation_metrics.csv",
+  "runner_exit_code": 0
+}

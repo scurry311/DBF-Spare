@@ -1,0 +1,28 @@
+{
+  "created_at": "2026-07-17 02:00:43",
+  "metric": {
+    "name": "grounded_patch_1x1",
+    "side": 1,
+    "build_return_code": 0,
+    "solve_return_code": 0,
+    "profile": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\grounded_patch_direct_1x1_20260717_run01\\grounded_patch_1x1\\grounded_patch_1x1.aedtresults\\URA_GroundedPatch_10GHz.results\\DV15_S12_V0.profile",
+    "pass_count": 12,
+    "final_delta_s": 0.0234328,
+    "converged": true,
+    "small_mesh_segment_count": 26,
+    "touchstone_exists": true,
+    "port_topology_warning_count": 0,
+    "passive_rl_min_db": 9.590897724339468,
+    "passive_rl_median_db": 9.590897724339468,
+    "passive_rl_10db_port_pass_rate": 0.0,
+    "series_match_inductance_nh": 0.533,
+    "series_match_q": 50.0,
+    "series_match_resistance_ohm": 0.6697875537453438,
+    "matched_passive_rl_min_db": 15.95535095598073,
+    "matched_passive_rl_median_db": 15.95535095598073,
+    "matched_passive_rl_10db_port_pass_rate": 1.0,
+    "gate_pass": 1
+  },
+  "decision": "allow_4x4_grounded_patch",
+  "training_started": false
+}

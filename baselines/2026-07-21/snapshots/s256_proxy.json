@@ -1,0 +1,55 @@
+{
+  "created_at": "2026-07-17 02:17:21",
+  "model_label": "local_fullwave_kernel_proxy_not_full_16x16_hfss",
+  "source": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\grounded_patch_direct_4x4_20260717_run01\\grounded_patch_4x4\\matched_s_10ghz.npz",
+  "source_gate": "converged 4x4 HFSS direct-port matched model",
+  "target_shape": [
+    16,
+    16
+  ],
+  "reciprocity_max_abs": 3.554447978966673e-16,
+  "passivity_sigma_max": 0.9155851367829633,
+  "kernel_term_count": 48,
+  "kernel_max_offset": 3,
+  "resistance_min_eigenvalue_before": 2.683924541388242,
+  "resistance_min_eigenvalue_after": 2.683924541388242,
+  "passivity_projection_relative_norm": 1.944503823618699e-15,
+  "source_diagonal_ohm": {
+    "corner": {
+      "real": 66.52081845719943,
+      "imag": -18.301233474974975
+    },
+    "edge": {
+      "real": 63.40093918811175,
+      "imag": -22.445348258894732
+    },
+    "interior": {
+      "real": 57.47556195588871,
+      "imag": -25.986913319280898
+    }
+  },
+  "case_count": 2400,
+  "overall": {
+    "k": "all",
+    "ratio_requested": "all",
+    "large_scan": "all",
+    "case_count": 2400,
+    "worst_active_rl_min_db": -73.64187063840096,
+    "worst_active_rl_p05_db": -33.33363820535974,
+    "worst_active_rl_mean_db": -9.703358729475754,
+    "total_rl_min_db": 5.1049149471110535,
+    "total_rl_mean_db": 10.787539487951246,
+    "all_active_10db_pass_rate": 0.014166666666666666,
+    "total_10db_pass_rate": 0.615,
+    "proxy_engineering_gate_pass_rate": 0.014166666666666666,
+    "near_boundary_count": 156
+  },
+  "proxy_gate_pass_count": 34,
+  "near_boundary_count": 156,
+  "training_decision": "allow_proxy_pretraining_only",
+  "limitations": [
+    "The S256 matrix is synthesized from a converged local S16 impedance kernel.",
+    "It is not a full 16x16 HFSS matrix and cannot certify final engineering active return loss.",
+    "Final labels still require DDM/HPC full-array HFSS or measured hardware validation."
+  ]
+}

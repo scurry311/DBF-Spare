@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.python_deps*/
+
+# AEDT/HFSS generated state
+*.aedtresults/
+*.aedb/
+*.aedt.lock
+*.lock
+*.asol
+*.profile.bak
+stale_hfss_locks_*/
+
+# Large generated experiment outputs. Curated snapshots live under baselines/.
+hfss_outputs/
+*.h5
+*.hdf5
+*.npz
+*.npy
+*.pt
+*.pth
+*.ckpt
+*.s*p
+
+# Runtime output
+*.log
+*.tmp
+*.bak
+*.stdout
+*.stderr
+
+# IDE and OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Baseline S-parameter snapshots are intentionally versioned.
+!baselines/**/*.s*p

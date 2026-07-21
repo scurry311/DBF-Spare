@@ -1,0 +1,39 @@
+{
+  "stage": "pass01",
+  "profile": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\grounded_patch_direct_16x16_feedsheet_ddm_recovery_20260721_run02\\stages\\pass01\\DV1332_S2193_V0.profile",
+  "normal_completion": true,
+  "hfss_converged": false,
+  "final_pass": 1,
+  "delta_s_by_pass": {},
+  "matrix_size_by_pass": {
+    "1": 4505584
+  },
+  "tetrahedra_by_pass": {},
+  "touchstone_complete": true,
+  "s_reciprocity_max_abs": 2.499792063241914e-06,
+  "s_passivity_sigma_max": 0.9776634301903567,
+  "raw_passive_rl_min_db": 4.562953535257876,
+  "raw_passive_rl_median_db": 6.3340348445774755,
+  "matched_passive_rl_min_db": 3.707385617984944,
+  "matched_passive_rl_median_db": 6.28773942367791,
+  "matched_passive_rl_10db_port_pass_rate": 0.015625,
+  "numerical_smatrix_valid": true,
+  "comparison": {
+    "reference": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\grounded_patch_direct_16x16_feedsheet_staged_convergence_20260719_run02\\stages\\pass03\\grounded_patch_16x16.s256p",
+    "max_abs_delta_s": 0.3291128284967973,
+    "max_abs_delta_s_ports_1based": [
+      192,
+      192
+    ],
+    "max_diagonal_delta_s": 0.3291128284967973,
+    "max_diagonal_delta_s_port_1based": 192,
+    "max_offdiagonal_delta_s": 0.06948353457645182,
+    "max_offdiagonal_delta_s_ports_1based": [
+      208,
+      192
+    ],
+    "rms_abs_delta_s": 0.01149555167634764
+  },
+  "training_labels_locked": true,
+  "decision": "continue_staged_ddm_convergence"
+}

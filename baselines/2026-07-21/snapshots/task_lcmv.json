@@ -1,0 +1,17 @@
+{
+  "created_at": "2026-07-17 09:01:13",
+  "case_count": 2400,
+  "method_scope": "AF task metrics plus local-kernel S256 proxy RF; not HFSS full-wave",
+  "joint_gate_count": 1543,
+  "joint_gate_rate": 0.6429166666666667,
+  "sparse_case_count": 2000,
+  "sparse_joint_gate_rate": 0.638,
+  "control_ratio1_case_count": 400,
+  "control_ratio1_joint_gate_rate": 0.6675,
+  "unique_target_set_count": 2400,
+  "paired_ratio_counterfactual_available": false,
+  "adaptive_minimum_ratio_claim_allowed": false,
+  "adaptive_minimum_ratio_block_reason": "All 2400 target direction sets are unique; ratios are not paired within the same scene.",
+  "hfss_label_generation_allowed": false,
+  "hfss_next_step": "Validate only joint-pass and near-boundary candidates with a validated 256-port EEP or HFSS operator."
+}
