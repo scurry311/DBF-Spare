@@ -1,67 +1,85 @@
 # DBF-Spare
 
-Physics-gated sparse-array research code for a 16x16, 256-channel, 10 GHz
-multi-task phased array. The project searches for the minimum feasible active
-ratio while jointly controlling sidelobes, task isolation, main-lobe fidelity,
-active return loss, and normalized power.
+面向低功耗多任务波束的 16x16 稀疏相控阵研究项目。项目以 HFSS 全波模型和
+嵌入单元方向图（EEP）为物理基准，联合优化阵元 mask、任务级复权值、旁瓣、
+任务间隔离度、有源回波损耗与归一化功耗，并为每个任务场景寻找满足工程门限的
+最小阵元开启比例。
 
-## Current baseline
+## 项目状态
 
-The first versioned baseline is `v0.1.0-physics-gated` (2026-07-21). It records
-the current model, scripts, compact evidence snapshots, and the reasons that
-new engineering training labels remain locked.
+当前版本化基线为 `v0.1.0-physics-gated`（2026-07-21）。16x16 DDM 的第二轮
+结果满足互易性和无源性，但 `Delta S = 0.29495`、匹配后最差被动回波损耗仅
+`5.13 dB`，尚未满足连续两轮 `Delta S <= 0.05` 和全端口 `RL >= 10 dB`。
+因此当前 AF、EEP、代理 S256 和 critic 结果只用于候选生成、诊断或预训练，不能
+作为已经通过 HFSS 的最终工程结论，新 full-wave 训练标签仍保持锁定。
 
-- 1x1, 4x4, and 8x8 grounded-patch models pass their convergence and matched
-  passive-return-loss gates.
-- The 16x16 DDM S-matrix is reciprocal and passive, but Adaptive Pass 2 has
-  `Delta S = 0.29495` and matched minimum passive RL of `5.13 dB`.
-- The 256-port EEP superposition interface is numerically correct, but its
-  current full-array source solution is not an accepted engineering baseline.
-- AF/proxy optimization and the existing critic are retained for proposal and
-  pretraining only. They are not HFSS-certified final results.
-
-See [RESULTS_INDEX.md](RESULTS_INDEX.md) and
-[baselines/2026-07-21/BASELINE.md](baselines/2026-07-21/BASELINE.md).
-
-## Research pipeline
+## 目录结构
 
 ```text
-scene and task encoding
-  -> adaptive ratio and structured masks
-  -> regional LCMV/SOCP task weights
-  -> active-return and power projection
-  -> EEP/full-wave gate
-  -> residual critic ranking
-  -> local mask search
-  -> final HFSS validation
+DBF-Spare/
+|-- README.md                 项目入口和常用命令
+|-- docs/                     项目框架、实验要求和结果索引
+|-- scripts/                  数据、优化、训练、HFSS 与分析脚本
+|-- models/hfss/              可版本化的 HFSS 工程文件
+|-- baselines/<date>/         带 SHA-256 的紧凑证据快照
+|-- tools/                    仓库级结果索引工具
+`-- hfss_outputs/             本地大型仿真/训练输出，不进入 Git
 ```
 
-The search order is ratio `0.5 -> 0.6 -> 0.7 -> 0.8`; ratio `1.0` is a control.
+详细说明：
 
-## Repository policy
+- [项目框架与执行边界](docs/PROJECT_GUIDE.md)
+- [脚本职责索引](scripts/README.md)
+- [HFSS 模型说明](models/hfss/README.md)
+- [当前结果索引](docs/RESULTS_INDEX.md)
+- [实验要求与重建设计决策](docs/EXPERIMENT_REQUIREMENTS_AND_REBUILD_DECISION_20260717.md)
+- [2026-07-21 基线](baselines/2026-07-21/BASELINE.md)
 
-Source scripts and compact reference models are versioned. Raw AEDT result
-trees, generated training datasets, checkpoints, field exports, and scratch
-files are intentionally excluded because the local workspace is over 60 GiB.
-Selected result evidence is copied into `baselines/<date>/snapshots` and
-verified with SHA-256 hashes.
+## 核心闭环
 
-Rebuild the current result index from an intact local workspace with:
+```text
+任务场景编码
+  -> 自适应 ratio 与结构化 mask 候选
+  -> 区域鲁棒 LCMV/SOCP 任务权值
+  -> 有源回波与功率约束投影
+  -> EEP/full-wave 物理门控
+  -> residual critic 候选排序
+  -> 局部 mask 搜索
+  -> HFSS 最终验证
+```
+
+稀疏搜索顺序为 `0.5 -> 0.6 -> 0.7 -> 0.8`，首次满足严格门限即停止；
+`ratio=1.0` 只作全阵对照。
+
+## 常用命令
+
+从仓库根目录运行：
 
 ```powershell
-python tools/build_result_index.py --tag 2026-07-21
+# 验证当前基线快照没有被修改
+python tools\build_result_index.py --tag 2026-07-21 --verify-only
+
+# 查看脚本参数，不启动大规模 HFSS
+python scripts\run_staged_16x16_convergence.py --help
+
+# 生成或重建紧凑结果索引（要求本地原始结果仍完整）
+python tools\build_result_index.py --tag 2026-07-21
+
+# 提交并同步后续代码修改
+git add -A
+git commit -m "describe the change"
+git push
 ```
 
-The script never changes source HFSS results.
+## 工程门限
 
-## Engineering gates
+- 连续两轮自适应求解 `Delta S <= 0.05`。
+- S 矩阵互易性误差 `<= 1e-4`，最大奇异值 `<= 1.001`。
+- 匹配后被动 RL、激活端口 active RL 和总反射 RL 均 `>= 10 dB`。
+- PSLL 基础筛选 `<= 0 dB`，阶段目标 `-3 dB`，扩展目标 `-6 dB`。
+- 最近任务隔离度 `>= 25 dB`，目标附近 +/-5 度隔离度 `>= 20 dB`。
+- 最弱目标增益下降 `<= 0.5 dB`，多波束峰值幅度差 `<= 3 dB`。
 
-- Two consecutive adaptive passes with `Delta S <= 0.05`.
-- S-matrix reciprocity error `<= 1e-4` and maximum singular value `<= 1.001`.
-- Matched passive RL and active-port/total reflected-power RL `>= 10 dB`.
-- PSLL screening `<= 0 dB`, then targets of `-3 dB` and `-6 dB`.
-- Nearest-target isolation `>= 25 dB`; local +/-5 degree isolation `>= 20 dB`.
-- Weakest-target gain loss `<= 0.5 dB`; beam imbalance `<= 3 dB`.
-
-No AF, proxy, EEP, or unconverged S-matrix metric is presented as a final
-full-wave engineering claim.
+原始 AEDT 结果树、生成数据集、checkpoint、场数据和临时文件体量超过 60 GiB，
+由 `.gitignore` 排除。可复核的关键证据复制到 `baselines/<date>/snapshots/`，并在
+manifest 中记录来源、证据等级和 SHA-256。

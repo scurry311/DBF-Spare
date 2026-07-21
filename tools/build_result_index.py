@@ -26,7 +26,7 @@ class Artifact:
 
 
 ARTIFACTS = (
-    Artifact("requirements", "EXPERIMENT_REQUIREMENTS_AND_REBUILD_DECISION_20260717.md", "A", "policy", "Frozen research gates and rebuild decision."),
+    Artifact("requirements", "docs/EXPERIMENT_REQUIREMENTS_AND_REBUILD_DECISION_20260717.md", "A", "policy", "Frozen research gates and rebuild decision."),
     Artifact("patch_1x1", "hfss_outputs/grounded_patch_direct_1x1_20260717_run01/stage_summary.json", "A", "passed", "Converged matched 1x1 HFSS gate."),
     Artifact("patch_4x4", "hfss_outputs/grounded_patch_direct_4x4_20260717_run01/stage_summary.json", "A", "passed", "Converged matched 4x4 HFSS gate."),
     Artifact("patch_8x8", "hfss_outputs/grounded_patch_direct_8x8_eep_gate_20260717_run02/stage_summary.json", "A", "passed", "Converged matched 8x8 HFSS gate."),

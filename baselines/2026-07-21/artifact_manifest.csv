@@ -1,5 +1,5 @@
 ﻿name,level,status,source_path,snapshot_path,size_bytes,sha256,note
-requirements,A,policy,EXPERIMENT_REQUIREMENTS_AND_REBUILD_DECISION_20260717.md,baselines/2026-07-21/snapshots/requirements.md,4941,b69a0587673a2f56c89b687e66cb34c34c9c01ca947812d4313e32470c670a37,Frozen research gates and rebuild decision.
+requirements,A,policy,docs/EXPERIMENT_REQUIREMENTS_AND_REBUILD_DECISION_20260717.md,baselines/2026-07-21/snapshots/requirements.md,4941,b69a0587673a2f56c89b687e66cb34c34c9c01ca947812d4313e32470c670a37,Frozen research gates and rebuild decision.
 patch_1x1,A,passed,hfss_outputs/grounded_patch_direct_1x1_20260717_run01/stage_summary.json,baselines/2026-07-21/snapshots/patch_1x1.json,1104,e218a58f0c1e3023844bc54d1c8863eea3105ea203c7685e07cbd2a9a8ead928,Converged matched 1x1 HFSS gate.
 patch_4x4,A,passed,hfss_outputs/grounded_patch_direct_4x4_20260717_run01/stage_summary.json,baselines/2026-07-21/snapshots/patch_4x4.json,1107,7026450b9a1d989e0f3b044d160884666f18dae9916cc18c9c9a86845f4e96f5,Converged matched 4x4 HFSS gate.
 patch_8x8,A,passed,hfss_outputs/grounded_patch_direct_8x8_eep_gate_20260717_run02/stage_summary.json,baselines/2026-07-21/snapshots/patch_8x8.json,1074,902088a91955f5a551f234bb92238b6dbf890ba97f8f074fabce1882d19428b4,Converged matched 8x8 HFSS gate.
