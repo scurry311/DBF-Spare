@@ -69,6 +69,27 @@
 | `run_twoport_balanced_match_fixture.py` | 构建 1x1/2x2 真实两端口平衡馈电与匹配夹具。 |
 | `validate_eep_superposition_smoke.py` | 对比 EEP 直接叠加与相同权值的 direct HFSS 复场。 |
 
+## 实验性收敛恢复与资源审计
+
+| 文件 | 作用与当前状态 |
+|---|---|
+| `audit_port_mesh_consistency.py` | 审计 256 端口定义、积分线、网格覆盖和 small-segment 分布。 |
+| `prepare_clean_ddm4_restart.py` | 保留物理几何和 0.18 mm 面网格，删除旧 MeshLink 解并创建轻量 DDM4 分支。 |
+| `run_volumetric_feedmesh_ddm.py` | 通用分阶段 DDM 控制器；包含内存、矩阵规模、拓扑和 Delta S 硬停止条件。 |
+| `run_guarded_ddm_continuation.py` | 对旧 feedsheet 分支执行带反弹检测的受控续算。 |
+| `prepare_volumetric_feedmesh_recovery.py` | 创建 256 个全深度体积馈电网格区域；本机内存不足时不应继续。 |
+| `prepare_volumetric_feedmesh_pecsheet.py` | 在体积网格分支中将 patch/ground 转为零厚度 PEC sheet。 |
+| `prepare_pecsheet_perfecte_recovery.py` | 为零厚度 PEC sheet 显式添加 Perfect E 边界。 |
+| `prepare_ddm6_pecsheet_branch.py` | 创建六域并行资源 smoke；24 GB 主机上存在 OOM 风险。 |
+| `prepare_layered_feedmesh_recovery.py` | 创建 core/halo 分层体积网格候选。 |
+| `prepare_layered_mesh_relaxation.py` | 将分层网格放宽到 0.22/0.30 mm 以降低内存。 |
+| `collect_layered_pass1_failure.py` | 保存分层网格首轮 late-OOM 证据并锁定标签。 |
+| `summarize_volumetric_feedmesh_recovery.py` | 汇总体积、PEC sheet、DDM6 等恢复分支及失败原因。 |
+
+体积和分层网格脚本属于受控实验记录，不是当前推荐主线。当前主线是
+`prepare_clean_ddm4_restart.py` 加 `run_volumetric_feedmesh_ddm.py --ddm-tasks 4`；
+只有连续两轮 `Delta S <= 0.05` 且 RL、互易性、无源性同时通过后才能开放标签。
+
 ## 分析、比较与阶段判定
 
 | 文件 | 作用 |

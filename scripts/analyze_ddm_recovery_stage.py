@@ -65,6 +65,12 @@ def profile_metrics(path: Path) -> dict[str, object]:
         if value is None or value > 0.05:
             break
         consecutive += 1
+    max_domain_memory = re.findall(
+        r"Maximum domain memory:\s*([0-9.]+)\s*GB", text, re.IGNORECASE
+    )
+    total_domain_memory = re.findall(
+        r"Total memory for all domains:\s*([0-9.]+)\s*GB", text, re.IGNORECASE
+    )
     return {
         "profile": str(path.resolve()),
         "normal_completion": "Normal Completion" in text,
@@ -77,6 +83,12 @@ def profile_metrics(path: Path) -> dict[str, object]:
         "consecutive_delta_s_pass_count": consecutive,
         "matrix_size_by_pass": matrix_sizes,
         "tetrahedra_by_pass": tetrahedra,
+        "adaptive_max_domain_memory_gb": (
+            float(max_domain_memory[-1]) if max_domain_memory else None
+        ),
+        "adaptive_total_domain_memory_gb": (
+            float(total_domain_memory[-1]) if total_domain_memory else None
+        ),
     }
 
 
@@ -89,6 +101,9 @@ def comparison(current: Path, reference: Path) -> dict[str, object]:
     np.fill_diagonal(off_diagonal, np.nan)
     max_index = np.unravel_index(np.argmax(delta), delta.shape)
     off_index = np.unravel_index(np.nanargmax(off_diagonal), off_diagonal.shape)
+    current_rl = -20.0 * np.log10(np.maximum(np.abs(np.diag(s_current)), 1.0e-15))
+    reference_rl = -20.0 * np.log10(np.maximum(np.abs(np.diag(s_reference)), 1.0e-15))
+    rl_delta = np.abs(current_rl - reference_rl)
     return {
         "reference": str(reference.resolve()),
         "max_abs_delta_s": float(np.max(delta)),
@@ -98,6 +113,9 @@ def comparison(current: Path, reference: Path) -> dict[str, object]:
         "max_offdiagonal_delta_s": float(np.nanmax(off_diagonal)),
         "max_offdiagonal_delta_s_ports_1based": [int(value) + 1 for value in off_index],
         "rms_abs_delta_s": float(np.sqrt(np.mean(delta**2))),
+        "max_abs_passive_rl_delta_db": float(np.max(rl_delta)),
+        "max_abs_passive_rl_delta_port_1based": int(np.argmax(rl_delta)) + 1,
+        "rms_passive_rl_delta_db": float(np.sqrt(np.mean(rl_delta**2))),
     }
 
 
