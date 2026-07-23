@@ -1,0 +1,47 @@
+{
+  "return_code": 0,
+  "touchstone": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\fixed_mesh_eep_fieldsolve_20260723_run05_ddm80\\solve\\fixed_mesh_eep_ddm_fieldsolve.s256p",
+  "profile": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\fixed_mesh_eep_fieldsolve_20260723_run05_ddm80\\solve\\DV2455_S2457_V0.profile",
+  "solve_and_export_gate_pass": true,
+  "completion_resources": {
+    "physical_total_gb": 23.642162322998047,
+    "physical_available_gb": 16.462284088134766,
+    "commit_limit_gb": 43.49470901489258,
+    "commit_headroom_gb": 26.694499969482422,
+    "d_free_gb": 84.79529571533203
+  },
+  "normal_completion": true,
+  "hfss_converged": false,
+  "final_pass": 0,
+  "delta_s_by_pass": {},
+  "final_delta_s": null,
+  "consecutive_delta_s_pass_count": 0,
+  "matrix_size_by_pass": {},
+  "tetrahedra_by_pass": {},
+  "adaptive_max_domain_memory_gb": null,
+  "adaptive_total_domain_memory_gb": null,
+  "touchstone_complete": true,
+  "s_reciprocity_max_abs": 2.508860975091286e-11,
+  "s_passivity_sigma_max": 0.9800934146497954,
+  "raw_passive_rl_min_db": 7.845050178728391,
+  "raw_passive_rl_median_db": 8.761031724800045,
+  "matched_passive_rl_min_db": 13.53490989507942,
+  "matched_passive_rl_median_db": 22.534972917781403,
+  "matched_passive_rl_10db_port_pass_rate": 1.0,
+  "reference_direct_comparison": {
+    "first": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\fixed_mesh_cross_solver_20260723_run02\\engineering_baseline\\fixed_mesh_direct.s256p",
+    "second": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\fixed_mesh_eep_fieldsolve_20260723_run05_ddm80\\solve\\fixed_mesh_eep_ddm_fieldsolve.s256p",
+    "max_abs_delta_s": 4.758574923781544e-11,
+    "max_abs_delta_s_ports_1based": [
+      158,
+      158
+    ],
+    "rms_abs_delta_s": 7.282028089280134e-13,
+    "max_diagonal_delta_s": 4.758574923781544e-11,
+    "max_offdiagonal_delta_s": 1.6112704378271407e-11
+  },
+  "numerical_smatrix_valid": true,
+  "delta_s_gate_pass": true,
+  "matched_rl_gate_pass": true,
+  "fieldsolve_gate_pass": true
+}

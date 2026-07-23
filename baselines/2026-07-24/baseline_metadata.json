@@ -1,0 +1,10 @@
+{
+  "tag": "2026-07-24",
+  "version": "v0.2.0-trusted-eep",
+  "created_at_utc": "2026-07-23T17:07:39.767277+00:00",
+  "artifact_count": 15,
+  "snapshot_bytes": 1523008,
+  "training_labels_locked": true,
+  "pattern_labels_allowed": true,
+  "strict_benchmark_gate_pass": false
+}

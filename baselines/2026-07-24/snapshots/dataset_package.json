@@ -1,0 +1,18 @@
+{
+  "source_dataset": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\trusted_eep_residual_20260723_run02\\eep_hfss_validation\\residual_critic_dataset.npz",
+  "output_dataset": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\trusted_eep_residual_20260723_run02\\dataset_v2_20260724\\residual_critic_dataset_v2.npz",
+  "candidate_count": 96,
+  "independent_scene_count": 76,
+  "required_fields_present": true,
+  "scene_leakage_free": true,
+  "old_labels_included": false,
+  "copied_evidence": [
+    "analysis_summary.json",
+    "candidate_residual_labels.csv",
+    "critic_priority_candidates.csv",
+    "critic_training_decision.json",
+    "fullwave_summary_by_k_ratio_scan.csv",
+    "grouped_split_manifest.json",
+    "null_residual_baseline_metrics.csv"
+  ]
+}

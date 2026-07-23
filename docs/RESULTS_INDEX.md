@@ -1,68 +1,75 @@
 # Result Index
 
-Baseline: `v0.1.0-physics-gated`, frozen on 2026-07-21.
+Current baseline: `v0.2.0-trusted-eep`, frozen on 2026-07-24.
 
-## Evidence levels
+## Evidence Levels
 
 | Level | Meaning | Permitted use |
 |---|---|---|
-| A | Converged HFSS result with numerical and engineering gates | Engineering evidence |
-| B | Numerically valid HFSS result with incomplete convergence or RF gate | Diagnostic evidence only |
-| C | Validated EEP/full-wave interface sourced from a blocked baseline | Pipeline validation only |
+| A | Trusted HFSS result with numerical provenance and stated gates | Engineering or pattern evidence within the passed gates |
+| B | Numerically valid HFSS result with an incomplete physical gate | Diagnostic evidence only |
+| C | Validated interface from a blocked physical baseline | Pipeline validation only |
 | D | AF, synthesized S256, or learned proxy | Proposal, screening, and pretraining |
 | X | Invalid, incomplete, stale, or empty result | Excluded |
 
-## Physical baseline
+## Trusted 16x16 Baseline
 
-| Model | Evidence | Delta S | Matched min RL | Status |
-|---|---:|---:|---:|---|
-| Grounded patch 1x1 | A | 0.02343 | 15.96 dB | Passed |
-| Grounded patch 4x4 | A | 0.03670 | 11.87 dB | Passed |
-| Grounded patch 8x8 | A | 0.03453 | 10.93 dB | Passed |
-| Grounded patch 16x16 DDM pass1 | B | N/A | 3.71 dB | Reciprocal/passive; blocked |
-| Grounded patch 16x16 DDM pass2 | B | 0.29495 | 5.13 dB | Reciprocal/passive; not converged |
+| Result | Value | Decision |
+|---|---:|---|
+| Field-enabled DDM vs trusted direct max Delta S | 4.76e-11 | Passed |
+| S reciprocity max error | 2.51e-11 | Passed |
+| S passivity maximum singular value | 0.98009 | Passed |
+| Matched passive minimum RL | 13.53 dB | Passed |
+| Matched passive 10 dB port rate | 100% | Passed |
+| Complex EEP completeness | 256/256 ports | Passed |
 
-The 16x16 pass2 matrix has reciprocity error `2.50e-6`, maximum singular value
-`0.97779`, and 32.03% of matched passive ports at or above 10 dB. Training
-labels remain locked because neither convergence nor minimum RL passes.
+The fixed-mesh field solve is the current physical reference. Large raw AEDT,
+EEP CSV, and operator files remain under `hfss_outputs/` and are not committed.
 
-## EEP and full-wave checks
+## EEP/HFSS Validation
 
-| Result | Value | Level | Decision |
-|---|---:|---:|---|
-| 256-port EEP field completeness | 256/256 ports | C | Interface complete |
-| Three-case direct superposition NMSE | <= 3.02e-12 | C | Linear mapping verified |
-| HFSS smoke basic gate | 10/26 | B | Diagnostic only |
-| HFSS smoke strict gate | 8/26 | B | Diagnostic only |
-| K=6 HFSS smoke strict gate | 0/10 | B | Hard-case failure |
-| Close 5-10 degree paired joint pass | 0% | B | Candidate/physics gap |
+| Result | Value | Decision |
+|---|---:|---|
+| Candidates / independent scenes | 96 / 76 | New labels only |
+| Combined plus task-level HFSS cases | 474/474 complete | Passed |
+| Maximum no-scale complex NMSE | 7.93e-12 | Passed |
+| Maximum magnitude RMSE | 6.83e-5 dB | Passed |
+| Basic gate15 rate | 33.33% | Pattern gate |
+| Strict local-20 rate | 21.88% | Pattern gate |
+| Mainlobe gate rate | 30.21% | Pattern gate |
+| Active-RL gate rate | 0% | Failed |
+| Strict engineering gate rate | 0% | Failed |
 
-## Algorithm and data baseline
+The no-scale result demonstrates that the EEP operator reproduces HFSS fields
+for the same linear electromagnetic basis. It does not establish that the
+current sparse weights satisfy active matching or low-power hardware gates.
 
-| Result | Value | Evidence level |
-|---|---:|---:|
-| AF + local-kernel S256 joint gate | 64.29% of 2400 | D |
-| Active-return projection engineering gate | 39.25% of 2400 | D |
-| Mean effective ratio after projection | 0.639 | D |
-| Full-wave residual dataset | 2019 variants / 265 scenes | B |
-| Dataset strict engineering positive rate | 4.85% | B |
-| Critic strict AUROC | 0.9133 | B |
-| Critic strict scene top-1 | 5.13% | B |
-| Best fixed strict strategy | 7.69% | B |
-| Observed strict best-of-N oracle | 10.26% | B |
+## Residual Critic
 
-High AUROC has not translated into useful candidate ranking. The current
-bottleneck is the small physically feasible candidate set, especially for
-K=6, large scans, and closely spaced targets.
+| Signal | Observed |
+|---|---:|
+| Delta PSLL standard deviation | 1.19e-5 dB |
+| Delta nearest-isolation standard deviation | 3.49e-5 dB |
+| Delta local-isolation standard deviation | 1.55e-5 dB |
+| Delta mainlobe-gain standard deviation | 7.21e-6 dB |
+| Hard negatives | 0 |
+| Hard positives | 17 |
+| Near-boundary candidates | 87 |
 
-## Label policy
+Neural residual-critic training is held. The nominal EEP and HFSS labels are
+identical to numerical precision, so a high-capacity model would fit export
+noise. The versioned null checkpoint is only a reconstruction sanity baseline.
 
-- `trusted_fullwave`: accepted only after convergence, S-matrix validity, RF
-  gate, and complete pattern/isolation output.
+## Label Policy
+
+- `trusted_pattern_label`: allowed for EEP/HFSS pattern optimization and gates.
+- `trusted_engineering_label`: requires active-RL and strict engineering gates;
+  the current new dataset has no positives.
 - `proxy_only`: allowed for proposal generation, warm starts, and rejection.
-- `legacy_shape_only`: allowed only for pattern-shape pretraining after source
-  convention audit.
+- `legacy_shape_only`: excluded unless explicitly selected for pretraining.
 - `invalid`: never included in train/validation/test data.
 
-The machine-readable inventory is
-[`baselines/2026-07-21/artifact_manifest.csv`](baselines/2026-07-21/artifact_manifest.csv).
+The split is grouped by independent `sample_index` scenes with no leakage, and
+old labels are not mixed automatically. The machine-readable inventories are
+`baselines/2026-07-24/artifact_manifest.csv` and the retained historical
+`baselines/2026-07-21/artifact_manifest.csv`.

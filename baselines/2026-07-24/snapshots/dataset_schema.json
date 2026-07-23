@@ -1,0 +1,339 @@
+{
+  "active_RL_gate": {
+    "shape": [
+      96
+    ],
+    "dtype": "int8"
+  },
+  "active_ratios_actual": {
+    "shape": [
+      96
+    ],
+    "dtype": "float32"
+  },
+  "active_ratios_requested": {
+    "shape": [
+      96
+    ],
+    "dtype": "float32"
+  },
+  "candidate_index": {
+    "shape": [
+      96
+    ],
+    "dtype": "int64"
+  },
+  "candidate_indices": {
+    "shape": [
+      96
+    ],
+    "dtype": "int64"
+  },
+  "combined_weights_real_imag": {
+    "shape": [
+      96,
+      256,
+      2
+    ],
+    "dtype": "float32"
+  },
+  "delta_local_iso_db": {
+    "shape": [
+      96
+    ],
+    "dtype": "float32"
+  },
+  "delta_mainlobe_gain_db": {
+    "shape": [
+      96
+    ],
+    "dtype": "float32"
+  },
+  "delta_nearest_iso_db": {
+    "shape": [
+      96
+    ],
+    "dtype": "float32"
+  },
+  "delta_psll_db": {
+    "shape": [
+      96
+    ],
+    "dtype": "float32"
+  },
+  "eep_local_iso_db": {
+    "shape": [
+      96
+    ],
+    "dtype": "float32"
+  },
+  "eep_mainlobe_gain_db": {
+    "shape": [
+      96
+    ],
+    "dtype": "float32"
+  },
+  "eep_nearest_iso_db": {
+    "shape": [
+      96
+    ],
+    "dtype": "float32"
+  },
+  "eep_psll_db": {
+    "shape": [
+      96
+    ],
+    "dtype": "float32"
+  },
+  "element_ixiy": {
+    "shape": [
+      256,
+      2
+    ],
+    "dtype": "int64"
+  },
+  "gate15": {
+    "shape": [
+      96
+    ],
+    "dtype": "int8"
+  },
+  "hard_negative": {
+    "shape": [
+      96
+    ],
+    "dtype": "int8"
+  },
+  "hard_positive": {
+    "shape": [
+      96
+    ],
+    "dtype": "int8"
+  },
+  "hfss_local_iso_db": {
+    "shape": [
+      96
+    ],
+    "dtype": "float32"
+  },
+  "hfss_mainlobe_gain_db": {
+    "shape": [
+      96
+    ],
+    "dtype": "float32"
+  },
+  "hfss_nearest_iso_db": {
+    "shape": [
+      96
+    ],
+    "dtype": "float32"
+  },
+  "hfss_psll_db": {
+    "shape": [
+      96
+    ],
+    "dtype": "float32"
+  },
+  "hfss_weights_real_imag": {
+    "shape": [
+      96,
+      256,
+      2
+    ],
+    "dtype": "float32"
+  },
+  "k_values": {
+    "shape": [
+      96
+    ],
+    "dtype": "int64"
+  },
+  "large_scan": {
+    "shape": [
+      96
+    ],
+    "dtype": "int8"
+  },
+  "mainlobe_gate": {
+    "shape": [
+      96
+    ],
+    "dtype": "int8"
+  },
+  "mask": {
+    "shape": [
+      96,
+      256
+    ],
+    "dtype": "int8"
+  },
+  "masks": {
+    "shape": [
+      96,
+      256
+    ],
+    "dtype": "int8"
+  },
+  "max_target_theta_deg": {
+    "shape": [
+      96
+    ],
+    "dtype": "float32"
+  },
+  "min_target_separation_deg": {
+    "shape": [
+      96
+    ],
+    "dtype": "float32"
+  },
+  "near_boundary": {
+    "shape": [
+      96
+    ],
+    "dtype": "int8"
+  },
+  "num_active": {
+    "shape": [
+      96
+    ],
+    "dtype": "int64"
+  },
+  "port_names": {
+    "shape": [
+      256
+    ],
+    "dtype": "<U4"
+  },
+  "positions_lambda": {
+    "shape": [
+      256,
+      3
+    ],
+    "dtype": "float64"
+  },
+  "sample_ids": {
+    "shape": [
+      96
+    ],
+    "dtype": "<U96"
+  },
+  "sample_index": {
+    "shape": [
+      96
+    ],
+    "dtype": "int64"
+  },
+  "sample_indices": {
+    "shape": [
+      96
+    ],
+    "dtype": "int64"
+  },
+  "scene_ids": {
+    "shape": [
+      96
+    ],
+    "dtype": "<U96"
+  },
+  "selected_indices": {
+    "shape": [
+      96
+    ],
+    "dtype": "int64"
+  },
+  "selection_roles": {
+    "shape": [
+      96
+    ],
+    "dtype": "<U40"
+  },
+  "source_dataset": {
+    "shape": [
+      96
+    ],
+    "dtype": "<U32"
+  },
+  "source_sample_indices": {
+    "shape": [
+      96
+    ],
+    "dtype": "int64"
+  },
+  "split": {
+    "shape": [
+      96
+    ],
+    "dtype": "int8"
+  },
+  "strict_engineering_gate": {
+    "shape": [
+      96
+    ],
+    "dtype": "int8"
+  },
+  "strict_gate20": {
+    "shape": [
+      96
+    ],
+    "dtype": "int8"
+  },
+  "targets_deg": {
+    "shape": [
+      96,
+      6,
+      2
+    ],
+    "dtype": "float32"
+  },
+  "task_valid": {
+    "shape": [
+      96,
+      6
+    ],
+    "dtype": "int8"
+  },
+  "task_weights_real_imag": {
+    "shape": [
+      96,
+      256,
+      6,
+      2
+    ],
+    "dtype": "float32"
+  },
+  "total_rl_db": {
+    "shape": [
+      96
+    ],
+    "dtype": "float32"
+  },
+  "training_priority": {
+    "shape": [
+      96
+    ],
+    "dtype": "float32"
+  },
+  "w_combined_real_imag": {
+    "shape": [
+      96,
+      256,
+      2
+    ],
+    "dtype": "float32"
+  },
+  "w_tasks_real_imag": {
+    "shape": [
+      96,
+      256,
+      6,
+      2
+    ],
+    "dtype": "float32"
+  },
+  "worst_active_rl_db": {
+    "shape": [
+      96
+    ],
+    "dtype": "float32"
+  }
+}

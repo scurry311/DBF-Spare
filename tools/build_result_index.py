@@ -25,7 +25,7 @@ class Artifact:
     note: str
 
 
-ARTIFACTS = (
+LEGACY_ARTIFACTS = (
     Artifact("requirements", "docs/EXPERIMENT_REQUIREMENTS_AND_REBUILD_DECISION_20260717.md", "A", "policy", "Frozen research gates and rebuild decision."),
     Artifact("patch_1x1", "hfss_outputs/grounded_patch_direct_1x1_20260717_run01/stage_summary.json", "A", "passed", "Converged matched 1x1 HFSS gate."),
     Artifact("patch_4x4", "hfss_outputs/grounded_patch_direct_4x4_20260717_run01/stage_summary.json", "A", "passed", "Converged matched 4x4 HFSS gate."),
@@ -49,6 +49,43 @@ ARTIFACTS = (
 )
 
 
+TRUSTED_EEP_ARTIFACTS = (
+    Artifact("fieldsolve_validation", "hfss_outputs/fixed_mesh_eep_fieldsolve_20260723_run05_ddm80/solve/fieldsolve_validation.json", "A", "passed", "Field-enabled fixed-mesh DDM solve cross-checked against the trusted direct S256."),
+    Artifact("eep_operator", "hfss_outputs/fixed_mesh_eep256_20260723_run05/operator_analysis_summary.json", "A", "passed", "Complete 256-port complex Etheta/Ephi EEP operator audit."),
+    Artifact("eep_superposition", "hfss_outputs/fixed_mesh_eep256_20260723_run05/superposition_analysis_summary.json", "A", "passed", "Initial three-case no-scale complex-field superposition smoke."),
+    Artifact("candidate_prepare", "hfss_outputs/trusted_eep_residual_20260723_run02/validation_dataset/prepare_summary.json", "A", "passed", "New-label candidate distribution and scene semantics."),
+    Artifact("reconstruction_validation", "hfss_outputs/trusted_eep_residual_20260723_run02/eep_hfss_validation/analysis_summary.json", "A", "pattern_labels_only", "Ninety-six candidates and 474 no-scale EEP/HFSS task cases."),
+    Artifact("grouped_split", "hfss_outputs/trusted_eep_residual_20260723_run02/eep_hfss_validation/grouped_split_manifest.json", "A", "passed", "Leakage-free sample_index grouped train/validation/test split."),
+    Artifact("residual_labels", "hfss_outputs/trusted_eep_residual_20260723_run02/eep_hfss_validation/candidate_residual_labels.csv", "A", "pattern_labels_only", "Per-candidate EEP/HFSS residuals, gates, and S256 matching metrics."),
+    Artifact("dataset_package", "hfss_outputs/trusted_eep_residual_20260723_run02/dataset_v2_20260724/package_summary.json", "A", "passed", "Canonical non-destructive dataset package audit."),
+    Artifact("dataset_schema", "hfss_outputs/trusted_eep_residual_20260723_run02/dataset_v2_20260724/dataset_schema.json", "A", "passed", "Names, shapes, and dtypes for every packaged array."),
+    Artifact("residual_dataset", "hfss_outputs/trusted_eep_residual_20260723_run02/dataset_v2_20260724/residual_critic_dataset_v2.npz", "A", "pattern_labels_only", "Compact arrays containing canonical scene IDs, masks, task weights, combined weights, metrics, gates, and splits."),
+    Artifact("group_summary", "hfss_outputs/trusted_eep_residual_20260723_run02/eep_hfss_validation/fullwave_summary_by_k_ratio_scan.csv", "A", "diagnostic", "K, ratio, and scan-angle grouped full-wave statistics."),
+    Artifact("critic_decision", "hfss_outputs/trusted_eep_residual_20260723_run02/eep_hfss_validation/critic_training_decision.json", "A", "held", "Residual-critic readiness decision based on residual scale and label support."),
+    Artifact("critic_priority", "hfss_outputs/trusted_eep_residual_20260723_run02/eep_hfss_validation/critic_priority_candidates.csv", "A", "diagnostic", "Near-boundary and hard-positive candidate priority list."),
+    Artifact("null_metrics", "hfss_outputs/trusted_eep_residual_20260723_run02/eep_hfss_validation/null_residual_baseline_metrics.csv", "A", "baseline_only", "Zero/train-mean residual baseline metrics."),
+    Artifact("null_checkpoint", "hfss_outputs/trusted_eep_residual_20260723_run02/eep_hfss_validation/null_residual_critic_checkpoint.npz", "A", "baseline_only", "Reproducible null checkpoint; not an engineering feasibility critic."),
+)
+
+
+BASELINE_CONFIGS = {
+    "2026-07-21": {
+        "version": "v0.1.0-physics-gated",
+        "artifacts": LEGACY_ARTIFACTS,
+        "training_labels_locked": True,
+        "pattern_labels_allowed": False,
+        "strict_benchmark_gate_pass": False,
+    },
+    "2026-07-24": {
+        "version": "v0.2.0-trusted-eep",
+        "artifacts": TRUSTED_EEP_ARTIFACTS,
+        "training_labels_locked": True,
+        "pattern_labels_allowed": True,
+        "strict_benchmark_gate_pass": False,
+    },
+}
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--tag", default=datetime.now().strftime("%Y-%m-%d"))
@@ -70,6 +107,10 @@ def snapshot_name(artifact: Artifact, source: Path) -> str:
 
 def main() -> None:
     args = parse_args()
+    if args.tag not in BASELINE_CONFIGS:
+        known = ", ".join(sorted(BASELINE_CONFIGS))
+        raise ValueError(f"Unknown baseline tag {args.tag!r}; choose one of: {known}")
+    config = BASELINE_CONFIGS[args.tag]
     baseline = ROOT / "baselines" / args.tag
     snapshots = baseline / "snapshots"
     manifest_path = baseline / "artifact_manifest.csv"
@@ -86,7 +127,7 @@ def main() -> None:
     snapshots.mkdir(parents=True, exist_ok=True)
     rows = []
     missing = []
-    for artifact in ARTIFACTS:
+    for artifact in config["artifacts"]:
         source = ROOT / artifact.source
         if not source.exists():
             missing.append(artifact.source)
@@ -116,12 +157,13 @@ def main() -> None:
         writer.writerows(rows)
     metadata = {
         "tag": args.tag,
-        "version": "v0.1.0-physics-gated",
+        "version": config["version"],
         "created_at_utc": datetime.now(timezone.utc).isoformat(),
         "artifact_count": len(rows),
         "snapshot_bytes": sum(int(row["size_bytes"]) for row in rows),
-        "training_labels_locked": True,
-        "strict_benchmark_gate_pass": False,
+        "training_labels_locked": config["training_labels_locked"],
+        "pattern_labels_allowed": config["pattern_labels_allowed"],
+        "strict_benchmark_gate_pass": config["strict_benchmark_gate_pass"],
     }
     (baseline / "baseline_metadata.json").write_text(
         json.dumps(metadata, indent=2), encoding="utf-8"

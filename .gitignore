@@ -41,3 +41,5 @@ Thumbs.db
 
 # Baseline S-parameter snapshots are intentionally versioned.
 !baselines/**/*.s*p
+# Compact baseline datasets/checkpoints are intentionally versioned.
+!baselines/**/*.npz

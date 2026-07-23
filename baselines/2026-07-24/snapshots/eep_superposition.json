@@ -1,0 +1,19 @@
+{
+  "created_at": "2026-07-23 23:19:22",
+  "expected_case_count": 3,
+  "complete_case_count": 3,
+  "all_cases_passed": true,
+  "all_shapes_passed_after_complex_scale": true,
+  "complex_nmse_max": 5.763061902697153e-12,
+  "magnitude_rmse_db_max": 2.2530266505782492e-05,
+  "complex_correlation_min": 0.9999974966049194,
+  "scale_corrected_complex_nmse_max": 5.767841065873469e-12,
+  "best_fit_scale_magnitude_range": [
+    0.9999999403953552,
+    1.0
+  ],
+  "allow_256_port_export": false,
+  "next_gate": "Keep the 256-port export blocked until 50-100 full-array HFSS cases confirm reconstruction error.",
+  "metrics_csv": "hfss_outputs\\fixed_mesh_eep256_20260723_run05\\superposition_validation_metrics.csv",
+  "runner_exit_code": 0
+}

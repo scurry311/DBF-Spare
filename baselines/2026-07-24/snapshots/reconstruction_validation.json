@@ -1,0 +1,21 @@
+{
+  "created_at": "2026-07-24 00:54:41",
+  "candidate_count": 96,
+  "independent_scene_count": 76,
+  "expected_case_count": 474,
+  "complete_case_count": 474,
+  "all_no_scale_reconstruction_pass": true,
+  "complex_nmse_max": 7.9310447098635e-12,
+  "magnitude_rmse_db_max": 6.833378574810922e-05,
+  "gate15_rate": 0.3333333333333333,
+  "strict_gate20_rate": 0.21875,
+  "mainlobe_gate_rate": 0.3020833333333333,
+  "active_RL_gate_rate": 0.0,
+  "strict_engineering_gate_rate": 0.0,
+  "hard_negative_count": 0,
+  "hard_positive_count": 17,
+  "near_boundary_count": 87,
+  "scene_leakage_free": true,
+  "old_labels_included": false,
+  "labels_allowed": true
+}

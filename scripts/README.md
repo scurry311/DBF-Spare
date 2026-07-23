@@ -95,6 +95,15 @@
 | 文件 | 作用 |
 |---|---|
 | `analyze_ddm_recovery_stage.py` | 分析 16x16 DDM 恢复阶段的 S 参数、Delta S 和工程 gate。 |
+| `audit_meshlink_baseline.py` | 对比旧 MeshLink、原 direct 与 clean DDM 快照，审计逐端口阻抗、耦合、匹配灵敏度和固定网格验证决策。 |
+| `run_fixed_mesh_ddm_run02.py` | 建立独立 run02，移除目标侧二次局部细化，依次执行 MeshLink import smoke、资源受控 DDM、S256 导出及 old pass5 交叉验证。 |
+| `run_fixed_mesh_direct_crosscheck.py` | 独立执行相同固定网格的 Direct Solver，管理 D 盘 off-core scratch，并完成 direct/DDM 交叉门控与版本化工程基准冻结。 |
+| `run_fixed_mesh_eep_fieldsolve.py` | 从可信固定网格建立保存辐射场的资源受控 DDM 求解，并与 direct S256 交叉验证。 |
+| `run_fixed_mesh_eep_ddm_fieldsolve_run05.py` | 以 80% 内存门限启动通过的 run05 场求解配置；run03/run04 包装器保留失败审计参数。 |
+| `prepare_trusted_eep_residual_validation.py` | 构造 K=1/2/4/6、跨 ratio、大扫描角及 K=6 小间隔的 96 候选新标签集。 |
+| `validate_trusted_eep_hfss_residuals.py` | 执行无比例校正的 EEP/HFSS 复场验证，生成方向图残差、S256 匹配指标、工程 gate 和场景级划分。 |
+| `package_trusted_residual_dataset.py` | 在不覆盖原始结果的前提下生成带标准键、schema 和证据清单的 critic 数据包。 |
+| `gate_trusted_residual_critic_training.py` | 检查残差尺度、正负样本支持和 active-RL 可行集，决定是否允许训练神经 residual critic。 |
 | `analyze_eep_16port_operator.py` | 解析 16 端口复数 EEP 并构建/检查线性算子。 |
 | `analyze_full_s256p_active_return.py` | 计算 S256 下的 active impedance、逐端口/总反射 RL 分布。 |
 | `analyze_paired_task_results.py` | 分析相同方向集合下不同 ratio/权值的配对任务结果。 |
@@ -132,6 +141,8 @@
 | `archive_superseded_root_results_for_scratch.ps1` | 将确认过时的大型 `.aedtresults` 迁移到归档盘并建立 junction。 |
 | `cleanup_failed_hfss_scratch_20260718.ps1` | 清理已确认失败的 HFSS scratch，保留审计信息。 |
 | `cleanup_invalid_pass09_retry02.ps1` | 定点删除 pass09 retry02 的无效求解节点和锁文件。 |
+| `cleanup_fieldsolve_scratch_20260723.ps1` | 仅清理已完成并通过验证的 fieldsolve 临时 scratch，保留求解结果。 |
+| `cleanup_failed_fieldsolve_run03.ps1` | 清理失败 run03 的大体积 scratch，并生成文件哈希审计清单。 |
 | `cleanup_superseded_pass19_cache.ps1` | 删除被替代的 pass19 cache，并保存 profile/manifest。 |
 | `cleanup_verified_hfss_artifacts.ps1` | 对白名单 HFSS 缓存执行 dry-run 或显式 `-Execute` 清理。 |
 
