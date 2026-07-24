@@ -104,6 +104,9 @@
 | `validate_trusted_eep_hfss_residuals.py` | 执行无比例校正的 EEP/HFSS 复场验证，生成方向图残差、S256 匹配指标、工程 gate 和场景级划分。 |
 | `package_trusted_residual_dataset.py` | 在不覆盖原始结果的前提下生成带标准键、schema 和证据清单的 critic 数据包。 |
 | `gate_trusted_residual_critic_training.py` | 检查残差尺度、正负样本支持和 active-RL 可行集，决定是否允许训练神经 residual critic。 |
+| `audit_trusted_active_rl_semantics.py` | 在可信 matched S256 上比较 combined/task-level 及 -20/-30/-40 dB 有效驱动端口的 active-RL 口径。 |
+| `optimize_trusted_eep_s256_joint_weights.py` | 联合优化任务级 `w1...wK`，保持 EEP 主响应和区域泄漏约束，同时投影 combined/task active RL。 |
+| `evaluate_trusted_eep_s256_joint_smoke.py` | 汇总96候选联合优化结果，输出 K/ratio/扫描角统计、场景oracle和HFSS标签开放决定。 |
 | `analyze_eep_16port_operator.py` | 解析 16 端口复数 EEP 并构建/检查线性算子。 |
 | `analyze_full_s256p_active_return.py` | 计算 S256 下的 active impedance、逐端口/总反射 RL 分布。 |
 | `analyze_paired_task_results.py` | 分析相同方向集合下不同 ratio/权值的配对任务结果。 |

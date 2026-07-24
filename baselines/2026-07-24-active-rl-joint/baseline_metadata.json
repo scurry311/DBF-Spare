@@ -1,0 +1,10 @@
+{
+  "tag": "2026-07-24-active-rl-joint",
+  "version": "v0.3.0-active-rl-joint",
+  "created_at_utc": "2026-07-24T01:22:53.673637+00:00",
+  "artifact_count": 10,
+  "snapshot_bytes": 1301791,
+  "training_labels_locked": true,
+  "pattern_labels_allowed": true,
+  "strict_benchmark_gate_pass": false
+}

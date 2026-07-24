@@ -68,6 +68,20 @@ TRUSTED_EEP_ARTIFACTS = (
 )
 
 
+ACTIVE_RL_JOINT_ARTIFACTS = (
+    Artifact("active_rl_audit", "hfss_outputs/trusted_active_rl_audit_20260724_run02/active_rl_audit_summary.json", "A", "passed", "Combined/task and amplitude-threshold active-RL semantics audit on 96 trusted candidates."),
+    Artifact("active_rl_groups", "hfss_outputs/trusted_active_rl_audit_20260724_run02/active_rl_group_summary.csv", "A", "diagnostic", "Active-RL audit grouped by K, ratio, and scan class."),
+    Artifact("joint_optimization_summary", "hfss_outputs/trusted_eep_s256_joint_optimization_20260724_run03/optimization_summary.json", "A", "passed", "Full 96-candidate trusted EEP/S256 joint projection summary."),
+    Artifact("joint_candidate_metrics", "hfss_outputs/trusted_eep_s256_joint_optimization_20260724_run03/optimization_candidate_metrics.csv", "A", "diagnostic", "Paired baseline/optimized pattern, matching, gain, and gate metrics."),
+    Artifact("joint_trials", "hfss_outputs/trusted_eep_s256_joint_optimization_20260724_run03/optimization_trials.csv", "A", "diagnostic", "Three projection configurations per candidate."),
+    Artifact("joint_weights", "hfss_outputs/trusted_eep_s256_joint_optimization_20260724_run03/optimized_task_weights.npz", "A", "eep_only", "Task-level and combined external weights with w=sum(w_k)."),
+    Artifact("smoke_decision", "hfss_outputs/trusted_eep_s256_joint_smoke_decision_20260724_run01/hfss_label_generation_decision.json", "A", "hfss_locked", "Authoritative decision after the 96-candidate optimization smoke."),
+    Artifact("smoke_groups", "hfss_outputs/trusted_eep_s256_joint_smoke_decision_20260724_run01/smoke_summary_by_k_ratio_scan.csv", "A", "diagnostic", "Joint-gate statistics by K, ratio, and scan class."),
+    Artifact("scene_oracle", "hfss_outputs/trusted_eep_s256_joint_smoke_decision_20260724_run01/scene_minimum_ratio_oracle.csv", "A", "diagnostic", "Scene-level minimum sparse-ratio oracle."),
+    Artifact("next_priority", "hfss_outputs/trusted_eep_s256_joint_smoke_decision_20260724_run01/next_optimization_priority_candidates.csv", "A", "diagnostic", "Prioritized sparse positives and multibeam direction failures for dense regional projection."),
+)
+
+
 BASELINE_CONFIGS = {
     "2026-07-21": {
         "version": "v0.1.0-physics-gated",
@@ -79,6 +93,13 @@ BASELINE_CONFIGS = {
     "2026-07-24": {
         "version": "v0.2.0-trusted-eep",
         "artifacts": TRUSTED_EEP_ARTIFACTS,
+        "training_labels_locked": True,
+        "pattern_labels_allowed": True,
+        "strict_benchmark_gate_pass": False,
+    },
+    "2026-07-24-active-rl-joint": {
+        "version": "v0.3.0-active-rl-joint",
+        "artifacts": ACTIVE_RL_JOINT_ARTIFACTS,
         "training_labels_locked": True,
         "pattern_labels_allowed": True,
         "strict_benchmark_gate_pass": False,

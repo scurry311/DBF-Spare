@@ -1,0 +1,29 @@
+{
+  "created_at": "2026-07-24 09:20:37",
+  "candidate_count": 96,
+  "independent_scene_count": 76,
+  "audit_combined_strict_gate_before_optimization": 0,
+  "combined_active_gate_after_optimization": 85,
+  "robust_active_gate_after_optimization": 62,
+  "strict_gate20_after_optimization": 27,
+  "strict_engineering_gate_after_optimization": 11,
+  "sparse_strict_engineering_positive_count": 8,
+  "sparse_multibeam_strict_engineering_positive_count": 1,
+  "k6_strict_engineering_positive_count": 0,
+  "sparse_scene_oracle_pass_count": 8,
+  "generate_new_hfss_training_labels": false,
+  "allow_large_hfss_batch": false,
+  "decision": "hold_hfss_labels_strengthen_dense_regional_eep_projection",
+  "reasons": [
+    "K=6 has no strict local-20 plus mainlobe plus active-RL joint positive",
+    "sparse multibeam strict positives do not cover K=2 and are limited to one K=4 ratio-0.9 candidate",
+    "the nominal EEP/HFSS basis is already numerically identical, so repeating these weights would not create learnable residual labels",
+    "the discrete local-null constraints underpredict the full EEP local-5deg peak by roughly 5-10 dB in hard scenes"
+  ],
+  "next_gate": {
+    "method": "dense local-5deg EEP operator plus combined-target equalities, then repeat the 96-candidate smoke",
+    "required_k6_sparse_joint_positive_count": 1,
+    "required_sparse_multibeam_joint_positive_count": 5,
+    "required_before_hfss": "nonzero K=2/4/6 coverage and a 50-100-case oracle shortlist"
+  }
+}

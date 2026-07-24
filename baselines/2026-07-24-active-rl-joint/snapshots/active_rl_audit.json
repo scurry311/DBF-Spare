@@ -1,0 +1,50 @@
+{
+  "created_at": "2026-07-24 09:03:49",
+  "dataset": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\trusted_eep_residual_20260723_run02\\dataset_v2_20260724\\residual_critic_dataset_v2.npz",
+  "matched_s_source": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\trusted_eep_residual_20260723_run02\\eep_hfss_validation\\case_excitations.npz",
+  "candidate_count": 96,
+  "case_count": 1896,
+  "return_loss_min_db": 10.0,
+  "definitions": {
+    "strict_mask": {
+      "combined_gate_count": 0,
+      "combined_gate_rate": 0.0,
+      "combined_worst_active_rl_min_db": -22.48519573894321,
+      "combined_worst_active_rl_mean_db": -0.22939077921444007,
+      "combined_worst_active_rl_max_db": 8.738883107874873,
+      "all_tasks_gate_count": 0,
+      "all_tasks_gate_rate": 0.0
+    },
+    "rel40db": {
+      "combined_gate_count": 0,
+      "combined_gate_rate": 0.0,
+      "combined_worst_active_rl_min_db": -22.48519573894321,
+      "combined_worst_active_rl_mean_db": -0.22939077921444007,
+      "combined_worst_active_rl_max_db": 8.738883107874873,
+      "all_tasks_gate_count": 0,
+      "all_tasks_gate_rate": 0.0
+    },
+    "rel30db": {
+      "combined_gate_count": 0,
+      "combined_gate_rate": 0.0,
+      "combined_worst_active_rl_min_db": -20.508369451080203,
+      "combined_worst_active_rl_mean_db": 0.021237562119847325,
+      "combined_worst_active_rl_max_db": 8.738883107874873,
+      "all_tasks_gate_count": 0,
+      "all_tasks_gate_rate": 0.0
+    },
+    "rel20db": {
+      "combined_gate_count": 0,
+      "combined_gate_rate": 0.0,
+      "combined_worst_active_rl_min_db": -10.272680049838561,
+      "combined_worst_active_rl_mean_db": 1.8527487626844605,
+      "combined_worst_active_rl_max_db": 8.738883107874873,
+      "all_tasks_gate_count": 0,
+      "all_tasks_gate_rate": 0.0
+    }
+  },
+  "worst_port_class_counts_combined_strict": {
+    "interior": 79,
+    "edge": 17
+  }
+}

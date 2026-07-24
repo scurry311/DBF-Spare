@@ -13,3 +13,6 @@ Current checkpoints:
 - `2026-07-21`: blocked 16x16 adaptive-mesh physics gate.
 - `2026-07-24`: trusted fixed-mesh S256 and EEP reconstruction; active-RL and
   strict engineering critic labels remain blocked.
+- `2026-07-24-active-rl-joint`: trusted EEP/S256 task-weight projection smoke;
+  active matching improves, while K=6 regional-pattern coverage keeps new
+  HFSS training labels locked.

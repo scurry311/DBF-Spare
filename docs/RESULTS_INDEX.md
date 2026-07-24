@@ -44,6 +44,29 @@ The no-scale result demonstrates that the EEP operator reproduces HFSS fields
 for the same linear electromagnetic basis. It does not establish that the
 current sparse weights satisfy active matching or low-power hardware gates.
 
+## Active-RL Joint Optimization
+
+Baseline `v0.3.0-active-rl-joint` audits and projects the same 96 candidates
+with task-level weights constrained to satisfy `w = sum(w_k)`.
+
+| Result | Before | After |
+|---|---:|---:|
+| Combined strict active-RL gate | 0/96 | 85/96 |
+| Combined plus significant task active-RL gate | 0/96 | 62/96 |
+| Strict local-20 pattern gate | 21/96 original | 27/96 optimized |
+| Mainlobe gate | 29/96 original | 30/96 optimized |
+| Strict engineering intersection | 0/96 | 11/96 |
+| Sparse strict engineering positives | 0 | 8 |
+| Sparse multibeam strict positives | 0 | 1 |
+| K=6 strict engineering positives | 0 | 0 |
+
+The mean improvement in combined worst active RL is 10.33 dB. The projection
+therefore solves most of the matching failure, but sparse multibeam coverage is
+not sufficient for new HFSS training labels. Full-EEP local-5-degree leakage
+is roughly 5-10 dB worse than the sparse regional constraints in hard scenes.
+The next solver gate is a dense local-5-degree EEP operator with explicit
+combined-target equalities, followed by another 96-candidate smoke.
+
 ## Residual Critic
 
 | Signal | Observed |
@@ -64,7 +87,8 @@ noise. The versioned null checkpoint is only a reconstruction sanity baseline.
 
 - `trusted_pattern_label`: allowed for EEP/HFSS pattern optimization and gates.
 - `trusted_engineering_label`: requires active-RL and strict engineering gates;
-  the current new dataset has no positives.
+  EEP/S256 optimization now has 11 candidates, but they are not new HFSS
+  training labels and do not cover K=6.
 - `proxy_only`: allowed for proposal generation, warm starts, and rejection.
 - `legacy_shape_only`: excluded unless explicitly selected for pretraining.
 - `invalid`: never included in train/validation/test data.
@@ -72,4 +96,5 @@ noise. The versioned null checkpoint is only a reconstruction sanity baseline.
 The split is grouped by independent `sample_index` scenes with no leakage, and
 old labels are not mixed automatically. The machine-readable inventories are
 `baselines/2026-07-24/artifact_manifest.csv` and the retained historical
-`baselines/2026-07-21/artifact_manifest.csv`.
+`baselines/2026-07-21/artifact_manifest.csv`. The active-RL joint projection
+inventory is `baselines/2026-07-24-active-rl-joint/artifact_manifest.csv`.
