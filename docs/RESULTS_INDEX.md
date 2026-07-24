@@ -113,6 +113,30 @@ boundary ranking but are not promoted to the engineering critic: calibration
 is insufficient, the test set is small, and mainlobe-failure negatives are
 missing.
 
+## Expanded Independent-Scene Critic
+
+Baseline `v0.6.0-expanded-residual` adds 45 unique target-direction scenes,
+including medium implementation errors, lower-ratio counterfactuals, and
+targeted mainlobe failures.
+
+| Result | Value | Decision |
+|---|---:|---|
+| New candidates / HFSS cases | 105 / 455 | Complete |
+| K=2 / K=4 / K=6 new scenes | 21 / 18 / 6 | Covered |
+| Reoptimized lower-ratio pairs | 15 | Strict full-wave pass |
+| Full-wave mainlobe failures | 37 | Support gate passed |
+| Actual EEP to direct-HFSS maximum NMSE | 6.13e-12 | Mapping passed |
+| Combined candidates / independent scenes | 141 / 60 | Scene-grouped |
+| Train / validation / test scenes | 38 / 11 / 11 | No leakage |
+| Gate15 / gate20 AUROC | 0.836 / 0.893 | Gate15 failed 0.88 |
+| Gate15 / gate20 ECE | 0.138 / 0.125 | Failed 0.08 |
+| Mainlobe / strict AUROC | 1.00 / 1.00 | Passed |
+
+The checkpoint now has the intended mainlobe-specific bias and reliable
+candidate-group ranking, but it remains experimental. The next increment must
+target independent PSLL and isolation threshold crossings rather than adding
+more mainlobe failures.
+
 ## Nominal Residual Critic (v0.2)
 
 | Signal | Observed |
@@ -148,3 +172,5 @@ The dense-local gated HFSS inventory is
 `baselines/2026-07-24-dense-local-hfss/artifact_manifest.csv`.
 The implementation-residual critic inventory is
 `baselines/2026-07-24-implementation-residual/artifact_manifest.csv`.
+The expanded independent-scene inventory is
+`baselines/2026-07-24-expanded-residual/artifact_manifest.csv`.

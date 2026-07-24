@@ -1,0 +1,209 @@
+{
+  "seeds": [
+    20260725,
+    20260726,
+    20260727,
+    20260728,
+    20260729
+  ],
+  "dataset_dir": "hfss_outputs\\trusted_dense_implementation_residual_dataset_20260724_run02",
+  "out_dir": "hfss_outputs\\trusted_dense_implementation_residual_critic_20260724_run02",
+  "device": "cpu",
+  "metrics": {
+    "gate15_auroc": {
+      "mean": 0.8362318840579709,
+      "ci95_half_width": 0.011538489328323537,
+      "values": [
+        0.8478260869565217,
+        0.8405797101449275,
+        0.8478260869565217,
+        0.8188405797101449,
+        0.8260869565217391
+      ]
+    },
+    "gate15_auprc": {
+      "mean": 0.9036425682828471,
+      "ci95_half_width": 0.013783138150668705,
+      "values": [
+        0.9155380502426012,
+        0.9010452966194127,
+        0.9155380502426012,
+        0.9084519447916565,
+        0.8776394995179635
+      ]
+    },
+    "gate15_ece": {
+      "mean": 0.1383231179210646,
+      "ci95_half_width": 0.027451213774501347,
+      "values": [
+        0.15286574949478282,
+        0.15105732812963682,
+        0.10108191378671545,
+        0.11080141622444681,
+        0.17580918196974132
+      ]
+    },
+    "gate20_auroc": {
+      "mean": 0.8927536231884059,
+      "ci95_half_width": 0.06561062767073665,
+      "values": [
+        0.9492753623188406,
+        0.9492753623188406,
+        0.9420289855072463,
+        0.7971014492753623,
+        0.8260869565217391
+      ]
+    },
+    "gate20_auprc": {
+      "mean": 0.9444053310506575,
+      "ci95_half_width": 0.04865847732652112,
+      "values": [
+        0.9853736671690109,
+        0.9853736671690109,
+        0.9837070005023444,
+        0.8899328208949582,
+        0.8776394995179635
+      ]
+    },
+    "gate20_ece": {
+      "mean": 0.12491807644737178,
+      "ci95_half_width": 0.03587246900394568,
+      "values": [
+        0.13198923139736568,
+        0.09399823728820372,
+        0.09504446785511643,
+        0.11080388519270667,
+        0.19275456050346637
+      ]
+    },
+    "mainlobe_auroc": {
+      "mean": 1.0,
+      "ci95_half_width": 0.0,
+      "values": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "strict_engineering_auroc": {
+      "mean": 1.0,
+      "ci95_half_width": 0.0,
+      "values": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "rank_gate15_rate": {
+      "mean": 1.0,
+      "ci95_half_width": 0.0,
+      "values": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "rank_gate20_rate": {
+      "mean": 1.0,
+      "ci95_half_width": 0.0,
+      "values": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "rank_strict_engineering_rate": {
+      "mean": 1.0,
+      "ci95_half_width": 0.0,
+      "values": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "conservative_gate15_rate": {
+      "mean": 1.0,
+      "ci95_half_width": 0.0,
+      "values": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "conservative_gate20_rate": {
+      "mean": 1.0,
+      "ci95_half_width": 0.0,
+      "values": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "conservative_strict_engineering_rate": {
+      "mean": 1.0,
+      "ci95_half_width": 0.0,
+      "values": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "oracle_gate15_rate": {
+      "mean": 1.0,
+      "ci95_half_width": 0.0,
+      "values": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "oracle_gate20_rate": {
+      "mean": 1.0,
+      "ci95_half_width": 0.0,
+      "values": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "oracle_strict_engineering_rate": {
+      "mean": 1.0,
+      "ci95_half_width": 0.0,
+      "values": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    }
+  },
+  "best_seed": 20260726,
+  "run_summaries": [
+    "hfss_outputs\\trusted_dense_implementation_residual_critic_20260724_run02\\seed_20260725\\run_summary.json",
+    "hfss_outputs\\trusted_dense_implementation_residual_critic_20260724_run02\\seed_20260726\\run_summary.json",
+    "hfss_outputs\\trusted_dense_implementation_residual_critic_20260724_run02\\seed_20260727\\run_summary.json",
+    "hfss_outputs\\trusted_dense_implementation_residual_critic_20260724_run02\\seed_20260728\\run_summary.json",
+    "hfss_outputs\\trusted_dense_implementation_residual_critic_20260724_run02\\seed_20260729\\run_summary.json"
+  ]
+}

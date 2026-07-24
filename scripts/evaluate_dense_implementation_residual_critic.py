@@ -169,6 +169,8 @@ def main() -> None:
         "failure_reasons": [
             reason
             for failed, reason in (
+                (not gate15_auc_pass, "mean gate15 AUROC is below 0.88"),
+                (not gate20_auc_pass, "mean gate20 AUROC is below 0.88"),
                 (not calibration_pass, "mean calibrated ECE exceeds 0.08"),
                 (not test_support_pass, "scene-level test set has fewer than 10 independent scenes"),
                 (not mainlobe_support_pass, "mainlobe gate has insufficient negative support"),
@@ -176,9 +178,10 @@ def main() -> None:
             if failed
         ],
         "next_action": (
-            "Use this checkpoint only for uncertainty-aware boundary ranking. Add at least "
-            "45 new independent scenes with intermediate perturbation levels, low-ratio pairs, "
-            "and at least 20 mainlobe-failure examples; then repeat grouped five-seed training."
+            "Keep this checkpoint experimental and use it only for uncertainty-aware candidate "
+            "ranking. Mainlobe support is now sufficient; next add independent gate15 boundary "
+            "scenes whose PSLL or nearest/local isolation just crosses its threshold, then fit "
+            "calibration on a larger scene-held-out validation set."
         ),
     }
     (args.out_dir / "critic_acceptance.json").write_text(

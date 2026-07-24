@@ -111,6 +111,7 @@
 | `prepare_dense_joint_hfss_smoke.py` | 仅将通过严格工程门控的稀疏多波束候选打包为50-100 case HFSS任务。 |
 | `evaluate_dense_joint_hfss_smoke.py` | 审计稠密优化后的HFSS批次，按K/ratio/扫描角汇总并分别判定物理标签与residual critic是否开放。 |
 | `generate_dense_boundary_hard_negatives.py` | 围绕可信正样本生成可复现的幅相量化、通道失效门限扰动及低ratio配对候选。 |
+| `generate_expanded_independent_residual_scenes.py` | 生成独立目标方向场景、中等实现误差、定向主瓣失败及重新优化的低ratio配对样本。 |
 | `subset_hfss_candidate_dataset.py` | 非破坏性抽取候选轴子集，用于正式HFSS批次前的小规模映射smoke。 |
 | `build_dense_implementation_residual_dataset.py` | 合并正样本与实现误差hard negative，按sample_index分组构建critic训练数据。 |
 | `evaluate_dense_implementation_residual_critic.py` | 汇总五随机种子critic指标并执行AUROC、ECE、测试支持和mainlobe负类晋级门控。 |

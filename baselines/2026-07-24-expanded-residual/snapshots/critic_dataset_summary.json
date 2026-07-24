@@ -1,0 +1,107 @@
+{
+  "created_at": "2026-07-24 16:48:46",
+  "candidate_count": 141,
+  "independent_scene_count": 60,
+  "source_counts": {
+    "dense_boundary": 21,
+    "expanded_independent": 105,
+    "trusted_sparse_positive": 15
+  },
+  "hard_negative_count": 33,
+  "strict_engineering_positive_count": 75,
+  "residual_std_db": {
+    "psll_db": 0.7259243130683899,
+    "iso_nearest_db": 2.4768924713134766,
+    "iso_local_db": 1.381325125694275,
+    "peak_min_db": 0.19944949448108673,
+    "peak_spread_db": 0.18423667550086975
+  },
+  "scene_leakage_free": true,
+  "split_summary": {
+    "train": {
+      "candidate_count": 89,
+      "scene_count": 38,
+      "hard_negative_count": 19,
+      "strict_positive_count": 46,
+      "sample_indices": [
+        19,
+        21,
+        24,
+        27,
+        36,
+        39,
+        45,
+        49,
+        60,
+        66,
+        100000,
+        100001,
+        100002,
+        100003,
+        100004,
+        100007,
+        100008,
+        100010,
+        100011,
+        100012,
+        100014,
+        100015,
+        100016,
+        100019,
+        100020,
+        100022,
+        100023,
+        100024,
+        100025,
+        100026,
+        100027,
+        100028,
+        100031,
+        100032,
+        100036,
+        100039,
+        100041,
+        100044
+      ]
+    },
+    "val": {
+      "candidate_count": 23,
+      "scene_count": 11,
+      "hard_negative_count": 8,
+      "strict_positive_count": 11,
+      "sample_indices": [
+        18,
+        23,
+        30,
+        48,
+        100013,
+        100029,
+        100034,
+        100035,
+        100037,
+        100040,
+        100043
+      ]
+    },
+    "test": {
+      "candidate_count": 29,
+      "scene_count": 11,
+      "hard_negative_count": 6,
+      "strict_positive_count": 18,
+      "sample_indices": [
+        42,
+        100005,
+        100006,
+        100009,
+        100017,
+        100018,
+        100021,
+        100030,
+        100033,
+        100038,
+        100042
+      ]
+    }
+  },
+  "residual_critic_training_allowed": true
+}

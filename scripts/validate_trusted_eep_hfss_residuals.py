@@ -707,15 +707,20 @@ def analyze(args: argparse.Namespace) -> dict[str, Any]:
         training_priority=metric("training_priority"),
     )
     complete_cases = [row for row in case_metrics if int(row.get("complete", 0)) == 1]
+    all_no_scale_pass = bool(
+        len(complete_cases) == len(case_rows)
+        and all(int(row["no_scale_pass"]) == 1 for row in complete_cases)
+    )
+    independent_scene_count = int(
+        np.unique([int(row["sample_index"]) for row in candidate_rows]).size
+    )
     summary = {
         "created_at": time.strftime("%Y-%m-%d %H:%M:%S"),
         "candidate_count": len(candidate_rows),
         "independent_scene_count": int(np.unique([row["sample_index"] for row in candidate_rows]).size),
         "expected_case_count": len(case_rows),
         "complete_case_count": len(complete_cases),
-        "all_no_scale_reconstruction_pass": bool(
-            len(complete_cases) == len(case_rows) and all(int(row["no_scale_pass"]) == 1 for row in complete_cases)
-        ),
+        "all_no_scale_reconstruction_pass": all_no_scale_pass,
         "complex_nmse_max": max((float(row["complex_nmse"]) for row in complete_cases), default=float("nan")),
         "magnitude_rmse_db_max": max((float(row["magnitude_rmse_db_visible40"]) for row in complete_cases), default=float("nan")),
         "nominal_to_direct_complex_nmse_max": max(
@@ -748,7 +753,13 @@ def analyze(args: argparse.Namespace) -> dict[str, Any]:
         "near_boundary_count": int(sum(row["near_boundary"] for row in candidate_rows)),
         "scene_leakage_free": bool(split_payload["scene_leakage_free"]),
         "old_labels_included": False,
-        "labels_allowed": bool(len(candidate_rows) == 96 and split_payload["scene_leakage_free"]),
+        "labels_allowed": bool(
+            len(candidate_rows) >= 50
+            and independent_scene_count >= 15
+            and all_no_scale_pass
+            and all(int(row["fullwave_complete"]) == 1 for row in candidate_rows)
+            and split_payload["scene_leakage_free"]
+        ),
     }
     (args.out_dir / "analysis_summary.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
     return summary

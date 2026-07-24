@@ -23,6 +23,8 @@ DEFAULT_POSITIVE_DATASET = ROOT / "hfss_outputs" / "trusted_dense_joint_hfss_dat
 DEFAULT_POSITIVE_HFSS = ROOT / "hfss_outputs" / "trusted_dense_joint_hfss_smoke_20260724_run01"
 DEFAULT_BOUNDARY_DATASET = ROOT / "hfss_outputs" / "trusted_dense_boundary_dataset_20260724_run01"
 DEFAULT_BOUNDARY_HFSS = ROOT / "hfss_outputs" / "trusted_dense_boundary_hfss_20260724_run01"
+DEFAULT_EXPANDED_DATASET = ROOT / "hfss_outputs" / "expanded_independent_scenes_20260724_run02"
+DEFAULT_EXPANDED_HFSS = ROOT / "hfss_outputs" / "expanded_independent_scenes_hfss_20260724_run01"
 DEFAULT_OPERATOR = (
     ROOT
     / "hfss_outputs"
@@ -79,6 +81,7 @@ SCALAR_NAMES = (
     "phase_bits_norm",
     "amplitude_bits_norm",
     "ratio_delta",
+    "phase_ramp_deg_norm",
 )
 
 
@@ -88,6 +91,13 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--positive-hfss-dir", type=Path, default=DEFAULT_POSITIVE_HFSS)
     parser.add_argument("--boundary-dataset-dir", type=Path, default=DEFAULT_BOUNDARY_DATASET)
     parser.add_argument("--boundary-hfss-dir", type=Path, default=DEFAULT_BOUNDARY_HFSS)
+    parser.add_argument("--expanded-dataset-dir", type=Path, default=DEFAULT_EXPANDED_DATASET)
+    parser.add_argument("--expanded-hfss-dir", type=Path, default=DEFAULT_EXPANDED_HFSS)
+    parser.add_argument(
+        "--exclude-expanded",
+        action="store_true",
+        help="Build the legacy two-source dataset without the expanded package.",
+    )
     parser.add_argument("--operator", type=Path, default=DEFAULT_OPERATOR)
     parser.add_argument("--out-dir", type=Path, default=DEFAULT_OUT)
     parser.add_argument("--seed", type=int, default=20260725)
@@ -186,7 +196,10 @@ def scene_split(sample_index: np.ndarray, k_values: np.ndarray, seed: int) -> np
         )
         rng.shuffle(scenes)
         if scenes.size >= 5:
-            n_val, n_test = 1, 1
+            # Ceil keeps the held-out scene count above the critic's minimum
+            # support gate after K-stratification (notably the small K=6 stratum).
+            n_val = max(1, int(math.ceil(0.15 * scenes.size)))
+            n_test = max(1, int(math.ceil(0.15 * scenes.size)))
         elif scenes.size >= 2:
             n_val, n_test = 0, 1
         else:
@@ -211,7 +224,7 @@ def main() -> None:
         raise FileExistsError(f"Refusing to overwrite dataset: {args.out_dir}")
     args.out_dir.mkdir(parents=True, exist_ok=True)
 
-    packages = (
+    packages = [
         (
             "trusted_sparse_positive",
             load_npz(args.positive_dataset_dir / "dataset_arrays.npz"),
@@ -222,18 +235,43 @@ def main() -> None:
             load_npz(args.boundary_dataset_dir / "dataset_arrays.npz"),
             read_csv(args.boundary_hfss_dir / "candidate_residual_labels.csv"),
         ),
-    )
+    ]
+    if not args.exclude_expanded:
+        packages.append(
+            (
+                "expanded_independent",
+                load_npz(args.expanded_dataset_dir / "dataset_arrays.npz"),
+                read_csv(args.expanded_hfss_dir / "candidate_residual_labels.csv"),
+            )
+        )
     with np.load(args.operator, allow_pickle=False) as source:
         s_matrix, _antenna_map, _series_z = series_network_map(
             np.asarray(source["s_raw"], dtype=np.complex128), 1.0e10
         )
 
     positive_reference: dict[int, tuple[float, float]] = {}
-    for row in packages[0][2]:
-        positive_reference[i(row, "sample_index")] = (
-            f(row, "hfss_mainlobe_gain_db"),
-            f(row, "hfss_target_spread_db"),
-        )
+    fallback_reference: dict[int, tuple[float, float]] = {}
+    for _source_name, dataset, rows in packages:
+        row_by_candidate = {i(row, "candidate_index"): row for row in rows}
+        for candidate in range(int(dataset["candidate_indices"].size)):
+            row = row_by_candidate[candidate]
+            sample = int(dataset["sample_indices"][candidate])
+            reference = (
+                f(row, "hfss_mainlobe_gain_db"),
+                f(row, "hfss_target_spread_db"),
+            )
+            fallback_reference.setdefault(sample, reference)
+            variant_kind = (
+                str(dataset["variant_kind"][candidate])
+                if "variant_kind" in dataset
+                else ""
+            )
+            if variant_kind == "nominal_control" or (
+                _source_name == "trusted_sparse_positive" and i(row, "strict_engineering_gate")
+            ):
+                positive_reference[sample] = reference
+    for sample, reference in fallback_reference.items():
+        positive_reference.setdefault(sample, reference)
 
     records: list[dict[str, Any]] = []
     for source_name, dataset, rows in packages:
@@ -285,6 +323,11 @@ def main() -> None:
             )
             ratio_delta = (
                 float(dataset["ratio_delta"][candidate]) if "ratio_delta" in dataset else 0.0
+            )
+            phase_ramp = (
+                float(dataset["phase_ramp_deg"][candidate])
+                if "phase_ramp_deg" in dataset
+                else 0.0
             )
             eep = np.asarray(
                 [
@@ -346,6 +389,7 @@ def main() -> None:
                     phase_bits / 16.0,
                     amplitude_bits / 16.0,
                     ratio_delta,
+                    phase_ramp / 5.0,
                 ],
                 dtype=np.float32,
             )
@@ -380,6 +424,7 @@ def main() -> None:
                     "gain_error_rms_db": gain_rms,
                     "dropout_count": dropout,
                     "ratio_delta": ratio_delta,
+                    "phase_ramp_deg": phase_ramp,
                 }
             )
 
@@ -447,6 +492,7 @@ def main() -> None:
                 "gain_error_rms_db": record["gain_error_rms_db"],
                 "dropout_count": record["dropout_count"],
                 "ratio_delta": record["ratio_delta"],
+                "phase_ramp_deg": record["phase_ramp_deg"],
                 "rank_violation": record["rank"],
             }
         )

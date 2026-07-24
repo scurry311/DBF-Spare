@@ -16,3 +16,10 @@ Current checkpoints:
 - `2026-07-24-active-rl-joint`: trusted EEP/S256 task-weight projection smoke;
   active matching improves, while K=6 regional-pattern coverage keeps new
   HFSS training labels locked.
+- `2026-07-24-dense-local-hfss`: dense local-5-degree EEP constraints and 15
+  trusted sparse full-wave positives open implementation-residual training.
+- `2026-07-24-implementation-residual`: first paired implementation-error
+  critic; useful for ranking but limited to 15 independent scenes.
+- `2026-07-24-expanded-residual`: 45 independent scenes and 455 complete HFSS
+  cases; mainlobe and ranking support pass, while gate15 AUROC and calibration
+  keep the residual critic experimental.

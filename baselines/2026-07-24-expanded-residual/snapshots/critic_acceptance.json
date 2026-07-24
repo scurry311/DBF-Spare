@@ -1,0 +1,109 @@
+{
+  "created_at": "2026-07-24 16:52:08",
+  "training_completed": true,
+  "seed_count": 5,
+  "parameter_count": 188407,
+  "candidate_count": 141,
+  "independent_scene_count": 60,
+  "test_scene_count": 11,
+  "hfss_case_count": 455,
+  "hfss_hard_negative_count": 18,
+  "actual_eep_to_hfss_complex_nmse_max": 6.125746177670921e-12,
+  "nominal_to_hfss_magnitude_rmse_db_max": 5.741630554199219,
+  "aggregate_test_metrics": {
+    "gate15_auroc": {
+      "mean": 0.8362318840579709,
+      "ci95_half_width": 0.011538489328323537
+    },
+    "gate15_auprc": {
+      "mean": 0.9036425682828471,
+      "ci95_half_width": 0.013783138150668705
+    },
+    "gate15_brier": {
+      "mean": 0.06966022487354064,
+      "ci95_half_width": 0.008402626205915337
+    },
+    "gate15_ece": {
+      "mean": 0.1383231179210646,
+      "ci95_half_width": 0.027451213774501347
+    },
+    "gate15_precision": {
+      "mean": 0.9276666666666668,
+      "ci95_half_width": 0.015026666666666666
+    },
+    "gate15_recall": {
+      "mean": 1.0,
+      "ci95_half_width": 0.0
+    },
+    "gate20_auroc": {
+      "mean": 0.8927536231884059,
+      "ci95_half_width": 0.06561062767073665
+    },
+    "gate20_auprc": {
+      "mean": 0.9444053310506575,
+      "ci95_half_width": 0.04865847732652112
+    },
+    "gate20_brier": {
+      "mean": 0.07197324409948322,
+      "ci95_half_width": 0.010944901740117101
+    },
+    "gate20_ece": {
+      "mean": 0.12491807644737178,
+      "ci95_half_width": 0.03587246900394568
+    },
+    "strict_engineering_auroc": {
+      "mean": 1.0,
+      "ci95_half_width": 0.0
+    },
+    "strict_engineering_brier": {
+      "mean": 0.03085936260752644,
+      "ci95_half_width": 0.005470189024216329
+    },
+    "strict_engineering_ece": {
+      "mean": 0.1356774550958954,
+      "ci95_half_width": 0.021581284482040154
+    },
+    "rank_strict_engineering_rate": {
+      "mean": 1.0,
+      "ci95_half_width": 0.0
+    },
+    "conservative_strict_engineering_rate": {
+      "mean": 1.0,
+      "ci95_half_width": 0.0
+    },
+    "residual_psll_db_rmse": {
+      "mean": 0.5087590396404267,
+      "ci95_half_width": 0.015858973341153146
+    },
+    "residual_iso_nearest_db_rmse": {
+      "mean": 1.467225432395935,
+      "ci95_half_width": 0.06527034951289434
+    },
+    "residual_iso_local_db_rmse": {
+      "mean": 0.47401060461997985,
+      "ci95_half_width": 0.02735587000466008
+    },
+    "residual_peak_min_db_rmse": {
+      "mean": 0.04567978978157043,
+      "ci95_half_width": 0.007930581659505704
+    },
+    "residual_peak_spread_db_rmse": {
+      "mean": 0.09637173116207123,
+      "ci95_half_width": 0.008369043782494185
+    }
+  },
+  "acceptance": {
+    "gate15_auroc_pass": false,
+    "gate20_auroc_pass": true,
+    "calibration_ece_pass": false,
+    "test_scene_support_pass": true,
+    "mainlobe_negative_support_pass": true
+  },
+  "promote_to_engineering_critic": false,
+  "checkpoint_status": "experimental_boundary_critic",
+  "failure_reasons": [
+    "mean gate15 AUROC is below 0.88",
+    "mean calibrated ECE exceeds 0.08"
+  ],
+  "next_action": "Keep this checkpoint experimental and use it only for uncertainty-aware candidate ranking. Mainlobe support is now sufficient; next add independent gate15 boundary scenes whose PSLL or nearest/local isolation just crosses its threshold, then fit calibration on a larger scene-held-out validation set."
+}
