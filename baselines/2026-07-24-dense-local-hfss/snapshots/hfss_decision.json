@@ -1,0 +1,50 @@
+{
+  "created_at": "2026-07-24 11:54:49",
+  "dense_candidate_count": 96,
+  "dense_sparse_multibeam_strict_positive_count": 15,
+  "dense_sparse_k6_strict_positive_count": 2,
+  "hfss_candidate_count": 15,
+  "hfss_expected_case_count": 65,
+  "hfss_complete_case_count": 65,
+  "hfss_strict_engineering_positive_count": 15,
+  "hfss_sparse_multibeam_positive_count": 15,
+  "hfss_sparse_k6_positive_count": 2,
+  "hfss_k_counts": {
+    "2": 7,
+    "4": 6,
+    "6": 2
+  },
+  "ratio1_included": false,
+  "all_no_scale_reconstruction_pass": true,
+  "complex_nmse_max": 6.026725559576951e-12,
+  "magnitude_rmse_db_max": 3.070691309403628e-05,
+  "shortlist_open_gate_pass": true,
+  "hfss_50_100_case_task_completed": true,
+  "hfss_physical_label_collection_allowed": true,
+  "residual_critic_training_allowed": false,
+  "residuals": {
+    "delta_psll": {
+      "mean_db": -1.0172526041666667e-06,
+      "std_db": 1.5477624567365458e-05,
+      "max_abs_db": 3.0517578125e-05
+    },
+    "delta_nearest_iso": {
+      "mean_db": -9.1552734375e-06,
+      "std_db": 3.095315975204589e-05,
+      "max_abs_db": 9.1552734375e-05
+    },
+    "delta_local_iso": {
+      "mean_db": 4.57763671875e-06,
+      "std_db": 1.6256161310319914e-05,
+      "max_abs_db": 3.814697265625e-05
+    },
+    "delta_mainlobe_gain": {
+      "mean_db": -2.5431315104166665e-06,
+      "std_db": 1.1373229866026762e-05,
+      "max_abs_db": 3.814697265625e-05
+    }
+  },
+  "legacy_labels_allowed_explanation": "The generic validator's labels_allowed flag requires exactly 96 candidates. This gated shortlist intentionally contains 15 candidates and 65 HFSS cases; the decision above applies the experiment-specific acceptance conditions.",
+  "decision": "accept_dense_local_hfss_positive_labels_hold_residual_critic",
+  "next_action": "Retain these samples as trusted sparse positive and boundary labels. Add paired near-boundary perturbations and EEP-pass/HFSS-fail hard negatives before training the residual critic; the present residuals are numerical-noise scale."
+}

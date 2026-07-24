@@ -107,6 +107,9 @@
 | `audit_trusted_active_rl_semantics.py` | 在可信 matched S256 上比较 combined/task-level 及 -20/-30/-40 dB 有效驱动端口的 active-RL 口径。 |
 | `optimize_trusted_eep_s256_joint_weights.py` | 联合优化任务级 `w1...wK`，保持 EEP 主响应和区域泄漏约束，同时投影 combined/task active RL。 |
 | `evaluate_trusted_eep_s256_joint_smoke.py` | 汇总96候选联合优化结果，输出 K/ratio/扫描角统计、场景oracle和HFSS标签开放决定。 |
+| `refine_trusted_dense_local_eep_joint.py` | 用稠密 local-5deg EEP 算子、合成目标点等式和 S256 active-RL 投影重新优化同一96候选。 |
+| `prepare_dense_joint_hfss_smoke.py` | 仅将通过严格工程门控的稀疏多波束候选打包为50-100 case HFSS任务。 |
+| `evaluate_dense_joint_hfss_smoke.py` | 审计稠密优化后的HFSS批次，按K/ratio/扫描角汇总并分别判定物理标签与residual critic是否开放。 |
 | `analyze_eep_16port_operator.py` | 解析 16 端口复数 EEP 并构建/检查线性算子。 |
 | `analyze_full_s256p_active_return.py` | 计算 S256 下的 active impedance、逐端口/总反射 RL 分布。 |
 | `analyze_paired_task_results.py` | 分析相同方向集合下不同 ratio/权值的配对任务结果。 |

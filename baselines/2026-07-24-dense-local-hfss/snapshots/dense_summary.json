@@ -1,0 +1,19 @@
+{
+  "created_at": "2026-07-24 11:27:51",
+  "candidate_count": 96,
+  "runtime_seconds": 233.8964192867279,
+  "dense_operator_build_seconds": 0.03605318069458008,
+  "local_radius_deg": 5.0,
+  "unique_local_points_min": 41,
+  "unique_local_points_mean": 134.59288194444446,
+  "unique_local_points_max": 809,
+  "combined_active_gate_count": 79,
+  "robust_active_gate_count": 71,
+  "gate15_count": 69,
+  "strict_gate20_count": 65,
+  "mainlobe_gate_count": 29,
+  "strict_engineering_gate_count": 27,
+  "sparse_multibeam_strict_positive_count": 15,
+  "sparse_k6_strict_positive_count": 2,
+  "hfss_shortlist_gate_pass": true
+}

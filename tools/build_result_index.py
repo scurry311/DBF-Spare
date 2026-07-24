@@ -82,6 +82,22 @@ ACTIVE_RL_JOINT_ARTIFACTS = (
 )
 
 
+DENSE_LOCAL_HFSS_ARTIFACTS = (
+    Artifact("dense_summary", "hfss_outputs/trusted_dense_local_eep_joint_20260724_run02/dense_refinement_summary.json", "A", "passed", "Dense local-5-degree EEP projection summary for all 96 candidates."),
+    Artifact("dense_candidate_metrics", "hfss_outputs/trusted_dense_local_eep_joint_20260724_run02/dense_refinement_candidate_metrics.csv", "A", "diagnostic", "Per-candidate dense EEP, active-RL, mainlobe, and strict-gate metrics."),
+    Artifact("dense_trials", "hfss_outputs/trusted_dense_local_eep_joint_20260724_run02/dense_refinement_trials.csv", "A", "diagnostic", "Paired preserve-target and equalized-target dense projection trials."),
+    Artifact("dense_weights", "hfss_outputs/trusted_dense_local_eep_joint_20260724_run02/dense_refined_task_weights.npz", "A", "eep_hfss_validated", "Task-level dense-local weights with exact combined-weight reconstruction."),
+    Artifact("shortlist_prepare", "hfss_outputs/trusted_dense_joint_hfss_dataset_20260724_run01/prepare_summary.json", "A", "passed", "Gated 15-candidate and 65-case sparse multibeam HFSS shortlist."),
+    Artifact("shortlist_manifest", "hfss_outputs/trusted_dense_joint_hfss_dataset_20260724_run01/candidate_manifest.csv", "A", "passed", "Traceable mapping from local HFSS candidates to the 96-candidate dense smoke."),
+    Artifact("hfss_analysis", "hfss_outputs/trusted_dense_joint_hfss_smoke_20260724_run01/analysis_summary.json", "A", "passed", "Complete no-scale EEP/HFSS analysis for all 65 combined and task cases."),
+    Artifact("hfss_case_metrics", "hfss_outputs/trusted_dense_joint_hfss_smoke_20260724_run01/case_reconstruction_metrics.csv", "A", "diagnostic", "Per-case complex-field and magnitude reconstruction errors."),
+    Artifact("hfss_candidate_labels", "hfss_outputs/trusted_dense_joint_hfss_smoke_20260724_run01/candidate_residual_labels.csv", "A", "positive_labels", "Fifteen trusted sparse multibeam positive labels; no ratio-1 control is included."),
+    Artifact("hfss_decision", "hfss_outputs/trusted_dense_joint_hfss_decision_20260724_run01/dense_joint_hfss_smoke_decision.json", "A", "labels_allowed_critic_held", "Experiment-specific label and residual-critic decision without the legacy 96-row assumption."),
+    Artifact("hfss_groups", "hfss_outputs/trusted_dense_joint_hfss_decision_20260724_run01/dense_joint_hfss_group_summary.csv", "A", "diagnostic", "HFSS strict-gate and residual statistics grouped by K, ratio, and scan class."),
+    Artifact("mapping_smoke", "hfss_outputs/trusted_dense_joint_hfss_mapping_smoke_20260724_run01/analysis_summary.json", "A", "passed", "Seven-case K=6 mapping smoke run before the 65-case batch."),
+)
+
+
 BASELINE_CONFIGS = {
     "2026-07-21": {
         "version": "v0.1.0-physics-gated",
@@ -103,6 +119,15 @@ BASELINE_CONFIGS = {
         "training_labels_locked": True,
         "pattern_labels_allowed": True,
         "strict_benchmark_gate_pass": False,
+    },
+    "2026-07-24-dense-local-hfss": {
+        "version": "v0.4.0-dense-local-hfss",
+        "artifacts": DENSE_LOCAL_HFSS_ARTIFACTS,
+        "training_labels_locked": False,
+        "pattern_labels_allowed": True,
+        "strict_benchmark_gate_pass": True,
+        "hfss_physical_labels_allowed": True,
+        "residual_critic_training_locked": True,
     },
 }
 
@@ -186,6 +211,12 @@ def main() -> None:
         "pattern_labels_allowed": config["pattern_labels_allowed"],
         "strict_benchmark_gate_pass": config["strict_benchmark_gate_pass"],
     }
+    for optional_key in (
+        "hfss_physical_labels_allowed",
+        "residual_critic_training_locked",
+    ):
+        if optional_key in config:
+            metadata[optional_key] = config[optional_key]
     (baseline / "baseline_metadata.json").write_text(
         json.dumps(metadata, indent=2), encoding="utf-8"
     )

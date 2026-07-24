@@ -1,6 +1,6 @@
 # Result Index
 
-Current baseline: `v0.2.0-trusted-eep`, frozen on 2026-07-24.
+Current baseline: `v0.4.0-dense-local-hfss`, frozen on 2026-07-24.
 
 ## Evidence Levels
 
@@ -67,6 +67,27 @@ is roughly 5-10 dB worse than the sparse regional constraints in hard scenes.
 The next solver gate is a dense local-5-degree EEP operator with explicit
 combined-target equalities, followed by another 96-candidate smoke.
 
+## Dense Local EEP and Gated HFSS
+
+Baseline `v0.4.0-dense-local-hfss` replaces the discrete regional offsets with
+every EEP grid point inside the local 5-degree neighborhoods and adds explicit
+complex combined-pattern equalities at all target directions.
+
+| Result | Value | Decision |
+|---|---:|---|
+| Dense EEP candidates | 96 | Complete |
+| Strict engineering positives | 27/96 | Passed |
+| Sparse multibeam positives | 15 | Exceeds required 5 |
+| Sparse K=6 positives | 2 | Exceeds required 1 |
+| Gated HFSS candidates / cases | 15 / 65 | Complete |
+| HFSS strict engineering positives | 15/15 | Passed |
+| Maximum no-scale complex NMSE | 6.03e-12 | Passed |
+| Maximum magnitude RMSE | 3.07e-5 dB | Passed |
+
+The 15 records are accepted as trusted sparse positive and near-boundary HFSS
+labels. Residual-critic training remains held because the run contains no hard
+negative and all EEP-to-HFSS residuals remain at numerical-noise scale.
+
 ## Residual Critic
 
 | Signal | Observed |
@@ -98,3 +119,5 @@ old labels are not mixed automatically. The machine-readable inventories are
 `baselines/2026-07-24/artifact_manifest.csv` and the retained historical
 `baselines/2026-07-21/artifact_manifest.csv`. The active-RL joint projection
 inventory is `baselines/2026-07-24-active-rl-joint/artifact_manifest.csv`.
+The dense-local gated HFSS inventory is
+`baselines/2026-07-24-dense-local-hfss/artifact_manifest.csv`.

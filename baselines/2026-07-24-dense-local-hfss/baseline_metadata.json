@@ -1,0 +1,12 @@
+{
+  "tag": "2026-07-24-dense-local-hfss",
+  "version": "v0.4.0-dense-local-hfss",
+  "created_at_utc": "2026-07-24T03:56:32.068737+00:00",
+  "artifact_count": 12,
+  "snapshot_bytes": 1309000,
+  "training_labels_locked": false,
+  "pattern_labels_allowed": true,
+  "strict_benchmark_gate_pass": true,
+  "hfss_physical_labels_allowed": true,
+  "residual_critic_training_locked": true
+}

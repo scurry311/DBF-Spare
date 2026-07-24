@@ -572,14 +572,25 @@ def analyze(args: argparse.Namespace) -> dict[str, Any]:
     )
     metric = lambda name: np.asarray([float(row[name]) for row in candidate_rows], dtype=np.float32)
     gate = lambda name: np.asarray([int(row[name]) for row in candidate_rows], dtype=np.int8)
+    dataset_payload = dict(dataset)
+    dataset_payload.setdefault(
+        "candidate_index", np.asarray(dataset["candidate_indices"], dtype=np.int64)
+    )
+    dataset_payload.setdefault(
+        "sample_index", np.asarray(dataset["sample_indices"], dtype=np.int64)
+    )
+    dataset_payload.setdefault("mask", np.asarray(dataset["masks"], dtype=np.int8))
+    dataset_payload.setdefault(
+        "w_tasks_real_imag",
+        np.asarray(dataset["task_weights_real_imag"], dtype=np.float32),
+    )
+    dataset_payload.setdefault(
+        "w_combined_real_imag",
+        np.asarray(dataset["combined_weights_real_imag"], dtype=np.float32),
+    )
     np.savez_compressed(
         args.out_dir / "residual_critic_dataset.npz",
-        **dataset,
-        candidate_index=np.asarray(dataset["candidate_indices"], dtype=np.int64),
-        sample_index=np.asarray(dataset["sample_indices"], dtype=np.int64),
-        mask=np.asarray(dataset["masks"], dtype=np.int8),
-        w_tasks_real_imag=np.asarray(dataset["task_weights_real_imag"], dtype=np.float32),
-        w_combined_real_imag=np.asarray(dataset["combined_weights_real_imag"], dtype=np.float32),
+        **dataset_payload,
         split=split,
         delta_psll_db=metric("delta_psll_db"),
         delta_nearest_iso_db=metric("delta_nearest_iso_db"),

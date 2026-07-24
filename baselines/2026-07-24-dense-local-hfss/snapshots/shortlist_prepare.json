@@ -1,0 +1,31 @@
+{
+  "created_at": "2026-07-24 11:33:54",
+  "candidate_count": 15,
+  "expected_hfss_case_count": 65,
+  "source_dense_candidate_indices": [
+    36,
+    18,
+    19,
+    39,
+    21,
+    23,
+    60,
+    42,
+    24,
+    45,
+    27,
+    66,
+    48,
+    49,
+    30
+  ],
+  "k_counts": {
+    "2": 7,
+    "4": 6,
+    "6": 2
+  },
+  "ratio1_included": false,
+  "all_selected_eep_strict_engineering_positive": true,
+  "small_mapping_smoke": false,
+  "full_50_100_case_gate_pass": true
+}
