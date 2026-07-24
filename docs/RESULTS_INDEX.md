@@ -137,6 +137,32 @@ candidate-group ranking, but it remains experimental. The next increment must
 target independent PSLL and isolation threshold crossings rather than adding
 more mainlobe failures.
 
+## Gate15 Boundary Critic
+
+Baseline `v0.7.0-gate15-boundary` adds 30 independent full-wave scenes aimed
+only at PSLL, nearest-isolation, and local-isolation threshold crossings. Each
+scene contains a strict control, a just-inside candidate, and a just-outside
+candidate; no mainlobe-failure scene was added.
+
+| Result | Value | Decision |
+|---|---:|---|
+| New candidates / independent scenes | 90 / 30 | Complete |
+| PSLL / nearest / local scenes | 10 / 10 / 10 | Balanced |
+| Full-wave cases | 444/444 | Complete |
+| Inside pass / isolated outside failure | 30/30 / 30/30 | Passed |
+| New mainlobe failures | 0 | Requirement met |
+| Combined candidates / scenes | 231 / 90 | Scene-grouped |
+| Train / validation / test scenes | 62 / 14 / 14 | No leakage |
+| Gate15 / gate20 AUROC | 0.883 / 0.910 | Passed 0.88 |
+| Gate15 / gate20 pooled ECE | 0.050 / 0.071 | Passed 0.08 |
+| Strict ranking rate | 1.000 | Passed |
+
+The best checkpoint is seed `20260727`, but it is promoted only together with
+the pooled scene-grouped regularized-isotonic calibrator. Test labels were not
+used to select the calibrator. This is a retrospective stage-one promotion;
+prospective HFSS validation on unseen scenes is still required before the
+critic may automatically admit candidates to HFSS.
+
 ## Nominal Residual Critic (v0.2)
 
 | Signal | Observed |
@@ -174,3 +200,5 @@ The implementation-residual critic inventory is
 `baselines/2026-07-24-implementation-residual/artifact_manifest.csv`.
 The expanded independent-scene inventory is
 `baselines/2026-07-24-expanded-residual/artifact_manifest.csv`.
+The dedicated gate15-boundary inventory is
+`baselines/2026-07-25-gate15-boundary/artifact_manifest.csv`.

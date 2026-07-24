@@ -132,6 +132,28 @@ EXPANDED_RESIDUAL_ARTIFACTS = (
 )
 
 
+GATE15_BOUNDARY_ARTIFACTS = (
+    Artifact("boundary_prepare", "hfss_outputs/gate15_boundary_scenes_20260725_run01/prepare_summary.json", "A", "passed", "Thirty independent PSLL, nearest-isolation, and local-isolation boundary scenes with ninety paired candidates."),
+    Artifact("boundary_manifest", "hfss_outputs/gate15_boundary_scenes_20260725_run01/candidate_manifest.csv", "A", "diagnostic", "Per-candidate boundary type, side, physical perturbation, EEP metrics, and active-return metadata."),
+    Artifact("mapping_smoke", "hfss_outputs/gate15_boundary_scenes_hfss_smoke_20260725_run01/analysis_summary.json", "A", "passed", "Thirty-four-case no-scale EEP/direct-HFSS mapping smoke across all three boundary mechanisms."),
+    Artifact("boundary_hfss_analysis", "hfss_outputs/gate15_boundary_scenes_hfss_20260725_run01/analysis_summary.json", "A", "passed", "Complete 444-case full-wave analysis for ninety candidates and thirty independent scenes."),
+    Artifact("boundary_hfss_summary", "hfss_outputs/gate15_boundary_scenes_hfss_20260725_run01/gate15_boundary_hfss_summary.json", "A", "passed", "Strict audit of inside/outside threshold crossings with zero new mainlobe failures."),
+    Artifact("boundary_hfss_groups", "hfss_outputs/gate15_boundary_scenes_hfss_20260725_run01/gate15_boundary_hfss_summary_by_type_side.csv", "A", "diagnostic", "Full-wave margins by PSLL/nearest/local boundary type and control/inside/outside side."),
+    Artifact("boundary_hfss_labels", "hfss_outputs/gate15_boundary_scenes_hfss_20260725_run01/candidate_residual_labels.csv", "A", "pattern_boundary_labels", "Thirty isolated gate15 hard negatives, thirty just-inside positives, and thirty controls."),
+    Artifact("critic_dataset_summary", "hfss_outputs/trusted_dense_implementation_residual_dataset_20260725_run02/build_summary.json", "A", "training_open", "Scene-grouped 231-candidate and 90-scene four-source dataset audit."),
+    Artifact("critic_dataset", "hfss_outputs/trusted_dense_implementation_residual_dataset_20260725_run02/fullwave_residual_dataset_v2.npz", "A", "training_dataset", "Mask, task-weight, target, implementation-condition, residual, gate, and leakage-free split arrays."),
+    Artifact("five_seed_summary", "hfss_outputs/trusted_dense_implementation_residual_critic_20260725_run01/five_seed_summary.json", "A", "trained", "Five-seed discrimination, residual-regression, and ranking metrics before pooled calibration."),
+    Artifact("five_seed_metrics", "hfss_outputs/trusted_dense_implementation_residual_critic_20260725_run01/five_seed_summary.csv", "A", "diagnostic", "Per-seed gate AUROC, AUPRC, temperature ECE, and ranking confidence intervals."),
+    Artifact("best_checkpoint", "hfss_outputs/trusted_dense_implementation_residual_critic_20260725_run01/seed_20260727/residual_critic_v2.pt", "A", "calibrator_required", "Best validation-seed 188855-parameter checkpoint; never deploy without the pooled calibrator."),
+    Artifact("best_run_summary", "hfss_outputs/trusted_dense_implementation_residual_critic_20260725_run01/seed_20260727/run_summary.json", "A", "diagnostic", "Best-seed train, validation, test, residual, gate, and ranking metrics."),
+    Artifact("pooled_calibration", "hfss_outputs/trusted_dense_implementation_residual_calibration_20260725_run01/pooled_calibration_summary.json", "A", "passed", "Scene-grouped regularized-isotonic calibration selected without test-label access."),
+    Artifact("calibration_cv", "hfss_outputs/trusted_dense_implementation_residual_calibration_20260725_run01/calibration_cross_validation.csv", "A", "diagnostic", "Grouped validation OOF alpha selection for gate15 and gate20 calibrators."),
+    Artifact("calibrated_seed_metrics", "hfss_outputs/trusted_dense_implementation_residual_calibration_20260725_run01/pooled_calibrated_five_seed_test_metrics.csv", "A", "diagnostic", "Five-seed test AUROC, AUPRC, Brier, ECE, precision, and recall after pooled calibration."),
+    Artifact("critic_acceptance", "hfss_outputs/trusted_dense_implementation_critic_decision_20260725_run02/critic_acceptance.json", "A", "stage1_promoted", "Promotion decision requiring the checkpoint and pooled calibrator as one inference package."),
+    Artifact("critic_seed_test", "hfss_outputs/trusted_dense_implementation_critic_decision_20260725_run02/five_seed_test_metrics.csv", "A", "diagnostic", "Per-seed held-out scene metrics and mainlobe-negative support audit."),
+)
+
+
 BASELINE_CONFIGS = {
     "2026-07-21": {
         "version": "v0.1.0-physics-gated",
@@ -182,6 +204,17 @@ BASELINE_CONFIGS = {
         "hfss_physical_labels_allowed": True,
         "residual_critic_training_locked": False,
         "residual_critic_engineering_promoted": False,
+    },
+    "2026-07-25-gate15-boundary": {
+        "version": "v0.7.0-gate15-boundary",
+        "artifacts": GATE15_BOUNDARY_ARTIFACTS,
+        "training_labels_locked": False,
+        "pattern_labels_allowed": True,
+        "strict_benchmark_gate_pass": False,
+        "hfss_physical_labels_allowed": True,
+        "residual_critic_training_locked": False,
+        "residual_critic_engineering_promoted": True,
+        "prospective_validation_required": True,
     },
 }
 
@@ -269,6 +302,7 @@ def main() -> None:
         "hfss_physical_labels_allowed",
         "residual_critic_training_locked",
         "residual_critic_engineering_promoted",
+        "prospective_validation_required",
     ):
         if optional_key in config:
             metadata[optional_key] = config[optional_key]

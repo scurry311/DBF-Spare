@@ -25,6 +25,8 @@ DEFAULT_BOUNDARY_DATASET = ROOT / "hfss_outputs" / "trusted_dense_boundary_datas
 DEFAULT_BOUNDARY_HFSS = ROOT / "hfss_outputs" / "trusted_dense_boundary_hfss_20260724_run01"
 DEFAULT_EXPANDED_DATASET = ROOT / "hfss_outputs" / "expanded_independent_scenes_20260724_run02"
 DEFAULT_EXPANDED_HFSS = ROOT / "hfss_outputs" / "expanded_independent_scenes_hfss_20260724_run01"
+DEFAULT_GATE15_BOUNDARY_DATASET = ROOT / "hfss_outputs" / "gate15_boundary_scenes_20260725_run01"
+DEFAULT_GATE15_BOUNDARY_HFSS = ROOT / "hfss_outputs" / "gate15_boundary_scenes_hfss_20260725_run01"
 DEFAULT_OPERATOR = (
     ROOT
     / "hfss_outputs"
@@ -82,6 +84,13 @@ SCALAR_NAMES = (
     "amplitude_bits_norm",
     "ratio_delta",
     "phase_ramp_deg_norm",
+    "implementation_delta_norm",
+    "implementation_delta_max",
+    "task_mixing_amplitude",
+    "coherent_mode_amplitude",
+    "boundary_psll_mode",
+    "boundary_nearest_mode",
+    "boundary_local_mode",
 )
 
 
@@ -94,9 +103,24 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--expanded-dataset-dir", type=Path, default=DEFAULT_EXPANDED_DATASET)
     parser.add_argument("--expanded-hfss-dir", type=Path, default=DEFAULT_EXPANDED_HFSS)
     parser.add_argument(
+        "--gate15-boundary-dataset-dir",
+        type=Path,
+        default=DEFAULT_GATE15_BOUNDARY_DATASET,
+    )
+    parser.add_argument(
+        "--gate15-boundary-hfss-dir",
+        type=Path,
+        default=DEFAULT_GATE15_BOUNDARY_HFSS,
+    )
+    parser.add_argument(
         "--exclude-expanded",
         action="store_true",
         help="Build the legacy two-source dataset without the expanded package.",
+    )
+    parser.add_argument(
+        "--exclude-gate15-boundary",
+        action="store_true",
+        help="Exclude the dedicated PSLL/nearest/local gate15 boundary package.",
     )
     parser.add_argument("--operator", type=Path, default=DEFAULT_OPERATOR)
     parser.add_argument("--out-dir", type=Path, default=DEFAULT_OUT)
@@ -244,6 +268,14 @@ def main() -> None:
                 read_csv(args.expanded_hfss_dir / "candidate_residual_labels.csv"),
             )
         )
+    if not args.exclude_gate15_boundary:
+        packages.append(
+            (
+                "gate15_boundary",
+                load_npz(args.gate15_boundary_dataset_dir / "dataset_arrays.npz"),
+                read_csv(args.gate15_boundary_hfss_dir / "candidate_residual_labels.csv"),
+            )
+        )
     with np.load(args.operator, allow_pickle=False) as source:
         s_matrix, _antenna_map, _series_z = series_network_map(
             np.asarray(source["s_raw"], dtype=np.complex128), 1.0e10
@@ -329,6 +361,31 @@ def main() -> None:
                 if "phase_ramp_deg" in dataset
                 else 0.0
             )
+            implementation_delta_norm = (
+                float(dataset["implementation_delta_norm"][candidate])
+                if "implementation_delta_norm" in dataset
+                else 0.0
+            )
+            implementation_delta_max = (
+                float(dataset["implementation_delta_max"][candidate])
+                if "implementation_delta_max" in dataset
+                else 0.0
+            )
+            task_mixing_amplitude = (
+                float(dataset["task_mixing_amplitude"][candidate])
+                if "task_mixing_amplitude" in dataset
+                else 0.0
+            )
+            coherent_mode_amplitude = (
+                float(dataset["coherent_mode_amplitude"][candidate])
+                if "coherent_mode_amplitude" in dataset
+                else 0.0
+            )
+            boundary_code = (
+                int(dataset["boundary_metric_code"][candidate])
+                if "boundary_metric_code" in dataset
+                else 0
+            )
             eep = np.asarray(
                 [
                     f(row, "eep_psll_db"),
@@ -390,6 +447,13 @@ def main() -> None:
                     amplitude_bits / 16.0,
                     ratio_delta,
                     phase_ramp / 5.0,
+                    implementation_delta_norm,
+                    implementation_delta_max,
+                    task_mixing_amplitude,
+                    coherent_mode_amplitude,
+                    float(boundary_code == 1),
+                    float(boundary_code == 2),
+                    float(boundary_code == 3),
                 ],
                 dtype=np.float32,
             )
@@ -425,6 +489,11 @@ def main() -> None:
                     "dropout_count": dropout,
                     "ratio_delta": ratio_delta,
                     "phase_ramp_deg": phase_ramp,
+                    "implementation_delta_norm": implementation_delta_norm,
+                    "implementation_delta_max": implementation_delta_max,
+                    "task_mixing_amplitude": task_mixing_amplitude,
+                    "coherent_mode_amplitude": coherent_mode_amplitude,
+                    "boundary_metric_code": boundary_code,
                 }
             )
 
@@ -461,6 +530,21 @@ def main() -> None:
         "scalar_names": np.asarray(SCALAR_NAMES),
         "rank_violation": np.asarray([record["rank"] for record in records], dtype=np.float32),
         "hard_negative": np.asarray([record["hard_negative"] for record in records], dtype=np.int8),
+        "implementation_delta_norm": np.asarray(
+            [record["implementation_delta_norm"] for record in records], dtype=np.float32
+        ),
+        "implementation_delta_max": np.asarray(
+            [record["implementation_delta_max"] for record in records], dtype=np.float32
+        ),
+        "task_mixing_amplitude": np.asarray(
+            [record["task_mixing_amplitude"] for record in records], dtype=np.float32
+        ),
+        "coherent_mode_amplitude": np.asarray(
+            [record["coherent_mode_amplitude"] for record in records], dtype=np.float32
+        ),
+        "boundary_metric_code": np.asarray(
+            [record["boundary_metric_code"] for record in records], dtype=np.int8
+        ),
         "element_ixiy": np.asarray(packages[0][1]["element_ixiy"]),
         "positions_lambda": np.asarray(packages[0][1]["positions_lambda"]),
     }
@@ -493,6 +577,11 @@ def main() -> None:
                 "dropout_count": record["dropout_count"],
                 "ratio_delta": record["ratio_delta"],
                 "phase_ramp_deg": record["phase_ramp_deg"],
+                "implementation_delta_norm": record["implementation_delta_norm"],
+                "implementation_delta_max": record["implementation_delta_max"],
+                "task_mixing_amplitude": record["task_mixing_amplitude"],
+                "coherent_mode_amplitude": record["coherent_mode_amplitude"],
+                "boundary_metric_code": record["boundary_metric_code"],
                 "rank_violation": record["rank"],
             }
         )

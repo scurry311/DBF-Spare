@@ -28,6 +28,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--hfss-dir", type=Path, default=DEFAULT_HFSS)
     parser.add_argument("--train-dir", type=Path, default=DEFAULT_TRAIN)
     parser.add_argument("--out-dir", type=Path, default=DEFAULT_OUT)
+    parser.add_argument("--pooled-calibration-dir", type=Path)
     parser.add_argument("--auroc-min", type=float, default=0.88)
     parser.add_argument("--ece-max", type=float, default=0.08)
     parser.add_argument("--minimum-test-scenes", type=int, default=10)
@@ -119,6 +120,20 @@ def main() -> None:
         mean, ci = mean_ci([float(row[key]) for row in rows])
         aggregate_metrics[key] = {"mean": mean, "ci95_half_width": ci}
 
+    pooled_calibration: dict[str, Any] | None = None
+    if args.pooled_calibration_dir is not None:
+        pooled_calibration = load_json(
+            args.pooled_calibration_dir / "pooled_calibration_summary.json"
+        )
+        if pooled_calibration.get("test_labels_used_for_calibrator_selection") is not False:
+            raise ValueError("Pooled calibrator must not use test labels for model selection")
+        for key, value in pooled_calibration["aggregate_test_metrics"].items():
+            if key in aggregate_metrics:
+                aggregate_metrics[key] = {
+                    "mean": float(value["mean"]),
+                    "ci95_half_width": float(value["ci95_half_width"]),
+                }
+
     gate15_auc_pass = aggregate_metrics["gate15_auroc"]["mean"] >= float(args.auroc_min)
     gate20_auc_pass = aggregate_metrics["gate20_auroc"]["mean"] >= float(args.auroc_min)
     calibration_pass = bool(
@@ -137,6 +152,10 @@ def main() -> None:
         and calibration_pass
         and test_support_pass
         and mainlobe_support_pass
+        and (
+            pooled_calibration is None
+            or bool(pooled_calibration["pooled_calibration_gate_pass"])
+        )
     )
     decision = {
         "created_at": time.strftime("%Y-%m-%d %H:%M:%S"),
@@ -157,6 +176,24 @@ def main() -> None:
             hfss["nominal_to_direct_magnitude_rmse_db_max"]
         ),
         "aggregate_test_metrics": aggregate_metrics,
+        "calibration": {
+            "source": (
+                "per-seed temperature scaling"
+                if pooled_calibration is None
+                else pooled_calibration["method"]
+            ),
+            "required_with_checkpoint": pooled_calibration is not None,
+            "directory": (
+                None
+                if args.pooled_calibration_dir is None
+                else str(args.pooled_calibration_dir)
+            ),
+            "test_labels_used_for_calibrator_selection": (
+                None
+                if pooled_calibration is None
+                else pooled_calibration["test_labels_used_for_calibrator_selection"]
+            ),
+        },
         "acceptance": {
             "gate15_auroc_pass": gate15_auc_pass,
             "gate20_auroc_pass": gate20_auc_pass,
@@ -165,7 +202,11 @@ def main() -> None:
             "mainlobe_negative_support_pass": mainlobe_support_pass,
         },
         "promote_to_engineering_critic": promotion,
-        "checkpoint_status": "engineering_promoted" if promotion else "experimental_boundary_critic",
+        "checkpoint_status": (
+            "engineering_promoted_with_required_pooled_calibrator"
+            if promotion and pooled_calibration is not None
+            else ("engineering_promoted" if promotion else "experimental_boundary_critic")
+        ),
         "failure_reasons": [
             reason
             for failed, reason in (
@@ -178,10 +219,13 @@ def main() -> None:
             if failed
         ],
         "next_action": (
-            "Keep this checkpoint experimental and use it only for uncertainty-aware candidate "
-            "ranking. Mainlobe support is now sufficient; next add independent gate15 boundary "
-            "scenes whose PSLL or nearest/local isolation just crosses its threshold, then fit "
-            "calibration on a larger scene-held-out validation set."
+            "Freeze this checkpoint together with its pooled calibrator and run a prospective "
+            "HFSS validation on unseen target-direction scenes before enabling automatic HFSS "
+            "candidate admission."
+            if promotion
+            else "Keep this checkpoint experimental. Do not add more mainlobe failures; diagnose "
+            "the failing gate by PSLL/nearest/local boundary type and add only independent scenes "
+            "in the under-supported margin bins."
         ),
     }
     (args.out_dir / "critic_acceptance.json").write_text(

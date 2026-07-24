@@ -1,0 +1,19 @@
+{
+  "created_at": "2026-07-25 03:04:56",
+  "candidate_count": 90,
+  "independent_scene_count": 30,
+  "boundary_scene_counts": {
+    "psll": 10,
+    "nearest": 10,
+    "local": 10
+  },
+  "inside_gate15_pass_count": 30,
+  "outside_gate15_fail_count": 30,
+  "outside_isolated_target_failure_count": 30,
+  "mainlobe_failure_count": 0,
+  "fullwave_incomplete_count": 0,
+  "all_no_scale_reconstruction_pass": true,
+  "complex_nmse_max": 6.025732430386954e-12,
+  "magnitude_rmse_db_max": 2.9706239729421213e-05,
+  "boundary_dataset_pass": true
+}

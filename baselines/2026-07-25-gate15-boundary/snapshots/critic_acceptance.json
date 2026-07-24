@@ -1,0 +1,112 @@
+{
+  "created_at": "2026-07-25 03:14:08",
+  "training_completed": true,
+  "seed_count": 5,
+  "parameter_count": 188855,
+  "candidate_count": 231,
+  "independent_scene_count": 90,
+  "test_scene_count": 14,
+  "hfss_case_count": 444,
+  "hfss_hard_negative_count": 30,
+  "actual_eep_to_hfss_complex_nmse_max": 6.025732430386954e-12,
+  "nominal_to_hfss_magnitude_rmse_db_max": 4.278511047363281,
+  "aggregate_test_metrics": {
+    "gate15_auroc": {
+      "mean": 0.8830769230769231,
+      "ci95_half_width": 0.006124275105033272
+    },
+    "gate15_auprc": {
+      "mean": 0.9571638506104986,
+      "ci95_half_width": 0.0026725860710045835
+    },
+    "gate15_brier": {
+      "mean": 0.12472222405613347,
+      "ci95_half_width": 0.0064515618444939485
+    },
+    "gate15_ece": {
+      "mean": 0.05012941092937303,
+      "ci95_half_width": 0.013872914251896788
+    },
+    "gate15_precision": {
+      "mean": 0.7955575639599555,
+      "ci95_half_width": 0.01837929022736913
+    },
+    "gate15_recall": {
+      "mean": 0.9538461538461538,
+      "ci95_half_width": 0.015076923076923068
+    },
+    "gate20_auroc": {
+      "mean": 0.9104166666666667,
+      "ci95_half_width": 0.01527843432932691
+    },
+    "gate20_auprc": {
+      "mean": 0.9588621397923573,
+      "ci95_half_width": 0.006336924407898874
+    },
+    "gate20_brier": {
+      "mean": 0.10695348929695603,
+      "ci95_half_width": 0.012145138840275365
+    },
+    "gate20_ece": {
+      "mean": 0.07145890254041096,
+      "ci95_half_width": 0.016719997435384958
+    },
+    "strict_engineering_auroc": {
+      "mean": 1.0,
+      "ci95_half_width": 0.0
+    },
+    "strict_engineering_brier": {
+      "mean": 0.038453224302259316,
+      "ci95_half_width": 0.01874151829502393
+    },
+    "strict_engineering_ece": {
+      "mean": 0.0790047858201433,
+      "ci95_half_width": 0.015880742365203687
+    },
+    "rank_strict_engineering_rate": {
+      "mean": 1.0,
+      "ci95_half_width": 0.0
+    },
+    "conservative_strict_engineering_rate": {
+      "mean": 1.0,
+      "ci95_half_width": 0.0
+    },
+    "residual_psll_db_rmse": {
+      "mean": 0.8058243751525879,
+      "ci95_half_width": 0.04468734487664966
+    },
+    "residual_iso_nearest_db_rmse": {
+      "mean": 1.0978984832763672,
+      "ci95_half_width": 0.07579270535589745
+    },
+    "residual_iso_local_db_rmse": {
+      "mean": 1.7405148983001708,
+      "ci95_half_width": 0.25164016906090503
+    },
+    "residual_peak_min_db_rmse": {
+      "mean": 0.07983714640140534,
+      "ci95_half_width": 0.007137269812524572
+    },
+    "residual_peak_spread_db_rmse": {
+      "mean": 0.13126962035894393,
+      "ci95_half_width": 0.009084403145891045
+    }
+  },
+  "calibration": {
+    "source": "pooled scene-grouped regularized isotonic calibration",
+    "required_with_checkpoint": true,
+    "directory": "hfss_outputs\\trusted_dense_implementation_residual_calibration_20260725_run01",
+    "test_labels_used_for_calibrator_selection": false
+  },
+  "acceptance": {
+    "gate15_auroc_pass": true,
+    "gate20_auroc_pass": true,
+    "calibration_ece_pass": true,
+    "test_scene_support_pass": true,
+    "mainlobe_negative_support_pass": true
+  },
+  "promote_to_engineering_critic": true,
+  "checkpoint_status": "engineering_promoted_with_required_pooled_calibrator",
+  "failure_reasons": [],
+  "next_action": "Freeze this checkpoint together with its pooled calibrator and run a prospective HFSS validation on unseen target-direction scenes before enabling automatic HFSS candidate admission."
+}

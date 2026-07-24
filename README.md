@@ -7,11 +7,12 @@
 
 ## 项目状态
 
-当前版本化基线为 `v0.1.0-physics-gated`（2026-07-21）。16x16 DDM 的第二轮
-结果满足互易性和无源性，但 `Delta S = 0.29495`、匹配后最差被动回波损耗仅
-`5.13 dB`，尚未满足连续两轮 `Delta S <= 0.05` 和全端口 `RL >= 10 dB`。
-因此当前 AF、EEP、代理 S256 和 critic 结果只用于候选生成、诊断或预训练，不能
-作为已经通过 HFSS 的最终工程结论，新 full-wave 训练标签仍保持锁定。
+当前版本化基线为 `v0.7.0-gate15-boundary`（2026-07-25）。可信固定网格
+16x16 基准、完整 S256/EEP 和无比例校正 EEP/HFSS 映射已经通过；最新增量包含
+30 个独立 PSLL/nearest/local 门限场景、90 个候选和 444 个完整 full-wave case。
+五种子 residual critic 的 gate15/gate20 AUROC 为 `0.883/0.910`，绑定 pooled
+calibrator 后 ECE 为 `0.050/0.071`。该组合已通过回顾性阶段一门控，但在开放
+自动 HFSS 候选准入前，仍必须完成未见目标方向场景的前瞻性 HFSS 验证。
 
 ## 目录结构
 
@@ -57,13 +58,13 @@ DBF-Spare/
 
 ```powershell
 # 验证当前基线快照没有被修改
-python tools\build_result_index.py --tag 2026-07-21 --verify-only
+python tools\build_result_index.py --tag 2026-07-25-gate15-boundary --verify-only
 
 # 查看脚本参数，不启动大规模 HFSS
 python scripts\run_staged_16x16_convergence.py --help
 
 # 生成或重建紧凑结果索引（要求本地原始结果仍完整）
-python tools\build_result_index.py --tag 2026-07-21
+python tools\build_result_index.py --tag 2026-07-25-gate15-boundary
 
 # 提交并同步后续代码修改
 git add -A

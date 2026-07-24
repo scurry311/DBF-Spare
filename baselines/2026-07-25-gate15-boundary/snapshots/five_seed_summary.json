@@ -1,0 +1,209 @@
+{
+  "seeds": [
+    20260725,
+    20260726,
+    20260727,
+    20260728,
+    20260729
+  ],
+  "dataset_dir": "hfss_outputs\\trusted_dense_implementation_residual_dataset_20260725_run02",
+  "out_dir": "hfss_outputs\\trusted_dense_implementation_residual_critic_20260725_run01",
+  "device": "cpu",
+  "metrics": {
+    "gate15_auroc": {
+      "mean": 0.8830769230769231,
+      "ci95_half_width": 0.006124275105033272,
+      "values": [
+        0.8846153846153846,
+        0.8730769230769231,
+        0.8846153846153846,
+        0.8923076923076924,
+        0.8807692307692307
+      ]
+    },
+    "gate15_auprc": {
+      "mean": 0.9571638506104986,
+      "ci95_half_width": 0.0026725860710045835,
+      "values": [
+        0.9580942917481381,
+        0.953800233772453,
+        0.9558977173629473,
+        0.9618910889243371,
+        0.9561359212446169
+      ]
+    },
+    "gate15_ece": {
+      "mean": 0.17984733138647346,
+      "ci95_half_width": 0.024385287269281162,
+      "values": [
+        0.16341653114391697,
+        0.18620020834108195,
+        0.14189177772237194,
+        0.1940854373905394,
+        0.21364270233445698
+      ]
+    },
+    "gate20_auroc": {
+      "mean": 0.9104166666666667,
+      "ci95_half_width": 0.01527843432932691,
+      "values": [
+        0.9027777777777778,
+        0.8923611111111112,
+        0.9166666666666666,
+        0.9375,
+        0.9027777777777778
+      ]
+    },
+    "gate20_auprc": {
+      "mean": 0.9588621397923573,
+      "ci95_half_width": 0.006336924407898874,
+      "values": [
+        0.9561957332790666,
+        0.952226686783602,
+        0.9592565480404384,
+        0.9710001365058213,
+        0.9556315943528587
+      ]
+    },
+    "gate20_ece": {
+      "mean": 0.19292674261248774,
+      "ci95_half_width": 0.04738480459693523,
+      "values": [
+        0.21788418168822926,
+        0.20588017627596855,
+        0.10223524976107809,
+        0.19400901212874386,
+        0.2446250932084189
+      ]
+    },
+    "mainlobe_auroc": {
+      "mean": 0.9990147783251231,
+      "ci95_half_width": 0.0019310344827586183,
+      "values": [
+        1.0,
+        1.0,
+        1.0,
+        0.9950738916256158,
+        1.0
+      ]
+    },
+    "strict_engineering_auroc": {
+      "mean": 1.0,
+      "ci95_half_width": 0.0,
+      "values": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "rank_gate15_rate": {
+      "mean": 1.0,
+      "ci95_half_width": 0.0,
+      "values": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "rank_gate20_rate": {
+      "mean": 1.0,
+      "ci95_half_width": 0.0,
+      "values": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "rank_strict_engineering_rate": {
+      "mean": 1.0,
+      "ci95_half_width": 0.0,
+      "values": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "conservative_gate15_rate": {
+      "mean": 1.0,
+      "ci95_half_width": 0.0,
+      "values": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "conservative_gate20_rate": {
+      "mean": 1.0,
+      "ci95_half_width": 0.0,
+      "values": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "conservative_strict_engineering_rate": {
+      "mean": 1.0,
+      "ci95_half_width": 0.0,
+      "values": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "oracle_gate15_rate": {
+      "mean": 1.0,
+      "ci95_half_width": 0.0,
+      "values": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "oracle_gate20_rate": {
+      "mean": 1.0,
+      "ci95_half_width": 0.0,
+      "values": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "oracle_strict_engineering_rate": {
+      "mean": 1.0,
+      "ci95_half_width": 0.0,
+      "values": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    }
+  },
+  "best_seed": 20260727,
+  "run_summaries": [
+    "hfss_outputs\\trusted_dense_implementation_residual_critic_20260725_run01\\seed_20260725\\run_summary.json",
+    "hfss_outputs\\trusted_dense_implementation_residual_critic_20260725_run01\\seed_20260726\\run_summary.json",
+    "hfss_outputs\\trusted_dense_implementation_residual_critic_20260725_run01\\seed_20260727\\run_summary.json",
+    "hfss_outputs\\trusted_dense_implementation_residual_critic_20260725_run01\\seed_20260728\\run_summary.json",
+    "hfss_outputs\\trusted_dense_implementation_residual_critic_20260725_run01\\seed_20260729\\run_summary.json"
+  ]
+}

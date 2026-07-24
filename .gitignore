@@ -43,3 +43,4 @@ Thumbs.db
 !baselines/**/*.s*p
 # Compact baseline datasets/checkpoints are intentionally versioned.
 !baselines/**/*.npz
+!baselines/**/*.pt
