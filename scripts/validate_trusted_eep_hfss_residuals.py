@@ -182,30 +182,65 @@ def prepare(args: argparse.Namespace) -> dict[str, Any]:
         dataset["combined_weights_real_imag"][..., 0]
         + 1j * dataset["combined_weights_real_imag"][..., 1]
     )
+    actual_task_ri = dataset.get(
+        "hfss_actual_task_weights_real_imag", dataset["task_weights_real_imag"]
+    )
+    actual_combined_ri = dataset.get(
+        "hfss_actual_combined_weights_real_imag",
+        dataset["combined_weights_real_imag"],
+    )
+    actual_task_weights = actual_task_ri[..., 0] + 1j * actual_task_ri[..., 1]
+    actual_combined_weights = (
+        actual_combined_ri[..., 0] + 1j * actual_combined_ri[..., 1]
+    )
+    mismatch_enabled = bool(
+        not np.allclose(actual_task_weights, task_weights, rtol=0.0, atol=1.0e-12)
+        or not np.allclose(actual_combined_weights, combined_weights, rtol=0.0, atol=1.0e-12)
+    )
     case_rows: list[dict[str, Any]] = []
-    external: list[np.ndarray] = []
-    antenna: list[np.ndarray] = []
+    eep_external: list[np.ndarray] = []
+    eep_antenna: list[np.ndarray] = []
+    hfss_external: list[np.ndarray] = []
+    hfss_antenna: list[np.ndarray] = []
     source_root = args.out_dir / "sources"
     source_root.mkdir()
 
     for candidate_index in range(dataset["candidate_indices"].size):
         valid_tasks = np.flatnonzero(dataset["task_valid"][candidate_index].astype(bool))
-        case_specs: list[tuple[str, int, np.ndarray]] = [
-            ("combined", -1, combined_weights[candidate_index])
+        case_specs: list[tuple[str, int, np.ndarray, np.ndarray]] = [
+            (
+                "combined",
+                -1,
+                combined_weights[candidate_index],
+                actual_combined_weights[candidate_index],
+            )
         ]
         case_specs.extend(
-            ("task", int(task_index), task_weights[candidate_index, :, int(task_index)])
+            (
+                "task",
+                int(task_index),
+                task_weights[candidate_index, :, int(task_index)],
+                actual_task_weights[candidate_index, :, int(task_index)],
+            )
             for task_index in valid_tasks
         )
-        for case_kind, task_index, weight in case_specs:
+        for case_kind, task_index, weight, actual_weight in case_specs:
             case_index = len(case_rows)
             suffix = "combined" if task_index < 0 else f"t{task_index}"
             case_id = f"c{candidate_index:03d}_{suffix}"
-            a_external = normalized_external_excitation(weight, masks[candidate_index])
-            a_antenna = antenna_map @ a_external
+            nominal_external = normalized_external_excitation(
+                weight, masks[candidate_index]
+            )
+            actual_external = normalized_external_excitation(
+                actual_weight, masks[candidate_index]
+            )
+            nominal_antenna = antenna_map @ nominal_external
+            actual_antenna = antenna_map @ actual_external
             source_path = source_root / f"sources_{case_id}.csv"
-            source_csv(source_path, ports, a_antenna)
-            metrics = active_return_metrics(s_matched, a_external, masks[candidate_index])
+            source_csv(source_path, ports, actual_antenna)
+            metrics = active_return_metrics(
+                s_matched, actual_external, masks[candidate_index]
+            )
             case_rows.append(
                 {
                     "case_index": case_index,
@@ -220,16 +255,22 @@ def prepare(args: argparse.Namespace) -> dict[str, Any]:
                     **metrics,
                 }
             )
-            external.append(a_external.astype(np.complex64))
-            antenna.append(a_antenna.astype(np.complex64))
+            eep_external.append(nominal_external.astype(np.complex64))
+            eep_antenna.append(nominal_antenna.astype(np.complex64))
+            hfss_external.append(actual_external.astype(np.complex64))
+            hfss_antenna.append(actual_antenna.astype(np.complex64))
 
     np.savez_compressed(
         args.out_dir / "case_excitations.npz",
         case_ids=np.asarray([row["case_id"] for row in case_rows]),
         candidate_indices=np.asarray([row["candidate_index"] for row in case_rows], dtype=np.int64),
         task_indices=np.asarray([row["task_index"] for row in case_rows], dtype=np.int64),
-        external_excitation=np.stack(external),
-        antenna_excitation=np.stack(antenna),
+        external_excitation=np.stack(hfss_external),
+        antenna_excitation=np.stack(hfss_antenna),
+        eep_external_excitation=np.stack(eep_external),
+        eep_antenna_excitation=np.stack(eep_antenna),
+        hfss_actual_external_excitation=np.stack(hfss_external),
+        hfss_actual_antenna_excitation=np.stack(hfss_antenna),
         antenna_wave_map=antenna_map.astype(np.complex64),
         matched_s=s_matched.astype(np.complex64),
     )
@@ -280,6 +321,9 @@ def prepare(args: argparse.Namespace) -> dict[str, Any]:
         },
         "normalization": "one watt at matching-network external reference for each combined/task case",
         "hfss_antenna_excitation": "a_ant = antenna_wave_map @ a_external; no renormalization",
+        "command_actual_mismatch_enabled": mismatch_enabled,
+        "eep_prediction_excitation": "nominal command weights",
+        "hfss_direct_excitation": "actual implementation weights when supplied, otherwise nominal weights",
         "old_labels_included": False,
     }
     (args.out_dir / "prepare_summary.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
@@ -423,9 +467,20 @@ def analyze(args: argparse.Namespace) -> dict[str, Any]:
 
     theta = np.asarray(operator["theta_deg"], dtype=np.float64)
     phi = np.asarray(operator["phi_deg"], dtype=np.float64)
-    antenna_excitation = np.asarray(cases["antenna_excitation"], dtype=np.complex64)
-    reconstructed_theta = antenna_excitation @ np.asarray(operator["etheta"], dtype=np.complex64)
-    reconstructed_phi = antenna_excitation @ np.asarray(operator["ephi"], dtype=np.complex64)
+    nominal_antenna_excitation = np.asarray(
+        cases.get("eep_antenna_excitation", cases["antenna_excitation"]),
+        dtype=np.complex64,
+    )
+    actual_antenna_excitation = np.asarray(
+        cases.get("hfss_actual_antenna_excitation", cases["antenna_excitation"]),
+        dtype=np.complex64,
+    )
+    eep_theta = np.asarray(operator["etheta"], dtype=np.complex64)
+    eep_phi = np.asarray(operator["ephi"], dtype=np.complex64)
+    reconstructed_theta = nominal_antenna_excitation @ eep_theta
+    reconstructed_phi = nominal_antenna_excitation @ eep_phi
+    actual_basis_theta = actual_antenna_excitation @ eep_theta
+    actual_basis_phi = actual_antenna_excitation @ eep_phi
 
     case_metrics: list[dict[str, Any]] = []
     candidate_case_indices: dict[int, list[int]] = defaultdict(list)
@@ -441,13 +496,29 @@ def analyze(args: argparse.Namespace) -> dict[str, Any]:
             raise RuntimeError(f"Grid mismatch for {row['case_id']}")
         direct_cache[case_index] = (direct_theta, direct_phi)
         direct = np.concatenate((direct_theta, direct_phi))
-        reconstructed = np.concatenate((reconstructed_theta[case_index], reconstructed_phi[case_index]))
+        reconstructed = np.concatenate(
+            (actual_basis_theta[case_index], actual_basis_phi[case_index])
+        )
+        nominal = np.concatenate(
+            (reconstructed_theta[case_index], reconstructed_phi[case_index])
+        )
         error = reconstructed - direct
-        nmse = float(np.sum(np.abs(error) ** 2) / max(float(np.sum(np.abs(direct) ** 2)), 1.0e-20))
+        nominal_error = nominal - direct
+        direct_energy = max(float(np.sum(np.abs(direct) ** 2)), 1.0e-20)
+        nmse = float(np.sum(np.abs(error) ** 2) / direct_energy)
+        nominal_to_direct_nmse = float(
+            np.sum(np.abs(nominal_error) ** 2) / direct_energy
+        )
         direct_db = 20.0 * np.log10(np.maximum(np.abs(direct), 1.0e-12))
-        reconstruction_db = 20.0 * np.log10(np.maximum(np.abs(reconstructed), 1.0e-12))
+        reconstruction_db = 20.0 * np.log10(
+            np.maximum(np.abs(reconstructed), 1.0e-12)
+        )
+        nominal_db = 20.0 * np.log10(np.maximum(np.abs(nominal), 1.0e-12))
         visible = direct_db >= float(np.max(direct_db) - 40.0)
         magnitude_rmse = float(np.sqrt(np.mean((reconstruction_db[visible] - direct_db[visible]) ** 2)))
+        nominal_magnitude_rmse = float(
+            np.sqrt(np.mean((nominal_db[visible] - direct_db[visible]) ** 2))
+        )
         correlation = float(abs(np.vdot(direct, reconstructed)) / max(float(np.linalg.norm(direct) * np.linalg.norm(reconstructed)), 1.0e-20))
         case_metrics.append(
             {
@@ -455,6 +526,8 @@ def analyze(args: argparse.Namespace) -> dict[str, Any]:
                 "complete": 1,
                 "complex_nmse": nmse,
                 "magnitude_rmse_db_visible40": magnitude_rmse,
+                "nominal_to_direct_complex_nmse": nominal_to_direct_nmse,
+                "nominal_to_direct_magnitude_rmse_db_visible40": nominal_magnitude_rmse,
                 "complex_correlation": correlation,
                 "no_scale_pass": int(nmse <= float(args.nmse_max) and magnitude_rmse <= float(args.magnitude_rmse_max_db)),
             }
@@ -516,6 +589,22 @@ def analyze(args: argparse.Namespace) -> dict[str, Any]:
         )
         active_gate = bool(all_active_rl >= 10.0 and all_total_rl >= 10.0)
         eep_gate15 = bool(eep_psll <= 0.0 and eep_nearest >= 25.0 and eep_local >= 15.0)
+        optional_metadata: dict[str, Any] = {}
+        for key in (
+            "variant_kind",
+            "parent_candidate_index",
+            "parent_ratio",
+            "ratio_delta",
+            "phase_error_rms_deg",
+            "gain_error_rms_db",
+            "dropout_count",
+            "phase_bits",
+            "amplitude_bits",
+            "perturbation_seed",
+        ):
+            if key in dataset:
+                item = dataset[key][candidate_index]
+                optional_metadata[key] = item.item() if hasattr(item, "item") else item
         candidate_rows.append(
             {
                 "candidate_index": candidate_index,
@@ -530,6 +619,7 @@ def analyze(args: argparse.Namespace) -> dict[str, Any]:
                 "active_count": int(dataset["num_active"][candidate_index]),
                 "large_scan": int(dataset["large_scan"][candidate_index]),
                 "min_target_separation_deg": float(dataset["min_target_separation_deg"][candidate_index]),
+                **optional_metadata,
                 "eep_psll_db": eep_psll,
                 "hfss_psll_db": hfss_psll,
                 "delta_psll_db": hfss_psll - eep_psll,
@@ -628,6 +718,26 @@ def analyze(args: argparse.Namespace) -> dict[str, Any]:
         ),
         "complex_nmse_max": max((float(row["complex_nmse"]) for row in complete_cases), default=float("nan")),
         "magnitude_rmse_db_max": max((float(row["magnitude_rmse_db_visible40"]) for row in complete_cases), default=float("nan")),
+        "nominal_to_direct_complex_nmse_max": max(
+            (float(row["nominal_to_direct_complex_nmse"]) for row in complete_cases),
+            default=float("nan"),
+        ),
+        "nominal_to_direct_magnitude_rmse_db_max": max(
+            (
+                float(row["nominal_to_direct_magnitude_rmse_db_visible40"])
+                for row in complete_cases
+            ),
+            default=float("nan"),
+        ),
+        "command_actual_mismatch_enabled": bool(
+            "hfss_actual_antenna_excitation" in cases
+            and not np.allclose(
+                cases["eep_antenna_excitation"],
+                cases["hfss_actual_antenna_excitation"],
+                rtol=0.0,
+                atol=1.0e-12,
+            )
+        ),
         "gate15_rate": float(np.mean([row["gate15"] for row in candidate_rows])),
         "strict_gate20_rate": float(np.mean([row["strict_gate20"] for row in candidate_rows])),
         "mainlobe_gate_rate": float(np.mean([row["mainlobe_gate"] for row in candidate_rows])),

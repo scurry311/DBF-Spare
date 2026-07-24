@@ -1,0 +1,110 @@
+{
+  "created_at": "2026-07-24 13:53:01",
+  "training_completed": true,
+  "seed_count": 5,
+  "parameter_count": 188343,
+  "candidate_count": 36,
+  "independent_scene_count": 15,
+  "test_scene_count": 3,
+  "hfss_case_count": 95,
+  "hfss_hard_negative_count": 15,
+  "actual_eep_to_hfss_complex_nmse_max": 5.847297472605373e-12,
+  "nominal_to_hfss_magnitude_rmse_db_max": 3.7704784870147705,
+  "aggregate_test_metrics": {
+    "gate15_auroc": {
+      "mean": 1.0,
+      "ci95_half_width": 0.0
+    },
+    "gate15_auprc": {
+      "mean": 1.0,
+      "ci95_half_width": 0.0
+    },
+    "gate15_brier": {
+      "mean": 0.1263140709859979,
+      "ci95_half_width": 0.07042402015057525
+    },
+    "gate15_ece": {
+      "mean": 0.17538865058512393,
+      "ci95_half_width": 0.06836341339782465
+    },
+    "gate15_precision": {
+      "mean": 0.7100000000000001,
+      "ci95_half_width": 0.15308089364777042
+    },
+    "gate15_recall": {
+      "mean": 1.0,
+      "ci95_half_width": 0.0
+    },
+    "gate20_auroc": {
+      "mean": 1.0,
+      "ci95_half_width": 0.0
+    },
+    "gate20_auprc": {
+      "mean": 1.0,
+      "ci95_half_width": 0.0
+    },
+    "gate20_brier": {
+      "mean": 0.12190210948169418,
+      "ci95_half_width": 0.07742667624212037
+    },
+    "gate20_ece": {
+      "mean": 0.1686654865503702,
+      "ci95_half_width": 0.07609382183181827
+    },
+    "strict_engineering_auroc": {
+      "mean": 1.0,
+      "ci95_half_width": 0.0
+    },
+    "strict_engineering_brier": {
+      "mean": 0.052840334210150816,
+      "ci95_half_width": 0.058737925881518854
+    },
+    "strict_engineering_ece": {
+      "mean": 0.11083708971865625,
+      "ci95_half_width": 0.06547776254983184
+    },
+    "rank_strict_engineering_rate": {
+      "mean": 1.0,
+      "ci95_half_width": 0.0
+    },
+    "conservative_strict_engineering_rate": {
+      "mean": 1.0,
+      "ci95_half_width": 0.0
+    },
+    "residual_psll_db_rmse": {
+      "mean": 0.12152833342552186,
+      "ci95_half_width": 0.027119951319963607
+    },
+    "residual_iso_nearest_db_rmse": {
+      "mean": 1.3732640981674193,
+      "ci95_half_width": 0.0808224001185515
+    },
+    "residual_iso_local_db_rmse": {
+      "mean": 1.138904857635498,
+      "ci95_half_width": 0.10663043796001856
+    },
+    "residual_peak_min_db_rmse": {
+      "mean": 0.06543994471430778,
+      "ci95_half_width": 0.008272154351644282
+    },
+    "residual_peak_spread_db_rmse": {
+      "mean": 0.06623057052493095,
+      "ci95_half_width": 0.012126556858107474
+    }
+  },
+  "acceptance": {
+    "gate15_auroc_pass": true,
+    "gate20_auroc_pass": true,
+    "calibration_ece_pass": false,
+    "test_scene_support_pass": false,
+    "mainlobe_negative_support_pass": false
+  },
+  "promote_to_engineering_critic": false,
+  "checkpoint_status": "experimental_boundary_critic",
+  "failure_reasons": [
+    "mean calibrated ECE exceeds 0.08",
+    "scene-level test set has fewer than 10 independent scenes",
+    "mainlobe gate has insufficient negative support"
+  ],
+  "next_action": "Use this checkpoint only for uncertainty-aware boundary ranking. Add at least 45 new independent scenes with intermediate perturbation levels, low-ratio pairs, and at least 20 mainlobe-failure examples; then repeat grouped five-seed training."
+}

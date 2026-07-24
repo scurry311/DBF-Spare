@@ -1,0 +1,209 @@
+{
+  "seeds": [
+    20260725,
+    20260726,
+    20260727,
+    20260728,
+    20260729
+  ],
+  "dataset_dir": "hfss_outputs\\trusted_dense_implementation_residual_dataset_20260724_run01",
+  "out_dir": "hfss_outputs\\trusted_dense_implementation_residual_critic_20260724_run01",
+  "device": "cpu",
+  "metrics": {
+    "gate15_auroc": {
+      "mean": 1.0,
+      "ci95_half_width": 0.0,
+      "values": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "gate15_auprc": {
+      "mean": 1.0,
+      "ci95_half_width": 0.0,
+      "values": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "gate15_ece": {
+      "mean": 0.17538865058512393,
+      "ci95_half_width": 0.06836341339782465,
+      "values": [
+        0.19548075590864752,
+        0.240591016541917,
+        0.15149720200653455,
+        0.05189626457701836,
+        0.23747801389150222
+      ]
+    },
+    "gate20_auroc": {
+      "mean": 1.0,
+      "ci95_half_width": 0.0,
+      "values": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "gate20_auprc": {
+      "mean": 1.0,
+      "ci95_half_width": 0.0,
+      "values": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "gate20_ece": {
+      "mean": 0.1686654865503702,
+      "ci95_half_width": 0.07609382183181827,
+      "values": [
+        0.18083963797627284,
+        0.2528409527232205,
+        0.1373613960001551,
+        0.03660386404953897,
+        0.23568158200266354
+      ]
+    },
+    "mainlobe_auroc": {
+      "mean": NaN,
+      "ci95_half_width": NaN,
+      "values": [
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN
+      ]
+    },
+    "strict_engineering_auroc": {
+      "mean": 1.0,
+      "ci95_half_width": 0.0,
+      "values": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "rank_gate15_rate": {
+      "mean": 1.0,
+      "ci95_half_width": 0.0,
+      "values": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "rank_gate20_rate": {
+      "mean": 1.0,
+      "ci95_half_width": 0.0,
+      "values": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "rank_strict_engineering_rate": {
+      "mean": 1.0,
+      "ci95_half_width": 0.0,
+      "values": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "conservative_gate15_rate": {
+      "mean": 1.0,
+      "ci95_half_width": 0.0,
+      "values": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "conservative_gate20_rate": {
+      "mean": 1.0,
+      "ci95_half_width": 0.0,
+      "values": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "conservative_strict_engineering_rate": {
+      "mean": 1.0,
+      "ci95_half_width": 0.0,
+      "values": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "oracle_gate15_rate": {
+      "mean": 1.0,
+      "ci95_half_width": 0.0,
+      "values": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "oracle_gate20_rate": {
+      "mean": 1.0,
+      "ci95_half_width": 0.0,
+      "values": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "oracle_strict_engineering_rate": {
+      "mean": 1.0,
+      "ci95_half_width": 0.0,
+      "values": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    }
+  },
+  "best_seed": 20260725,
+  "run_summaries": [
+    "hfss_outputs\\trusted_dense_implementation_residual_critic_20260724_run01\\seed_20260725\\run_summary.json",
+    "hfss_outputs\\trusted_dense_implementation_residual_critic_20260724_run01\\seed_20260726\\run_summary.json",
+    "hfss_outputs\\trusted_dense_implementation_residual_critic_20260724_run01\\seed_20260727\\run_summary.json",
+    "hfss_outputs\\trusted_dense_implementation_residual_critic_20260724_run01\\seed_20260728\\run_summary.json",
+    "hfss_outputs\\trusted_dense_implementation_residual_critic_20260724_run01\\seed_20260729\\run_summary.json"
+  ]
+}

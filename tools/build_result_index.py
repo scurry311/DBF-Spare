@@ -98,6 +98,23 @@ DENSE_LOCAL_HFSS_ARTIFACTS = (
 )
 
 
+IMPLEMENTATION_RESIDUAL_ARTIFACTS = (
+    Artifact("boundary_prepare", "hfss_outputs/trusted_dense_boundary_dataset_20260724_run01/prepare_summary.json", "A", "passed", "Twenty-one implementation-boundary and lower-ratio candidates forming a 95-case HFSS batch."),
+    Artifact("boundary_manifest", "hfss_outputs/trusted_dense_boundary_dataset_20260724_run01/candidate_manifest.csv", "A", "diagnostic", "Per-candidate perturbation, ratio, nominal EEP, predicted actual-basis, and active-RL metadata."),
+    Artifact("mapping_smoke", "hfss_outputs/trusted_dense_boundary_hfss_mapping_smoke_20260724_run01/analysis_summary.json", "A", "passed", "Seven-case K=6 dual-excitation mapping smoke before the full batch."),
+    Artifact("boundary_hfss_analysis", "hfss_outputs/trusted_dense_boundary_hfss_20260724_run01/analysis_summary.json", "A", "passed", "Complete 95-case actual-EEP/direct-HFSS mapping and nominal-command residual analysis."),
+    Artifact("boundary_hfss_labels", "hfss_outputs/trusted_dense_boundary_hfss_20260724_run01/candidate_residual_labels.csv", "A", "hard_negative_labels", "Fifteen EEP-pass/HFSS-fail hard negatives and six lower-ratio paired labels."),
+    Artifact("critic_dataset_summary", "hfss_outputs/trusted_dense_implementation_residual_dataset_20260724_run01/build_summary.json", "A", "training_open", "Scene-grouped 36-candidate dataset readiness and residual-scale audit."),
+    Artifact("critic_dataset", "hfss_outputs/trusted_dense_implementation_residual_dataset_20260724_run01/fullwave_residual_dataset_v2.npz", "A", "training_dataset", "Compact mask, task-weight, target, hardware-condition, residual, gate, and split arrays."),
+    Artifact("five_seed_summary", "hfss_outputs/trusted_dense_implementation_residual_critic_20260724_run01/five_seed_summary.json", "A", "trained_experimental", "Five-seed aggregate critic metrics."),
+    Artifact("five_seed_metrics", "hfss_outputs/trusted_dense_implementation_residual_critic_20260724_run01/five_seed_summary.csv", "A", "diagnostic", "Five-seed AUROC, AUPRC, ECE, ranking, and confidence intervals."),
+    Artifact("best_checkpoint", "hfss_outputs/trusted_dense_implementation_residual_critic_20260724_run01/seed_20260725/residual_critic_v2.pt", "A", "experimental_checkpoint", "Best validation-seed 188343-parameter residual critic checkpoint."),
+    Artifact("best_run_summary", "hfss_outputs/trusted_dense_implementation_residual_critic_20260724_run01/seed_20260725/run_summary.json", "A", "diagnostic", "Best-seed train, validation, test, calibration, and selection metrics."),
+    Artifact("critic_acceptance", "hfss_outputs/trusted_dense_implementation_critic_decision_20260724_run01/critic_acceptance.json", "A", "not_promoted", "Authoritative engineering-promotion decision and failure reasons."),
+    Artifact("critic_seed_test", "hfss_outputs/trusted_dense_implementation_critic_decision_20260724_run01/five_seed_test_metrics.csv", "A", "diagnostic", "Per-seed scene-test residual and gate metrics."),
+)
+
+
 BASELINE_CONFIGS = {
     "2026-07-21": {
         "version": "v0.1.0-physics-gated",
@@ -128,6 +145,16 @@ BASELINE_CONFIGS = {
         "strict_benchmark_gate_pass": True,
         "hfss_physical_labels_allowed": True,
         "residual_critic_training_locked": True,
+    },
+    "2026-07-24-implementation-residual": {
+        "version": "v0.5.0-implementation-residual",
+        "artifacts": IMPLEMENTATION_RESIDUAL_ARTIFACTS,
+        "training_labels_locked": False,
+        "pattern_labels_allowed": True,
+        "strict_benchmark_gate_pass": False,
+        "hfss_physical_labels_allowed": True,
+        "residual_critic_training_locked": False,
+        "residual_critic_engineering_promoted": False,
     },
 }
 
@@ -214,6 +241,7 @@ def main() -> None:
     for optional_key in (
         "hfss_physical_labels_allowed",
         "residual_critic_training_locked",
+        "residual_critic_engineering_promoted",
     ):
         if optional_key in config:
             metadata[optional_key] = config[optional_key]

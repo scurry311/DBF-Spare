@@ -110,6 +110,10 @@
 | `refine_trusted_dense_local_eep_joint.py` | 用稠密 local-5deg EEP 算子、合成目标点等式和 S256 active-RL 投影重新优化同一96候选。 |
 | `prepare_dense_joint_hfss_smoke.py` | 仅将通过严格工程门控的稀疏多波束候选打包为50-100 case HFSS任务。 |
 | `evaluate_dense_joint_hfss_smoke.py` | 审计稠密优化后的HFSS批次，按K/ratio/扫描角汇总并分别判定物理标签与residual critic是否开放。 |
+| `generate_dense_boundary_hard_negatives.py` | 围绕可信正样本生成可复现的幅相量化、通道失效门限扰动及低ratio配对候选。 |
+| `subset_hfss_candidate_dataset.py` | 非破坏性抽取候选轴子集，用于正式HFSS批次前的小规模映射smoke。 |
+| `build_dense_implementation_residual_dataset.py` | 合并正样本与实现误差hard negative，按sample_index分组构建critic训练数据。 |
+| `evaluate_dense_implementation_residual_critic.py` | 汇总五随机种子critic指标并执行AUROC、ECE、测试支持和mainlobe负类晋级门控。 |
 | `analyze_eep_16port_operator.py` | 解析 16 端口复数 EEP 并构建/检查线性算子。 |
 | `analyze_full_s256p_active_return.py` | 计算 S256 下的 active impedance、逐端口/总反射 RL 分布。 |
 | `analyze_paired_task_results.py` | 分析相同方向集合下不同 ratio/权值的配对任务结果。 |

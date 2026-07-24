@@ -1,6 +1,6 @@
 # Result Index
 
-Current baseline: `v0.4.0-dense-local-hfss`, frozen on 2026-07-24.
+Current baseline: `v0.5.0-implementation-residual`, frozen on 2026-07-24.
 
 ## Evidence Levels
 
@@ -88,7 +88,32 @@ The 15 records are accepted as trusted sparse positive and near-boundary HFSS
 labels. Residual-critic training remains held because the run contains no hard
 negative and all EEP-to-HFSS residuals remain at numerical-noise scale.
 
-## Residual Critic
+## Implementation-Residual Critic
+
+Baseline `v0.5.0-implementation-residual` conditions the residual on known
+implementation errors. Nominal command weights are evaluated by EEP, while
+quantized/gain-phase-perturbed or failed-channel weights are returned to HFSS.
+Actual-weight EEP remains the numerical mapping audit and is not used as the
+critic prediction baseline.
+
+| Result | Value | Decision |
+|---|---:|---|
+| Boundary candidates / HFSS cases | 21 / 95 | Complete |
+| EEP-pass / HFSS-fail hard negatives | 15 | Passed data gate |
+| Lower-ratio paired candidates | 6 | K=2/4/6 covered |
+| Actual EEP to direct-HFSS maximum NMSE | 5.85e-12 | Mapping passed |
+| Nominal to direct-HFSS maximum magnitude RMSE | 3.77 dB | Learnable residual |
+| Training candidates / independent scenes | 36 / 15 | Scene-grouped |
+| Five-seed gate15/gate20 test AUROC | 1.00 / 1.00 | Preliminary pass |
+| Five-seed gate15/gate20 mean ECE | 0.175 / 0.169 | Failed 0.08 gate |
+| Scene-test support | 3 scenes | Insufficient |
+
+Five experimental checkpoints were trained. They may be used for conservative
+boundary ranking but are not promoted to the engineering critic: calibration
+is insufficient, the test set is small, and mainlobe-failure negatives are
+missing.
+
+## Nominal Residual Critic (v0.2)
 
 | Signal | Observed |
 |---|---:|
@@ -121,3 +146,5 @@ old labels are not mixed automatically. The machine-readable inventories are
 inventory is `baselines/2026-07-24-active-rl-joint/artifact_manifest.csv`.
 The dense-local gated HFSS inventory is
 `baselines/2026-07-24-dense-local-hfss/artifact_manifest.csv`.
+The implementation-residual critic inventory is
+`baselines/2026-07-24-implementation-residual/artifact_manifest.csv`.

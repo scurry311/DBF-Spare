@@ -1,0 +1,13 @@
+{
+  "tag": "2026-07-24-implementation-residual",
+  "version": "v0.5.0-implementation-residual",
+  "created_at_utc": "2026-07-24T05:55:13.075481+00:00",
+  "artifact_count": 13,
+  "snapshot_bytes": 983065,
+  "training_labels_locked": false,
+  "pattern_labels_allowed": true,
+  "strict_benchmark_gate_pass": false,
+  "hfss_physical_labels_allowed": true,
+  "residual_critic_training_locked": false,
+  "residual_critic_engineering_promoted": false
+}
