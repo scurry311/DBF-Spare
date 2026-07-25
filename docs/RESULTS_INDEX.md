@@ -1,6 +1,6 @@
 # Result Index
 
-Current baseline: `v0.5.0-implementation-residual`, frozen on 2026-07-24.
+Current baseline: `v0.8.0-prospective-hfss`, frozen on 2026-07-25.
 
 ## Evidence Levels
 
@@ -163,6 +163,37 @@ used to select the calibrator. This is a retrospective stage-one promotion;
 prospective HFSS validation on unseen scenes is still required before the
 critic may automatically admit candidates to HFSS.
 
+## Prospective Frozen-Critic HFSS Validation
+
+Baseline `v0.8.0-prospective-hfss` freezes the v0.7 checkpoint, pooled
+calibrator, feature substitutions, uncertainty factor, and thresholds before
+running HFSS on 24 unseen target-direction sets. The prospective labels are
+evaluation-only and were not used for retraining or recalibration.
+
+| Result | Value | Decision |
+|---|---:|---|
+| Unseen scenes / candidates / HFSS cases | 24 / 72 / 354 | Complete |
+| Training target-hash overlap | 0 | Passed |
+| PSLL / nearest / local scenes | 8 / 8 / 8 | Balanced |
+| Inside pass / isolated outside failure | 24/24 / 24/24 | Passed |
+| Mainlobe failures | 0 | Requirement met |
+| Maximum no-scale complex NMSE | 6.19e-12 | Passed |
+| Gate15 AUROC / ECE | 0.795 / 0.041 | AUROC failed |
+| Gate20 AUROC / ECE | 0.895 / 0.084 | ECE failed |
+| Pattern15 admission precision / recall | 0.853 / 0.604 | Diagnostic |
+| Strict admission precision / recall | 1.000 / 0.885 | Diagnostic |
+
+The critic orders every just-inside candidate above its paired just-outside
+candidate, but the mean probability margin is only 0.0218 and control-free
+gate15 AUROC is 0.590. It has useful scene-relative ranking behavior but does
+not provide reliable absolute feasibility probabilities across unseen scenes.
+All top-one methods selected the nominal control, so their 24/24 strict pass
+rate is not evidence that near-boundary sparse variants generalize.
+
+The pre-registered prospective protocol failed. Automatic HFSS admission stays
+disabled, and this prospective set must not be used to tune the frozen model or
+calibrator in the same development cycle.
+
 ## Nominal Residual Critic (v0.2)
 
 | Signal | Observed |
@@ -202,3 +233,5 @@ The expanded independent-scene inventory is
 `baselines/2026-07-24-expanded-residual/artifact_manifest.csv`.
 The dedicated gate15-boundary inventory is
 `baselines/2026-07-25-gate15-boundary/artifact_manifest.csv`.
+The frozen prospective HFSS inventory is
+`baselines/2026-07-25-prospective-hfss/artifact_manifest.csv`.

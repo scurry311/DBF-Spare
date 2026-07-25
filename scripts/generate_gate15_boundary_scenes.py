@@ -87,6 +87,19 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--out-dir", type=Path, default=DEFAULT_OUT)
     parser.add_argument("--scenes-per-type", type=int, default=10)
     parser.add_argument("--seed", type=int, default=20260725)
+    parser.add_argument(
+        "--exclude-dataset-dir",
+        type=Path,
+        action="append",
+        default=[],
+        help="Additional dataset package whose target hashes must remain unseen.",
+    )
+    parser.add_argument(
+        "--target-mode",
+        choices=("global", "prospective"),
+        default="global",
+        help="Prospective mode also perturbs individual task directions and separations.",
+    )
     return parser.parse_args()
 
 
@@ -107,6 +120,23 @@ def write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
 def shifted_grid_targets(old: np.ndarray, dtheta: int, dphi: int) -> np.ndarray:
     theta = np.clip(np.rint(old[:, 0]) + int(dtheta), 1.0, 75.0)
     phi = (np.rint(old[:, 1] / 2.0) * 2.0 + int(dphi)) % 360.0
+    return np.column_stack((theta, phi)).astype(np.float64)
+
+
+def prospective_grid_targets(
+    old: np.ndarray, dtheta: int, dphi: int, pattern: int
+) -> np.ndarray:
+    task = np.arange(old.shape[0], dtype=np.int64)
+    theta_local = ((2 * task + int(pattern)) % 5) - 2
+    phi_local = 2 * (((3 * task + 2 * int(pattern)) % 5) - 2)
+    theta = np.clip(
+        np.rint(old[:, 0]) + int(dtheta) + theta_local.astype(float), 1.0, 75.0
+    )
+    phi = (
+        np.rint(old[:, 1] / 2.0) * 2.0
+        + int(dphi)
+        + phi_local.astype(float)
+    ) % 360.0
     return np.column_stack((theta, phi)).astype(np.float64)
 
 
@@ -602,7 +632,11 @@ def main() -> None:
     )
 
     used_hashes = set()
-    for package in (base, expanded):
+    packages_for_exclusion = [base, expanded]
+    for directory in args.exclude_dataset_dir:
+        with np.load(directory / "dataset_arrays.npz", allow_pickle=False) as source:
+            packages_for_exclusion.append({key: source[key] for key in source.files})
+    for package in packages_for_exclusion:
         for candidate in range(int(package["candidate_indices"].size)):
             k_value = int(package["k_values"][candidate])
             used_hashes.add(target_hash(package["targets_deg"][candidate, :k_value]))
@@ -616,17 +650,23 @@ def main() -> None:
     attempt_rows: list[dict[str, Any]] = []
     for boundary_type in ("psll", "nearest", "local"):
         accepted = 0
+        patterns = (0,) if args.target_mode == "global" else (1, 2, 3, 4, 5)
         attempts = [
-            (parent, shift)
+            (parent, shift, pattern)
+            for pattern in patterns
             for shift in GLOBAL_SHIFTS
             for parent in parent_pools[boundary_type]
         ]
-        for parent, (dtheta, dphi) in attempts:
+        for parent, (dtheta, dphi), pattern in attempts:
             if accepted >= int(args.scenes_per_type):
                 break
             k_value = int(base["k_values"][parent])
             old_targets = np.asarray(base["targets_deg"][parent, :k_value], dtype=np.float64)
-            targets = shifted_grid_targets(old_targets, dtheta, dphi)
+            targets = (
+                shifted_grid_targets(old_targets, dtheta, dphi)
+                if args.target_mode == "global"
+                else prospective_grid_targets(old_targets, dtheta, dphi, pattern)
+            )
             digest = target_hash(targets)
             if digest in used_hashes or angular_separation_deg(targets) < 5.0:
                 continue
@@ -691,6 +731,7 @@ def main() -> None:
                     "k": k_value,
                     "dtheta_deg": dtheta,
                     "dphi_deg": dphi,
+                    "target_pattern": pattern,
                     "target_hash": digest,
                     "nominal_strict": int(strict),
                     "boundary_pair_found": int(pair is not None),
@@ -897,6 +938,8 @@ def main() -> None:
         "outside_gate15_failure_count": int(sum(not int(row["actual_basis_gate15"]) for row in outside_rows)),
         "new_mainlobe_failure_count": int(sum(not int(row["actual_basis_mainlobe_gate"]) for row in manifest)),
         "large_scan_scene_count": int(sum(int(scene["large_scan"]) for scene in scene_records)),
+        "target_mode": args.target_mode,
+        "excluded_dataset_dirs": [str(path.resolve()) for path in args.exclude_dataset_dir],
         "ratio1_included": False,
         "command_actual_mismatch_enabled": True,
         "runtime_seconds": time.time() - started,

@@ -1,0 +1,42 @@
+{
+  "created_at": "2026-07-25 08:42:36",
+  "prospective": true,
+  "hfss_results_read": false,
+  "checkpoint_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\baselines\\2026-07-25-gate15-boundary\\snapshots\\best_checkpoint.pt",
+  "checkpoint_sha256": "3c4ec79bf93631a610f22bc52da252e0e7ac128bc2cc2079770111bc39308393",
+  "checkpoint_seed": 20260727,
+  "calibrator_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\baselines\\2026-07-25-gate15-boundary\\snapshots\\pooled_calibration.json",
+  "calibrator_sha256": "fc5cbc66e7179027fcf361a342f6911eb713814e9bbfea91d4758b47f48fd04b",
+  "training_dataset_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\baselines\\2026-07-25-gate15-boundary\\snapshots\\critic_dataset.npz",
+  "training_dataset_sha256": "d430404c9e29fc6a95d3ba0d233164d727dbb7d3328cc632c89786e224fd1595",
+  "prospective_dataset_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\prospective_gate15_scenes_20260725_run01\\dataset_arrays.npz",
+  "prospective_dataset_sha256": "a3b40d39ca99ac81c51bfb7af2f9baa2cbcad440a4ab56df34dc80f580eac1ab",
+  "prediction_sha256": "737b2b678d0142b310f6cf0482e740814b781d490ebf44f0435207a2fed3223c",
+  "selection_sha256": "7053101bf10f8defe34b971cf0db02af41176dfb20fa87f6658ca1fb50f33bef",
+  "candidate_count": 72,
+  "independent_scene_count": 24,
+  "unique_target_hash_count": 24,
+  "training_target_overlap_count": 0,
+  "input_substitutions": {
+    "energy_normalized_hfss": "energy / 10**(eep_peak_min_db/10)",
+    "reference_hfss_peak_min_db": "same-scene nominal EEP peak",
+    "reference_hfss_peak_spread_db": "same-scene nominal EEP spread"
+  },
+  "thresholds_frozen": {
+    "psll_db_max": 0.0,
+    "nearest_iso_db_min": 25.0,
+    "local_iso_gate15_db_min": 15.0,
+    "local_iso_gate20_db_min": 20.0,
+    "mainlobe_drop_db_max": 0.5,
+    "target_spread_db_max": 3.0,
+    "pointing_error_deg_max": 1.5,
+    "active_rl_db_min": 10.0,
+    "probability_threshold": 0.5,
+    "uncertainty_kappa": 1.0
+  },
+  "pattern15_admit_count": 34,
+  "strict_admit_count": 23,
+  "mainlobe_failures_added_for_training": 0,
+  "retraining_allowed_after_hfss": false,
+  "freeze_pass": true
+}

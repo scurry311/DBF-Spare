@@ -7,12 +7,11 @@
 
 ## 项目状态
 
-当前版本化基线为 `v0.7.0-gate15-boundary`（2026-07-25）。可信固定网格
-16x16 基准、完整 S256/EEP 和无比例校正 EEP/HFSS 映射已经通过；最新增量包含
-30 个独立 PSLL/nearest/local 门限场景、90 个候选和 444 个完整 full-wave case。
-五种子 residual critic 的 gate15/gate20 AUROC 为 `0.883/0.910`，绑定 pooled
-calibrator 后 ECE 为 `0.050/0.071`。该组合已通过回顾性阶段一门控，但在开放
-自动 HFSS 候选准入前，仍必须完成未见目标方向场景的前瞻性 HFSS 验证。
+当前版本化基线为 `v0.8.0-prospective-hfss`（2026-07-25）。冻结的 v0.7
+checkpoint 与 pooled calibrator 已在 24 个未见目标方向场景、72 个候选和 354 个
+完整 HFSS case 上完成前瞻验证。物理重构与边界样本审计通过，但 gate15 AUROC
+为 `0.795`，gate20 ECE 为 `0.084`，分别未达到 `0.88/0.08` 的预注册门限。
+因此自动 HFSS 候选准入保持关闭，本批前瞻标签锁定为评估证据，不用于回调模型。
 
 ## 目录结构
 
@@ -58,13 +57,13 @@ DBF-Spare/
 
 ```powershell
 # 验证当前基线快照没有被修改
-python tools\build_result_index.py --tag 2026-07-25-gate15-boundary --verify-only
+python tools\build_result_index.py --tag 2026-07-25-prospective-hfss --verify-only
 
 # 查看脚本参数，不启动大规模 HFSS
 python scripts\run_staged_16x16_convergence.py --help
 
 # 生成或重建紧凑结果索引（要求本地原始结果仍完整）
-python tools\build_result_index.py --tag 2026-07-25-gate15-boundary
+python tools\build_result_index.py --tag 2026-07-25-prospective-hfss
 
 # 提交并同步后续代码修改
 git add -A

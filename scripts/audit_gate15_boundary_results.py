@@ -74,6 +74,9 @@ def boundary_margin(boundary_type: str, row: dict[str, str]) -> float:
 
 def main() -> None:
     args = parse_args()
+    prepare = json.loads(
+        (args.dataset_dir / "prepare_summary.json").read_text(encoding="utf-8")
+    )
     labels = read_csv(args.hfss_dir / "candidate_residual_labels.csv")
     with np.load(args.dataset_dir / "dataset_arrays.npz", allow_pickle=False) as source:
         dataset = {key: source[key] for key in source.files}
@@ -178,13 +181,32 @@ def main() -> None:
         "complex_nmse_max": float(analysis["complex_nmse_max"]),
         "magnitude_rmse_db_max": float(analysis["magnitude_rmse_db_max"]),
     }
+    expected_candidate_count = int(prepare.get("candidate_count", candidate_count))
+    expected_scene_count = int(
+        prepare.get("independent_scene_count", summary["independent_scene_count"])
+    )
+    expected_type_counts = prepare.get("scene_counts_by_boundary_type")
+    if expected_type_counts is None:
+        expected_type_counts = summary["boundary_scene_counts"]
+    expected_inside_count = sum(
+        1 for index in range(candidate_count) if str(dataset["boundary_side"][index]) == "inside"
+    )
+    expected_outside_count = sum(
+        1 for index in range(candidate_count) if str(dataset["boundary_side"][index]) == "outside"
+    )
+    summary["expected_candidate_count"] = expected_candidate_count
+    summary["expected_independent_scene_count"] = expected_scene_count
+    summary["expected_boundary_scene_counts"] = {
+        name: int(expected_type_counts.get(name, 0))
+        for name in ("psll", "nearest", "local")
+    }
     summary["boundary_dataset_pass"] = bool(
-        summary["candidate_count"] == 90
-        and summary["independent_scene_count"] == 30
-        and all(value == 10 for value in summary["boundary_scene_counts"].values())
-        and summary["inside_gate15_pass_count"] == 30
-        and summary["outside_gate15_fail_count"] == 30
-        and summary["outside_isolated_target_failure_count"] == 30
+        summary["candidate_count"] == expected_candidate_count
+        and summary["independent_scene_count"] == expected_scene_count
+        and summary["boundary_scene_counts"] == summary["expected_boundary_scene_counts"]
+        and summary["inside_gate15_pass_count"] == expected_inside_count
+        and summary["outside_gate15_fail_count"] == expected_outside_count
+        and summary["outside_isolated_target_failure_count"] == expected_outside_count
         and summary["mainlobe_failure_count"] == 0
         and summary["fullwave_incomplete_count"] == 0
         and summary["all_no_scale_reconstruction_pass"]

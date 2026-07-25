@@ -1,0 +1,17 @@
+{
+  "tag": "2026-07-25-prospective-hfss",
+  "version": "v0.8.0-prospective-hfss",
+  "created_at_utc": "2026-07-25T01:33:18.488053+00:00",
+  "artifact_count": 17,
+  "snapshot_bytes": 159911,
+  "training_labels_locked": true,
+  "pattern_labels_allowed": true,
+  "strict_benchmark_gate_pass": false,
+  "hfss_physical_labels_allowed": true,
+  "residual_critic_training_locked": true,
+  "residual_critic_engineering_promoted": false,
+  "prospective_validation_required": false,
+  "prospective_validation_completed": true,
+  "prospective_validation_pass": false,
+  "automatic_hfss_admission_allowed": false
+}

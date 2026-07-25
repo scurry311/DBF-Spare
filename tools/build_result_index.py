@@ -154,6 +154,27 @@ GATE15_BOUNDARY_ARTIFACTS = (
 )
 
 
+PROSPECTIVE_HFSS_ARTIFACTS = (
+    Artifact("prospective_prepare", "hfss_outputs/prospective_gate15_scenes_20260725_run01/prepare_summary.json", "A", "passed", "Twenty-four unseen target-direction scenes with balanced PSLL, nearest-isolation, and local-isolation boundary triplets."),
+    Artifact("freeze_manifest", "hfss_outputs/prospective_frozen_critic_20260725_run01/prospective_freeze_manifest.json", "A", "pre_registered", "Pre-HFSS checkpoint, calibrator, dataset, thresholds, substitutions, and SHA-256 freeze record."),
+    Artifact("frozen_predictions", "hfss_outputs/prospective_frozen_critic_20260725_run01/frozen_predictions_before_hfss.csv", "A", "pre_registered", "Seventy-two candidate probabilities, residual predictions, confidence bounds, and admission decisions saved before HFSS."),
+    Artifact("frozen_selections", "hfss_outputs/prospective_frozen_critic_20260725_run01/frozen_scene_selections_before_hfss.csv", "A", "pre_registered", "Four frozen top-one selection rules for every unseen scene."),
+    Artifact("mapping_smoke", "hfss_outputs/prospective_gate15_hfss_smoke_20260725_run01/analysis_summary.json", "A", "passed", "Thirty-case unseen-scene no-scale mapping smoke before the full prospective batch."),
+    Artifact("prospective_hfss_analysis", "hfss_outputs/prospective_gate15_hfss_20260725_run01/analysis_summary.json", "A", "passed", "Complete 354-case prospective no-scale EEP/direct-HFSS analysis."),
+    Artifact("prospective_boundary_audit", "hfss_outputs/prospective_gate15_hfss_20260725_run01/gate15_boundary_hfss_summary.json", "A", "passed", "Dynamic audit of all twenty-four inside/outside boundary crossings with zero mainlobe failures."),
+    Artifact("prospective_boundary_groups", "hfss_outputs/prospective_gate15_hfss_20260725_run01/gate15_boundary_hfss_summary_by_type_side.csv", "A", "diagnostic", "Prospective HFSS margins grouped by boundary type and side."),
+    Artifact("prospective_hfss_labels", "hfss_outputs/prospective_gate15_hfss_20260725_run01/candidate_residual_labels.csv", "A", "prospective_locked", "Prospective labels retained for evaluation only and excluded from post-HFSS retraining."),
+    Artifact("prospective_evaluation", "hfss_outputs/prospective_frozen_critic_evaluation_20260725_run03/prospective_validation_summary.json", "A", "failed_acceptance", "Frozen critic prospective decision: gate15 AUROC and gate20 ECE failed the inherited v0.7 protocol."),
+    Artifact("prospective_candidate_metrics", "hfss_outputs/prospective_frozen_critic_evaluation_20260725_run03/prospective_candidate_evaluation.csv", "A", "diagnostic", "Frozen prediction, HFSS truth, residual error, admission, and threshold-consistency fields for every candidate."),
+    Artifact("prospective_group_metrics", "hfss_outputs/prospective_frozen_critic_evaluation_20260725_run03/prospective_group_metrics.csv", "A", "diagnostic", "Gate discrimination and calibration grouped by PSLL, nearest, local, and boundary side."),
+    Artifact("prospective_pair_metrics", "hfss_outputs/prospective_frozen_critic_evaluation_20260725_run03/prospective_boundary_pair_metrics.csv", "A", "diagnostic", "Inside/outside pair ordering and control-free discrimination by boundary mechanism."),
+    Artifact("prospective_scene_metrics", "hfss_outputs/prospective_frozen_critic_evaluation_20260725_run03/prospective_scene_selection_metrics.csv", "A", "diagnostic", "Frozen scene-level top-one and oracle pass rates."),
+    Artifact("prospective_bootstrap", "hfss_outputs/prospective_frozen_critic_evaluation_20260725_run03/prospective_scene_bootstrap_95ci.csv", "A", "diagnostic", "Two-thousand-repeat sample_index-grouped prospective uncertainty intervals."),
+    Artifact("prospective_failures", "hfss_outputs/prospective_frozen_critic_evaluation_20260725_run03/prospective_failures.csv", "A", "diagnostic", "Candidate-level pattern or strict admission errors retained without post-HFSS tuning."),
+    Artifact("prospective_calibration", "hfss_outputs/prospective_frozen_critic_evaluation_20260725_run03/prospective_calibration_bins.csv", "A", "diagnostic", "Prospective reliability bins for all frozen critic gates."),
+)
+
+
 BASELINE_CONFIGS = {
     "2026-07-21": {
         "version": "v0.1.0-physics-gated",
@@ -215,6 +236,20 @@ BASELINE_CONFIGS = {
         "residual_critic_training_locked": False,
         "residual_critic_engineering_promoted": True,
         "prospective_validation_required": True,
+    },
+    "2026-07-25-prospective-hfss": {
+        "version": "v0.8.0-prospective-hfss",
+        "artifacts": PROSPECTIVE_HFSS_ARTIFACTS,
+        "training_labels_locked": True,
+        "pattern_labels_allowed": True,
+        "strict_benchmark_gate_pass": False,
+        "hfss_physical_labels_allowed": True,
+        "residual_critic_training_locked": True,
+        "residual_critic_engineering_promoted": False,
+        "prospective_validation_required": False,
+        "prospective_validation_completed": True,
+        "prospective_validation_pass": False,
+        "automatic_hfss_admission_allowed": False,
     },
 }
 
@@ -303,6 +338,9 @@ def main() -> None:
         "residual_critic_training_locked",
         "residual_critic_engineering_promoted",
         "prospective_validation_required",
+        "prospective_validation_completed",
+        "prospective_validation_pass",
+        "automatic_hfss_admission_allowed",
     ):
         if optional_key in config:
             metadata[optional_key] = config[optional_key]

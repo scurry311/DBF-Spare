@@ -1,0 +1,6 @@
+﻿method,scene_count,gate15_top1_rate,gate20_top1_rate,strict_engineering_top1_rate,gate15_oracle_rate,gate20_oracle_rate,strict_engineering_oracle_rate
+conservative,24,1.0,1.0,1.0,,,
+gate15_probability,24,1.0,1.0,1.0,,,
+gate20_probability,24,1.0,1.0,1.0,,,
+rank,24,1.0,1.0,1.0,,,
+best_of_three_oracle,24,,,,1.0,1.0,1.0

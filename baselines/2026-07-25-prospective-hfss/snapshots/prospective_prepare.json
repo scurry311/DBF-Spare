@@ -1,0 +1,23 @@
+{
+  "created_at": "2026-07-25 08:39:23",
+  "independent_scene_count": 24,
+  "candidate_count": 72,
+  "expected_hfss_case_count": 354,
+  "scene_counts_by_boundary_type": {
+    "psll": 8,
+    "nearest": 8,
+    "local": 8
+  },
+  "inside_gate15_pass_count": 24,
+  "outside_gate15_failure_count": 24,
+  "new_mainlobe_failure_count": 0,
+  "large_scan_scene_count": 13,
+  "target_mode": "prospective",
+  "excluded_dataset_dirs": [
+    "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\gate15_boundary_scenes_20260725_run01"
+  ],
+  "ratio1_included": false,
+  "command_actual_mismatch_enabled": true,
+  "runtime_seconds": 70.12793898582458,
+  "hfss_gate_pass": true
+}

@@ -113,6 +113,8 @@
 | `generate_dense_boundary_hard_negatives.py` | 围绕可信正样本生成可复现的幅相量化、通道失效门限扰动及低ratio配对候选。 |
 | `generate_expanded_independent_residual_scenes.py` | 生成独立目标方向场景、中等实现误差、定向主瓣失败及重新优化的低ratio配对样本。 |
 | `generate_gate15_boundary_scenes.py` | 生成PSLL、nearest isolation与local isolation门内/门外/对照三元组，并强制新增样本保持主瓣通过。 |
+| `prepare_frozen_critic_prospective_validation.py` | 在读取任何新HFSS结果前冻结checkpoint、pooled calibrator、输入替代、门限、候选概率、场景选择和SHA-256证据。 |
+| `evaluate_frozen_critic_prospective_hfss.py` | 将事前冻结预测与未见方向集合的完整HFSS标签配对，核验哈希/门限/方向泄漏并输出前瞻AUROC、校准、准入和场景级bootstrap指标。 |
 | `audit_gate15_boundary_results.py` | 严格审计三类full-wave门限跨越、主瓣保持、复场重构和分组裕量。 |
 | `subset_hfss_candidate_dataset.py` | 非破坏性抽取候选轴子集，用于正式HFSS批次前的小规模映射smoke。 |
 | `build_dense_implementation_residual_dataset.py` | 合并正样本、实现误差和三类gate15边界样本，按sample_index分组构建critic训练数据。 |
