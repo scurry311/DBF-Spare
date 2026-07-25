@@ -1,0 +1,56 @@
+{
+  "stage": "v0.9-adaptive-ratio-eep-loop",
+  "candidate_count": 384,
+  "scene_count": 12,
+  "checkpoint_count": 5,
+  "probability_threshold": 0.5,
+  "calibrator": {
+    "type": "regularized_platt",
+    "slope": 1.05,
+    "intercept": 0.125,
+    "probability_threshold": 0.5,
+    "regularization": 0.02,
+    "fit_scene_count": 12,
+    "fit_candidate_count": 12,
+    "fit_positive_count": 3,
+    "test_labels_used_for_fit": false
+  },
+  "contains_ratio_1": false,
+  "contains_nominal_control": false,
+  "metric_scope": "EEP/S256 only; HFSS confirmation pending",
+  "split_summary": {
+    "train": {
+      "scene_count": 9,
+      "admission_rate": 0.4444444444444444,
+      "admitted_strict_precision": 1.0,
+      "all_scene_selected_strict_rate": 0.4444444444444444,
+      "oracle_scene_rate": 0.4444444444444444,
+      "mean_selected_ratio": 0.700000007947286,
+      "admitted_ratio_counts": {
+        "0.7": 1,
+        "0.5": 2,
+        "0.6": 1
+      }
+    },
+    "val": {
+      "scene_count": 3,
+      "admission_rate": 0.3333333333333333,
+      "admitted_strict_precision": 1.0,
+      "all_scene_selected_strict_rate": 0.3333333333333333,
+      "oracle_scene_rate": 1.0,
+      "mean_selected_ratio": 0.700000007947286,
+      "admitted_ratio_counts": {
+        "0.5": 1
+      }
+    },
+    "test": {
+      "scene_count": 0,
+      "admission_rate": 0.0,
+      "admitted_strict_precision": NaN,
+      "all_scene_selected_strict_rate": NaN,
+      "oracle_scene_rate": NaN,
+      "mean_selected_ratio": NaN,
+      "admitted_ratio_counts": {}
+    }
+  }
+}

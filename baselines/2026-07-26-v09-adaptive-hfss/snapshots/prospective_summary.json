@@ -1,0 +1,18 @@
+{
+  "candidate_count": 12,
+  "independent_scene_count": 12,
+  "admission_rate": 0.4166666666666667,
+  "admitted_hfss_precision": 1.0,
+  "all_scene_hfss_strict_rate": 0.4166666666666667,
+  "mean_selected_ratio": 0.700000007947286,
+  "complex_nmse_max": 5.847792736157764e-12,
+  "magnitude_rmse_db_max": 2.74999656539876e-05,
+  "acceptance": {
+    "fullwave_complete": true,
+    "all_no_scale_reconstruction_pass": true,
+    "admitted_hfss_precision_ge_0_80": true,
+    "k6_admitted_positive_exists": true,
+    "prospective_pass": true
+  },
+  "post_hfss_tuning_performed": false
+}

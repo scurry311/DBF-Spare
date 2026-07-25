@@ -1,0 +1,33 @@
+{
+  "candidate_count": 84,
+  "independent_scene_count": 12,
+  "case_count": 420,
+  "strict_engineering_positive_count": 18,
+  "eep_hfss_strict_agreement": 0.9404761904761905,
+  "critic_strict_metrics": {
+    "auroc": 0.9175084175084175,
+    "auprc": 0.7319837564545804,
+    "brier": 0.09952134353830948,
+    "ece": 0.09129555685274754,
+    "precision": 0.6842105263157895,
+    "recall": 0.7222222222222222,
+    "positive_rate": 0.21428571428571427
+  },
+  "critic_top1_hfss_rate": 0.5,
+  "fixed_ratio06_hfss_rate": 0.3333333333333333,
+  "oracle_hfss_rate": 0.6666666666666666,
+  "adaptive_admission_rate": 0.4166666666666667,
+  "adaptive_admitted_hfss_precision": 0.8,
+  "complex_nmse_max": 6.1033513312769294e-12,
+  "magnitude_rmse_db_max": 4.03940757678356e-05,
+  "acceptance": {
+    "all_420_cases_complete": true,
+    "all_no_scale_reconstruction_pass": true,
+    "strict_auroc_ge_0_88": true,
+    "strict_ece_le_0_08": false,
+    "critic_top1_beats_fixed_ratio": true,
+    "adaptive_admitted_precision_ge_0_80": true,
+    "k6_fullwave_positive_exists": true,
+    "v09_stage_complete": false
+  }
+}

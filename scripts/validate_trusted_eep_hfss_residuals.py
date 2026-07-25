@@ -678,6 +678,36 @@ def analyze(args: argparse.Namespace) -> dict[str, Any]:
         "w_combined_real_imag",
         np.asarray(dataset["combined_weights_real_imag"], dtype=np.float32),
     )
+    # Newer candidate packages may already carry EEP-side labels with these
+    # names.  The residual package must expose the analyzed HFSS truth instead.
+    analyzed_keys = (
+        "split",
+        "delta_psll_db",
+        "delta_nearest_iso_db",
+        "delta_local_iso_db",
+        "delta_mainlobe_gain_db",
+        "eep_psll_db",
+        "eep_nearest_iso_db",
+        "eep_local_iso_db",
+        "eep_mainlobe_gain_db",
+        "hfss_psll_db",
+        "hfss_nearest_iso_db",
+        "hfss_local_iso_db",
+        "hfss_mainlobe_gain_db",
+        "worst_active_rl_db",
+        "total_rl_db",
+        "gate15",
+        "strict_gate20",
+        "mainlobe_gate",
+        "active_RL_gate",
+        "strict_engineering_gate",
+        "hard_negative",
+        "hard_positive",
+        "near_boundary",
+        "training_priority",
+    )
+    for key in analyzed_keys:
+        dataset_payload.pop(key, None)
     np.savez_compressed(
         args.out_dir / "residual_critic_dataset.npz",
         **dataset_payload,

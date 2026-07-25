@@ -175,6 +175,34 @@ PROSPECTIVE_HFSS_ARTIFACTS = (
 )
 
 
+V09_ADAPTIVE_HFSS_ARTIFACTS = (
+    Artifact("eep_pool_summary", "hfss_outputs/v09_eep_development_candidates_20260726_run01/prepare_summary.json", "A", "passed", "Sixty independent scenes and 1,920 no-control sparse EEP/S256 candidates."),
+    Artifact("development_summary", "hfss_outputs/v09_margin_development_dataset_20260726_run01/prepare_summary.json", "A", "passed", "Scene-grouped 420-candidate physical-margin development set."),
+    Artifact("development_groups", "hfss_outputs/v09_margin_development_dataset_20260726_run01/distribution_by_split_k_ratio.csv", "A", "diagnostic", "K, ratio, split, and boundary-label support."),
+    Artifact("critic_summary", "hfss_outputs/v09_physical_margin_critic_20260726_run02/training_summary.json", "A", "passed", "Five-seed scene-conditioned physical-margin residual critic."),
+    Artifact("critic_metrics", "hfss_outputs/v09_physical_margin_critic_20260726_run02/five_seed_metrics.csv", "A", "diagnostic", "Five-seed discrimination, calibration, and no-control ranking metrics."),
+    Artifact("checkpoint_20260726", "hfss_outputs/v09_physical_margin_critic_20260726_run02/seed_20260726/best_checkpoint.pt", "A", "ensemble_checkpoint", "Frozen physical-margin ensemble member."),
+    Artifact("checkpoint_20260727", "hfss_outputs/v09_physical_margin_critic_20260726_run02/seed_20260727/best_checkpoint.pt", "A", "ensemble_checkpoint", "Frozen physical-margin ensemble member."),
+    Artifact("checkpoint_20260728", "hfss_outputs/v09_physical_margin_critic_20260726_run02/seed_20260728/best_checkpoint.pt", "A", "ensemble_checkpoint", "Frozen physical-margin ensemble member."),
+    Artifact("checkpoint_20260729", "hfss_outputs/v09_physical_margin_critic_20260726_run02/seed_20260729/best_checkpoint.pt", "A", "ensemble_checkpoint", "Frozen physical-margin ensemble member."),
+    Artifact("checkpoint_20260730", "hfss_outputs/v09_physical_margin_critic_20260726_run02/seed_20260730/best_checkpoint.pt", "A", "ensemble_checkpoint", "Frozen physical-margin ensemble member."),
+    Artifact("adaptive_eep_summary", "hfss_outputs/v09_adaptive_ratio_eep_loop_20260726_run01/adaptive_summary.json", "A", "passed_conservative", "Minimum-ratio EEP/S256 search with conservative five-margin admission."),
+    Artifact("smoke_analysis", "hfss_outputs/v09_hfss_smoke_20260726_run02/analysis_summary.json", "A", "passed", "Eighteen-candidate and 82-case HFSS smoke."),
+    Artifact("smoke_acceptance", "hfss_outputs/v09_hfss_smoke_20260726_run02/v09_smoke_acceptance.json", "A", "passed", "Hard gate authorizing the 50-100 candidate stage."),
+    Artifact("fullwave_analysis", "hfss_outputs/v09_fullwave_validation_20260726_run02/analysis_summary.json", "A", "passed", "Sixty-six new candidates and 338 direct-HFSS cases."),
+    Artifact("fullwave_evaluation", "hfss_outputs/v09_fullwave_evaluation_20260726_run02/v09_fullwave_summary.json", "A", "calibration_required", "Combined 84-candidate held-out HFSS critic and ranking audit."),
+    Artifact("fullwave_groups", "hfss_outputs/v09_fullwave_evaluation_20260726_run02/fullwave_by_k_ratio.csv", "A", "diagnostic", "Held-out full-wave metrics grouped by K and ratio."),
+    Artifact("calibrator", "hfss_outputs/v09_fullwave_calibrator_20260726_run01/calibrator.json", "A", "frozen", "Regularized Platt calibrator fit on twelve independent HFSS validation scenes."),
+    Artifact("calibration_summary", "hfss_outputs/v09_fullwave_calibrator_20260726_run01/calibration_summary.json", "A", "ece_pass_brier_tradeoff", "Held-out ECE improvement with the recorded small Brier tradeoff."),
+    Artifact("prospective_pool", "hfss_outputs/v09_second_prospective_eep_candidates_20260726_run01/prepare_summary.json", "A", "passed", "Twelve second-cycle unseen scenes and 384 sparse candidates."),
+    Artifact("prospective_adaptive", "hfss_outputs/v09_second_prospective_adaptive_20260726_run01/adaptive_summary.json", "A", "pre_registered", "Frozen calibrated adaptive-ratio selections before HFSS."),
+    Artifact("prospective_freeze", "hfss_outputs/v09_second_prospective_hfss_dataset_20260726_run01/prospective_freeze_manifest.json", "A", "pre_registered", "Checkpoint hashes, threshold, target hashes, and no-tuning policy."),
+    Artifact("prospective_analysis", "hfss_outputs/v09_second_prospective_hfss_20260726_run01/analysis_summary.json", "A", "passed", "Complete sixty-case no-scale prospective HFSS analysis."),
+    Artifact("prospective_summary", "hfss_outputs/v09_second_prospective_hfss_20260726_run01/second_prospective_summary.json", "A", "passed_conservative", "Five of five admitted candidates passed strict HFSS gates."),
+    Artifact("prospective_selections", "hfss_outputs/v09_second_prospective_hfss_20260726_run01/prospective_selection_evaluation.csv", "A", "diagnostic", "Per-scene ratio, PSLL, isolation, active-RL, admission, and HFSS truth."),
+)
+
+
 BASELINE_CONFIGS = {
     "2026-07-21": {
         "version": "v0.1.0-physics-gated",
@@ -250,6 +278,21 @@ BASELINE_CONFIGS = {
         "prospective_validation_completed": True,
         "prospective_validation_pass": False,
         "automatic_hfss_admission_allowed": False,
+    },
+    "2026-07-26-v09-adaptive-hfss": {
+        "version": "v0.9.0-physical-margin-adaptive",
+        "artifacts": V09_ADAPTIVE_HFSS_ARTIFACTS,
+        "training_labels_locked": True,
+        "pattern_labels_allowed": True,
+        "strict_benchmark_gate_pass": True,
+        "hfss_physical_labels_allowed": True,
+        "residual_critic_training_locked": True,
+        "residual_critic_engineering_promoted": True,
+        "prospective_validation_required": False,
+        "prospective_validation_completed": True,
+        "prospective_validation_pass": True,
+        "automatic_hfss_admission_allowed": True,
+        "final_adaptive_coverage_target_met": False,
     },
 }
 
@@ -341,6 +384,7 @@ def main() -> None:
         "prospective_validation_completed",
         "prospective_validation_pass",
         "automatic_hfss_admission_allowed",
+        "final_adaptive_coverage_target_met",
     ):
         if optional_key in config:
             metadata[optional_key] = config[optional_key]

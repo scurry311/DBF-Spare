@@ -1,0 +1,19 @@
+{
+  "candidate_count": 18,
+  "hfss_strict_positive_count": 11,
+  "hfss_k6_strict_positive_count": 2,
+  "eep_hfss_strict_agreement": 0.8333333333333334,
+  "predicted_positive_precision": 0.8333333333333334,
+  "predicted_positive_recall": 0.9090909090909091,
+  "complex_nmse_max": 5.780864068688496e-12,
+  "magnitude_rmse_db_max": 2.7217372917220928e-05,
+  "acceptance": {
+    "fullwave_complete": true,
+    "all_no_scale_reconstruction_pass": true,
+    "hfss_strict_positive_ge_5": true,
+    "hfss_k6_strict_positive_ge_1": true,
+    "eep_hfss_strict_agreement_ge_0_80": true,
+    "predicted_positive_precision_ge_0_70": true,
+    "open_50_100_fullwave": true
+  }
+}

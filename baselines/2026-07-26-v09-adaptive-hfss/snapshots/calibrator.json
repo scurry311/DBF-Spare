@@ -1,0 +1,11 @@
+{
+  "type": "regularized_platt",
+  "slope": 1.05,
+  "intercept": 0.125,
+  "probability_threshold": 0.5,
+  "regularization": 0.02,
+  "fit_scene_count": 12,
+  "fit_candidate_count": 12,
+  "fit_positive_count": 3,
+  "test_labels_used_for_fit": false
+}

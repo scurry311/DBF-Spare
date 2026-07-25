@@ -1,0 +1,48 @@
+{
+  "stage": "v0.9-adaptive-ratio-eep-loop",
+  "candidate_count": 1920,
+  "scene_count": 60,
+  "checkpoint_count": 5,
+  "probability_threshold": 0.5,
+  "contains_ratio_1": false,
+  "contains_nominal_control": false,
+  "metric_scope": "EEP/S256 only; HFSS confirmation pending",
+  "split_summary": {
+    "train": {
+      "scene_count": 36,
+      "admission_rate": 0.16666666666666666,
+      "admitted_strict_precision": 0.8333333333333334,
+      "all_scene_selected_strict_rate": 0.19444444444444445,
+      "oracle_scene_rate": 0.5,
+      "mean_selected_ratio": 0.7611111220386293,
+      "admitted_ratio_counts": {
+        "0.5": 3,
+        "0.6": 2,
+        "0.7": 1
+      }
+    },
+    "val": {
+      "scene_count": 12,
+      "admission_rate": 0.16666666666666666,
+      "admitted_strict_precision": 1.0,
+      "all_scene_selected_strict_rate": 0.16666666666666666,
+      "oracle_scene_rate": 0.4166666666666667,
+      "mean_selected_ratio": 0.7500000099341074,
+      "admitted_ratio_counts": {
+        "0.5": 2
+      }
+    },
+    "test": {
+      "scene_count": 12,
+      "admission_rate": 0.4166666666666667,
+      "admitted_strict_precision": 1.0,
+      "all_scene_selected_strict_rate": 0.4166666666666667,
+      "oracle_scene_rate": 0.6666666666666666,
+      "mean_selected_ratio": 0.6916666775941849,
+      "admitted_ratio_counts": {
+        "0.5": 3,
+        "0.6": 2
+      }
+    }
+  }
+}

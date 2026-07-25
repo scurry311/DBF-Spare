@@ -1,0 +1,21 @@
+{
+  "stage": "v0.9-second-independent-prospective-hfss",
+  "pool_dir": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v09_second_prospective_eep_candidates_20260726_run01",
+  "adaptive_dir": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v09_second_prospective_adaptive_20260726_run01",
+  "critic_dir": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v09_physical_margin_critic_20260726_run02",
+  "probability_threshold": 0.5,
+  "candidate_count": 12,
+  "independent_scene_count": 12,
+  "admitted_count": 5,
+  "target_hash_count": 12,
+  "contains_ratio_1": false,
+  "contains_nominal_control": false,
+  "post_hfss_tuning_allowed": false,
+  "checkpoint_sha256": {
+    "seed_20260726": "e21ae2c3f72220b2010c02073d4596462e7e8b1b78033ec822aa63d8b92680be",
+    "seed_20260727": "f84686110b1e2d802a6232f28305c964278d0f84c6821f0c4a3fac4f250b7f6b",
+    "seed_20260728": "a245672d5174c90ab2bbffd194eb5004e1308c7d9ae96670080a4b9dee42d11a",
+    "seed_20260729": "411f95e0376b950cc26ef02bdb6b74cff8d04f493d7f3a1429d90e8ead6afb88",
+    "seed_20260730": "08ae076d385f9aab9d6608cbdd1b5362463340cc1bb621e12b994c96d8452ae3"
+  }
+}

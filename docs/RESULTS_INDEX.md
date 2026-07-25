@@ -194,6 +194,33 @@ The pre-registered prospective protocol failed. Automatic HFSS admission stays
 disabled, and this prospective set must not be used to tune the frozen model or
 calibrator in the same development cycle.
 
+## Physical-Margin Adaptive Critic v0.9
+
+Baseline `v0.9.0-physical-margin-adaptive` removes nominal controls from sparse
+ranking and predicts five uncertainty-aware physical-margin residuals.  The
+development set contains 60 independent scenes, 1,920 EEP/S256 candidates, and
+a 420-candidate scene-grouped subset.
+
+| Result | Value | Decision |
+|---|---:|---|
+| Development scenes / candidates | 60 / 420 | Leakage-free 36/12/12 split |
+| Strict positives / hard negatives | 79 / 70 | Sufficient support |
+| gate15 AUROC / ECE | 0.989 / 0.055 | Passed |
+| strict AUROC / ECE | 0.935 / 0.073 | Passed |
+| No-control top-1 / fixed ratio-0.6 | 66.7% / 41.7% | Ranking improved |
+| Held-out HFSS candidates / cases | 84 / 420 | Complete |
+| HFSS strict AUROC | 0.918 | Passed |
+| HFSS strict ECE before / after val calibration | 0.091 / 0.066 | Calibrated pass |
+| Second prospective admitted / strict pass | 5/12 / 5/5 | Conservative pass |
+| Prospective K=6 positive | ratio 0.6 | Passed |
+| Prospective scene coverage | 41.7% | Final 80% target not met |
+
+The selector may now automatically route only conservative admissions to HFSS.
+Fallback candidates remain explicitly infeasible/unconfirmed.  The prospective
+admitted ratios are 0.5, 0.6, and 0.7, corresponding to a 44% mean channel
+reduction among admitted scenes.  This is not a measured same-EIRP RF power
+reduction because no new paired ratio-1 full-wave control was included.
+
 ## Nominal Residual Critic (v0.2)
 
 | Signal | Observed |
@@ -235,3 +262,5 @@ The dedicated gate15-boundary inventory is
 `baselines/2026-07-25-gate15-boundary/artifact_manifest.csv`.
 The frozen prospective HFSS inventory is
 `baselines/2026-07-25-prospective-hfss/artifact_manifest.csv`.
+The v0.9 physical-margin adaptive HFSS inventory is
+`baselines/2026-07-26-v09-adaptive-hfss/artifact_manifest.csv`.
