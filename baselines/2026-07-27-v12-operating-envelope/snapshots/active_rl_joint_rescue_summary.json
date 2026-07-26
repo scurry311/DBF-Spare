@@ -1,0 +1,28 @@
+{
+  "candidate_count": 672,
+  "candidate_family_groups": [
+    {
+      "family_group": "active_rl_guided",
+      "candidate_count": 448,
+      "strict_count": 4,
+      "strict_rate": 0.008928571428571428,
+      "active_rl_count": 272,
+      "active_rl_rate": 0.6071428571428571,
+      "best_strict_violation_db": 0.0
+    },
+    {
+      "family_group": "other_local",
+      "candidate_count": 224,
+      "strict_count": 1,
+      "strict_rate": 0.004464285714285714,
+      "active_rl_count": 160,
+      "active_rl_rate": 0.7142857142857143,
+      "best_strict_violation_db": 0.0
+    }
+  ],
+  "scene_count": 40,
+  "baseline_oracle_count": 33,
+  "joint_oracle_count": 35,
+  "rescued_scene_count": 2,
+  "label_scope": "EEP/S256; not HFSS full-wave"
+}

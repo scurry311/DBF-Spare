@@ -1,6 +1,6 @@
 # Result Index
 
-Current baseline: `v0.8.0-prospective-hfss`, frozen on 2026-07-25.
+Current baseline: `v1.2.0-eep-operating-envelope`, frozen on 2026-07-27.
 
 ## Evidence Levels
 
@@ -245,6 +245,31 @@ active-RL, mainlobe, and isolation feasibility problem rather than a shortage
 of random masks; candidate-level positives must not be reported as scene-level
 coverage.
 
+## EEP/S256 Operating Envelope v1.2
+
+Baseline `v1.2.0-eep-operating-envelope` pre-registers and independently
+validates a narrower engineering support domain, while retaining the broader
+domain as a stress set. No HFSS labels were generated in this stage.
+
+| Result | Value | Decision |
+|---|---:|---|
+| v1.1 independent scenes / candidates | 40 / 3,840 | Complete |
+| v1.1 K=2 / K=6 oracle | 70.0% / 95.0% | K=2 failed |
+| Active-RL joint rescue candidates | 672 | Complete |
+| Rescued scenes / oracle after rescue | 2 / 87.5% | Still below 90% |
+| New independent K=2 scenes / candidates | 20 / 1,920 | Complete |
+| New K=2 oracle at scan <=48 deg | 19/20 (95.0%) | Passed |
+| Combined supported K=2 / K=6 oracle | 97.1% / 95.0% | Passed |
+| Combined supported total | 52/54 (96.3%) | Passed |
+| Excluded target-hash overlap | 0 | Passed |
+
+The supported EEP/S256 envelope is K=2 with maximum target scan 48 degrees
+and minimum separation 16 degrees, and K=6 with maximum target scan 58 degrees
+and minimum separation 13 degrees. K=2 at 50 degrees remains a pressure set:
+the joint discrete-mask/continuous-weight rescue improved it only to 80%.
+Within the validated envelope, a frozen 15-20-candidate HFSS smoke may proceed;
+bulk HFSS and full-wave performance claims remain disabled.
+
 ## Nominal Residual Critic (v0.2)
 
 | Signal | Observed |
@@ -290,3 +315,5 @@ The v0.9 physical-margin adaptive HFSS inventory is
 `baselines/2026-07-26-v09-adaptive-hfss/artifact_manifest.csv`.
 The v1.0 targeted K=2/K=6 EEP oracle audit is
 `baselines/2026-07-27-v10-targeted-eep-oracle/BASELINE.md`.
+The validated v1.2 EEP/S256 operating envelope is
+`baselines/2026-07-27-v12-operating-envelope/BASELINE.md`.

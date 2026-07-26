@@ -1,0 +1,40 @@
+{
+  "scene_oracle": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v11_operating_envelope_validation_oracle_20260727_run01\\scene_oracle.csv",
+  "validation_mode": true,
+  "pre_registered_limits": {
+    "K2": {
+      "max_scan_deg": 50.0,
+      "min_separation_deg": 16.0
+    },
+    "K6": {
+      "max_scan_deg": 58.0,
+      "min_separation_deg": 13.0
+    }
+  },
+  "oracle_target": 0.9,
+  "minimum_scenes_per_k": 10,
+  "groups": [
+    {
+      "k_value": 2,
+      "max_scan_deg": 50.0,
+      "min_separation_deg": 16.0,
+      "inside_scene_count": 20,
+      "oracle_scene_count": 14,
+      "oracle_rate": 0.7,
+      "minimum_scene_count_pass": 1,
+      "oracle_target_pass": 0
+    },
+    {
+      "k_value": 6,
+      "max_scan_deg": 58.0,
+      "min_separation_deg": 13.0,
+      "inside_scene_count": 20,
+      "oracle_scene_count": 19,
+      "oracle_rate": 0.95,
+      "minimum_scene_count_pass": 1,
+      "oracle_target_pass": 1
+    }
+  ],
+  "operating_envelope_pass": false,
+  "status": "validation_failed"
+}

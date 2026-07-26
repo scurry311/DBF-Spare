@@ -1,0 +1,14 @@
+{
+  "dataset_dir": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v12_k2_operating_envelope_validation_candidates_20260727_run01",
+  "additional_dataset_count": 0,
+  "candidate_count": 1920,
+  "independent_scene_count": 20,
+  "target_hash_count": 20,
+  "excluded_target_hash_count": 103,
+  "target_hash_overlap_count": 0,
+  "oracle_scene_count": 19,
+  "oracle_rate": 0.95,
+  "oracle_target": 0.9,
+  "candidate_space_sufficient": true,
+  "critic_retraining_allowed": true
+}

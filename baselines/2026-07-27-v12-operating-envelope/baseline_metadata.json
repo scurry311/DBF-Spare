@@ -1,0 +1,24 @@
+{
+  "tag": "2026-07-27-v12-operating-envelope",
+  "version": "v1.2.0-eep-operating-envelope",
+  "label_scope": "EEP/S256; not HFSS full-wave",
+  "supported_limits": {
+    "K2": {"maximum_scan_deg": 48.0, "minimum_separation_deg": 16.0},
+    "K6": {"maximum_scan_deg": 58.0, "minimum_separation_deg": 13.0}
+  },
+  "v11_scene_count": 40,
+  "v11_oracle_rate": 0.825,
+  "v11_joint_oracle_rate": 0.875,
+  "joint_rescued_scene_count": 2,
+  "v12_new_k2_scene_count": 20,
+  "v12_new_k2_oracle_rate": 0.95,
+  "combined_supported_scene_count": 54,
+  "combined_supported_oracle_count": 52,
+  "combined_supported_oracle_rate": 0.9629629629629629,
+  "target_hash_overlap_count": 0,
+  "operating_envelope_validated": true,
+  "critic_redevelopment_allowed_inside_envelope": true,
+  "hfss_smoke_allowed_inside_envelope": true,
+  "bulk_hfss_allowed": false,
+  "hfss_fullwave_claim_allowed": false
+}

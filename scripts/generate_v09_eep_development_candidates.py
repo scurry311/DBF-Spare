@@ -151,10 +151,29 @@ def parse_args() -> argparse.Namespace:
         default=None,
         help="Generate local masks around the best candidates in this pool.",
     )
+    parser.add_argument(
+        "--active-rl-guided-rescue-count",
+        type=int,
+        default=0,
+        help=(
+            "Add this many fixed-cardinality masks per scene/ratio by swapping "
+            "ports with high per-port active-reflection stress for low-coupling ports."
+        ),
+    )
     parser.add_argument("--only-failed-scenes", action="store_true")
     parser.add_argument("--targeted-hard-fraction", type=float, default=0.0)
     parser.add_argument("--small-separation-deg", type=float, default=10.5)
     parser.add_argument("--large-scan-deg", type=float, default=50.0)
+    parser.add_argument(
+        "--minimum-separation-by-k",
+        default="",
+        help="Optional envelope floors such as 2:16,6:13.",
+    )
+    parser.add_argument(
+        "--maximum-scan-by-k",
+        default="",
+        help="Optional envelope ceilings such as 2:50,6:58.",
+    )
     parser.add_argument("--continuation-from-high-ratio", action="store_true")
     parser.add_argument("--sample-index-start", type=int, default=390000)
     parser.add_argument("--dataset-version", default="v0.9-eep-development-pool")
@@ -175,6 +194,19 @@ def write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
         writer = csv.DictWriter(handle, fieldnames=fields)
         writer.writeheader()
         writer.writerows(rows)
+
+
+def parse_k_float_map(value: str) -> dict[int, float]:
+    result: dict[int, float] = {}
+    for item in str(value).split(","):
+        if not item.strip():
+            continue
+        key, threshold = item.split(":", maxsplit=1)
+        k_value = int(key.strip())
+        if k_value not in (2, 4, 6):
+            raise ValueError(f"Unsupported K in envelope: {k_value}")
+        result[k_value] = float(threshold.strip())
+    return result
 
 
 def complex_to_ri(values: np.ndarray) -> np.ndarray:
@@ -301,6 +333,8 @@ def generate_targeted_scenes(
     large_scan_deg: float,
     sample_index_start: int,
     seed: int,
+    minimum_separation_by_k: dict[int, float] | None = None,
+    maximum_scan_by_k: dict[int, float] | None = None,
 ) -> list[dict[str, Any]]:
     """Generate independent K-stratified scenes with explicit hard-scene quotas."""
     if not 0.0 <= hard_fraction <= 1.0:
@@ -328,11 +362,19 @@ def generate_targeted_scenes(
                         separation = angular_separation_deg(targets)
                         if separation < 5.0:
                             continue
+                        if separation < float(
+                            (minimum_separation_by_k or {}).get(k_value, 5.0)
+                        ):
+                            continue
                         digest = target_hash(targets)
                         if digest in used_hashes or digest in local_hashes:
                             continue
                         local_hashes.add(digest)
                         max_theta = float(np.max(targets[:, 0]))
+                        if max_theta > float(
+                            (maximum_scan_by_k or {}).get(k_value, 90.0)
+                        ):
+                            continue
                         candidates.append(
                             {
                                 "target_hash": digest,
@@ -476,6 +518,119 @@ def best_rescue_masks(
     return [np.asarray(masks[index], dtype=bool) for index in order]
 
 
+def active_rl_guided_rescue_masks(
+    rescue: dict[str, np.ndarray] | None,
+    *,
+    sample_index: int,
+    ratio: float,
+    score: np.ndarray,
+    s_matrix: np.ndarray,
+    count: int,
+) -> list[tuple[np.ndarray, str]]:
+    """Propose fixed-cardinality swaps from explicit per-port active-RL stress."""
+    if rescue is None or count <= 0:
+        return []
+    members = np.flatnonzero(
+        (np.asarray(rescue["sample_index"], dtype=np.int64) == int(sample_index))
+        & np.isclose(
+            np.asarray(rescue["active_ratios_requested"], dtype=float),
+            float(ratio),
+            atol=1.0e-5,
+        )
+    )
+    if members.size == 0:
+        return []
+    masks = np.asarray(
+        rescue["masks"] if "masks" in rescue else rescue["mask"], dtype=bool
+    )
+    task_key = (
+        "nominal_external_task_weights_real_imag"
+        if "nominal_external_task_weights_real_imag" in rescue
+        else "task_weights_real_imag"
+    )
+    task_ri = np.asarray(rescue[task_key], dtype=np.float32)
+    k_values = np.asarray(rescue["k_values"], dtype=int)
+    margins = np.asarray(rescue["actual_margins"], dtype=float)
+    violation = np.maximum(-margins[members], 0.0).sum(axis=1)
+    # Prefer the closest physical failures, while retaining an active-RL-focused
+    # seed when its total violation is not the smallest.
+    ordered = members[np.argsort(violation, kind="stable")]
+    active_order = members[
+        np.argsort(margins[members, 4], kind="stable")
+    ]
+    parent_indices: list[int] = []
+    for value in [*ordered[:3].tolist(), *active_order[:2].tolist()]:
+        if int(value) not in parent_indices:
+            parent_indices.append(int(value))
+
+    utility = np.asarray(score, dtype=float)
+    utility = (utility - float(np.min(utility))) / max(float(np.ptp(utility)), EPS)
+    rho = 10.0 ** (-12.0 / 20.0)
+    proposals: list[tuple[np.ndarray, str]] = []
+    seen: set[bytes] = set()
+    for parent_rank, candidate_index in enumerate(parent_indices):
+        mask = masks[candidate_index].copy()
+        k_value = int(k_values[candidate_index])
+        tasks = (
+            task_ri[candidate_index, :, :k_value, 0].astype(np.float64)
+            + 1j * task_ri[candidate_index, :, :k_value, 1].astype(np.float64)
+        )
+        sources = [np.sum(tasks, axis=1), *[tasks[:, task] for task in range(k_value)]]
+        stress = np.zeros(mask.size, dtype=float)
+        for source_index, source in enumerate(sources):
+            reflected = s_matrix @ source
+            amplitude = np.abs(source)
+            maximum = max(float(np.max(amplitude)), EPS)
+            if source_index == 0:
+                considered = mask
+                floor = maximum * 1.0e-6
+            else:
+                considered = mask & (amplitude >= maximum * 0.1)
+                floor = maximum * 0.1
+            gamma = np.abs(reflected) / np.maximum(amplitude, floor)
+            stress = np.maximum(stress, np.where(considered, gamma / rho, 0.0))
+        task_power = np.sum(np.abs(tasks) ** 2, axis=1)
+        task_power /= max(float(np.max(task_power)), EPS)
+        remove_priority = stress - 0.45 * utility - 0.25 * task_power
+        active = np.flatnonzero(mask)
+        remove_order = active[np.argsort(remove_priority[active], kind="stable")[::-1]]
+
+        inactive = np.flatnonzero(~mask)
+        diagonal = np.abs(np.diag(s_matrix))[inactive]
+        row_coupling = np.sqrt(
+            np.sum(np.abs(s_matrix[np.ix_(inactive, active)]) ** 2, axis=1)
+        )
+        burden = diagonal + row_coupling
+        burden = (burden - float(np.min(burden))) / max(float(np.ptp(burden)), EPS)
+        add_priority = 0.65 * utility[inactive] - 0.35 * burden
+        add_order = inactive[np.argsort(add_priority, kind="stable")[::-1]]
+
+        for swap_count in (1, 2, 3, 4):
+            if swap_count > active.size or swap_count > inactive.size:
+                continue
+            for offset in (0, 1):
+                remove = remove_order[offset : offset + swap_count]
+                add = add_order[offset : offset + swap_count]
+                if remove.size != swap_count or add.size != swap_count:
+                    continue
+                proposal = mask.copy()
+                proposal[remove] = False
+                proposal[add] = True
+                key = np.packbits(proposal).tobytes()
+                if key in seen:
+                    continue
+                seen.add(key)
+                proposals.append(
+                    (
+                        proposal,
+                        f"active_rl_joint_p{parent_rank:02d}_s{swap_count}_o{offset}",
+                    )
+                )
+                if len(proposals) >= count:
+                    return proposals
+    return proposals
+
+
 def matched_steering_tasks(
     migrated_parent: np.ndarray,
     targets: np.ndarray,
@@ -514,6 +669,7 @@ def structured_masks(
     donor_masks: list[np.ndarray] | None = None,
     continuation_masks: list[np.ndarray] | None = None,
     priority_masks: list[np.ndarray] | None = None,
+    guided_masks: list[tuple[np.ndarray, str]] | None = None,
 ) -> tuple[list[np.ndarray], list[str]]:
     coords = element_ixiy.astype(np.float64)
     center = (coords.max(axis=0) + coords.min(axis=0)) / 2.0
@@ -525,6 +681,7 @@ def structured_masks(
     )
     checker = ((coords[:, 0] + coords[:, 1]) % 2.0) - 0.05 * radius
     seeds: list[tuple[np.ndarray, str]] = []
+    seeds.extend(guided_masks or [])
     for priority_index, source in enumerate(priority_masks or []):
         normalized = fill_mask_from_scores(
             np.asarray(source, dtype=bool), normalized_score, num_active
@@ -957,6 +1114,8 @@ def main() -> None:
         raise ValueError("ratios must be ordered sparse values strictly between 0 and 1")
     if int(args.masks_per_ratio) < 4:
         raise ValueError("masks-per-ratio must be at least 4")
+    if int(args.active_rl_guided_rescue_count) < 0:
+        raise ValueError("active-rl-guided-rescue-count must be non-negative")
     k_counts: dict[int, int] | None = None
     if str(args.k_counts).strip():
         values = [int(value.strip()) for value in str(args.k_counts).split(",")]
@@ -965,6 +1124,8 @@ def main() -> None:
         k_counts = dict(zip((2, 4, 6), values))
         if sum(values) < 3:
             raise ValueError("k-counts must request at least three scenes")
+    minimum_separation_by_k = parse_k_float_map(args.minimum_separation_by_k)
+    maximum_scan_by_k = parse_k_float_map(args.maximum_scan_by_k)
     targeted_joint_search = bool(
         k_counts is not None
         or float(args.targeted_hard_fraction) > 0.0
@@ -1022,6 +1183,8 @@ def main() -> None:
             large_scan_deg=float(args.large_scan_deg),
             sample_index_start=int(args.sample_index_start),
             seed=int(args.seed),
+            minimum_separation_by_k=minimum_separation_by_k,
+            maximum_scan_by_k=maximum_scan_by_k,
         )
     else:
         scenes = generate_scenes(base, int(args.scene_count), used_hashes)
@@ -1093,6 +1256,14 @@ def main() -> None:
                 sample_index=int(scene["sample_index"]),
                 ratio=ratio,
             )
+            guided_rescue_masks = active_rl_guided_rescue_masks(
+                rescue_pool,
+                sample_index=int(scene["sample_index"]),
+                ratio=ratio,
+                score=score,
+                s_matrix=s_matrix,
+                count=int(args.active_rl_guided_rescue_count),
+            )
             masks, mask_names = structured_masks(
                 parent_mask,
                 score,
@@ -1103,6 +1274,7 @@ def main() -> None:
                 donor_masks=donors,
                 continuation_masks=continuation_masks,
                 priority_masks=rescue_masks,
+                guided_masks=guided_rescue_masks,
             )
             ratio_seed_candidates: list[tuple[np.ndarray, np.ndarray]] = []
             for mask_position, (mask, mask_name) in enumerate(zip(masks, mask_names)):
@@ -1219,6 +1391,7 @@ def main() -> None:
                         "ratio_continuation_",
                         "continuation_swap_",
                         "failed_best_swap_",
+                        "active_rl_joint_",
                     )
                 ):
                     role = "hard_positive"
@@ -1470,12 +1643,19 @@ def main() -> None:
             for k_value in (2, 4, 6)
         },
         "targeted_hard_fraction_requested": float(args.targeted_hard_fraction),
+        "minimum_separation_by_k": {
+            str(key): value for key, value in minimum_separation_by_k.items()
+        },
+        "maximum_scan_by_k": {
+            str(key): value for key, value in maximum_scan_by_k.items()
+        },
         "small_gap_scene_count": sum(int(row["small_target_gap"]) for row in scene_rows),
         "large_scan_scene_count": sum(int(row["large_scan"]) for row in scene_rows),
         "continuation_from_high_ratio": bool(args.continuation_from_high_ratio),
         "donor_dataset_count": len(args.donor_dataset),
         "scene_source": str(args.scene_source.resolve()) if args.scene_source else None,
         "rescue_dataset": str(args.rescue_dataset.resolve()) if args.rescue_dataset else None,
+        "active_rl_guided_rescue_count": int(args.active_rl_guided_rescue_count),
         "only_failed_scenes": bool(args.only_failed_scenes),
         "targeted_joint_search": targeted_joint_search,
         "contains_ratio_1": False,
