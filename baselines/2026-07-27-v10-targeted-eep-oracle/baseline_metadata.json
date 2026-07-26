@@ -1,0 +1,14 @@
+{
+  "tag": "2026-07-27-v10-targeted-eep-oracle",
+  "version": "v1.0.0-targeted-eep-oracle-audit",
+  "candidate_count_initial": 4608,
+  "candidate_count_rescue": 832,
+  "independent_scene_count": 48,
+  "oracle_scene_count": 22,
+  "oracle_rate": 0.4583333333333333,
+  "oracle_target": 0.9,
+  "target_hash_overlap_count": 0,
+  "candidate_space_sufficient": false,
+  "critic_retraining_allowed": false,
+  "hfss_admission_allowed": false
+}

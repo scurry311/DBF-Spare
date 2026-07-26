@@ -1,0 +1,13 @@
+{
+  "dataset_dir": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v10_targeted_eep_development_20260726_run01",
+  "candidate_count": 4608,
+  "independent_scene_count": 48,
+  "target_hash_count": 48,
+  "excluded_target_hash_count": 86,
+  "target_hash_overlap_count": 0,
+  "oracle_scene_count": 22,
+  "oracle_rate": 0.4583333333333333,
+  "oracle_target": 0.9,
+  "candidate_space_sufficient": false,
+  "critic_retraining_allowed": false
+}

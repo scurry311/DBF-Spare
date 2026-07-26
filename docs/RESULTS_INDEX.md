@@ -221,6 +221,30 @@ admitted ratios are 0.5, 0.6, and 0.7, corresponding to a 44% mean channel
 reduction among admitted scenes.  This is not a measured same-EIRP RF power
 reduction because no new paired ratio-1 full-wave control was included.
 
+## Targeted K=2/K=6 EEP Oracle Audit v1.0
+
+Baseline `v1.0.0-targeted-eep-oracle-audit` expands the structured mask search
+to 24 candidates per ratio and adds eight best-neighbor rescue masks for each
+failed scene.  It keeps the v0.9 second prospective directions frozen and
+evaluation-only.
+
+| Result | Value | Decision |
+|---|---:|---|
+| Independent scenes / initial candidates | 48 / 4,608 | Complete |
+| K=2 / K=6 scenes | 24 / 24 | Targeted |
+| Initial strict candidates / hard negatives | 452 / 202 | Candidate support |
+| Additional failed-scene rescue candidates | 832 | Complete |
+| Target-hash overlap with excluded sets | 0 | Passed |
+| Overall scene oracle | 22/48 (45.8%) | Failed 90% gate |
+| K=2 / K=6 scene oracle | 62.5% / 29.2% | K=6 bottleneck |
+| Non-large / large-scan scene oracle | 77.3% / 19.2% | Scan bottleneck |
+
+The 24-to-32 mask expansion did not rescue another scene.  Residual critic
+retraining and HFSS admission remain locked.  The failure is a coupled
+active-RL, mainlobe, and isolation feasibility problem rather than a shortage
+of random masks; candidate-level positives must not be reported as scene-level
+coverage.
+
 ## Nominal Residual Critic (v0.2)
 
 | Signal | Observed |
@@ -264,3 +288,5 @@ The frozen prospective HFSS inventory is
 `baselines/2026-07-25-prospective-hfss/artifact_manifest.csv`.
 The v0.9 physical-margin adaptive HFSS inventory is
 `baselines/2026-07-26-v09-adaptive-hfss/artifact_manifest.csv`.
+The v1.0 targeted K=2/K=6 EEP oracle audit is
+`baselines/2026-07-27-v10-targeted-eep-oracle/BASELINE.md`.
