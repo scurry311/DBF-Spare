@@ -1,0 +1,44 @@
+{
+  "version": "v1.3",
+  "frozen_before_k4_candidate_generation": true,
+  "k4_operating_envelope": {
+    "maximum_target_scan_deg": 48.0,
+    "minimum_target_separation_deg": 16.0,
+    "independent_scene_count": 20,
+    "candidate_ratios": [0.5, 0.6, 0.7, 0.8],
+    "masks_per_ratio": 24,
+    "scene_oracle_target": 0.9,
+    "ratio_1_control_included": false
+  },
+  "frozen_hfss_smoke": {
+    "independent_scene_count": 20,
+    "scene_counts_by_k": {"K2": 7, "K4": 6, "K6": 7},
+    "prefer_low_ratio": true,
+    "candidate_classes": [
+      "strict_positive",
+      "near_boundary",
+      "psll_boundary",
+      "nearest_isolation_boundary",
+      "local_isolation_boundary",
+      "active_rl_boundary"
+    ],
+    "weights_frozen_before_hfss": true,
+    "thresholds_frozen_before_hfss": true,
+    "minimum_hfss_precision_for_eep_accepted_candidates": 0.9
+  },
+  "strict_gate": {
+    "psll_max_db": 0.0,
+    "nearest_isolation_min_db": 25.0,
+    "local_5deg_isolation_min_db": 20.0,
+    "mainlobe_drop_max_db": 0.5,
+    "per_active_port_rl_min_db": 10.0,
+    "total_active_rl_min_db": 10.0
+  },
+  "failure_policy": {
+    "reoptimize_after_hfss": false,
+    "retrain_critic_if_smoke_fails": false,
+    "launch_bulk_hfss_if_smoke_fails": false,
+    "required_action": "audit EEP-HFSS metric residuals and physical failure causes"
+  },
+  "k1_policy": "matching and normalized-power calibration control only; excluded from multitask isolation conclusions"
+}
