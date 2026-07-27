@@ -26,3 +26,6 @@ Current checkpoints:
 - `2026-07-27-v16-robust-drift-oracle`: preregistered E1/E2/E3 common-command
   robust search; K=2/K=4 pass the E2 oracle gate, while K=6 and E1 keep critic
   retraining and perturbed 16x16 HFSS locked.
+- `2026-07-27-v17-k6-multifrequency-rescue`: frozen-E2 K=6 multifrequency and
+  quantization-aware boundary rescue; Stage B passes with 97.33% overall and
+  96% K=6 oracle coverage, opening only the small frozen 16x16 HFSS smoke.

@@ -1,0 +1,115 @@
+{
+  "protocol": "v16-k6-multifrequency-mainlobe-active-rl-reserve",
+  "created_at": "2026-07-27",
+  "frozen_parent_commit": "9803e5e",
+  "frozen_parent_tag": "v1.6.0-robust-drift-oracle",
+  "seed": 20260827,
+  "calibration_state_seed_preserved_from_v16": 20260827,
+  "evidence_scope": "4x4-HFSS-calibrated 16x16 EEP/S256 proxy K6 rescue; not perturbed 16x16 HFSS",
+  "target_scene_policy": {
+    "k_value": 6,
+    "only_post_rescue_E2_failures": true,
+    "sample_indices": [
+      421022, 421023, 421025, 421026, 421029, 421035,
+      421036, 426120, 426122, 426124, 426125, 426126
+    ],
+    "ratios": [0.5, 0.6, 0.7, 0.8],
+    "parents_per_ratio": 2,
+    "design_variants_per_parent": 4,
+    "candidate_count_expected": 384,
+    "ratio_1_control_only": true
+  },
+  "frozen_E2": {
+    "intensity": 0.20,
+    "profiles": [
+      "frequency_low", "frequency_high", "patch_length_low",
+      "patch_length_high", "dielectric_low", "dielectric_high"
+    ],
+    "frequency_offset_ghz": [-0.04, 0.04],
+    "patch_length_offset_mm": [-0.02, 0.02],
+    "relative_permittivity_offset": [-0.008, 0.008],
+    "post_result_change_prohibited": true
+  },
+  "common_command_policy": {
+    "same_mask_across_all_corners": true,
+    "same_task_weights_across_all_corners": true,
+    "same_matching_network_across_all_corners": true,
+    "same_quantization_across_all_corners": true,
+    "profile_specific_weights_prohibited": true
+  },
+  "multifrequency_combined_mainlobe": {
+    "fixed_target_equalities_across_all_E2_corners": true,
+    "target_equalization_amplitude": "variant-frozen weakest, median, or strongest initial target-center response",
+    "target_phase_reference": "frozen initial corner response",
+    "local_regions_deg": [2.0, 5.0],
+    "regional_dominance_is_inequality": true,
+    "global_equality_restore_after_each_regional_projection": true,
+    "active_rl_nullspace_repair_steps": 24,
+    "active_rl_nullspace_step_size": 0.004
+  },
+  "design_variants": [
+    {
+      "name": "mf_eq_r2_rl12",
+      "target_amplitude_mode": "weakest",
+      "active_rl_design_min_db": 12.0,
+      "local_radius_deg": 2.0,
+      "regional_ceiling_db": 0.25,
+      "joint_projection_passes": 2,
+      "corner_sweeps": 3
+    },
+    {
+      "name": "mf_eq_r5_rl12p5",
+      "target_amplitude_mode": "weakest",
+      "active_rl_design_min_db": 12.5,
+      "local_radius_deg": 5.0,
+      "regional_ceiling_db": 0.25,
+      "joint_projection_passes": 2,
+      "corner_sweeps": 3
+    },
+    {
+      "name": "mf_eq_r5_rl13",
+      "target_amplitude_mode": "median",
+      "active_rl_design_min_db": 13.0,
+      "local_radius_deg": 5.0,
+      "regional_ceiling_db": 0.0,
+      "joint_projection_passes": 3,
+      "corner_sweeps": 3
+    },
+    {
+      "name": "mf_eq_r2_rl12p5_strong",
+      "target_amplitude_mode": "strongest",
+      "active_rl_design_min_db": 12.5,
+      "local_radius_deg": 2.0,
+      "regional_ceiling_db": 0.0,
+      "joint_projection_passes": 3,
+      "corner_sweeps": 4
+    }
+  ],
+  "strict_corner_gate_unchanged": {
+    "psll_max_db": 0.0,
+    "nearest_isolation_min_db": 25.0,
+    "local_5deg_isolation_min_db": 20.0,
+    "weakest_target_gain_drop_max_db": 0.5,
+    "target_peak_spread_max_db": 3.0,
+    "pointing_error_max_deg": 1.5,
+    "combined_and_task_active_rl_min_db": 10.0,
+    "task_significant_relative_db": -20.0,
+    "combined_channel_dynamic_range_max_db": 20.0,
+    "combined_peak_to_rms_max_db": 12.0,
+    "corner_power_increase_max_db": 1.0,
+    "normalized_wng_min_db": -10.0
+  },
+  "acceptance_unchanged": {
+    "E1_new_scene_robust_oracle_min": 0.90,
+    "E2_overall_robust_oracle_min": 0.90,
+    "E2_k2_robust_oracle_min": 0.90,
+    "E2_k4_robust_oracle_min": 0.90,
+    "E2_k6_robust_oracle_min": 0.90,
+    "E2_requires_k6_positive_ratio_at_most": 0.70
+  },
+  "downstream_policy": {
+    "critic_retraining_allowed_before_pass": false,
+    "hfss_smoke_allowed_before_pass": false,
+    "failure_action": "Keep E2 and gates fixed; report equality, region, active-RL, and pointing residuals"
+  }
+}

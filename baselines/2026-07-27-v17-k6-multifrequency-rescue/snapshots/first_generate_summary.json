@@ -1,0 +1,80 @@
+{
+  "candidate_count": 384,
+  "target_scene_count": 12,
+  "target_sample_indices": [
+    421022,
+    421023,
+    421025,
+    421026,
+    421029,
+    421035,
+    421036,
+    426120,
+    426122,
+    426124,
+    426125,
+    426126
+  ],
+  "shard_count": 3,
+  "shard_summaries": [
+    {
+      "candidate_count": 128,
+      "target_scene_count": 4,
+      "target_sample_indices": [
+        421022,
+        421023,
+        421025,
+        421026
+      ],
+      "scene_offset": 0,
+      "k_value": 6,
+      "parents_per_ratio": 2,
+      "variants_per_parent": 4,
+      "common_command_across_E2_corners": true,
+      "profile_specific_weights_saved": false,
+      "E2_or_gates_changed": false,
+      "elapsed_seconds": 1145.6503522396088,
+      "evidence_scope": "4x4-HFSS-calibrated 16x16 EEP/S256 proxy K6 rescue; not perturbed 16x16 HFSS"
+    },
+    {
+      "candidate_count": 128,
+      "target_scene_count": 4,
+      "target_sample_indices": [
+        421029,
+        421035,
+        421036,
+        426120
+      ],
+      "scene_offset": 4,
+      "k_value": 6,
+      "parents_per_ratio": 2,
+      "variants_per_parent": 4,
+      "common_command_across_E2_corners": true,
+      "profile_specific_weights_saved": false,
+      "E2_or_gates_changed": false,
+      "elapsed_seconds": 1223.4936938285828,
+      "evidence_scope": "4x4-HFSS-calibrated 16x16 EEP/S256 proxy K6 rescue; not perturbed 16x16 HFSS"
+    },
+    {
+      "candidate_count": 128,
+      "target_scene_count": 4,
+      "target_sample_indices": [
+        426122,
+        426124,
+        426125,
+        426126
+      ],
+      "scene_offset": 8,
+      "k_value": 6,
+      "parents_per_ratio": 2,
+      "variants_per_parent": 4,
+      "common_command_across_E2_corners": true,
+      "profile_specific_weights_saved": false,
+      "E2_or_gates_changed": false,
+      "elapsed_seconds": 1213.3257148265839,
+      "evidence_scope": "4x4-HFSS-calibrated 16x16 EEP/S256 proxy K6 rescue; not perturbed 16x16 HFSS"
+    }
+  ],
+  "deterministic_scene_disjoint_merge": true,
+  "E2_or_gates_changed": false
+}

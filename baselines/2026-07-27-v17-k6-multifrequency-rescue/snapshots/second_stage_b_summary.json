@@ -1,0 +1,22 @@
+{
+  "candidate_count": 192,
+  "target_K6_failed_scene_count": 6,
+  "target_K6_scenes_rescued_by_new_candidates": 5,
+  "E1_new_scene_robust_oracle": 1.0,
+  "E2_overall_robust_oracle": 0.9733333333333334,
+  "E2_k2_robust_oracle": 1.0,
+  "E2_k4_robust_oracle": 0.96,
+  "E2_k6_robust_oracle": 0.96,
+  "E2_has_k6_positive_ratio_le_0_7": true,
+  "E3_stress_oracle": 0.0,
+  "stage_b_gate_pass": true,
+  "remaining_failed_scene_root_causes": {
+    "active_rl": 2
+  },
+  "critic_retraining_allowed": true,
+  "hfss_smoke_allowed": true,
+  "automatic_large_HFSS_allowed": false,
+  "E2_or_gates_changed": false,
+  "elapsed_seconds": 44.37043833732605,
+  "evidence_scope": "4x4-HFSS-calibrated 16x16 EEP/S256 proxy K6 boundary rescue; not perturbed 16x16 HFSS"
+}

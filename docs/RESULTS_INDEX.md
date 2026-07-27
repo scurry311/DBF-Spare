@@ -1,6 +1,6 @@
 # Result Index
 
-Current baseline: `v1.5.0-feature-observability`, frozen on 2026-07-27.
+Current baseline: `v1.7.0-k6-multifrequency-rescue`, frozen on 2026-07-27.
 
 ## Evidence Levels
 
@@ -413,3 +413,23 @@ on the 30 new scenes is 86.67%, and E3 stress coverage is 0%.
 Stage B therefore remains failed. Critic retraining and perturbed 16x16 HFSS
 are still disabled. The authoritative snapshot is
 `baselines/2026-07-27-v16-robust-drift-oracle/BASELINE.md`.
+
+## K=6 Multifrequency Rescue v1.7
+
+E2, its calibration seed, all strict thresholds, and the common-command rule
+remain frozen. The first round adds 384 K=6 candidates with multifrequency
+combined-mainlobe equalities and dense regional inequalities. A declared
+adaptive second round adds 192 quantization-aware boundary candidates.
+
+| Stage | E1 new | E2 overall | E2 K=2 | E2 K=4 | E2 K=6 |
+|---|---:|---:|---:|---:|---:|
+| v1.6 baseline | 86.67% | 82.67% | 100% | 96% | 52% |
+| Multifrequency rescue | 96.67% | 90.67% | 100% | 96% | 76% |
+| Quantization-aware rescue | 100% | 97.33% | 100% | 96% | 96% |
+
+Stage B passes. The final E2 feasible-ratio distribution is 51/15/4/3 scenes
+at ratio 0.5/0.6/0.7/0.8. Two active-RL failures remain, and E3 stress coverage
+is 0%. The result is still a 4x4-HFSS-calibrated 16x16 EEP/S256 proxy. It opens
+only a frozen small 16x16 perturbed HFSS smoke; it does not create new HFSS
+labels or authorize an automatic large batch. The authoritative snapshot is
+`baselines/2026-07-27-v17-k6-multifrequency-rescue/BASELINE.md`.

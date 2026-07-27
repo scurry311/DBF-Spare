@@ -1,0 +1,68 @@
+{
+  "candidate_count": 192,
+  "target_scene_count": 6,
+  "target_sample_indices": [
+    421022,
+    421023,
+    421029,
+    421036,
+    426120,
+    426125
+  ],
+  "shard_count": 3,
+  "shard_summaries": [
+    {
+      "candidate_count": 64,
+      "target_scene_count": 2,
+      "target_sample_indices": [
+        421022,
+        421023
+      ],
+      "scene_offset": 0,
+      "k_value": 6,
+      "parents_per_ratio": 2,
+      "variants_per_parent": 4,
+      "common_command_across_E2_corners": true,
+      "profile_specific_weights_saved": false,
+      "E2_or_gates_changed": false,
+      "elapsed_seconds": 1169.9845843315125,
+      "evidence_scope": "4x4-HFSS-calibrated 16x16 EEP/S256 proxy K6 boundary rescue; not perturbed 16x16 HFSS"
+    },
+    {
+      "candidate_count": 64,
+      "target_scene_count": 2,
+      "target_sample_indices": [
+        421029,
+        421036
+      ],
+      "scene_offset": 2,
+      "k_value": 6,
+      "parents_per_ratio": 2,
+      "variants_per_parent": 4,
+      "common_command_across_E2_corners": true,
+      "profile_specific_weights_saved": false,
+      "E2_or_gates_changed": false,
+      "elapsed_seconds": 1216.627340555191,
+      "evidence_scope": "4x4-HFSS-calibrated 16x16 EEP/S256 proxy K6 boundary rescue; not perturbed 16x16 HFSS"
+    },
+    {
+      "candidate_count": 64,
+      "target_scene_count": 2,
+      "target_sample_indices": [
+        426120,
+        426125
+      ],
+      "scene_offset": 4,
+      "k_value": 6,
+      "parents_per_ratio": 2,
+      "variants_per_parent": 4,
+      "common_command_across_E2_corners": true,
+      "profile_specific_weights_saved": false,
+      "E2_or_gates_changed": false,
+      "elapsed_seconds": 1243.8807337284088,
+      "evidence_scope": "4x4-HFSS-calibrated 16x16 EEP/S256 proxy K6 boundary rescue; not perturbed 16x16 HFSS"
+    }
+  ],
+  "deterministic_scene_disjoint_merge": true,
+  "E2_or_gates_changed": false
+}
