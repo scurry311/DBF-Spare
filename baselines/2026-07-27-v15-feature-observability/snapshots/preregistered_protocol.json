@@ -1,0 +1,23 @@
+{
+  "protocol": "v15-feature-observability-stage-a",
+  "created_at": "2026-07-27",
+  "frozen_parent_commit": "32e07dc",
+  "frozen_parent_tag": "v1.4.0-operator-drift-critic",
+  "dataset_dir": "hfss_outputs/v14_operator_drift_dataset_20260727_run03",
+  "model_c_dir": "hfss_outputs/v14_operator_drift_residual_critic_20260727_run01",
+  "seeds": [20260814, 20260815, 20260816, 20260817, 20260818],
+  "feature_tiers": {
+    "model_a": "deployable",
+    "model_b": "measurement",
+    "model_c": "oracle"
+  },
+  "stage_a_gates": {
+    "strict_auroc_min": 0.88,
+    "strict_ece_max": 0.08,
+    "strict_precision_min": 0.90,
+    "target_hash_overlap_max": 0
+  },
+  "evidence_scope": "4x4-HFSS-calibrated 16x16 EEP/S256 proxy observability audit; not 16x16 perturbed HFSS",
+  "stage_b_requires_model_a_or_b_pass": true,
+  "automatic_hfss_admission_allowed": false
+}

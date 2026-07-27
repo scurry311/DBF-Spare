@@ -52,6 +52,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--seeds", default="20260726,20260727,20260728,20260729,20260730")
     parser.add_argument("--device", choices=("auto", "cpu", "cuda"), default="auto")
     parser.add_argument("--disable-drift-features", action="store_true")
+    parser.add_argument(
+        "--feature-tier",
+        choices=("legacy", "deployable", "measurement", "oracle"),
+        default="legacy",
+    )
     return parser.parse_args()
 
 
@@ -113,8 +118,49 @@ def spatial_features(masks: np.ndarray, weights_ri: np.ndarray) -> np.ndarray:
     return np.concatenate((mask_channel, channels.astype(np.float32)), axis=1)
 
 
+def feature_observability_class(name: str) -> str:
+    oracle_only = {
+        "drift_intensity_scaled",
+        "patch_length_offset_mm_scaled",
+        "relative_permittivity_offset_scaled",
+    }
+    measurement_assisted = {
+        "phase_error_scaled",
+        "gain_error_scaled",
+        "dropout_scaled",
+        "implementation_delta_norm",
+        "implementation_delta_max",
+        "s_drift_relative_fro_scaled",
+        "s_drift_max_abs_scaled",
+        "s_projection_scale_scaled",
+        "group_phase_bias_rms_deg_scaled",
+        "soft_failure_count_scaled",
+        "temperature_offset_c_scaled",
+    }
+    if name in oracle_only:
+        return "C"
+    if name in measurement_assisted:
+        return "B"
+    return "A"
+
+
+def select_observable_features(
+    values: np.ndarray, names: list[str], feature_tier: str
+) -> tuple[np.ndarray, list[str]]:
+    if feature_tier in ("legacy", "oracle"):
+        return values, names
+    allowed = {"A"} if feature_tier == "deployable" else {"A", "B"}
+    keep = np.asarray(
+        [feature_observability_class(name) in allowed for name in names], dtype=bool
+    )
+    if not np.any(keep):
+        raise RuntimeError(f"No scalar features retained for tier {feature_tier}")
+    return values[:, keep], [name for name, retain in zip(names, keep) if retain]
+
+
 def scalar_features(
-    data: dict[str, np.ndarray], include_drift_features: bool = True
+    data: dict[str, np.ndarray], include_drift_features: bool = True,
+    feature_tier: str = "legacy",
 ) -> tuple[np.ndarray, list[str]]:
     weights_ri = np.asarray(data["nominal_external_task_weights_real_imag"], dtype=np.float32)
     weights = weights_ri[..., 0] + 1j * weights_ri[..., 1]
@@ -186,6 +232,7 @@ def scalar_features(
                 )
                 names.append(f"{name}_scaled")
     values = np.concatenate(blocks, axis=1).astype(np.float32)
+    values, names = select_observable_features(values, names, feature_tier)
     if not np.all(np.isfinite(values)):
         raise RuntimeError("Non-finite scalar feature")
     return values, names
@@ -412,8 +459,11 @@ def main() -> None:
 
     spatial = spatial_features(data["masks"], data["nominal_external_task_weights_real_imag"])
     targets = target_features(data["targets_deg"], data["task_valid"])
+    include_drift_features = not args.disable_drift_features or args.feature_tier != "legacy"
     scalars_raw, scalar_names = scalar_features(
-        data, include_drift_features=not args.disable_drift_features
+        data,
+        include_drift_features=include_drift_features,
+        feature_tier=args.feature_tier,
     )
     scalar_mean = scalars_raw[train_indices].mean(axis=0, keepdims=True)
     scalar_std = scalars_raw[train_indices].std(axis=0, keepdims=True)
@@ -588,6 +638,7 @@ def main() -> None:
                 "margin_names": data["margin_names"],
                 "temperatures": temperatures,
                 "uncertainty_kappa": float(args.uncertainty_kappa),
+                "feature_tier": args.feature_tier,
             },
             seed_dir / "best_checkpoint.pt",
         )
@@ -632,6 +683,7 @@ def main() -> None:
         "strict_auroc_ge_0_88": aggregate["test_strict_gate20_auroc"]["mean"] >= 0.88,
         "gate15_ece_le_0_08": aggregate["test_gate15_ece"]["mean"] <= 0.08,
         "strict_ece_le_0_08": aggregate["test_strict_gate20_ece"]["mean"] <= 0.08,
+        "strict_precision_ge_0_90": aggregate["test_strict_gate20_precision"]["mean"] >= 0.90,
         "top1_beats_fixed_strategy": aggregate["top1_strict_rate"]["mean"] > aggregate["fixed_strategy_rate"]["mean"],
     }
     acceptance["open_hfss_smoke"] = bool(all(acceptance.values()))
@@ -644,7 +696,13 @@ def main() -> None:
             "train": len(train_scenes), "val": len(val_scenes), "test": len(test_scenes)
         },
         "contains_nominal_control": False,
-        "drift_features_enabled": not args.disable_drift_features,
+        "feature_tier": args.feature_tier,
+        "drift_features_enabled": any(
+            name.endswith("_scaled") and name in {item[0] + "_scaled" for item in OPTIONAL_DRIFT_FEATURES}
+            for name in scalar_names
+        ),
+        "scalar_feature_count": len(scalar_names),
+        "scalar_feature_names": scalar_names,
         "v08_used_for_tuning": False,
         "fixed_strategy": fixed_strategy,
         "fixed_ratio_train_rates": fixed_ratio_rates,

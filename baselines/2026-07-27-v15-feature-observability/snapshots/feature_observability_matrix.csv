@@ -1,0 +1,55 @@
+﻿feature_name,is_current_input,model_input_group,observability_class,physical_meaning,training_source,inference_source,online_measurable,requires_vna_or_calibrator,depends_on_hfss_perturbed_operator,label_leakage_risk,recommendation,model_a_included,model_b_included,model_c_included
+mask_16x16,1,spatial,A,Commanded sparse element-selection mask,Frozen v1.4 proxy dataset,Beam-command controller,1,0,0,low,retain,1,1,1
+task_weights_real_imag,1,spatial,A,Commanded task-level complex weights,Frozen v1.4 proxy dataset,Beam-command controller,1,0,0,low,retain,1,1,1
+target_set,1,set,A,Commanded unordered target directions and validity mask,Frozen v1.4 proxy dataset,Beam-command controller,1,0,0,low,retain,1,1,1
+nominal_margin_psll,1,scalar,A,Derived nominal command or EEP/S256 scene descriptor,Frozen v1.4 proxy dataset,Commanded scene and nominal EEP/S256 evaluation,1,0,0,low,retain,1,1,1
+nominal_margin_nearest_iso,1,scalar,A,Derived nominal command or EEP/S256 scene descriptor,Frozen v1.4 proxy dataset,Commanded scene and nominal EEP/S256 evaluation,1,0,0,low,retain,1,1,1
+nominal_margin_local20_iso,1,scalar,A,Derived nominal command or EEP/S256 scene descriptor,Frozen v1.4 proxy dataset,Commanded scene and nominal EEP/S256 evaluation,1,0,0,low,retain,1,1,1
+nominal_margin_mainlobe,1,scalar,A,Derived nominal command or EEP/S256 scene descriptor,Frozen v1.4 proxy dataset,Commanded scene and nominal EEP/S256 evaluation,1,0,0,low,retain,1,1,1
+nominal_margin_active_rl,1,scalar,A,Derived nominal command or EEP/S256 scene descriptor,Frozen v1.4 proxy dataset,Commanded scene and nominal EEP/S256 evaluation,1,0,0,low,retain,1,1,1
+nominal_psll_db,1,scalar,A,Derived nominal command or EEP/S256 scene descriptor,Frozen v1.4 proxy dataset,Commanded scene and nominal EEP/S256 evaluation,1,0,0,low,retain,1,1,1
+nominal_weakest_target_gain_db,1,scalar,A,Derived nominal command or EEP/S256 scene descriptor,Frozen v1.4 proxy dataset,Commanded scene and nominal EEP/S256 evaluation,1,0,0,low,retain,1,1,1
+nominal_target_spread_db,1,scalar,A,Derived nominal command or EEP/S256 scene descriptor,Frozen v1.4 proxy dataset,Commanded scene and nominal EEP/S256 evaluation,1,0,0,low,retain,1,1,1
+nominal_nearest_iso_db,1,scalar,A,Derived nominal command or EEP/S256 scene descriptor,Frozen v1.4 proxy dataset,Commanded scene and nominal EEP/S256 evaluation,1,0,0,low,retain,1,1,1
+nominal_local_iso_db,1,scalar,A,Derived nominal command or EEP/S256 scene descriptor,Frozen v1.4 proxy dataset,Commanded scene and nominal EEP/S256 evaluation,1,0,0,low,retain,1,1,1
+nominal_pointing_error_deg,1,scalar,A,Derived nominal command or EEP/S256 scene descriptor,Frozen v1.4 proxy dataset,Commanded scene and nominal EEP/S256 evaluation,1,0,0,low,retain,1,1,1
+reference_psll_db,1,scalar,A,Derived nominal command or EEP/S256 scene descriptor,Frozen v1.4 proxy dataset,Commanded scene and nominal EEP/S256 evaluation,1,0,0,low,retain,1,1,1
+reference_weakest_target_gain_db,1,scalar,A,Derived nominal command or EEP/S256 scene descriptor,Frozen v1.4 proxy dataset,Commanded scene and nominal EEP/S256 evaluation,1,0,0,low,retain,1,1,1
+reference_target_spread_db,1,scalar,A,Derived nominal command or EEP/S256 scene descriptor,Frozen v1.4 proxy dataset,Commanded scene and nominal EEP/S256 evaluation,1,0,0,low,retain,1,1,1
+reference_nearest_iso_db,1,scalar,A,Derived nominal command or EEP/S256 scene descriptor,Frozen v1.4 proxy dataset,Commanded scene and nominal EEP/S256 evaluation,1,0,0,low,retain,1,1,1
+reference_local_iso_db,1,scalar,A,Derived nominal command or EEP/S256 scene descriptor,Frozen v1.4 proxy dataset,Commanded scene and nominal EEP/S256 evaluation,1,0,0,low,retain,1,1,1
+reference_pointing_error_deg,1,scalar,A,Derived nominal command or EEP/S256 scene descriptor,Frozen v1.4 proxy dataset,Commanded scene and nominal EEP/S256 evaluation,1,0,0,low,retain,1,1,1
+k_scaled,1,scalar,A,Derived nominal command or EEP/S256 scene descriptor,Frozen v1.4 proxy dataset,Commanded scene and nominal EEP/S256 evaluation,1,0,0,low,retain,1,1,1
+ratio,1,scalar,A,Derived nominal command or EEP/S256 scene descriptor,Frozen v1.4 proxy dataset,Commanded scene and nominal EEP/S256 evaluation,1,0,0,low,retain,1,1,1
+num_active_scaled,1,scalar,A,Derived nominal command or EEP/S256 scene descriptor,Frozen v1.4 proxy dataset,Commanded scene and nominal EEP/S256 evaluation,1,0,0,low,retain,1,1,1
+min_separation_scaled,1,scalar,A,Derived nominal command or EEP/S256 scene descriptor,Frozen v1.4 proxy dataset,Commanded scene and nominal EEP/S256 evaluation,1,0,0,low,retain,1,1,1
+max_theta_scaled,1,scalar,A,Derived nominal command or EEP/S256 scene descriptor,Frozen v1.4 proxy dataset,Commanded scene and nominal EEP/S256 evaluation,1,0,0,low,retain,1,1,1
+large_scan,1,scalar,A,Derived nominal command or EEP/S256 scene descriptor,Frozen v1.4 proxy dataset,Commanded scene and nominal EEP/S256 evaluation,1,0,0,low,retain,1,1,1
+phase_error_scaled,1,scalar,B,Measured or calibrated implementation state,Frozen v1.4 proxy dataset,"VNA, built-in calibration, telemetry, or fault monitor",0,1,0,medium if measurement is unavailable at inference,retain only for measurement-assisted deployment,0,1,1
+gain_error_scaled,1,scalar,B,Measured or calibrated implementation state,Frozen v1.4 proxy dataset,"VNA, built-in calibration, telemetry, or fault monitor",0,1,0,medium if measurement is unavailable at inference,retain only for measurement-assisted deployment,0,1,1
+dropout_scaled,1,scalar,B,Measured or calibrated implementation state,Frozen v1.4 proxy dataset,"VNA, built-in calibration, telemetry, or fault monitor",0,1,0,medium if measurement is unavailable at inference,retain only for measurement-assisted deployment,0,1,1
+phase_bits_scaled,1,scalar,A,Derived nominal command or EEP/S256 scene descriptor,Frozen v1.4 proxy dataset,Commanded scene and nominal EEP/S256 evaluation,1,0,0,low,retain,1,1,1
+amplitude_bits_scaled,1,scalar,A,Derived nominal command or EEP/S256 scene descriptor,Frozen v1.4 proxy dataset,Commanded scene and nominal EEP/S256 evaluation,1,0,0,low,retain,1,1,1
+implementation_delta_norm,1,scalar,B,Measured or calibrated implementation state,Frozen v1.4 proxy dataset,"VNA, built-in calibration, telemetry, or fault monitor",0,1,0,medium if measurement is unavailable at inference,retain only for measurement-assisted deployment,0,1,1
+implementation_delta_max,1,scalar,B,Measured or calibrated implementation state,Frozen v1.4 proxy dataset,"VNA, built-in calibration, telemetry, or fault monitor",0,1,0,medium if measurement is unavailable at inference,retain only for measurement-assisted deployment,0,1,1
+task_norm_min,1,scalar,A,Derived nominal command or EEP/S256 scene descriptor,Frozen v1.4 proxy dataset,Commanded scene and nominal EEP/S256 evaluation,1,0,0,low,retain,1,1,1
+task_norm_mean,1,scalar,A,Derived nominal command or EEP/S256 scene descriptor,Frozen v1.4 proxy dataset,Commanded scene and nominal EEP/S256 evaluation,1,0,0,low,retain,1,1,1
+task_norm_max,1,scalar,A,Derived nominal command or EEP/S256 scene descriptor,Frozen v1.4 proxy dataset,Commanded scene and nominal EEP/S256 evaluation,1,0,0,low,retain,1,1,1
+combined_norm,1,scalar,A,Derived nominal command or EEP/S256 scene descriptor,Frozen v1.4 proxy dataset,Commanded scene and nominal EEP/S256 evaluation,1,0,0,low,retain,1,1,1
+max_channel_amplitude,1,scalar,A,Derived nominal command or EEP/S256 scene descriptor,Frozen v1.4 proxy dataset,Commanded scene and nominal EEP/S256 evaluation,1,0,0,low,retain,1,1,1
+channel_dynamic_range_db,1,scalar,A,Derived nominal command or EEP/S256 scene descriptor,Frozen v1.4 proxy dataset,Commanded scene and nominal EEP/S256 evaluation,1,0,0,low,retain,1,1,1
+drift_intensity_scaled,1,scalar,C,Synthetic interpolation strength of the perturbed operator,Proxy generator control variable,Unavailable without metrology or perturbed full-wave truth,0,0,1,high,oracle ablation only; prohibit deployment,0,0,1
+frequency_offset_ghz_scaled,1,scalar,A,Known operating-frequency offset from 10 GHz,Frozen v1.4 proxy dataset,RF synthesizer setpoint,1,0,0,low,retain,1,1,1
+patch_length_offset_mm_scaled,1,scalar,C,True manufactured patch-length offset,HFSS geometry profile truth,Unavailable without metrology or perturbed full-wave truth,0,0,1,high,oracle ablation only; prohibit deployment,0,0,1
+relative_permittivity_offset_scaled,1,scalar,C,True substrate permittivity offset,HFSS material profile truth,Unavailable without metrology or perturbed full-wave truth,0,0,1,high,oracle ablation only; prohibit deployment,0,0,1
+s_drift_relative_fro_scaled,1,scalar,B,Relative complex S-matrix drift,Frozen v1.4 proxy dataset,VNA or embedded multiport reflection calibration,0,1,0,medium if measurement is unavailable at inference,retain only for measurement-assisted deployment,0,1,1
+s_drift_max_abs_scaled,1,scalar,B,Maximum absolute complex S-parameter drift,Frozen v1.4 proxy dataset,VNA or embedded multiport reflection calibration,0,1,0,medium if measurement is unavailable at inference,retain only for measurement-assisted deployment,0,1,1
+s_projection_scale_scaled,1,scalar,B,Passivity projection severity of measured S matrix,Frozen v1.4 proxy dataset,Derived from measured complex S matrix,0,1,0,medium if measurement is unavailable at inference,retain only for measurement-assisted deployment,0,1,1
+group_phase_bias_rms_deg_scaled,1,scalar,B,Measured or calibrated implementation state,Frozen v1.4 proxy dataset,"VNA, built-in calibration, telemetry, or fault monitor",0,1,0,medium if measurement is unavailable at inference,retain only for measurement-assisted deployment,0,1,1
+soft_failure_count_scaled,1,scalar,B,Measured or calibrated implementation state,Frozen v1.4 proxy dataset,"VNA, built-in calibration, telemetry, or fault monitor",0,1,0,medium if measurement is unavailable at inference,retain only for measurement-assisted deployment,0,1,1
+temperature_offset_c_scaled,1,scalar,B,Array or RF-chain temperature offset,Frozen v1.4 proxy dataset,Temperature telemetry,1,0,0,medium if measurement is unavailable at inference,retain only for measurement-assisted deployment,0,1,1
+actual_hfss_psll_isolation_mainlobe,0,forbidden,C,Ground-truth or future evaluation label,Evaluation label only,Unavailable before prediction,0,0,1,prohibited,never use as critic input,0,0,0
+actual_margins,0,forbidden,C,Ground-truth or future evaluation label,Evaluation label only,Unavailable before prediction,0,0,1,prohibited,never use as critic input,0,0,0
+strict_gate_label,0,forbidden,C,Ground-truth or future evaluation label,Evaluation label only,Unavailable before prediction,0,0,1,prohibited,never use as critic input,0,0,0
+test_derived_drift_feature,0,forbidden,C,Ground-truth or future evaluation label,Evaluation label only,Unavailable before prediction,0,0,1,prohibited,never use as critic input,0,0,0
+future_fullwave_label,0,forbidden,C,Ground-truth or future evaluation label,Evaluation label only,Unavailable before prediction,0,0,1,prohibited,never use as critic input,0,0,0

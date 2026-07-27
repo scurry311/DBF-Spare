@@ -1,0 +1,47 @@
+{
+  "protocol": "v15-feature-observability-stage-a",
+  "label_scope": "4x4-HFSS-calibrated 16x16 EEP/S256 proxy observability audit; not 16x16 perturbed HFSS",
+  "split_audit": {
+    "candidate_count": 4320,
+    "base_scene_count": 45,
+    "split_candidate_counts": {
+      "train": 2880,
+      "val": 576,
+      "test": 864
+    },
+    "target_hash_intersections": {
+      "train_val": 0,
+      "train_test": 0,
+      "val_test": 0
+    },
+    "target_hash_leakage_free": true
+  },
+  "model_gates": {
+    "model_a": true,
+    "model_b": true,
+    "model_c": true
+  },
+  "model_a_or_b_pass": true,
+  "only_model_c_pass": false,
+  "e1_strict_precision_by_model": {
+    "model_a": 0.9902920634920636,
+    "model_b": 0.9887174603174603,
+    "model_c": 0.9856349206349206
+  },
+  "e2_strict_precision_by_model": {
+    "model_a": 0.5997785780979059,
+    "model_b": 0.6983292899060697,
+    "model_c": 0.7136027271720193
+  },
+  "e2_precision_gate_by_model": {
+    "model_a": false,
+    "model_b": false,
+    "model_c": false
+  },
+  "e2_critic_auto_acceptance_allowed": false,
+  "stage_a_gate_pass": true,
+  "stage_b_allowed": true,
+  "engineering_critic_promoted": false,
+  "automatic_hfss_admission_allowed": false,
+  "decision": "allow_stage_b_drift_envelope_preregistration"
+}

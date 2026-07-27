@@ -1,6 +1,6 @@
 # Result Index
 
-Current baseline: `v1.4.0-operator-drift-critic`, frozen on 2026-07-27.
+Current baseline: `v1.5.0-feature-observability`, frozen on 2026-07-27.
 
 ## Evidence Levels
 
@@ -326,6 +326,28 @@ not by perturbed 16x16 HFSS solves. Engineering promotion and the final adaptive
 ratio HFSS stage remain locked until an independent frozen 16x16 operator-drift
 smoke passes without threshold or model changes.
 
+## Feature Observability Audit v1.5
+
+Baseline `v1.5.0-feature-observability` separates directly deployable features,
+measurement-assisted features, and unavailable simulation truth on the same
+v1.4 scene-grouped split.
+
+| Result | Model A | Model B | Model C |
+|---|---:|---:|---:|
+| Feature tier | Deployable | Measurement-assisted | Oracle truth |
+| Strict AUROC | 0.9829 | 0.9899 | 0.9887 |
+| Strict ECE | 0.0318 | 0.0311 | 0.0330 |
+| Strict precision | 0.9343 | 0.9071 | 0.9064 |
+| Strict recall | 0.7672 | 0.8723 | 0.8983 |
+| Top-1 strict rate | 29.17% | 30.09% | 30.00% |
+
+Models A and B pass the aggregate pre-registered Stage-A gate, and the target
+hash overlap remains zero. Measurement-assisted inputs improve recall by 10.5
+percentage points relative to deployable-only inputs. However, strict precision
+inside the E2 intensity-0.20 subgroup is only 59.98%/69.83%/71.36% for Models
+A/B/C. Stage B robust-candidate optimization may proceed, but E2 automatic
+critic admission, engineering promotion, and 16x16 HFSS remain disabled.
+
 ## Nominal Residual Critic (v0.2)
 
 | Signal | Observed |
@@ -377,3 +399,5 @@ The v1.3 K=4, frozen HFSS, and critic gate baseline is
 `baselines/2026-07-27-v13-k4-hfss-critic-gate/BASELINE.md`.
 The v1.4 operator-drift residual critic baseline is
 `baselines/2026-07-27-v14-operator-drift-critic/BASELINE.md`.
+The v1.5 feature observability audit baseline is
+`baselines/2026-07-27-v15-feature-observability/BASELINE.md`.

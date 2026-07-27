@@ -1,0 +1,280 @@
+{
+  "model_version": "v0.9-scene-conditioned-physical-margin-residual",
+  "dataset_dir": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v14_operator_drift_dataset_20260727_run03",
+  "device": "cpu",
+  "candidate_count": 4320,
+  "scene_counts": {
+    "train": 720,
+    "val": 144,
+    "test": 216
+  },
+  "contains_nominal_control": false,
+  "feature_tier": "measurement",
+  "drift_features_enabled": true,
+  "scalar_feature_count": 43,
+  "scalar_feature_names": [
+    "nominal_margin_psll",
+    "nominal_margin_nearest_iso",
+    "nominal_margin_local20_iso",
+    "nominal_margin_mainlobe",
+    "nominal_margin_active_rl",
+    "nominal_psll_db",
+    "nominal_weakest_target_gain_db",
+    "nominal_target_spread_db",
+    "nominal_nearest_iso_db",
+    "nominal_local_iso_db",
+    "nominal_pointing_error_deg",
+    "reference_psll_db",
+    "reference_weakest_target_gain_db",
+    "reference_target_spread_db",
+    "reference_nearest_iso_db",
+    "reference_local_iso_db",
+    "reference_pointing_error_deg",
+    "k_scaled",
+    "ratio",
+    "num_active_scaled",
+    "min_separation_scaled",
+    "max_theta_scaled",
+    "large_scan",
+    "phase_error_scaled",
+    "gain_error_scaled",
+    "dropout_scaled",
+    "phase_bits_scaled",
+    "amplitude_bits_scaled",
+    "implementation_delta_norm",
+    "implementation_delta_max",
+    "task_norm_min",
+    "task_norm_mean",
+    "task_norm_max",
+    "combined_norm",
+    "max_channel_amplitude",
+    "channel_dynamic_range_db",
+    "frequency_offset_ghz_scaled",
+    "s_drift_relative_fro_scaled",
+    "s_drift_max_abs_scaled",
+    "s_projection_scale_scaled",
+    "group_phase_bias_rms_deg_scaled",
+    "soft_failure_count_scaled",
+    "temperature_offset_c_scaled"
+  ],
+  "v08_used_for_tuning": false,
+  "fixed_strategy": "ratio_0.7_nominal_margin",
+  "fixed_ratio_train_rates": {
+    "0.5": 0.1597222222222222,
+    "0.6000000238418579": 0.2375,
+    "0.699999988079071": 0.2875,
+    "0.800000011920929": 0.23055555555555557
+  },
+  "five_seed_aggregate": {
+    "epochs": {
+      "mean": 30.2,
+      "std": 3.3466401061363023,
+      "ci95_half_width": 2.93345939123077
+    },
+    "best_val_nll": {
+      "mean": -0.2074502319097519,
+      "std": 0.02665596875096761,
+      "ci95_half_width": 0.023364986788243305
+    },
+    "scene_count": {
+      "mean": 216.0,
+      "std": 0.0,
+      "ci95_half_width": 0.0
+    },
+    "top1_strict_rate": {
+      "mean": 0.30092592592592593,
+      "std": 0.007320087176315691,
+      "ci95_half_width": 0.006416339310766818
+    },
+    "oracle_strict_rate": {
+      "mean": 0.3425925925925926,
+      "std": 0.0,
+      "ci95_half_width": 0.0
+    },
+    "top1_mean_ratio": {
+      "mean": 0.6135185122489929,
+      "std": 0.008342333475494937,
+      "ci95_half_width": 0.007312377698934071
+    },
+    "fixed_strategy_rate": {
+      "mean": 0.24537037037037038,
+      "std": 0.0,
+      "ci95_half_width": 0.0
+    },
+    "fixed_strategy_scene_count": {
+      "mean": 216.0,
+      "std": 0.0,
+      "ci95_half_width": 0.0
+    },
+    "test_gate15_auroc": {
+      "mean": 0.9320147379291633,
+      "std": 0.0036739506001352085,
+      "ci95_half_width": 0.0032203596888483615
+    },
+    "test_gate15_auprc": {
+      "mean": 0.9841801652030066,
+      "std": 0.0009129383940493212,
+      "ci95_half_width": 0.0008002257848785985
+    },
+    "test_gate15_brier": {
+      "mean": 0.08201640933658123,
+      "std": 0.001893916779985128,
+      "ci95_half_width": 0.0016600912521995096
+    },
+    "test_gate15_ece": {
+      "mean": 0.02154871634147303,
+      "std": 0.0036782960717988435,
+      "ci95_half_width": 0.003224168662701763
+    },
+    "test_gate15_precision": {
+      "mean": 0.9127808103386172,
+      "std": 0.01112060443054476,
+      "ci95_half_width": 0.009747639563372702
+    },
+    "test_gate15_recall": {
+      "mean": 0.9352353780313838,
+      "std": 0.009654165087411513,
+      "ci95_half_width": 0.008462248805371277
+    },
+    "test_gate15_positive_rate": {
+      "mean": 0.8113425925925926,
+      "std": 0.0,
+      "ci95_half_width": 0.0
+    },
+    "temperature_gate15": {
+      "mean": 1.1680000000000001,
+      "std": 0.08786353054595519,
+      "ci95_half_width": 0.07701578020120292
+    },
+    "test_strict_gate20_auroc": {
+      "mean": 0.9898502454789924,
+      "std": 0.0008932978277051449,
+      "ci95_half_width": 0.0007830100694254268
+    },
+    "test_strict_gate20_auprc": {
+      "mean": 0.9565566588830346,
+      "std": 0.004379533531098863,
+      "ci95_half_width": 0.003838830396628485
+    },
+    "test_strict_gate20_brier": {
+      "mean": 0.03342357506027427,
+      "std": 0.0016803043381842866,
+      "ci95_half_width": 0.0014728516914426014
+    },
+    "test_strict_gate20_ece": {
+      "mean": 0.031051663186668455,
+      "std": 0.0035136980732087845,
+      "ci95_half_width": 0.0030798921556891108
+    },
+    "test_strict_gate20_precision": {
+      "mean": 0.9071398287853484,
+      "std": 0.03012194549813759,
+      "ci95_half_width": 0.02640304935736473
+    },
+    "test_strict_gate20_recall": {
+      "mean": 0.872316384180791,
+      "std": 0.05248462898302188,
+      "ci95_half_width": 0.04600480568651789
+    },
+    "test_strict_gate20_positive_rate": {
+      "mean": 0.2048611111111111,
+      "std": 0.0,
+      "ci95_half_width": 0.0
+    },
+    "temperature_strict_gate20": {
+      "mean": 0.9880000000000001,
+      "std": 0.07563068160475617,
+      "ci95_half_width": 0.06629321533912805
+    },
+    "test_mainlobe_gate_auroc": {
+      "mean": 0.9837157684801955,
+      "std": 0.0023282003470262574,
+      "ci95_half_width": 0.0020407575825462103
+    },
+    "test_mainlobe_gate_auprc": {
+      "mean": 0.9800733030285909,
+      "std": 0.002234124855817042,
+      "ci95_half_width": 0.001958296778748898
+    },
+    "test_mainlobe_gate_brier": {
+      "mean": 0.048504667990751746,
+      "std": 0.00400860431503833,
+      "ci95_half_width": 0.003513696603383278
+    },
+    "test_mainlobe_gate_ece": {
+      "mean": 0.028255401877901966,
+      "std": 0.011754682423727533,
+      "ci95_half_width": 0.010303433429723686
+    },
+    "test_mainlobe_gate_precision": {
+      "mean": 0.9353676193687495,
+      "std": 0.016963748925131625,
+      "ci95_half_width": 0.014869381533934653
+    },
+    "test_mainlobe_gate_recall": {
+      "mean": 0.937914691943128,
+      "std": 0.022505611508215673,
+      "ci95_half_width": 0.01972703826536815
+    },
+    "test_mainlobe_gate_positive_rate": {
+      "mean": 0.48842592592592593,
+      "std": 0.0,
+      "ci95_half_width": 0.0
+    },
+    "temperature_mainlobe_gate": {
+      "mean": 0.812,
+      "std": 0.14532721699667958,
+      "ci95_half_width": 0.12738492218469183
+    },
+    "test_active_rl_gate_auroc": {
+      "mean": 0.9880796381620662,
+      "std": 0.0007009166655633667,
+      "ci95_half_width": 0.0006143805458187721
+    },
+    "test_active_rl_gate_auprc": {
+      "mean": 0.9783472894913128,
+      "std": 0.0008034564788406897,
+      "ci95_half_width": 0.0007042606550309581
+    },
+    "test_active_rl_gate_brier": {
+      "mean": 0.04312462424777408,
+      "std": 0.0014815826894689422,
+      "ci95_half_width": 0.0012986644863122905
+    },
+    "test_active_rl_gate_ece": {
+      "mean": 0.02918302537485336,
+      "std": 0.006975145477516752,
+      "ci95_half_width": 0.006113984580745654
+    },
+    "test_active_rl_gate_precision": {
+      "mean": 0.9167889991362266,
+      "std": 0.03190866238409795,
+      "ci95_half_width": 0.02796917575947794
+    },
+    "test_active_rl_gate_recall": {
+      "mean": 0.902439024390244,
+      "std": 0.026649927771390882,
+      "ci95_half_width": 0.023359691636177477
+    },
+    "test_active_rl_gate_positive_rate": {
+      "mean": 0.33217592592592593,
+      "std": 0.0,
+      "ci95_half_width": 0.0
+    },
+    "temperature_active_rl_gate": {
+      "mean": 0.9960000000000001,
+      "std": 0.15059880477613363,
+      "ci95_half_width": 0.13200567260538468
+    }
+  },
+  "acceptance": {
+    "gate15_auroc_ge_0_88": true,
+    "strict_auroc_ge_0_88": true,
+    "gate15_ece_le_0_08": true,
+    "strict_ece_le_0_08": true,
+    "strict_precision_ge_0_90": true,
+    "top1_beats_fixed_strategy": true,
+    "open_hfss_smoke": true
+  },
+  "elapsed_seconds": 257.58741068840027
+}

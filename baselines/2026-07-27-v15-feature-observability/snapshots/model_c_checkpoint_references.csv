@@ -1,0 +1,6 @@
+﻿"model","relative_path","bytes","sha256"
+"model_c","./baselines/2026-07-27-v14-operator-drift-critic/checkpoints/seed_20260814_best_checkpoint.pt","777233","b110205995dfa2e3c75d175bd743072468909b6e797f1c13afdb634e49eacad9"
+"model_c","./baselines/2026-07-27-v14-operator-drift-critic/checkpoints/seed_20260815_best_checkpoint.pt","777233","b38b98d8699584d238d420fb43793fe5fefac6bab63b83890dcc9c4e5c780b17"
+"model_c","./baselines/2026-07-27-v14-operator-drift-critic/checkpoints/seed_20260816_best_checkpoint.pt","777233","2068e2f2c3a621c7483f559fb3140ceb4d18af0b95e4f5d567720d515d9893ff"
+"model_c","./baselines/2026-07-27-v14-operator-drift-critic/checkpoints/seed_20260817_best_checkpoint.pt","777233","fbef166e118c6dd07a72c60e46fbbf062de9960674ca76e0ac77f1539dbf519f"
+"model_c","./baselines/2026-07-27-v14-operator-drift-critic/checkpoints/seed_20260818_best_checkpoint.pt","777233","5bed689875c2ecffa5bd1608210101c602a58e714309b8d894d4380e785b64f1"
