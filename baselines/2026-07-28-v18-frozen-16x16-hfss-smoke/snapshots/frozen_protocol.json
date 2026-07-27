@@ -1,0 +1,165 @@
+{
+  "protocol": "v17-frozen-16x16-perturbed-source-hfss-smoke",
+  "created_at": "2026-07-28",
+  "parent_commit": "551032e",
+  "parent_tag": "v1.7.0-k6-multifrequency-rescue",
+  "candidate_count": 20,
+  "independent_scene_count": 20,
+  "scene_counts_by_k": {
+    "K2": 7,
+    "K4": 6,
+    "K6": 7
+  },
+  "only_new30_unseen_target_sets": true,
+  "exclude_previous_hfss_smoke_target_hashes": true,
+  "ratio_1_control_only": true,
+  "selection_schedule": {
+    "K2": [
+      [
+        "reserve",
+        0.5
+      ],
+      [
+        "reserve",
+        0.5
+      ],
+      [
+        "psll_boundary",
+        0.5
+      ],
+      [
+        "nearest_boundary",
+        0.6
+      ],
+      [
+        "local_boundary",
+        0.7
+      ],
+      [
+        "active_rl_boundary",
+        0.8
+      ],
+      [
+        "large_scan",
+        0.6
+      ]
+    ],
+    "K4": [
+      [
+        "reserve",
+        0.5
+      ],
+      [
+        "psll_boundary",
+        0.5
+      ],
+      [
+        "nearest_boundary",
+        0.6
+      ],
+      [
+        "local_boundary",
+        0.7
+      ],
+      [
+        "active_rl_boundary",
+        0.8
+      ],
+      [
+        "large_scan",
+        0.6
+      ]
+    ],
+    "K6": [
+      [
+        "reserve",
+        0.5
+      ],
+      [
+        "psll_boundary",
+        0.5
+      ],
+      [
+        "nearest_boundary",
+        0.6
+      ],
+      [
+        "local_boundary",
+        0.7
+      ],
+      [
+        "active_rl_boundary",
+        0.8
+      ],
+      [
+        "large_scan",
+        0.7
+      ],
+      [
+        "small_gap",
+        0.8
+      ]
+    ]
+  },
+  "frozen_E2": {
+    "seed": 20260827,
+    "intensity": 0.2,
+    "profiles": [
+      "frequency_low",
+      "frequency_high",
+      "patch_length_low",
+      "patch_length_high",
+      "dielectric_low",
+      "dielectric_high"
+    ],
+    "candidate_perturbation_corner": "candidate-specific limiting E2 margin corner",
+    "same_mask_and_common_task_command_across_corners": true
+  },
+  "hfss_evidence_scope": {
+    "array": "trusted fixed-mesh 16x16 grounded-patch project",
+    "frequency_ghz": 10.0,
+    "source_perturbations": [
+      "7-bit amplitude quantization",
+      "7-bit phase quantization",
+      "gain error",
+      "phase error",
+      "quadrant phase bias",
+      "compression",
+      "soft-port failure"
+    ],
+    "physical_frequency_geometry_dielectric_corner_in_16x16_hfss": false,
+    "physical_corner_status": "held until physical available RAM >= 14 GB",
+    "claim_prohibited": "Do not call this a 16x16 physical-geometry E2 validation"
+  },
+  "strict_gate_unchanged": {
+    "psll_max_db": 0.0,
+    "nearest_isolation_min_db": 25.0,
+    "local_5deg_isolation_min_db": 20.0,
+    "weakest_target_gain_drop_max_db": 0.5,
+    "target_peak_spread_max_db": 3.0,
+    "pointing_error_max_deg": 1.5,
+    "combined_and_task_active_rl_min_db": 10.0
+  },
+  "execution_policy": {
+    "freeze_hashes_before_hfss": true,
+    "single_candidate_end_to_end_first": true,
+    "launch_remaining_candidates_only_after_single_candidate_pass": true,
+    "reoptimize_after_hfss": false,
+    "threshold_change_after_hfss": false,
+    "automatic_large_hfss": false
+  },
+  "single_candidate_acceptance": {
+    "all_cases_complete": true,
+    "complex_nmse_max": 1e-06,
+    "magnitude_rmse_max_db": 0.02,
+    "strict_engineering_gate_required": true
+  },
+  "batch_acceptance": {
+    "candidate_count": 20,
+    "expected_case_count": 100,
+    "fullwave_completion_rate_min": 1.0,
+    "eep_accepted_hfss_strict_precision_min": 0.9,
+    "K6_strict_positive_min": 6,
+    "all_no_scale_reconstruction_required": true
+  }
+}

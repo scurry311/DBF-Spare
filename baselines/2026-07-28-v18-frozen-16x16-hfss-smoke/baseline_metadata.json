@@ -1,0 +1,20 @@
+{
+  "tag": "2026-07-28-v18-frozen-16x16-hfss-smoke",
+  "version": "v1.8.0-frozen-16x16-hfss-smoke",
+  "parent_commit": "551032e",
+  "parent_tag": "v1.7.0-k6-multifrequency-rescue",
+  "candidate_count": 20,
+  "independent_scene_count": 20,
+  "hfss_case_count": 100,
+  "k_counts": {"2": 7, "4": 6, "6": 7},
+  "ratio_counts": {"0.5": 7, "0.6": 5, "0.7": 4, "0.8": 4},
+  "no_scale_complex_nmse_max": 5.866862985010046e-12,
+  "no_scale_magnitude_rmse_db_max": 2.98810082313139e-05,
+  "strict_pattern_gate_rate": 1.0,
+  "semantic_active_rl_gate_rate": 1.0,
+  "final_engineering_smoke_gate_rate": 1.0,
+  "physical_16x16_operator_corner_included": false,
+  "smoke_gate_pass": true,
+  "new_critic_training_labels_allowed": false,
+  "automatic_large_hfss_allowed": false
+}

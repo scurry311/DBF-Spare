@@ -1,0 +1,23 @@
+{
+  "candidate_count": 20,
+  "independent_scene_count": 20,
+  "k_counts": {
+    "2": 7,
+    "4": 6,
+    "6": 7
+  },
+  "ratio_counts": {
+    "0.5": 7,
+    "0.6": 5,
+    "0.7": 4,
+    "0.8": 4
+  },
+  "expected_hfss_case_count": 100,
+  "previous_hfss_target_hash_overlap": 0,
+  "all_selected_E2_strict": true,
+  "weights_frozen": true,
+  "thresholds_frozen": true,
+  "dataset_sha256": "eeaa538885e7b35cd5864b9ac600461cc6f7974887a3d9794da1f1b438314db7",
+  "physical_16x16_operator_corner_included": false,
+  "hfss_scope": "trusted nominal 16x16 field basis with frozen E2 source/calibration perturbations"
+}

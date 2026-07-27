@@ -29,3 +29,6 @@ Current checkpoints:
 - `2026-07-27-v17-k6-multifrequency-rescue`: frozen-E2 K=6 multifrequency and
   quantization-aware boundary rescue; Stage B passes with 97.33% overall and
   96% K=6 oracle coverage, opening only the small frozen 16x16 HFSS smoke.
+- `2026-07-28-v18-frozen-16x16-hfss-smoke`: twenty frozen independent sparse
+  candidates and 100 direct saved-field HFSS cases pass the strict pattern and
+  semantic active-RL gates; physical-corner critic labels remain locked.

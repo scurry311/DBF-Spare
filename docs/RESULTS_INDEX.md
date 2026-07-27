@@ -1,6 +1,6 @@
 # Result Index
 
-Current baseline: `v1.7.0-k6-multifrequency-rescue`, frozen on 2026-07-27.
+Current baseline: `v1.8.0-frozen-16x16-hfss-smoke`, frozen on 2026-07-28.
 
 ## Evidence Levels
 
@@ -433,3 +433,23 @@ is 0%. The result is still a 4x4-HFSS-calibrated 16x16 EEP/S256 proxy. It opens
 only a frozen small 16x16 perturbed HFSS smoke; it does not create new HFSS
 labels or authorize an automatic large batch. The authoritative snapshot is
 `baselines/2026-07-27-v17-k6-multifrequency-rescue/BASELINE.md`.
+
+## Frozen 16x16 Perturbed HFSS Smoke v1.8
+
+Twenty independent E2-positive candidates were frozen before HFSS, with
+K=2/4/6 represented by 7/6/7 scenes and sparse ratios 0.5/0.6/0.7/0.8 by
+7/5/4/4 scenes. All 100 combined/task cases completed. The no-scale complex
+NMSE and magnitude RMSE maxima are 5.87e-12 and 2.99e-5 dB.
+
+All 20 candidates pass the strict pattern gate and the combined plus -20 dB
+significant-task active-RL gate. Worst full-wave PSLL is -0.91 dB; minimum
+nearest/local isolation is 25.66/20.95 dB; minimum combined and significant-task
+active RL is 10.88/10.62 dB. The old all-nonzero task diagnostic passes 11/20
+and is retained only to expose the near-zero coefficient semantic mismatch.
+
+This smoke reuses the trusted nominal 16x16 saved-field basis and applies frozen
+source/calibration perturbations. It does not include new 16x16 physical
+frequency, geometry, dielectric, or S-parameter corner solves, so it validates
+the execution chain but does not open hidden-physics residual-critic training.
+The authoritative snapshot is
+`baselines/2026-07-28-v18-frozen-16x16-hfss-smoke/BASELINE.md`.
