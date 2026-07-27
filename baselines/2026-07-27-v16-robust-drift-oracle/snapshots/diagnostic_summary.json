@@ -1,0 +1,22 @@
+{
+  "stage_b_gate_pass": false,
+  "E2_oracle_initial": 0.013333333333333334,
+  "E2_oracle_after_common_weight_projection": 0.6933333333333334,
+  "E2_oracle_after_mask_rescue": 0.8266666666666667,
+  "E2_k2_post_rescue": 1.0,
+  "E2_k4_post_rescue": 0.96,
+  "E2_k6_post_rescue": 0.52,
+  "E1_new_post_rescue": 0.8666666666666667,
+  "E3_post_rescue": 0.0,
+  "failed_scene_count": 13,
+  "failed_scene_root_causes": {
+    "mainlobe": 8,
+    "active_rl": 4,
+    "nearest_iso": 1
+  },
+  "candidate_budget_min": 32,
+  "candidate_budget_max": 40,
+  "critic_retraining_allowed": false,
+  "hfss_smoke_allowed": false,
+  "next_action": "Keep E2 fixed. Repair K6 frequency-corner mainlobe robustness and active-RL with explicit multi-frequency combined-beam constraints before another oracle run."
+}

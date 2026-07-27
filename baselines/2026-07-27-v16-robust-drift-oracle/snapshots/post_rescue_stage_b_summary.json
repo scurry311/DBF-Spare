@@ -1,0 +1,22 @@
+{
+  "evaluation": "post_rescue",
+  "rescue_candidate_count": 736,
+  "scene_count": 75,
+  "E1_new_scene_robust_oracle": 0.8666666666666667,
+  "E2_overall_robust_oracle": 0.8266666666666667,
+  "E2_k2_robust_oracle": 1.0,
+  "E2_k4_robust_oracle": 0.96,
+  "E2_k6_robust_oracle": 0.52,
+  "E2_has_k6_positive_ratio_le_0_7": true,
+  "stage_b_gate_pass": false,
+  "E3_stress_oracle": 0.0,
+  "failed_scene_best_candidate_root_causes": {
+    "mainlobe": 8,
+    "active_rl": 4,
+    "nearest_iso": 1
+  },
+  "critic_retraining_allowed": false,
+  "hfss_smoke_allowed": false,
+  "elapsed_seconds": 65.79491305351257,
+  "evidence_scope": "4x4-HFSS-calibrated 16x16 EEP/S256 proxy robust-oracle development; not perturbed 16x16 HFSS"
+}

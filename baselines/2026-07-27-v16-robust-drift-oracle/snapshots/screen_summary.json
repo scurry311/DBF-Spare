@@ -1,0 +1,7 @@
+{
+  "candidate_count": 9600,
+  "dense_selected_count": 1200,
+  "selected_per_scene_ratio": 4,
+  "selection_policy": "top physics margins plus one near-boundary uncertainty candidate",
+  "uses_HFSS_labels": false
+}

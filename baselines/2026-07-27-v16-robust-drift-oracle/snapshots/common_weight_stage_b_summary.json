@@ -1,0 +1,25 @@
+{
+  "evaluation": "final",
+  "verified_candidate_count": 1500,
+  "scene_count": 75,
+  "E1_new_scene_robust_oracle": 0.8666666666666667,
+  "E2_overall_robust_oracle": 0.6933333333333334,
+  "E2_k2_robust_oracle": 0.88,
+  "E2_k4_robust_oracle": 0.76,
+  "E2_k6_robust_oracle": 0.44,
+  "E2_has_k6_positive_ratio_le_0_7": true,
+  "stage_b_gate_pass": false,
+  "E3_stress_oracle": 0.0,
+  "E2_failed_candidate_root_causes": {
+    "hardware": 266,
+    "active_rl": 893,
+    "nearest_iso": 151,
+    "local20_iso": 1,
+    "mainlobe": 95
+  },
+  "calibration_seed_formula": "protocol_seed + 97*sample_index + 100003*profile_index + 1009*level_index",
+  "critic_retraining_allowed": false,
+  "hfss_smoke_allowed": false,
+  "elapsed_seconds": 118.47509503364563,
+  "evidence_scope": "4x4-HFSS-calibrated 16x16 EEP/S256 proxy robust-oracle development; not perturbed 16x16 HFSS"
+}

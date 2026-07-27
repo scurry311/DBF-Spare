@@ -1,0 +1,8 @@
+{
+  "failed_scene_count": 23,
+  "rescue_candidate_count": 736,
+  "rescue_masks_per_failed_scene_ratio": 8,
+  "profile_specific_commands_saved": false,
+  "E2_or_threshold_changed": false,
+  "elapsed_seconds": 1032.1401476860046
+}

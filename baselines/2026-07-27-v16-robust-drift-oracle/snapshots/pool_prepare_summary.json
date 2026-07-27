@@ -1,0 +1,23 @@
+{
+  "created_at": "2026-07-27 16:24:30",
+  "candidate_count": 9600,
+  "scene_count": 75,
+  "existing_scene_count": 45,
+  "new_scene_count": 30,
+  "new_scene_counts_by_k": {
+    "2": 10,
+    "4": 10,
+    "6": 10
+  },
+  "unique_masks_per_scene_ratio_min": 32,
+  "unique_masks_per_scene_ratio_max": 32,
+  "frozen_target_hash_overlaps": {
+    "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v09_second_prospective_eep_candidates_20260726_run01": 0,
+    "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v13_frozen_k246_hfss_smoke_dataset_20260727_run01": 0,
+    "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v14_operator_drift_dataset_20260727_run03": 0
+  },
+  "target_hash_overlap_gate_pass": true,
+  "ratio_1_present": false,
+  "elapsed_seconds": 188.54035305976868,
+  "evidence_scope": "4x4-HFSS-calibrated 16x16 EEP/S256 proxy robust-oracle development; not perturbed 16x16 HFSS"
+}

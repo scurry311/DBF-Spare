@@ -1,0 +1,111 @@
+{
+  "protocol": "v16-stage-b-robust-drift-oracle",
+  "created_at": "2026-07-27",
+  "frozen_parent_commit": "14b807b",
+  "frozen_parent_tag": "v1.5.0-feature-observability",
+  "seed": 20260827,
+  "evidence_scope": "4x4-HFSS-calibrated 16x16 EEP/S256 proxy robust-oracle development; not perturbed 16x16 HFSS",
+  "candidate_command_policy": {
+    "common_mask_across_corners": true,
+    "common_task_weights_across_corners": true,
+    "common_matching_network_across_corners": true,
+    "common_quantization_across_corners": true,
+    "profile_specific_reoptimization_prohibited": true,
+    "ratio_1_control_only": true
+  },
+  "scene_policy": {
+    "existing_development_scenes": 45,
+    "new_independent_scenes": 30,
+    "new_scene_counts_by_k": {
+      "2": 10,
+      "4": 10,
+      "6": 10
+    },
+    "ratios": [0.5, 0.6, 0.7, 0.8],
+    "candidate_masks_per_scene_ratio_min": 32,
+    "candidate_masks_per_scene_ratio_max": 64,
+    "target_hash_overlap_with_frozen_sets_max": 0,
+    "operating_envelope": {
+      "2": {"max_scan_deg": 48.0, "min_separation_deg": 16.0},
+      "4": {"max_scan_deg": 48.0, "min_separation_deg": 16.0},
+      "6": {"max_scan_deg": 58.0, "min_separation_deg": 13.0}
+    }
+  },
+  "drift_envelopes": {
+    "E1_commissioning": {
+      "intensities": [0.05],
+      "profiles": [
+        "frequency_low", "frequency_high", "patch_length_low",
+        "patch_length_high", "dielectric_low", "dielectric_high"
+      ],
+      "automatic_candidate_admission": true
+    },
+    "E2_engineering": {
+      "intensities": [0.20],
+      "profiles": [
+        "frequency_low", "frequency_high", "patch_length_low",
+        "patch_length_high", "dielectric_low", "dielectric_high"
+      ],
+      "physical_bounds": {
+        "frequency_offset_ghz": [-0.04, 0.04],
+        "patch_length_offset_mm": [-0.02, 0.02],
+        "relative_permittivity_offset": [-0.008, 0.008]
+      },
+      "calibration_quantization_temperature_intensity": 0.20,
+      "unknown_hard_failures": 0,
+      "post_result_envelope_shrink_prohibited": true,
+      "automatic_candidate_admission": false
+    },
+    "E3_stress": {
+      "intensities": [0.50, 1.00],
+      "profiles": [
+        "frequency_low", "frequency_high", "patch_length_low",
+        "patch_length_high", "dielectric_low", "dielectric_high"
+      ],
+      "used_for_engineering_claim": false
+    }
+  },
+  "strict_corner_gate": {
+    "psll_max_db": 0.0,
+    "nearest_isolation_min_db": 25.0,
+    "local_5deg_isolation_min_db": 20.0,
+    "weakest_target_gain_drop_max_db": 0.5,
+    "target_peak_spread_max_db": 3.0,
+    "pointing_error_max_deg": 1.5,
+    "combined_and_task_active_rl_min_db": 10.0,
+    "task_significant_relative_db": -20.0,
+    "combined_channel_dynamic_range_max_db": 20.0,
+    "combined_peak_to_rms_max_db": 12.0,
+    "corner_power_increase_max_db": 1.0,
+    "normalized_wng_min_db": -10.0
+  },
+  "robust_search": {
+    "candidate_sources": [
+      "symmetry_quadrant_balance",
+      "center_edge_density",
+      "historical_hard_positive_neighborhood",
+      "swap_add_remove",
+      "high_ratio_continuation",
+      "k6_hard_scene_strengthening",
+      "critic_uncertainty_priority",
+      "adversarial_multi_corner_refinement"
+    ],
+    "initial_candidates_per_ratio": 32,
+    "rescue_candidates_per_ratio": 32,
+    "robust_refine_top_per_ratio": 4,
+    "search_order": [0.5, 0.6, 0.7, 0.8]
+  },
+  "stage_b_acceptance": {
+    "E1_new_scene_robust_oracle_min": 0.90,
+    "E2_overall_robust_oracle_min": 0.90,
+    "E2_k2_robust_oracle_min": 0.90,
+    "E2_k4_robust_oracle_min": 0.90,
+    "E2_k6_robust_oracle_min": 0.90,
+    "E2_requires_k6_positive_ratio_at_most": 0.70
+  },
+  "downstream_policy": {
+    "critic_retraining_allowed_before_stage_b_pass": false,
+    "hfss_smoke_allowed_before_stage_b_pass": false,
+    "failure_action": "diagnose mask, common task weights, active-RL, and hardware envelope without changing E2"
+  }
+}

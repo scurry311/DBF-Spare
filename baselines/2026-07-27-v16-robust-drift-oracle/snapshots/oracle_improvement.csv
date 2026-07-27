@@ -1,0 +1,4 @@
+﻿stage,E1_new_scene_robust_oracle,E2_overall_robust_oracle,E2_k2_robust_oracle,E2_k4_robust_oracle,E2_k6_robust_oracle,E3_stress_oracle
+initial,0.8,0.013333333333333334,0.04,0.0,0.0,0.0
+common_weight_projection,0.8666666666666667,0.6933333333333334,0.88,0.76,0.44,0.0
+mask_rescue,0.8666666666666667,0.8266666666666667,1.0,0.96,0.52,0.0

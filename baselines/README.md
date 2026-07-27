@@ -23,3 +23,6 @@ Current checkpoints:
 - `2026-07-24-expanded-residual`: 45 independent scenes and 455 complete HFSS
   cases; mainlobe and ranking support pass, while gate15 AUROC and calibration
   keep the residual critic experimental.
+- `2026-07-27-v16-robust-drift-oracle`: preregistered E1/E2/E3 common-command
+  robust search; K=2/K=4 pass the E2 oracle gate, while K=6 and E1 keep critic
+  retraining and perturbed 16x16 HFSS locked.

@@ -401,3 +401,15 @@ The v1.4 operator-drift residual critic baseline is
 `baselines/2026-07-27-v14-operator-drift-critic/BASELINE.md`.
 The v1.5 feature observability audit baseline is
 `baselines/2026-07-27-v15-feature-observability/BASELINE.md`.
+
+## Robust Drift Oracle v1.6
+
+The preregistered common-mask/common-command search uses 75 independent
+K=2/4/6 scenes and 9,600 initial candidates. Common-weight projection raises
+the E2 oracle from 1.33% to 69.33%; active-RL-guided mask rescue raises it to
+82.67%. K=2 and K=4 reach 100% and 96%, while K=6 remains at 52%. E1 coverage
+on the 30 new scenes is 86.67%, and E3 stress coverage is 0%.
+
+Stage B therefore remains failed. Critic retraining and perturbed 16x16 HFSS
+are still disabled. The authoritative snapshot is
+`baselines/2026-07-27-v16-robust-drift-oracle/BASELINE.md`.

@@ -1,0 +1,55 @@
+{
+  "dataset_version": "v1.6-stage-b-robust-new-scenes",
+  "candidate_count": 3840,
+  "independent_scene_count": 30,
+  "ratios": [
+    0.5,
+    0.6,
+    0.7,
+    0.8
+  ],
+  "masks_per_ratio": 32,
+  "k_scene_counts": {
+    "2": 10,
+    "4": 10,
+    "6": 10
+  },
+  "targeted_hard_fraction_requested": 0.6,
+  "minimum_separation_by_k": {
+    "2": 16.0,
+    "4": 16.0,
+    "6": 13.0
+  },
+  "maximum_scan_by_k": {
+    "2": 48.0,
+    "4": 48.0,
+    "6": 58.0
+  },
+  "small_gap_scene_count": 0,
+  "large_scan_scene_count": 6,
+  "continuation_from_high_ratio": true,
+  "donor_dataset_count": 3,
+  "scene_source": null,
+  "rescue_dataset": null,
+  "active_rl_guided_rescue_count": 0,
+  "only_failed_scenes": false,
+  "targeted_joint_search": true,
+  "contains_ratio_1": false,
+  "contains_nominal_control": false,
+  "split_scene_counts": {
+    "train": 18,
+    "val": 6,
+    "test": 6
+  },
+  "gate15_count": 2359,
+  "strict_gate20_count": 895,
+  "mainlobe_gate_count": 3072,
+  "active_rl_gate_count": 1307,
+  "near_boundary_count": 3838,
+  "hard_negative_count": 777,
+  "hard_positive_count": 895,
+  "excluded_target_hash_count": 194,
+  "v08_used_for_training": false,
+  "label_scope": "EEP/S256 implementation residual; not HFSS full-wave",
+  "elapsed_seconds": 2167.6298348903656
+}
