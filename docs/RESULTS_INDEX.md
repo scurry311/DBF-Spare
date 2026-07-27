@@ -1,6 +1,6 @@
 # Result Index
 
-Current baseline: `v1.2.0-eep-operating-envelope`, frozen on 2026-07-27.
+Current baseline: `v1.3.0-k4-hfss-critic-gate`, frozen on 2026-07-27.
 
 ## Evidence Levels
 
@@ -270,6 +270,33 @@ the joint discrete-mask/continuous-weight rescue improved it only to 80%.
 Within the validated envelope, a frozen 15-20-candidate HFSS smoke may proceed;
 bulk HFSS and full-wave performance claims remain disabled.
 
+## K=4, Frozen HFSS, and Critic Gate v1.3
+
+Baseline `v1.3.0-k4-hfss-critic-gate` adds K=4 at scan <=48 degrees and
+minimum target separation >=16 degrees, then executes the pre-registered
+frozen HFSS smoke and one targeted full-wave label batch.
+
+| Result | Value | Decision |
+|---|---:|---|
+| New K=4 scenes / candidates | 20 / 1,920 | Complete |
+| K=4 scene oracle | 20/20 (100%) | Passed 90% |
+| Supported K=2 / K=4 / K=6 oracle | 97.1% / 100% / 95.0% | Passed |
+| Frozen smoke scenes K=2/4/6 | 7 / 6 / 7 | Pre-registered |
+| Frozen HFSS smoke cases | 100/100 complete | Passed |
+| Pattern, mainlobe, operating active-RL gate | 20/20 | Passed |
+| Targeted labels / independent scenes | 50 / 41 | Complete |
+| Targeted HFSS cases | 256/256 complete | Passed |
+| Critic strict AUROC / ECE | 0.760 / 0.234 | Failed |
+| Critic precision / top-one | 0.900 / 0.467 | Top-one failed |
+| Actual-weight EEP/HFSS strict agreement | 100% | Deterministic gate |
+
+The residual critic is not promoted and the final adaptive-ratio prospective
+HFSS stage remains locked. The known actual implementation weights are already
+evaluated by EEP/S256 with numerical agreement to HFSS; asking a nominal-only
+critic to infer those known perturbations reduced reliability. Future critic
+labels must contain operator or hardware drift not already represented by the
+actual weights and fixed EEP/S256 basis.
+
 ## Nominal Residual Critic (v0.2)
 
 | Signal | Observed |
@@ -317,3 +344,5 @@ The v1.0 targeted K=2/K=6 EEP oracle audit is
 `baselines/2026-07-27-v10-targeted-eep-oracle/BASELINE.md`.
 The validated v1.2 EEP/S256 operating envelope is
 `baselines/2026-07-27-v12-operating-envelope/BASELINE.md`.
+The v1.3 K=4, frozen HFSS, and critic gate baseline is
+`baselines/2026-07-27-v13-k4-hfss-critic-gate/BASELINE.md`.

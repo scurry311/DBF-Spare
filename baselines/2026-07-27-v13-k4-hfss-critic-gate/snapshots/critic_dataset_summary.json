@@ -1,0 +1,103 @@
+{
+  "candidate_count": 50,
+  "independent_scene_count": 41,
+  "strict_engineering_positive_count": 18,
+  "strict_engineering_negative_count": 32,
+  "hard_negative_count": 12,
+  "hard_positive_count": 18,
+  "near_boundary_count": 49,
+  "split": {
+    "seed": 20260808,
+    "splits": [
+      {
+        "split": "train",
+        "scene_count": 29,
+        "candidate_count": 34,
+        "strict_positive_count": 12,
+        "strict_negative_count": 22,
+        "k_scene_counts": {
+          "2": 10,
+          "4": 9,
+          "6": 10
+        },
+        "sample_indices": [
+          421001,
+          421002,
+          421003,
+          421012,
+          421013,
+          421015,
+          421018,
+          421021,
+          421022,
+          421023,
+          421027,
+          421028,
+          421029,
+          421030,
+          421031,
+          421033,
+          421039,
+          422003,
+          422005,
+          422017,
+          423000,
+          423001,
+          423002,
+          423003,
+          423012,
+          423014,
+          423015,
+          423016,
+          423018
+        ]
+      },
+      {
+        "split": "val",
+        "scene_count": 6,
+        "candidate_count": 8,
+        "strict_positive_count": 3,
+        "strict_negative_count": 5,
+        "k_scene_counts": {
+          "2": 3,
+          "4": 1,
+          "6": 2
+        },
+        "sample_indices": [
+          421017,
+          421019,
+          421035,
+          421036,
+          422002,
+          423009
+        ]
+      },
+      {
+        "split": "test",
+        "scene_count": 6,
+        "candidate_count": 8,
+        "strict_positive_count": 3,
+        "strict_negative_count": 5,
+        "k_scene_counts": {
+          "2": 1,
+          "4": 4,
+          "6": 1
+        },
+        "sample_indices": [
+          421026,
+          422009,
+          423006,
+          423010,
+          423011,
+          423017
+        ]
+      }
+    ],
+    "scene_leakage_free": true
+  },
+  "scene_leakage_free": true,
+  "smoke_labels_included": false,
+  "old_labels_included": false,
+  "active_rl_semantics": "combined all active ports plus -20 dB significant task ports",
+  "thresholds_changed": false
+}

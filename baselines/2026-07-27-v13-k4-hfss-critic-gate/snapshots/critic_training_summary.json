@@ -1,0 +1,231 @@
+{
+  "model_version": "v0.9-scene-conditioned-physical-margin-residual",
+  "dataset_dir": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v13_fullwave_margin_critic_dataset_20260727_run01",
+  "device": "cpu",
+  "candidate_count": 50,
+  "scene_counts": {
+    "train": 29,
+    "val": 6,
+    "test": 6
+  },
+  "contains_nominal_control": false,
+  "v08_used_for_tuning": false,
+  "fixed_strategy": "ratio_0.7_nominal_margin",
+  "fixed_ratio_train_rates": {
+    "0.5": 0.2,
+    "0.6000000238418579": 0.36363636363636365,
+    "0.699999988079071": 0.4,
+    "0.800000011920929": 0.375
+  },
+  "five_seed_aggregate": {
+    "epochs": {
+      "mean": 30.6,
+      "std": 0.5477225575051661,
+      "ci95_half_width": 0.4800999895855029
+    },
+    "best_val_nll": {
+      "mean": 0.32239819765090943,
+      "std": 0.044085291996029,
+      "ci95_half_width": 0.038642462206730906
+    },
+    "scene_count": {
+      "mean": 6.0,
+      "std": 0.0,
+      "ci95_half_width": 0.0
+    },
+    "top1_strict_rate": {
+      "mean": 0.4666666666666666,
+      "std": 0.074535599249993,
+      "ci95_half_width": 0.06533333333333334
+    },
+    "oracle_strict_rate": {
+      "mean": 0.5,
+      "std": 0.0,
+      "ci95_half_width": 0.0
+    },
+    "top1_mean_ratio": {
+      "mean": 0.5966666340827942,
+      "std": 0.007453552816730632,
+      "ci95_half_width": 0.0065333271026611316
+    },
+    "fixed_strategy_rate": {
+      "mean": NaN,
+      "std": NaN,
+      "ci95_half_width": NaN
+    },
+    "fixed_strategy_scene_count": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci95_half_width": 0.0
+    },
+    "test_gate15_auroc": {
+      "mean": 1.0,
+      "std": 0.0,
+      "ci95_half_width": 0.0
+    },
+    "test_gate15_auprc": {
+      "mean": 1.0,
+      "std": 0.0,
+      "ci95_half_width": 0.0
+    },
+    "test_gate15_brier": {
+      "mean": 0.0015763935064742717,
+      "std": 0.0015851256239514681,
+      "ci95_half_width": 0.0013894238700286425
+    },
+    "test_gate15_ece": {
+      "mean": 0.013233163952827578,
+      "std": 0.007023250675335722,
+      "ci95_half_width": 0.006156150645764216
+    },
+    "test_gate15_precision": {
+      "mean": 1.0,
+      "std": 0.0,
+      "ci95_half_width": 0.0
+    },
+    "test_gate15_recall": {
+      "mean": 1.0,
+      "std": 0.0,
+      "ci95_half_width": 0.0
+    },
+    "test_gate15_positive_rate": {
+      "mean": 0.875,
+      "std": 0.0,
+      "ci95_half_width": 0.0
+    },
+    "temperature_gate15": {
+      "mean": 0.4,
+      "std": 0.0,
+      "ci95_half_width": 0.0
+    },
+    "test_strict_gate20_auroc": {
+      "mean": 0.76,
+      "std": 0.08944271909999162,
+      "ci95_half_width": 0.07840000000000003
+    },
+    "test_strict_gate20_auprc": {
+      "mean": 0.7933333333333332,
+      "std": 0.08944271909999157,
+      "ci95_half_width": 0.07839999999999998
+    },
+    "test_strict_gate20_brier": {
+      "mean": 0.2029752751773401,
+      "std": 0.04505008209378255,
+      "ci95_half_width": 0.03948813801382838
+    },
+    "test_strict_gate20_ece": {
+      "mean": 0.2336445549013071,
+      "std": 0.056524944791761615,
+      "ci95_half_width": 0.04954629863969025
+    },
+    "test_strict_gate20_precision": {
+      "mean": 0.9,
+      "std": 0.22360679774997896,
+      "ci95_half_width": 0.19599999999999998
+    },
+    "test_strict_gate20_recall": {
+      "mean": 0.39999999999999997,
+      "std": 0.14907119849998596,
+      "ci95_half_width": 0.13066666666666663
+    },
+    "test_strict_gate20_positive_rate": {
+      "mean": 0.375,
+      "std": 0.0,
+      "ci95_half_width": 0.0
+    },
+    "temperature_strict_gate20": {
+      "mean": 0.42400000000000004,
+      "std": 0.03286335345030997,
+      "ci95_half_width": 0.028805999375130172
+    },
+    "test_mainlobe_gate_auroc": {
+      "mean": NaN,
+      "std": NaN,
+      "ci95_half_width": NaN
+    },
+    "test_mainlobe_gate_auprc": {
+      "mean": 1.0,
+      "std": 0.0,
+      "ci95_half_width": 0.0
+    },
+    "test_mainlobe_gate_brier": {
+      "mean": 0.12501952475663497,
+      "std": 4.3711075586393293e-05,
+      "ci95_half_width": 3.83144470612763e-05
+    },
+    "test_mainlobe_gate_ece": {
+      "mean": 0.12580609345583077,
+      "std": 0.0015324247075600634,
+      "ci95_half_width": 0.0013432294800697787
+    },
+    "test_mainlobe_gate_precision": {
+      "mean": 1.0,
+      "std": 0.0,
+      "ci95_half_width": 0.0
+    },
+    "test_mainlobe_gate_recall": {
+      "mean": 0.875,
+      "std": 0.0,
+      "ci95_half_width": 0.0
+    },
+    "test_mainlobe_gate_positive_rate": {
+      "mean": 1.0,
+      "std": 0.0,
+      "ci95_half_width": 0.0
+    },
+    "temperature_mainlobe_gate": {
+      "mean": 0.4,
+      "std": 0.0,
+      "ci95_half_width": 0.0
+    },
+    "test_active_rl_gate_auroc": {
+      "mean": 0.95,
+      "std": 0.08149003006503311,
+      "ci95_half_width": 0.07142916071185493
+    },
+    "test_active_rl_gate_auprc": {
+      "mean": 0.9685714285714285,
+      "std": 0.04754160369226784,
+      "ci95_half_width": 0.04167205298518423
+    },
+    "test_active_rl_gate_brier": {
+      "mean": 0.087010132263798,
+      "std": 0.028705383436578264,
+      "ci95_half_width": 0.02516137796427912
+    },
+    "test_active_rl_gate_ece": {
+      "mean": 0.15239398222159578,
+      "std": 0.03964080861954311,
+      "ci95_half_width": 0.034746700760492334
+    },
+    "test_active_rl_gate_precision": {
+      "mean": 0.95,
+      "std": 0.11180339887498948,
+      "ci95_half_width": 0.09799999999999999
+    },
+    "test_active_rl_gate_recall": {
+      "mean": 0.8,
+      "std": 0.11180339887498948,
+      "ci95_half_width": 0.09799999999999999
+    },
+    "test_active_rl_gate_positive_rate": {
+      "mean": 0.5,
+      "std": 0.0,
+      "ci95_half_width": 0.0
+    },
+    "temperature_active_rl_gate": {
+      "mean": 0.9200000000000002,
+      "std": 0.29631064780058114,
+      "ci95_half_width": 0.25972773436812635
+    }
+  },
+  "acceptance": {
+    "gate15_auroc_ge_0_88": true,
+    "strict_auroc_ge_0_88": false,
+    "gate15_ece_le_0_08": true,
+    "strict_ece_le_0_08": false,
+    "top1_beats_fixed_strategy": false,
+    "open_hfss_smoke": false
+  },
+  "elapsed_seconds": 13.937727689743042
+}

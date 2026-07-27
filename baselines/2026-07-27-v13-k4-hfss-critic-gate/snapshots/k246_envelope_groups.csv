@@ -1,0 +1,4 @@
+﻿k_value,max_scan_deg,min_separation_deg,inside_scene_count,oracle_scene_count,oracle_rate,minimum_scene_count_pass,oracle_target_pass
+2,48.0,16.0,34,33,0.9705882352941176,1,1
+4,48.0,16.0,20,20,1.0,1,1
+6,58.0,13.0,20,19,0.95,1,1

@@ -419,8 +419,14 @@ def main() -> None:
                 (scene[train_indices] == scene_id)
                 & np.isclose(ratios[train_indices], fixed_ratio_candidate)
             ]
-            chosen.append(int(group[np.argmax(nominal_score[group])]))
-        fixed_ratio_rates[float(fixed_ratio_candidate)] = float(np.mean(strict_gate[chosen]))
+            if group.size:
+                chosen.append(int(group[np.argmax(nominal_score[group])]))
+        if chosen:
+            fixed_ratio_rates[float(fixed_ratio_candidate)] = float(
+                np.mean(strict_gate[chosen])
+            )
+    if not fixed_ratio_rates:
+        raise RuntimeError("No fixed-ratio candidate is represented in training scenes")
     fixed_ratio = max(fixed_ratio_rates, key=fixed_ratio_rates.get)
     fixed_strategy = f"ratio_{fixed_ratio:.1f}_nominal_margin"
     device = resolve_device(args.device)

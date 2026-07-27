@@ -1,0 +1,29 @@
+{
+  "candidate_count": 20,
+  "independent_scene_count": 20,
+  "k_counts": {
+    "2": 7,
+    "4": 6,
+    "6": 7
+  },
+  "ratio_counts": {
+    "0.5": 9,
+    "0.6": 5,
+    "0.7": 3,
+    "0.8": 3
+  },
+  "role_counts": {
+    "active_rl_boundary": 4,
+    "local_boundary": 2,
+    "nearest_boundary": 4,
+    "psll_boundary": 2,
+    "strict_positive": 8
+  },
+  "eep_strict_count": 20,
+  "expected_hfss_case_count": 100,
+  "weights_frozen": true,
+  "thresholds_frozen": true,
+  "contains_ratio_1": false,
+  "k1_included": false,
+  "label_scope": "EEP/S256 shortlist; not HFSS full-wave"
+}

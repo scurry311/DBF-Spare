@@ -21,8 +21,15 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--out-dir", type=Path, required=True)
     parser.add_argument("--k2-max-scan", type=float, default=50.0)
     parser.add_argument("--k2-min-separation", type=float, default=16.0)
+    parser.add_argument("--k4-max-scan", type=float, default=48.0)
+    parser.add_argument("--k4-min-separation", type=float, default=16.0)
     parser.add_argument("--k6-max-scan", type=float, default=58.0)
     parser.add_argument("--k6-min-separation", type=float, default=13.0)
+    parser.add_argument(
+        "--required-k-values",
+        default="2,6",
+        help="Comma-separated K groups required to pass; defaults preserve v1.2.",
+    )
     parser.add_argument("--oracle-target", type=float, default=0.90)
     parser.add_argument("--minimum-scenes-per-k", type=int, default=10)
     parser.add_argument("--validation-mode", action="store_true")
@@ -50,8 +57,16 @@ def main() -> None:
     args.out_dir.mkdir(parents=True, exist_ok=True)
     limits = {
         2: (float(args.k2_max_scan), float(args.k2_min_separation)),
+        4: (float(args.k4_max_scan), float(args.k4_min_separation)),
         6: (float(args.k6_max_scan), float(args.k6_min_separation)),
     }
+    required_k_values = tuple(
+        int(value.strip())
+        for value in str(args.required_k_values).split(",")
+        if value.strip()
+    )
+    if not required_k_values or any(value not in limits for value in required_k_values):
+        raise ValueError("required-k-values must be a non-empty subset of 2,4,6")
     annotated: list[dict[str, Any]] = []
     seen_samples: set[int] = set()
     seen_hashes: set[str] = set()
@@ -91,7 +106,7 @@ def main() -> None:
         [row for row in annotated if int(row["inside_envelope"]) == 0],
     )
     groups: list[dict[str, Any]] = []
-    for k_value in (2, 6):
+    for k_value in required_k_values:
         members = [
             row for row in annotated
             if int(row["k_value"]) == k_value and int(row["inside_envelope"]) == 1
@@ -115,7 +130,7 @@ def main() -> None:
     write_csv(args.out_dir / "envelope_groups.csv", groups)
     source_groups: list[dict[str, Any]] = []
     for oracle_source in sorted({str(row["oracle_source"]) for row in annotated}):
-        for k_value in (2, 6):
+        for k_value in required_k_values:
             members = [
                 row
                 for row in annotated
@@ -148,8 +163,10 @@ def main() -> None:
         "validation_mode": bool(args.validation_mode),
         "pre_registered_limits": {
             "K2": {"max_scan_deg": limits[2][0], "min_separation_deg": limits[2][1]},
+            "K4": {"max_scan_deg": limits[4][0], "min_separation_deg": limits[4][1]},
             "K6": {"max_scan_deg": limits[6][0], "min_separation_deg": limits[6][1]},
         },
+        "required_k_values": list(required_k_values),
         "oracle_target": float(args.oracle_target),
         "minimum_scenes_per_k": int(args.minimum_scenes_per_k),
         "groups": groups,

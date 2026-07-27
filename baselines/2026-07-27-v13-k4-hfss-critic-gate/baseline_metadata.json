@@ -1,0 +1,28 @@
+{
+  "tag": "2026-07-27-v13-k4-hfss-critic-gate",
+  "version": "v1.3.0-k4-hfss-critic-gate",
+  "label_scope": "EEP/S256 envelope plus frozen HFSS smoke and targeted full-wave labels",
+  "supported_limits": {
+    "K2": {"maximum_scan_deg": 48.0, "minimum_separation_deg": 16.0},
+    "K4": {"maximum_scan_deg": 48.0, "minimum_separation_deg": 16.0},
+    "K6": {"maximum_scan_deg": 58.0, "minimum_separation_deg": 13.0}
+  },
+  "k4_scene_count": 20,
+  "k4_candidate_count": 1920,
+  "k4_oracle_rate": 1.0,
+  "frozen_smoke_scene_count": 20,
+  "frozen_smoke_case_count": 100,
+  "frozen_smoke_pattern_gate_rate": 1.0,
+  "frozen_smoke_operating_active_rl_gate_rate": 1.0,
+  "targeted_label_candidate_count": 50,
+  "targeted_label_independent_scene_count": 41,
+  "targeted_label_hfss_case_count": 256,
+  "critic_strict_auroc": 0.76,
+  "critic_strict_ece": 0.2336445549013071,
+  "critic_strict_precision": 0.9,
+  "critic_top1_strict_rate": 0.4666666666666666,
+  "actual_weight_eep_hfss_gate_agreement": 1.0,
+  "critic_promoted": false,
+  "adaptive_ratio_allowed": false,
+  "final_prospective_hfss_allowed": false
+}

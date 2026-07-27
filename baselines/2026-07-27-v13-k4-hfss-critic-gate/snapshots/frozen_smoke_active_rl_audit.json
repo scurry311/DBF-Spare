@@ -1,0 +1,16 @@
+{
+  "candidate_count": 20,
+  "fullwave_pattern_gate_count": 20,
+  "combined_operating_state_engineering_gate_count": 20,
+  "combined_operating_state_engineering_gate_rate": 1.0,
+  "preexisting_combined_plus_significant_task_gate_count": 20,
+  "preexisting_combined_plus_significant_task_gate_rate": 1.0,
+  "all_nonzero_task_diagnostic_gate_count": 12,
+  "all_nonzero_task_diagnostic_gate_rate": 0.6,
+  "task_significant_relative_db": -20.0,
+  "threshold_db": 10.0,
+  "semantic_disagreement_count": 8,
+  "decision": "Use combined operating-state per-port and total active RL as the hardware gate. Retain -20 dB significant-task RL as a conservative decomposition diagnostic; do not gate hardware feasibility on near-zero task decomposition coefficients.",
+  "threshold_changed": false,
+  "hfss_results_modified": false
+}

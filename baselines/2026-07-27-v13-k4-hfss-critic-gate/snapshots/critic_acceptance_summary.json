@@ -1,0 +1,63 @@
+{
+  "candidate_count": 50,
+  "independent_scene_count": 41,
+  "test_candidate_count": 8,
+  "test_scene_count": 6,
+  "critic_metrics": {
+    "strict_auroc_mean": 0.76,
+    "strict_auroc_ci95_half_width": 0.07840000000000003,
+    "strict_ece_mean": 0.2336445549013071,
+    "strict_precision_mean": 0.9,
+    "strict_recall_mean": 0.39999999999999997,
+    "top1_strict_rate_mean": 0.4666666666666666,
+    "test_oracle_strict_rate": 0.5
+  },
+  "critic_acceptance": {
+    "strict_auroc_ge_0_88": false,
+    "strict_ece_le_0_08": false,
+    "strict_precision_ge_0_90": true,
+    "top1_ge_0_80": false
+  },
+  "critic_promoted": false,
+  "actual_weight_eep_physics_gate": {
+    "all_candidate_agreement": 1.0,
+    "all_candidate_precision": 1.0,
+    "all_candidate_recall": 1.0,
+    "test_auroc": 1.0,
+    "test_auprc": 1.0,
+    "test_agreement": 1.0
+  },
+  "hfss_minus_actual_weight_eep_margin": {
+    "mean_db": [
+      1.52587890625e-07,
+      -2.13623046875e-06,
+      1.9073486328125e-06,
+      1.220703125e-06,
+      -1.076352782547474e-07
+    ],
+    "std_db": [
+      1.0177738126008478e-05,
+      2.133722195134073e-05,
+      1.6840927165713587e-05,
+      7.215326182578661e-06,
+      4.377768779060668e-07
+    ],
+    "max_abs_db": [
+      2.288818359375e-05,
+      5.7220458984375e-05,
+      4.57763671875e-05,
+      3.0517578125e-05,
+      9.890645742416382e-07
+    ],
+    "margin_names": [
+      "psll",
+      "nearest_iso",
+      "local20_iso",
+      "mainlobe",
+      "active_rl"
+    ]
+  },
+  "decision": "Do not promote the nominal-command residual critic and do not start adaptive-ratio prospective HFSS. Use actual implementation weights in EEP/S256 for deterministic physics gating. Collect geometry, frequency, calibration, S-parameter, and hardware drift labels before attempting a non-trivial residual critic.",
+  "adaptive_ratio_allowed": false,
+  "final_prospective_hfss_allowed": false
+}

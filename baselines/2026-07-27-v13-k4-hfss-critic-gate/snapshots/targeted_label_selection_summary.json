@@ -1,0 +1,25 @@
+{
+  "candidate_count": 50,
+  "independent_scene_count": 41,
+  "k_counts": {
+    "2": 16,
+    "4": 15,
+    "6": 19
+  },
+  "selection_category_counts": {
+    "hard_negative": 12,
+    "hard_positive": 13,
+    "near_boundary": 20,
+    "paired_ratio": 5
+  },
+  "paired_ratio_candidate_count": 5,
+  "paired_scene_count": 5,
+  "expected_hfss_case_count": 256,
+  "smoke_scene_overlap_count": 0,
+  "contains_ratio_1": false,
+  "weights_frozen": true,
+  "thresholds_frozen": true,
+  "implementation_mismatch_enabled": true,
+  "old_labels_included": false,
+  "label_scope": "EEP/S256 targeted shortlist; not HFSS full-wave until exported"
+}
