@@ -23,6 +23,18 @@ DEFAULT_DATASET = ROOT / "hfss_outputs" / "v09_margin_development_dataset_202607
 DEFAULT_OUT = ROOT / "hfss_outputs" / "v09_physical_margin_critic_20260726_run02"
 KMAX = 6
 MARGIN_SCALE = np.asarray([3.0, 5.0, 5.0, 0.5, 2.0], dtype=np.float32)
+OPTIONAL_DRIFT_FEATURES = (
+    ("drift_intensity", 1.0),
+    ("frequency_offset_ghz", 0.20),
+    ("patch_length_offset_mm", 0.10),
+    ("relative_permittivity_offset", 0.04),
+    ("s_drift_relative_fro", 0.10),
+    ("s_drift_max_abs", 0.05),
+    ("s_projection_scale", 1.0),
+    ("group_phase_bias_rms_deg", 10.0),
+    ("soft_failure_count", 4.0),
+    ("temperature_offset_c", 25.0),
+)
 
 
 def parse_args() -> argparse.Namespace:
@@ -39,6 +51,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--uncertainty-kappa", type=float, default=1.0)
     parser.add_argument("--seeds", default="20260726,20260727,20260728,20260729,20260730")
     parser.add_argument("--device", choices=("auto", "cpu", "cuda"), default="auto")
+    parser.add_argument("--disable-drift-features", action="store_true")
     return parser.parse_args()
 
 
@@ -100,7 +113,9 @@ def spatial_features(masks: np.ndarray, weights_ri: np.ndarray) -> np.ndarray:
     return np.concatenate((mask_channel, channels.astype(np.float32)), axis=1)
 
 
-def scalar_features(data: dict[str, np.ndarray]) -> tuple[np.ndarray, list[str]]:
+def scalar_features(
+    data: dict[str, np.ndarray], include_drift_features: bool = True
+) -> tuple[np.ndarray, list[str]]:
     weights_ri = np.asarray(data["nominal_external_task_weights_real_imag"], dtype=np.float32)
     weights = weights_ri[..., 0] + 1j * weights_ri[..., 1]
     task_norms = np.linalg.norm(weights, axis=1)
@@ -163,6 +178,13 @@ def scalar_features(data: dict[str, np.ndarray]) -> tuple[np.ndarray, list[str]]
         "max_channel_amplitude",
         "channel_dynamic_range_db",
     ]
+    if include_drift_features:
+        for name, scale in OPTIONAL_DRIFT_FEATURES:
+            if name in data:
+                blocks.append(
+                    (np.asarray(data[name], dtype=np.float32) / float(scale))[:, None]
+                )
+                names.append(f"{name}_scaled")
     values = np.concatenate(blocks, axis=1).astype(np.float32)
     if not np.all(np.isfinite(values)):
         raise RuntimeError("Non-finite scalar feature")
@@ -390,7 +412,9 @@ def main() -> None:
 
     spatial = spatial_features(data["masks"], data["nominal_external_task_weights_real_imag"])
     targets = target_features(data["targets_deg"], data["task_valid"])
-    scalars_raw, scalar_names = scalar_features(data)
+    scalars_raw, scalar_names = scalar_features(
+        data, include_drift_features=not args.disable_drift_features
+    )
     scalar_mean = scalars_raw[train_indices].mean(axis=0, keepdims=True)
     scalar_std = scalars_raw[train_indices].std(axis=0, keepdims=True)
     scalar_std = np.where(scalar_std < 1.0e-6, 1.0, scalar_std)
@@ -620,6 +644,7 @@ def main() -> None:
             "train": len(train_scenes), "val": len(val_scenes), "test": len(test_scenes)
         },
         "contains_nominal_control": False,
+        "drift_features_enabled": not args.disable_drift_features,
         "v08_used_for_tuning": False,
         "fixed_strategy": fixed_strategy,
         "fixed_ratio_train_rates": fixed_ratio_rates,

@@ -30,7 +30,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--project-path", type=Path, required=True)
     parser.add_argument("--touchstone-path", type=Path, required=True)
     parser.add_argument("--out-dir", type=Path, required=True)
-    parser.add_argument("--side", type=int, choices=(8, 16), required=True)
+    parser.add_argument("--side", type=int, choices=(4, 8, 16), required=True)
     parser.add_argument("--ports-per-job", type=int, default=16)
     parser.add_argument("--ansys-exe", type=Path, default=DEFAULT_ANSYS)
     parser.add_argument("--design-name", default=DESIGN_NAME)

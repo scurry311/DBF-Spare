@@ -1,0 +1,56 @@
+{
+  "protocol": "v1.4 operator-drift residual critic",
+  "created_on": "2026-07-27",
+  "nominal_frequency_ghz": 10.0,
+  "fullwave_calibration_scope": "4x4 HFSS S16 and complex EEP; sensitivity calibration only",
+  "profiles": [
+    {"name": "nominal", "frequency_ghz": 10.0},
+    {"name": "frequency_low", "frequency_ghz": 9.8},
+    {"name": "frequency_high", "frequency_ghz": 10.2},
+    {"name": "patch_length_low", "frequency_ghz": 10.0, "patch_length_y_mm": 9.25},
+    {"name": "patch_length_high", "frequency_ghz": 10.0, "patch_length_y_mm": 9.45},
+    {"name": "dielectric_low", "frequency_ghz": 10.0, "relative_permittivity": 2.16},
+    {"name": "dielectric_high", "frequency_ghz": 10.0, "relative_permittivity": 2.24}
+  ],
+  "fixed_geometry": {
+    "side": 4,
+    "spacing_mm": 15.0,
+    "patch_width_mm": 11.8,
+    "nominal_patch_length_mm": 9.35,
+    "nominal_relative_permittivity": 2.2,
+    "substrate_thickness_mm": 0.787,
+    "feed_offset_y_mm": -3.5,
+    "feed_model": "coax"
+  },
+  "hfss_gates": {
+    "converged_delta_s_max": 0.05,
+    "s_reciprocity_max_abs": 0.0001,
+    "s_passivity_sigma_max": 1.0001,
+    "eep_port_completeness": "16/16"
+  },
+  "sixteen_by_sixteen_proxy_policy": {
+    "description": "Apply 4x4 full-wave relative field and local S-kernel sensitivities to the trusted 16x16 nominal EEP/S256 operator.",
+    "label_level": "physics-calibrated proxy, not 16x16 HFSS",
+    "base_scene_split": "grouped by original target-direction sample_index",
+    "ratio_values": [0.5, 0.6, 0.7, 0.8],
+    "operator_profiles_per_scene": 6,
+    "base_scene_target": 45
+  },
+  "unobserved_drift_inputs": [
+    "frequency offset",
+    "patch-length tolerance magnitude",
+    "relative-permittivity tolerance magnitude",
+    "reciprocal passive S-parameter drift magnitude",
+    "calibration gain/phase RMS",
+    "spatial group phase bias",
+    "soft channel failure count",
+    "temperature proxy"
+  ],
+  "critic_acceptance": {
+    "strict_auroc_min": 0.88,
+    "strict_ece_max": 0.08,
+    "accepted_precision_min": 0.9,
+    "top1_min": 0.8
+  },
+  "promotion_policy": "Proxy-trained critic remains experimental until an independent 16x16 operator-drift HFSS smoke confirms residual sign and gate ranking."
+}

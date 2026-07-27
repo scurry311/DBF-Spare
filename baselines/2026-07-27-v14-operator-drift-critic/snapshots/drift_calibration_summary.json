@@ -1,0 +1,17 @@
+{
+  "created_at": "2026-07-27 13:57:00",
+  "profile_count": 7,
+  "all_hfss_operators_valid": true,
+  "all_non_nominal_residuals_nonzero": true,
+  "operator_drift_calibration_gate_pass": true,
+  "field_nmse_range_non_nominal": [
+    0.008578605949878693,
+    0.07380702346563339
+  ],
+  "s_delta_max_range_non_nominal": [
+    0.1342382745580493,
+    0.3926550918712414
+  ],
+  "label_scope": "4x4 HFSS-calibrated operator sensitivity; not 16x16 HFSS",
+  "allow_16x16_proxy_dataset": true
+}

@@ -57,6 +57,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--feed-offset-y-mm", type=float)
     parser.add_argument("--patch-length-y-mm", type=float)
     parser.add_argument("--patch-width-x-mm", type=float)
+    parser.add_argument("--frequency-ghz", type=float)
+    parser.add_argument("--relative-permittivity", type=float)
+    parser.add_argument("--loss-tangent", type=float)
+    parser.add_argument("--substrate-thickness-mm", type=float)
     parser.add_argument("--feed-model", choices=("coax", "direct"), default="coax")
     return parser.parse_args()
 
@@ -68,6 +72,10 @@ def effective_config(args: argparse.Namespace) -> dict[str, Any]:
         "feed_offset_y_mm": args.feed_offset_y_mm,
         "patch_length_y_mm": args.patch_length_y_mm,
         "patch_width_x_mm": args.patch_width_x_mm,
+        "frequency_ghz": args.frequency_ghz,
+        "er": args.relative_permittivity,
+        "tan_delta": args.loss_tangent,
+        "substrate_thickness_mm": args.substrate_thickness_mm,
     }
     for key, value in overrides.items():
         if value is not None:
@@ -154,7 +162,7 @@ Next
 
 CreateBox oEditor, "AirRegion", {-board_x/2-15:.6f}, {-board_y/2-15:.6f}, -15, {board_x+30:.6f}, {board_y+30:.6f}, 30, "air", True
 oBoundary.AssignRadiation Array("NAME:Rad_AirRegion", "Objects:=", Array("AirRegion"))
-oAnalysis.InsertSetup "HfssDriven", Array("NAME:Setup_10GHz", "SolveType:=", "Single", "Frequency:=", "10GHz", "MaxDeltaS:=", 0.05, "MaximumPasses:=", 20, "MinimumPasses:=", 2, "MinimumConvergedPasses:=", 2, "PercentRefinement:=", 15, "BasisOrder:=", 1, "DoLambdaRefine:=", True, "DoMaterialLambda:=", True, "SetLambdaTarget:=", False, "UseMaxTetIncrease:=", False, "PortAccuracy:=", 2, "UseABCOnPort:=", False, "SetPortMinMaxTri:=", False)
+oAnalysis.InsertSetup "HfssDriven", Array("NAME:Setup_10GHz", "SolveType:=", "Single", "Frequency:=", "{c['frequency_ghz']:.9g}GHz", "MaxDeltaS:=", 0.05, "MaximumPasses:=", 20, "MinimumPasses:=", 2, "MinimumConvergedPasses:=", 2, "PercentRefinement:=", 15, "BasisOrder:=", 1, "DoLambdaRefine:=", True, "DoMaterialLambda:=", True, "SetLambdaTarget:=", False, "UseMaxTetIncrease:=", False, "PortAccuracy:=", 2, "UseABCOnPort:=", False, "SetPortMinMaxTri:=", False)
 {sweep_setup}
 Set oRad = oDesign.GetModule("RadField")
 oRad.InsertFarFieldSphereSetup Array("NAME:InfiniteSphere_Theta0_90_Phi0_360", "UseCustomRadiationSurface:=", False, "ThetaStart:=", "0deg", "ThetaStop:=", "90deg", "ThetaStep:=", "1deg", "PhiStart:=", "0deg", "PhiStop:=", "360deg", "PhiStep:=", "2deg", "UseLocalCS:=", False)
