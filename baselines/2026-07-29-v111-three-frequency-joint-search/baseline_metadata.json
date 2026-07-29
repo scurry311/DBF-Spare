@@ -1,0 +1,19 @@
+{
+  "baseline": "v1.11-three-frequency-joint-search",
+  "created_on": "2026-07-29",
+  "parent_commit": "24c082c4935ea896b28424eef85107a2f1da24a1",
+  "parent_tag": "v1.10.0-three-frequency-active-rl",
+  "protocol": "v20-three-frequency-mask-weight-alternating-search",
+  "physical_frequencies_ghz": [9.96, 10.0, 10.04],
+  "scene_count": 20,
+  "searched_failed_scene_count": 18,
+  "generated_mask_count": 2304,
+  "full_optimizer_run_count": 144,
+  "three_frequency_strict_oracle_count": 7,
+  "three_frequency_reserve11_count": 0,
+  "stage_acceptance_pass": false,
+  "hfss_smoke_allowed": false,
+  "critic_training_allowed": false,
+  "thresholds_changed": false,
+  "frequency_specific_commands_saved": false
+}

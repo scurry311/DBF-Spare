@@ -1,6 +1,6 @@
 # Result Index
 
-Current baseline: `v1.10.0-three-frequency-active-rl`, frozen on 2026-07-29.
+Current baseline: `v1.11.0-three-frequency-joint-search`, frozen on 2026-07-29.
 
 ## Evidence Levels
 
@@ -507,3 +507,25 @@ The next stage must jointly optimize structured masks and common weights across
 nominal, 9.96, and 10.04 GHz with at least 1 dB active-RL reserve. Critic
 retraining and bulk HFSS remain locked. The authoritative snapshot is
 `baselines/2026-07-29-v110-three-frequency-active-rl/BASELINE.md`.
+
+## Three-Frequency Mask-Weight Joint Search v1.11
+
+The v1.11 stage audits 500 combined/significant-task active-RL cases and then
+searches 18 failed scenes with 24 structured plus eight alternating masks per
+explored ratio. One common task-weight command is used at nominal, 9.96, and
+10.04 GHz; frequency-specific weights and threshold changes remain prohibited.
+
+| Result | Value | Decision |
+|---|---:|---|
+| Generated masks | 2,304 | Completed |
+| Full optimizer runs | 144 | Completed |
+| Three-frequency strict oracle | 7/20 | Improved, insufficient |
+| K=2 / K=4 / K=6 strict oracle | 3/7 / 2/6 / 2/7 | Below 80% strata gate |
+| Active-RL reserve >= 11 dB | 0/20 | Failed |
+| K=2/K=4 high-corner best-of-N >= 10.5 dB | 100% / 100% | No immediate hardware stop |
+| Remaining root causes | 9 active-RL, 4 mainlobe | Joint-feasibility gap |
+
+HFSS smoke and critic training remain locked. The next step is a targeted
+same-mask joint-feasibility rescue on the recorded pattern/RL bridge masks.
+The authoritative snapshot is
+`baselines/2026-07-29-v111-three-frequency-joint-search/BASELINE.md`.

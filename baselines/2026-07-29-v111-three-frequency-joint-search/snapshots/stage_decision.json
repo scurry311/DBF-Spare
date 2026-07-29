@@ -1,0 +1,32 @@
+{
+  "protocol": "v20-three-frequency-stage-decision",
+  "frozen_v19_strict_count": 2,
+  "v20_strict_oracle_count": 7,
+  "v20_strict_oracle_rate": 0.35,
+  "v20_reserve11_count": 0,
+  "strict_improvement_count": 5,
+  "minimum_strict_ratio_counts": {
+    "0.6": 3,
+    "0.7": 2,
+    "0.8": 2
+  },
+  "failed_scene_root_counts": {
+    "mainlobe": 4,
+    "active_rl": 9
+  },
+  "same_mask_bridge_counts_by_k": {
+    "2": 14,
+    "4": 12,
+    "6": 2
+  },
+  "high_best_of_n_ge_10p5_rate_by_k": {
+    "2": 1.0,
+    "4": 1.0,
+    "6": 0.8571428571428571
+  },
+  "hardware_redesign_stop_condition_triggered": false,
+  "stage_acceptance_pass": false,
+  "hfss_smoke_allowed": false,
+  "critic_training_allowed": false,
+  "next_action": "Run a targeted same-mask joint-feasibility rescue on the recorded bridge masks: fine Pareto continuation plus augmented active-RL projection constrained by the three-frequency target equalities. Reassess K-stratified oracle and the 11 dB reserve before considering matching-network bandwidth changes."
+}

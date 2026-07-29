@@ -1,0 +1,5 @@
+﻿k,scene_count,strict_oracle_count,strict_oracle_rate,reserve11_oracle_count,reserve11_oracle_rate,high_best_of_n_ge_10p5_count,high_best_of_n_ge_10p5_rate
+all,20,7,0.35,0,0.0,19,0.95
+2,7,3,0.42857142857142855,0,0.0,7,1.0
+4,6,2,0.3333333333333333,0,0.0,6,1.0
+6,7,2,0.2857142857142857,0,0.0,6,0.8571428571428571

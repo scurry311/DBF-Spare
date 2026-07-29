@@ -1,0 +1,7 @@
+{
+  "hfss_smoke_allowed": false,
+  "critic_training_allowed": false,
+  "reason": "v20 strict oracle is below 18/20 and the 11 dB reserve oracle is 0/20",
+  "thresholds_changed": false,
+  "candidate_or_weight_reoptimization_after_HFSS_prohibited": true
+}

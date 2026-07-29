@@ -1,0 +1,50 @@
+{
+  "protocol": "v20-three-frequency-mask-weight-alternating-search",
+  "scene_count": 20,
+  "searched_failed_scene_count": 18,
+  "generated_mask_count": 2304,
+  "full_refined_candidate_count_including_v19": 740,
+  "full_optimizer_run_count": 144,
+  "three_frequency_strict_oracle_count": 7,
+  "three_frequency_strict_oracle_rate": 0.35,
+  "three_frequency_reserve11_oracle_count": 0,
+  "per_k": {
+    "2": {
+      "k": 2,
+      "scene_count": 7,
+      "strict_oracle_count": 3,
+      "strict_oracle_rate": 0.42857142857142855,
+      "reserve11_oracle_count": 0,
+      "reserve11_oracle_rate": 0.0,
+      "high_best_of_n_ge_10p5_count": 7,
+      "high_best_of_n_ge_10p5_rate": 1.0
+    },
+    "4": {
+      "k": 4,
+      "scene_count": 6,
+      "strict_oracle_count": 2,
+      "strict_oracle_rate": 0.3333333333333333,
+      "reserve11_oracle_count": 0,
+      "reserve11_oracle_rate": 0.0,
+      "high_best_of_n_ge_10p5_count": 6,
+      "high_best_of_n_ge_10p5_rate": 1.0
+    },
+    "6": {
+      "k": 6,
+      "scene_count": 7,
+      "strict_oracle_count": 2,
+      "strict_oracle_rate": 0.2857142857142857,
+      "reserve11_oracle_count": 0,
+      "reserve11_oracle_rate": 0.0,
+      "high_best_of_n_ge_10p5_count": 6,
+      "high_best_of_n_ge_10p5_rate": 0.8571428571428571
+    }
+  },
+  "stage_acceptance_pass": false,
+  "hardware_redesign_trigger_groups": [],
+  "hfss_smoke_allowed": false,
+  "critic_training_allowed": false,
+  "thresholds_changed": false,
+  "frequency_specific_commands_saved": false,
+  "elapsed_seconds": 1320.2854130268097
+}

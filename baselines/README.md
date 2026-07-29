@@ -39,3 +39,8 @@ Current checkpoints:
   improves strict coverage to 60%, but prospective 10.04 GHz coverage is 30%
   and only 10% remains feasible across all three frequencies; active matching
   is the limiting physical mechanism.
+- `2026-07-29-v111-three-frequency-joint-search`: three-frequency port
+  sensitivity and structured mask/common-weight alternating search improve the
+  strict oracle from 2/20 to 7/20, but the 18/20 gate and 11 dB reserve fail;
+  HFSS smoke and critic training remain locked pending same-mask feasibility
+  rescue.
