@@ -203,6 +203,21 @@ V09_ADAPTIVE_HFSS_ARTIFACTS = (
 )
 
 
+V112_PARETO_RESCUE_ARTIFACTS = (
+    Artifact("protocol", "configs/v201_pareto_joint_feasibility_rescue.json", "A", "pre_registered", "Frozen v20.1 alpha, Pareto, rescue, stage-gate, and downstream-lock protocol."),
+    Artifact("alpha_summary", "hfss_outputs/v201_dense_alpha_eep_20260729_run01/summary.json", "A", "passed_no_reserve", "Dense five-state EEP alpha validation for the two preregistered candidate neighborhoods."),
+    Artifact("alpha_metrics", "hfss_outputs/v201_dense_alpha_eep_20260729_run01/dense_alpha_summary.csv", "A", "diagnostic", "Best exact alpha and physical margins for both requested candidates."),
+    Artifact("warm_summary", "hfss_outputs/v201_warm_mask_pareto_screen_20260729_run01/summary.json", "A", "completed", "Five-state warm EEP screening of all 2,304 existing masks."),
+    Artifact("pareto_selection", "hfss_outputs/v201_warm_mask_pareto_screen_20260729_run01/pareto_selection.csv", "A", "diagnostic", "Four-role pattern, active-RL, max-min, and Pareto-knee selections for 72 scene-ratio groups."),
+    Artifact("rescue_summary", "hfss_outputs/v201_k24_progressive_rescue_20260729_run01/summary.json", "A", "failed_gate", "K=2/K=4 progressive three-frequency joint-feasibility rescue summary."),
+    Artifact("scene_oracle", "hfss_outputs/v201_k24_progressive_rescue_20260729_run01/k24_scene_oracle.csv", "A", "diagnostic", "Combined v20, dense-alpha, and Pareto-rescue scene oracle."),
+    Artifact("selected_paths", "hfss_outputs/v201_k24_progressive_rescue_20260729_run01/selected_path_metrics.csv", "A", "diagnostic", "Best command and physical margins on each of the 128 rescued Pareto paths."),
+    Artifact("stop_audit", "hfss_outputs/v201_k24_progressive_rescue_20260729_run01/k24_stop_decision_audit.csv", "A", "diagnostic", "Per-scene v20 comparison and limiting state/constraint audit."),
+    Artifact("stop_decision", "hfss_outputs/v201_k24_progressive_rescue_20260729_run01/stop_decision.json", "A", "algorithm_expansion_stopped", "Machine-readable preregistered stop decision."),
+    Artifact("stage_decision", "hfss_outputs/v201_k24_progressive_rescue_20260729_run01/STAGE_DECISION.md", "A", "authoritative", "Human-readable v20.1 result and downstream decision."),
+)
+
+
 BASELINE_CONFIGS = {
     "2026-07-21": {
         "version": "v0.1.0-physics-gated",
@@ -292,6 +307,18 @@ BASELINE_CONFIGS = {
         "prospective_validation_completed": True,
         "prospective_validation_pass": True,
         "automatic_hfss_admission_allowed": True,
+        "final_adaptive_coverage_target_met": False,
+    },
+    "2026-07-29-v112-pareto-joint-feasibility": {
+        "version": "v1.12.0-pareto-joint-feasibility",
+        "artifacts": V112_PARETO_RESCUE_ARTIFACTS,
+        "training_labels_locked": True,
+        "pattern_labels_allowed": True,
+        "strict_benchmark_gate_pass": False,
+        "hfss_physical_labels_allowed": False,
+        "residual_critic_training_locked": True,
+        "residual_critic_engineering_promoted": False,
+        "automatic_hfss_admission_allowed": False,
         "final_adaptive_coverage_target_met": False,
     },
 }

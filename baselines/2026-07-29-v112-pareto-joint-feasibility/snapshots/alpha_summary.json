@@ -1,0 +1,36 @@
+{
+  "protocol": "v20.1-pareto-rerank-and-joint-feasibility-rescue",
+  "request_count": 2,
+  "strict_pass_count": 2,
+  "reserve11_pass_count": 0,
+  "results": [
+    {
+      "sample_index": 426107,
+      "k": 2,
+      "ratio": 0.8,
+      "generated_index": 509,
+      "evaluated_alpha_count": 101,
+      "best_alpha": 0.8119999999999999,
+      "best_worst_margin_db": 0.07798004150390625,
+      "strict_pass": 1,
+      "design_reserve11_pass": 0,
+      "best_active_rl_floor_db": 10.078458532691002,
+      "best_pattern_margin_db": 0.07798004150390625
+    },
+    {
+      "sample_index": 426115,
+      "k": 4,
+      "ratio": 0.7,
+      "generated_index": 1118,
+      "evaluated_alpha_count": 101,
+      "best_alpha": 0.843,
+      "best_worst_margin_db": 0.1262969970703125,
+      "strict_pass": 1,
+      "design_reserve11_pass": 0,
+      "best_active_rl_floor_db": 10.127850845456123,
+      "best_pattern_margin_db": 0.1262969970703125
+    }
+  ],
+  "hfss_smoke_allowed": false,
+  "critic_training_allowed": false
+}

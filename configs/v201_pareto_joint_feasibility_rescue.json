@@ -1,0 +1,53 @@
+{
+  "protocol": "v20.1-pareto-rerank-and-joint-feasibility-rescue",
+  "created_on": "2026-07-29",
+  "parent_tag": "v1.11.0-three-frequency-joint-search",
+  "seed": 20260827,
+  "thresholds_changed": false,
+  "frequency_specific_commands_prohibited": true,
+  "dense_alpha_validation": [
+    {"sample_index": 426107, "ratio": 0.8, "predicted_alpha": 0.834},
+    {"sample_index": 426115, "ratio": 0.7, "predicted_alpha": 0.877}
+  ],
+  "dense_alpha_half_width": 0.05,
+  "dense_alpha_step": 0.001,
+  "warm_mask_screen": {
+    "expected_mask_count": 2304,
+    "evaluated_states": [
+      "nominal_identity",
+      "frequency_low_identity",
+      "frequency_low_E2_source",
+      "frequency_high_identity",
+      "frequency_high_E2_source"
+    ],
+    "selection_roles": ["pattern_best", "active_rl_best", "max_min_best", "pareto_knee"],
+    "selected_masks_per_scene_ratio": 4
+  },
+  "k24_rescue": {
+    "failed_sample_indices": [426107, 426102, 426105, 426109, 426116, 426110, 426113, 426117],
+    "ratios": [0.5, 0.6, 0.7, 0.8],
+    "active_rl_target_schedule_db": [10.0, 10.5, 11.0],
+    "corner_sweeps_per_target": 1,
+    "active_rl_nullspace_steps_per_target": 16,
+    "active_rl_nullspace_step_size": 0.0035,
+    "joint_projection_passes": 2,
+    "regional_radius_deg": 5.0,
+    "regional_ceiling_db": -0.25,
+    "backtracking_alphas": [0.0, 0.25, 0.5, 0.75, 1.0]
+  },
+  "stage_gate": {
+    "k2_strict_count_min": 6,
+    "k2_scene_count": 7,
+    "k4_strict_count_min": 5,
+    "k4_scene_count": 6,
+    "k6_execution_allowed_only_after_k24_gate": true,
+    "final_strict_count_min": 18,
+    "per_k_strict_rate_min": 0.8,
+    "preferred_active_rl_floor_db": 11.0
+  },
+  "downstream": {
+    "hfss_smoke_allowed_before_all_gates": false,
+    "critic_training_allowed": false,
+    "ratio_1_control_only": true
+  }
+}

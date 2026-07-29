@@ -1,6 +1,6 @@
 # Result Index
 
-Current baseline: `v1.11.0-three-frequency-joint-search`, frozen on 2026-07-29.
+Current baseline: `v1.12.0-pareto-joint-feasibility`, frozen on 2026-07-29.
 
 ## Evidence Levels
 
@@ -529,3 +529,30 @@ HFSS smoke and critic training remain locked. The next step is a targeted
 same-mask joint-feasibility rescue on the recorded pattern/RL bridge masks.
 The authoritative snapshot is
 `baselines/2026-07-29-v111-three-frequency-joint-search/BASELINE.md`.
+
+## Pareto Joint-Feasibility Rescue v1.12
+
+The v20.1 stage first validates two exact alpha neighborhoods, then reevaluates
+all 2,304 existing masks with the five-state warm EEP operator. Each of 72
+scene-ratio groups retains pattern-best, active-RL-best, max-min, and
+Pareto-knee candidates. The eight failed K=2/K=4 scenes receive progressive
+10/10.5/11 dB target-equality-nullspace optimization with a common command at
+9.96, 10.00, and 10.04 GHz.
+
+| Result | Value | Decision |
+|---|---:|---|
+| Exact alpha neighborhoods | 2/2 strict | Passed, no 11 dB reserve |
+| Warm masks / selected roles | 2,304 / 288 | Completed |
+| Progressive paths / commands | 128 / 2,048 | Completed |
+| K=2 strict oracle | 4/7 | Below 6/7 gate |
+| K=4 strict oracle | 2/6 | Below 5/6 gate |
+| Overall strict oracle | 8/20 | Below 18/20 gate |
+| Active-RL reserve >= 11 dB | 0/20 | Failed |
+| Failed root causes | 5 active-RL, 2 mainlobe | Six at 10.04 GHz |
+
+The preregistered stop condition triggers. K=6 rescue, HFSS smoke, and critic
+training are not executed. Further algorithm-only expansion stops; the next
+physical stage must broaden 10.04 GHz active matching and replay the frozen
+v20.1 candidates on a newly validated S256/EEP operator. The authoritative
+snapshot is
+`baselines/2026-07-29-v112-pareto-joint-feasibility/BASELINE.md`.

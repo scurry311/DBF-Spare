@@ -1,0 +1,21 @@
+{
+  "protocol": "v20.1-pareto-rerank-and-joint-feasibility-rescue",
+  "selected_path_count": 128,
+  "evaluated_command_count": 2048,
+  "strict_counts_by_k": {
+    "2": 4,
+    "4": 2,
+    "6": 2
+  },
+  "reserve11_counts_by_k": {
+    "2": 0,
+    "4": 0,
+    "6": 0
+  },
+  "k24_stage_gate_pass": false,
+  "k6_execution_allowed": false,
+  "hfss_smoke_allowed": false,
+  "critic_training_allowed": false,
+  "thresholds_changed": false,
+  "elapsed_seconds": 391.68637347221375
+}

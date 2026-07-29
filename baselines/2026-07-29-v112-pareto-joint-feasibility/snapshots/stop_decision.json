@@ -1,0 +1,38 @@
+{
+  "protocol": "v20.1-preregistered-stop-decision",
+  "strict_counts_by_k": {
+    "2": 4,
+    "4": 2
+  },
+  "total_counts_by_k": {
+    "2": 7,
+    "4": 6
+  },
+  "strict_rates_by_k": {
+    "2": 0.5714285714285714,
+    "4": 0.3333333333333333
+  },
+  "reserve11_counts_by_k": {
+    "2": 0,
+    "4": 0
+  },
+  "failed_scene_count": 7,
+  "failed_limiting_metric_counts": {
+    "active_rl": 5,
+    "mainlobe": 2
+  },
+  "failed_limiting_state_counts": {
+    "frequency_low_E2_source": 1,
+    "frequency_high_identity": 4,
+    "frequency_high_E2_source": 2
+  },
+  "k24_stage_gate_pass": false,
+  "k6_execution_allowed": false,
+  "hfss_smoke_allowed": false,
+  "critic_training_allowed": false,
+  "thresholds_changed": false,
+  "stop_algorithm_expansion": true,
+  "next_action": "broaden_10p04GHz_matching_bandwidth",
+  "reason": "K2/K4 Pareto reranking remained below 80% and 11 dB reserve set is empty",
+  "reserve_set_empty": true
+}

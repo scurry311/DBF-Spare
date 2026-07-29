@@ -1,0 +1,19 @@
+{
+  "protocol": "v20.1-pareto-rerank-and-joint-feasibility-rescue",
+  "warm_candidate_count": 2304,
+  "scene_ratio_group_count": 72,
+  "selected_candidate_count": 288,
+  "selected_per_group": 4,
+  "warm_strict_count": 0,
+  "warm_reserve11_count": 0,
+  "role_counts": {
+    "pattern_best": 72,
+    "active_rl_best": 72,
+    "max_min_best": 72,
+    "pareto_knee": 72
+  },
+  "thresholds_changed": false,
+  "hfss_smoke_allowed": false,
+  "critic_training_allowed": false,
+  "elapsed_seconds": 38.75572180747986
+}

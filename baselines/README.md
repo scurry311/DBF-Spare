@@ -44,3 +44,7 @@ Current checkpoints:
   strict oracle from 2/20 to 7/20, but the 18/20 gate and 11 dB reserve fail;
   HFSS smoke and critic training remain locked pending same-mask feasibility
   rescue.
+- `2026-07-29-v112-pareto-joint-feasibility`: exact alpha validation rescues
+  one additional scene, but four-role Pareto reranking and 2,048 progressive
+  command evaluations reach only K=2 4/7 and K=4 2/6 with no 11 dB reserve;
+  algorithm-only expansion stops pending broader 10.04 GHz active matching.
