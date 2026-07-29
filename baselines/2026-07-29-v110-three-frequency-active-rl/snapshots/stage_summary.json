@@ -1,0 +1,45 @@
+{
+  "protocol": "v19-nominal-low-joint-projection-and-symmetric-high-smoke",
+  "scene_count": 20,
+  "joint_projection_baseline_pass_count": 3,
+  "joint_projection_selected_pass_count": 12,
+  "joint_projection_pattern_pass_count": 20,
+  "high_source_strict_pass_count": 6,
+  "high_source_pattern_pass_count": 19,
+  "three_frequency_strict_pass_count": 2,
+  "three_frequency_strict_pass_rate": 0.1,
+  "three_frequency_k_pass": {
+    "2": 0,
+    "4": 0,
+    "6": 2
+  },
+  "low_matched_passive_rl_min_db": 15.727850918084783,
+  "high_matched_passive_rl_min_db": 10.61598342093285,
+  "low_high_matched_s_max_abs_delta": 0.208243586681009,
+  "high_nominal_max_abs_delta_s": 0.08327534394022938,
+  "high_operator_gate_pass": true,
+  "nominal_delta_s_0p05_gate_applicable": false,
+  "high_failure_root_causes": {
+    "active_rl": 14
+  },
+  "direct_hfss_case_count": 14,
+  "direct_no_scale_complex_nmse_max": 5.492001818596659e-12,
+  "direct_no_scale_magnitude_rmse_db_max": 2.9496814022422768e-05,
+  "direct_gate_agreement_count": 2,
+  "direct_gate_agreement_rate": 1.0,
+  "resource_summary": {
+    "sample_count": 120,
+    "minimum_physical_available_gb": 0.7148704528808594,
+    "below_0p75_sample_count": 1,
+    "minimum_commit_headroom_gb": 10.3238525390625,
+    "minimum_d_free_gb": 30.982707977294922,
+    "profile_max_memory_per_process_gb": 15.9,
+    "profile_matrix_size": 5576630,
+    "profile_matrix_disk": "42.5 GB",
+    "profile_elapsed": "00:38:13",
+    "resource_abort_triggered": false
+  },
+  "critic_training_allowed": false,
+  "large_hfss_batch_allowed": false,
+  "next_action": "Jointly optimize mask and one common task-weight command against nominal, 9.96, and 10.04 GHz physical EEP/S256 operators; target active-RL margin above 1 dB before any additional physical corner or critic training."
+}

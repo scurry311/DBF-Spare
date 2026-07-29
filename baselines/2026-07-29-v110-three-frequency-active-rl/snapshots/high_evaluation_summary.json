@@ -1,0 +1,21 @@
+{
+  "protocol": "v19-frozen-joint-projection-on-physical-frequency-high-operator",
+  "candidate_count": 20,
+  "independent_scene_count": 20,
+  "physical_frequency_ghz": 10.04,
+  "common_masks_and_weights_frozen": true,
+  "thresholds_changed": false,
+  "high_identity_strict_pass_count": 8,
+  "high_identity_strict_pass_rate": 0.4,
+  "high_source_strict_pass_count": 6,
+  "high_source_strict_pass_rate": 0.3,
+  "high_source_pattern_pass_count": 19,
+  "high_source_active_rl_pass_count": 6,
+  "high_source_hardware_pass_count": 20,
+  "failure_root_causes": {
+    "active_rl": 14
+  },
+  "minimum_high_source_active_rl_db": 8.505474930491735,
+  "critic_training_allowed": false,
+  "direct_hfss_smoke_required": true
+}

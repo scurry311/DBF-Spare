@@ -1,0 +1,39 @@
+{
+  "protocol": "v19-small-16x16-perturbed-operator-hfss",
+  "created_on": "2026-07-29",
+  "parent_tag": "v1.9.0-perturbed-operator-hfss-smoke",
+  "corner": {
+    "name": "frequency_high_E2",
+    "frequency_ghz": 10.04,
+    "nominal_frequency_ghz": 10.0,
+    "geometry_changed": false,
+    "dielectric_changed": false,
+    "mesh_policy": "trusted pass5 tetrahedral mesh imported without adaptive refinement"
+  },
+  "solver": {
+    "type": "HFSS domain decomposition",
+    "tasks": 1,
+    "cores": 4,
+    "ram_limit_percent": 80,
+    "save_radiation_fields": true,
+    "adaptive_passes": 1
+  },
+  "resource_gates": {
+    "start_physical_available_gb_min": 16.0,
+    "start_commit_headroom_gb_min": 27.0,
+    "start_d_free_gb_min": 70.0,
+    "abort_physical_available_gb_below": 0.75,
+    "abort_commit_headroom_gb_below": 3.0,
+    "abort_d_free_gb_below": 25.0,
+    "consecutive_abort_polls": 2,
+    "poll_seconds": 20,
+    "reason": "The 9.96 GHz solve reached 0.796 GB free RAM; requiring 16 GB before launch adds about 1 GB of host headroom while retaining the only validated 80% AEDT solve path."
+  },
+  "scope": {
+    "operator_count": 1,
+    "parallel_hfss_jobs": 1,
+    "geometry_or_dielectric_corner_allowed_in_same_run": false,
+    "candidate_reoptimization_after_hfss": false,
+    "critic_training_before_operator_validation": false
+  }
+}

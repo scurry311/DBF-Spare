@@ -1,0 +1,10 @@
+{
+  "source_dir": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v19_frequency_high_prospective_evaluation_20260729_run01",
+  "source_candidate_count": 20,
+  "selected_source_candidate_indices": [
+    16,
+    17
+  ],
+  "candidate_count": 2,
+  "expected_hfss_case_count": 14
+}

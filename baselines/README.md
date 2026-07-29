@@ -35,3 +35,7 @@ Current checkpoints:
 - `2026-07-29-v19-perturbed-operator-hfss-smoke`: first real 16x16 9.96 GHz
   physical-operator corner; EEP/direct-HFSS mapping passes, while frozen strict
   coverage falls to 20% solely because active matching loses margin.
+- `2026-07-29-v110-three-frequency-active-rl`: nominal/9.96 joint projection
+  improves strict coverage to 60%, but prospective 10.04 GHz coverage is 30%
+  and only 10% remains feasible across all three frequencies; active matching
+  is the limiting physical mechanism.

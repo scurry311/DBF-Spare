@@ -1,6 +1,6 @@
 # Result Index
 
-Current baseline: `v1.9.0-perturbed-operator-hfss-smoke`, frozen on 2026-07-29.
+Current baseline: `v1.10.0-three-frequency-active-rl`, frozen on 2026-07-29.
 
 ## Evidence Levels
 
@@ -479,3 +479,31 @@ development, but critic retraining and a large HFSS batch remain locked. Joint
 nominal/9.96 GHz active-RL projection and a symmetric 10.04 GHz physical corner
 must come next. The authoritative snapshot is
 `baselines/2026-07-29-v19-perturbed-operator-hfss-smoke/BASELINE.md`.
+
+## Three-Frequency Active-RL Validation v1.10
+
+One common task-weight command per scene is first projected jointly against
+the nominal and physical 9.96 GHz operators. Masks, thresholds, and source
+states remain fixed. The selected commands are then frozen before the new
+physical 10.04 GHz operator is solved and evaluated.
+
+| Result | Value | Decision |
+|---|---:|---|
+| Nominal/9.96 strict pass before projection | 3/20 | Baseline |
+| Nominal/9.96 strict pass after projection | 12/20 | Improved |
+| 10.04 GHz high-source strict pass | 6/20 | Insufficient |
+| Common three-frequency strict pass | 2/20 | Failed coverage |
+| High-corner pattern pass | 19/20 | Pattern mostly robust |
+| High-corner active-RL pass | 6/20 | Dominant bottleneck |
+| Direct high-corner EEP/HFSS agreement | 2/2 | Passed |
+| Direct maximum complex NMSE | 5.49e-12 | Passed |
+
+The physical 10.04 GHz S256/EEP operator is structurally valid, with matched
+passive minimum RL 10.616 dB. Its response is materially less tolerant than
+the 9.96 GHz operator, whose matched passive minimum RL is 15.728 dB. All 14
+prospective strict failures have active-RL as their worst root cause.
+
+The next stage must jointly optimize structured masks and common weights across
+nominal, 9.96, and 10.04 GHz with at least 1 dB active-RL reserve. Critic
+retraining and bulk HFSS remain locked. The authoritative snapshot is
+`baselines/2026-07-29-v110-three-frequency-active-rl/BASELINE.md`.

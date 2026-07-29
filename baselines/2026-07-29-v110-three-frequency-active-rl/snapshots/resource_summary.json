@@ -1,0 +1,12 @@
+{
+  "sample_count": 120,
+  "minimum_physical_available_gb": 0.7148704528808594,
+  "below_0p75_sample_count": 1,
+  "minimum_commit_headroom_gb": 10.3238525390625,
+  "minimum_d_free_gb": 30.982707977294922,
+  "profile_max_memory_per_process_gb": 15.9,
+  "profile_matrix_size": 5576630,
+  "profile_matrix_disk": "42.5 GB",
+  "profile_elapsed": "00:38:13",
+  "resource_abort_triggered": false
+}

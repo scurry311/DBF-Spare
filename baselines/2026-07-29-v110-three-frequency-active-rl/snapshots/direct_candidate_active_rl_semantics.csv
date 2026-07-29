@@ -1,0 +1,3 @@
+﻿candidate_index,sample_index,k,ratio,selection_role,fullwave_pattern_gate,combined_active_rl_gate,combined_plus_significant_task_active_rl_gate,all_nonzero_task_active_rl_gate,engineering_gate_combined_operating_state,engineering_gate_preexisting_eep_semantics,engineering_gate_all_nonzero_task_diagnostic,combined_worst_active_rl_db,combined_total_rl_db,worst_significant_case_active_rl_db,worst_all_nonzero_case_active_rl_db
+0,426122,6,0.699999988079071,local_boundary,1,1,1,0,1,1,0,10.446698129702511,12.475331882149895,10.446698327804178,0.33688684101285665
+1,426124,6,0.800000011920929,active_rl_boundary,1,1,0,0,1,0,0,10.095835281515598,12.960899640188776,9.944809036985951,-6.240101831809829

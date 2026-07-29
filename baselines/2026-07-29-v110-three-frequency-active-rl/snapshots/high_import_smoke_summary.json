@@ -1,0 +1,14 @@
+{
+  "return_code": 0,
+  "manual_refine_present": false,
+  "linked_mesh_profile_present": true,
+  "port_adapt_tetrahedra": [],
+  "port_refine_tetrahedra": [],
+  "domain_partition_tetrahedra": [],
+  "source_stats_rows": 260,
+  "source_stats_tetrahedra_sum": 1137834,
+  "target_stats_rows": 260,
+  "target_stats_tetrahedra_sum": 1137834,
+  "stats_relative_delta": 0.0,
+  "import_smoke_gate_pass": true
+}

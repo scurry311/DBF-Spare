@@ -1,0 +1,16 @@
+{
+  "created_at": "2026-07-29 16:39:24",
+  "port_count": 256,
+  "field_complete": true,
+  "grid_point_count": 16471,
+  "s_parameter_complete": true,
+  "s_reciprocity_max_abs": 7.454541504079022e-12,
+  "s_passivity_sigma_max": 0.9790580441520775,
+  "raw_passive_rl_min_db": 7.450527141313486,
+  "matched_passive_rl_min_db": 10.61598342093285,
+  "structural_gate_pass": true,
+  "operator_path": "hfss_outputs\\v19_perturbed_operator_frequency_high_20260729_run01\\operator\\grounded_patch_eep_operator_256port.npz",
+  "failures": [],
+  "engineering_claim_allowed": false,
+  "next_gate": "Direct HFSS superposition and selected joint-pass case validation are required."
+}

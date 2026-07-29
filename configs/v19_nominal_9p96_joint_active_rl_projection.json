@@ -1,0 +1,88 @@
+{
+  "protocol": "v19-nominal-9p96-joint-active-rl-projection",
+  "created_on": "2026-07-29",
+  "parent_tag": "v1.9.0-perturbed-operator-hfss-smoke",
+  "seed": 20260827,
+  "common_command_policy": {
+    "same_mask_across_corners": true,
+    "same_task_weights_across_corners": true,
+    "profile_specific_weights_prohibited": true,
+    "mask_changes_prohibited": true
+  },
+  "evaluated_states": [
+    "nominal_identity",
+    "nominal_E2_source",
+    "frequency_low_identity",
+    "frequency_low_E2_source"
+  ],
+  "gates_unchanged": {
+    "psll_max_db": 0.0,
+    "nearest_isolation_min_db": 25.0,
+    "local_5deg_isolation_min_db": 20.0,
+    "weakest_target_gain_drop_max_db": 0.5,
+    "target_peak_spread_max_db": 3.0,
+    "pointing_error_max_deg": 1.5,
+    "combined_and_significant_task_active_rl_min_db": 10.0,
+    "combined_channel_dynamic_range_max_db": 20.0,
+    "combined_peak_to_rms_max_db": 12.0,
+    "corner_power_increase_max_db": 1.0,
+    "normalized_wng_min_db": -10.0
+  },
+  "optimizer": {
+    "active_rl_nullspace_steps": 36,
+    "active_rl_nullspace_step_size": 0.005,
+    "quantization_aware_selection": true
+  },
+  "design_variants": [
+    {
+      "name": "joint_weak_r2_rl10p5",
+      "target_amplitude_mode": "weakest",
+      "active_rl_design_min_db": 10.5,
+      "local_radius_deg": 2.0,
+      "regional_ceiling_db": 0.5,
+      "joint_projection_passes": 2,
+      "corner_sweeps": 2
+    },
+    {
+      "name": "joint_weak_r5_rl11",
+      "target_amplitude_mode": "weakest",
+      "active_rl_design_min_db": 11.0,
+      "local_radius_deg": 5.0,
+      "regional_ceiling_db": 0.25,
+      "joint_projection_passes": 3,
+      "corner_sweeps": 2
+    },
+    {
+      "name": "joint_median_r2_rl11p5",
+      "target_amplitude_mode": "median",
+      "active_rl_design_min_db": 11.5,
+      "local_radius_deg": 2.0,
+      "regional_ceiling_db": 0.0,
+      "joint_projection_passes": 3,
+      "corner_sweeps": 3
+    },
+    {
+      "name": "joint_median_r5_rl12",
+      "target_amplitude_mode": "median",
+      "active_rl_design_min_db": 12.0,
+      "local_radius_deg": 5.0,
+      "regional_ceiling_db": -0.25,
+      "joint_projection_passes": 4,
+      "corner_sweeps": 3
+    },
+    {
+      "name": "joint_strong_r2_rl12p5",
+      "target_amplitude_mode": "strongest",
+      "active_rl_design_min_db": 12.5,
+      "local_radius_deg": 2.0,
+      "regional_ceiling_db": -0.5,
+      "joint_projection_passes": 4,
+      "corner_sweeps": 3
+    }
+  ],
+  "downstream_policy": {
+    "critic_retraining_allowed": false,
+    "ten_ghz_high_corner_after_projection": true,
+    "large_hfss_batch_allowed": false
+  }
+}

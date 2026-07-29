@@ -1,0 +1,22 @@
+{
+  "protocol": "v19-nominal-9p96-joint-active-rl-projection",
+  "scene_count": 20,
+  "variant_count_per_scene_including_baseline": 6,
+  "same_mask_and_command_across_corners": true,
+  "source_state_reconstruction_max_abs": 0.0,
+  "baseline_all_corner_strict_pass_count": 3,
+  "selected_all_corner_strict_pass_count": 12,
+  "baseline_source_pair_strict_pass_count": 4,
+  "selected_source_pair_strict_pass_count": 13,
+  "selected_pattern_pass_count": 20,
+  "selected_active_rl_pass_count": 12,
+  "selected_minimum_active_rl_floor_db": 8.622522830963135,
+  "selected_k_pass": {
+    "2": 6,
+    "4": 3,
+    "6": 3
+  },
+  "critic_training_allowed": false,
+  "symmetric_10p04_operator_smoke_allowed": true,
+  "elapsed_seconds": 339.03193187713623
+}
