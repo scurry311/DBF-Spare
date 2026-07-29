@@ -1,0 +1,21 @@
+{
+  "protocol": "v21-frozen-v112-three-frequency-broadband-matching",
+  "frozen_scene_count": 20,
+  "variants_evaluated": [
+    "old_series_l_0p533nH_q50",
+    "geometry3_sls"
+  ],
+  "selected_for_eep_replay": "geometry3_sls",
+  "selected_active10_count": 10,
+  "selected_reserve11_count": 0,
+  "selected_k2_active10_count": 4,
+  "selected_k4_active10_count": 4,
+  "selected_minimum_passive_rl_db": 10.748437701860578,
+  "selected_minimum_network_efficiency": 0.9808573592315494,
+  "physical_scope": "frequency-dependent finite-Q circuit cascade on three HFSS raw S256/EEP operators",
+  "embedded_hfss_validated": false,
+  "mask_or_weight_changes": false,
+  "thresholds_changed": false,
+  "hfss_allowed": false,
+  "critic_training_allowed": false
+}

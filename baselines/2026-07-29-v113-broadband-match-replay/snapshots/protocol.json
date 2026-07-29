@@ -1,0 +1,47 @@
+{
+  "protocol": "v21-frozen-v112-three-frequency-broadband-matching",
+  "created_on": "2026-07-29",
+  "parent_tag": "v1.12.0-pareto-joint-feasibility",
+  "seed": 20260828,
+  "frozen_state_seed": 20260827,
+  "frequencies_ghz": [9.96, 10.0, 10.04],
+  "freeze_policy": {
+    "strict_scene": "minimum strict ratio, then maximum robust worst margin",
+    "failed_scene": "maximum robust worst margin",
+    "mask_or_weight_changes_allowed": false,
+    "threshold_changes_allowed": false
+  },
+  "network": {
+    "topology": "source-series / shunt / antenna-series",
+    "reference_frequency_ghz": 10.0,
+    "component_q": 50.0,
+    "series_reactance_bounds_ohm": [-80.0, 80.0],
+    "shunt_susceptance_bounds_siemens": [-0.03, 0.03],
+    "variants": ["uniform_sls", "geometry3_sls"],
+    "geometry_classes": ["corner", "edge", "interior"],
+    "minimum_network_efficiency": 0.95,
+    "minimum_passive_rl_db": 10.0,
+    "preferred_active_rl_db": 11.0
+  },
+  "optimization": {
+    "differential_evolution_maxiter": 18,
+    "differential_evolution_popsize": 5,
+    "polish": true,
+    "workers": 1
+  },
+  "replay_gate": {
+    "k2_strict_count_min": 6,
+    "k2_scene_count": 7,
+    "k4_strict_count_min": 5,
+    "k4_scene_count": 6,
+    "reserve11_count_min": 1,
+    "all_corner_passive_rl_min_db": 10.0,
+    "all_corner_network_efficiency_min": 0.95
+  },
+  "downstream_lock": {
+    "candidate_optimization_allowed_before_gate": false,
+    "hfss_allowed_before_gate": false,
+    "critic_training_allowed_before_gate": false,
+    "bulk_hfss_allowed": false
+  }
+}

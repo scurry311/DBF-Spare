@@ -1,0 +1,15 @@
+{
+  "tag": "2026-07-29-v113-broadband-match-replay",
+  "version": "v1.13.0-broadband-match-replay",
+  "created_at_utc": "2026-07-29T13:02:11.470080+00:00",
+  "artifact_count": 12,
+  "snapshot_bytes": 93623,
+  "training_labels_locked": true,
+  "pattern_labels_allowed": true,
+  "strict_benchmark_gate_pass": false,
+  "hfss_physical_labels_allowed": false,
+  "residual_critic_training_locked": true,
+  "residual_critic_engineering_promoted": false,
+  "automatic_hfss_admission_allowed": false,
+  "final_adaptive_coverage_target_met": false
+}

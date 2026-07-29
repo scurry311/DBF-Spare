@@ -1,6 +1,6 @@
 # Result Index
 
-Current baseline: `v1.12.0-pareto-joint-feasibility`, frozen on 2026-07-29.
+Current baseline: `v1.13.0-broadband-match-replay`, frozen on 2026-07-29.
 
 ## Evidence Levels
 
@@ -556,3 +556,24 @@ physical stage must broaden 10.04 GHz active matching and replay the frozen
 v20.1 candidates on a newly validated S256/EEP operator. The authoritative
 snapshot is
 `baselines/2026-07-29-v112-pareto-joint-feasibility/BASELINE.md`.
+
+## Three-Frequency Broadband-Match Replay v1.13
+
+The twenty v1.12 masks, task commands, ratios, E2 states, and thresholds are
+frozen with a SHA-256 replay package. Uniform and corner/edge/interior finite-Q
+S-L-S networks are cascaded with the three physical raw S256/EEP operators.
+
+| Result | Old series match | Three-class S-L-S | Decision |
+|---|---:|---:|---|
+| 10.04 GHz passive RL | 10.616 dB | 10.748 dB | Small improvement |
+| Minimum network efficiency | 98.05% | 98.09% | Passed 95% gate |
+| Maximum EEP map complex NMSE | 1.95e-13 | 1.92e-13 | Passed |
+| K=2 strict | 4/7 | 4/7 | Below 6/7 |
+| K=4 strict | 2/6 | 2/6 | Below 5/6 |
+| Overall strict | 8/20 | 8/20 | No feasible-set gain |
+| 11 dB reserve | 0/20 | 0/20 | Failed |
+
+The new circuit network preserves pattern behavior but produces mixed
+active-RL changes and no new strict scene. Candidate optimization, HFSS smoke,
+bulk labels, and critic training remain locked. The authoritative snapshot is
+`baselines/2026-07-29-v113-broadband-match-replay/BASELINE.md`.

@@ -218,6 +218,22 @@ V112_PARETO_RESCUE_ARTIFACTS = (
 )
 
 
+V113_BROADBAND_MATCH_REPLAY_ARTIFACTS = (
+    Artifact("protocol", "configs/v21_three_frequency_broadband_matching.json", "A", "pre_registered", "Frozen-command three-frequency matching, replay gate, and downstream lock protocol."),
+    Artifact("freeze_summary", "hfss_outputs/v21_frozen_v112_replay_20260729_run03/freeze_summary.json", "A", "frozen", "Corrected v1.12 replay package provenance and SHA-256 chain."),
+    Artifact("freeze_manifest", "hfss_outputs/v21_frozen_v112_replay_20260729_run03/frozen_candidate_manifest.csv", "A", "frozen", "Twenty scene-level masks, commands, ratios, source rows, and hashes."),
+    Artifact("uniform_design", "hfss_outputs/v21_three_frequency_broadband_match_20260729_run02_q50_uniform01/design_summary.json", "A", "failed_gate", "Uniform finite-Q S-L-S network screening result."),
+    Artifact("geometry_design", "hfss_outputs/v21_three_frequency_broadband_match_20260729_run02_q50_geometry01/design_summary.json", "A", "selected_for_replay", "Corner/edge/interior finite-Q S-L-S design summary."),
+    Artifact("geometry_parameters", "hfss_outputs/v21_three_frequency_broadband_match_20260729_run02_q50_geometry01/network_variant_summary.csv", "A", "diagnostic", "Three-class component parameters and active-match design metrics."),
+    Artifact("geometry_active_replay", "hfss_outputs/v21_three_frequency_broadband_match_20260729_run02_q50_geometry01/candidate_active_rl_replay.csv", "A", "diagnostic", "Active-RL-only precheck on the frozen candidates."),
+    Artifact("operator_validation", "hfss_outputs/v21_broadband_s256_eep_replay_20260729_run01/operator_structural_validation.csv", "A", "passed", "Three-frequency external S256 reciprocity, passivity, passive RL, and EEP map validation."),
+    Artifact("frozen_replay_groups", "hfss_outputs/v21_broadband_s256_eep_replay_20260729_run01/frozen_replay_by_variant_k.csv", "A", "failed_gate", "Strict, pattern, active-RL, reserve, and efficiency counts by K."),
+    Artifact("frozen_replay_metrics", "hfss_outputs/v21_broadband_s256_eep_replay_20260729_run01/frozen_replay_candidate_metrics.csv", "A", "diagnostic", "Paired old/new full five-state EEP/S256 replay metrics for all scenes."),
+    Artifact("stage_decision", "hfss_outputs/v21_broadband_s256_eep_replay_20260729_run01/stage_decision.json", "A", "downstream_locked", "Machine-readable replay gate and downstream decision."),
+    Artifact("stage_report", "hfss_outputs/v21_broadband_s256_eep_replay_20260729_run01/STAGE_REPORT.md", "A", "authoritative", "Human-readable matching, operator, replay, and stop decision."),
+)
+
+
 BASELINE_CONFIGS = {
     "2026-07-21": {
         "version": "v0.1.0-physics-gated",
@@ -312,6 +328,18 @@ BASELINE_CONFIGS = {
     "2026-07-29-v112-pareto-joint-feasibility": {
         "version": "v1.12.0-pareto-joint-feasibility",
         "artifacts": V112_PARETO_RESCUE_ARTIFACTS,
+        "training_labels_locked": True,
+        "pattern_labels_allowed": True,
+        "strict_benchmark_gate_pass": False,
+        "hfss_physical_labels_allowed": False,
+        "residual_critic_training_locked": True,
+        "residual_critic_engineering_promoted": False,
+        "automatic_hfss_admission_allowed": False,
+        "final_adaptive_coverage_target_met": False,
+    },
+    "2026-07-29-v113-broadband-match-replay": {
+        "version": "v1.13.0-broadband-match-replay",
+        "artifacts": V113_BROADBAND_MATCH_REPLAY_ARTIFACTS,
         "training_labels_locked": True,
         "pattern_labels_allowed": True,
         "strict_benchmark_gate_pass": False,

@@ -1,0 +1,7 @@
+﻿variant,objective,active10_count,reserve11_count,k2_active10_count,k4_active10_count,k6_active10_count,k2_reserve11_count,k4_reserve11_count,k6_reserve11_count,worst_active_rl_db,p10_active_rl_db,minimum_passive_rl_db,minimum_network_efficiency,maximum_passivity_sigma,minimum_old_map_correlation,maximum_old_map_norm_change_db,optimizer_success,optimizer_message,optimizer_evaluations,elapsed_seconds,row_type,class_name,source_series_reactance_ohm_at_10ghz,shunt_susceptance_siemens_at_10ghz,antenna_series_reactance_ohm_at_10ghz
+old_series_l_0p533nH_q50,22.910177439710143,10,0,4,4,2,0,0,0,8.72406890363576,9.110014244717513,10.615983303321926,0.9804811374072175,0.9697790617414875,0.9999999999999996,4.821637332766436e-15,True,baseline,0,0.0,,,,,
+old_series_l_0p533nH_q50,,,,,,,,,,,,,,,,,,,,,component_parameters,all,33.48937768726719,0.0,0.0
+geometry3_sls,21.294437927735498,10,0,4,4,2,0,0,0,8.974082728553704,9.167487585292903,10.748437701860578,0.9808573592315494,0.9700153090595266,0.9999896597501563,0.013827500439870806,True,bounded_coordinate_search,451,89.36423635482788,,,,,
+geometry3_sls,,,,,,,,,,,,,,,,,,,,,component_parameters,corner,32.391770110030876,3.539661919921877e-05,-0.11798873066406254
+geometry3_sls,,,,,,,,,,,,,,,,,,,,,component_parameters,edge,32.199971437267195,-4.1520960937500025e-05,0.0
+geometry3_sls,,,,,,,,,,,,,,,,,,,,,component_parameters,interior,32.9091448747672,-4.1520960937500025e-05,0.0

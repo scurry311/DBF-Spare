@@ -48,3 +48,7 @@ Current checkpoints:
   one additional scene, but four-role Pareto reranking and 2,048 progressive
   command evaluations reach only K=2 4/7 and K=4 2/6 with no 11 dB reserve;
   algorithm-only expansion stops pending broader 10.04 GHz active matching.
+- `2026-07-29-v113-broadband-match-replay`: frozen v1.12 masks and commands are
+  replayed through uniform and three-class finite-Q broadband circuit networks;
+  rebuilt three-frequency S256/EEP operators pass structural checks, but K=2
+  4/7, K=4 2/6, and an empty 11 dB reserve keep algorithms and HFSS locked.

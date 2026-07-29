@@ -1,0 +1,25 @@
+{
+  "protocol": "v21-frozen-v112-three-frequency-broadband-matching",
+  "parent_tag": "v1.12.0-pareto-joint-feasibility",
+  "scene_count": 20,
+  "strict_count": 8,
+  "strict_counts_by_k": {
+    "2": 4,
+    "4": 2,
+    "6": 2
+  },
+  "package_sha256": "754dfa94aaa76e717f0b579ff5f8960758bdf20a88175c7c8bbc9233180092e4",
+  "manifest_sha256": "0ca355bf2238824c9a39e508e23f9ea1f8783bd1259cc947ab7f690d58ae8c1a",
+  "source_sha256": {
+    "v20_metrics": "b0bce2254da134e79c98080fdcec5bb68050b63f234c89eb1f55541c1e92dc00",
+    "v20_arrays": "c6a012d4aee8bfb010888c675d2f704652a13d7315911575f758139891965538",
+    "alpha_metrics": "ca548f394089f710b1efab0c48e2dd7dbcd6d833f335895e3011eeb293d291ab",
+    "alpha_arrays": "a9196330cedc93020fb07ff878c14547782a57c861c62dac49443dbe246e8c96",
+    "protocol": "4c4e7be671d1a68802e64882647e123c26b27a66f29f430c72c2fe0bca2a3566"
+  },
+  "mask_or_weight_changes_allowed": false,
+  "thresholds_changed": false,
+  "candidate_optimization_allowed": false,
+  "hfss_allowed": false,
+  "critic_training_allowed": false
+}
