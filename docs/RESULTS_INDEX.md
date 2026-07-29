@@ -1,6 +1,6 @@
 # Result Index
 
-Current baseline: `v1.8.0-frozen-16x16-hfss-smoke`, frozen on 2026-07-28.
+Current baseline: `v1.9.0-perturbed-operator-hfss-smoke`, frozen on 2026-07-29.
 
 ## Evidence Levels
 
@@ -453,3 +453,29 @@ frequency, geometry, dielectric, or S-parameter corner solves, so it validates
 the execution chain but does not open hidden-physics residual-critic training.
 The authoritative snapshot is
 `baselines/2026-07-28-v18-frozen-16x16-hfss-smoke/BASELINE.md`.
+
+## Physical Perturbed-Operator HFSS Smoke v1.9
+
+The first real 16x16 physical corner changes the fixed-mesh operator from the
+nominal frequency to the preregistered E2 frequency-low point at 9.96 GHz. The
+solve is numerically valid and completes all 256 complex EEP exports under a
+hard resource monitor.
+
+| Result | Value | Decision |
+|---|---:|---|
+| Matched passive minimum RL | 15.73 dB | Passed |
+| Complete EEP ports / directions | 256 / 16,471 | Passed |
+| Nominal versus physical max abs Delta S | 0.08295 | Expected physical drift |
+| Frozen operator-only strict pass | 5/20 | 25% |
+| Physical plus source strict pass | 4/20 | 20% |
+| Pattern-gate failures | 0 | Passed |
+| Active-RL failures | 16 | Hardware-margin bottleneck |
+| Direct EEP/HFSS gate agreement | 2/2 | Passed |
+| Minimum free RAM / disk | 0.796 / 31.966 GB | No resource abort |
+
+The `Delta S <= 0.05` same-model direct/DDM consistency gate does not apply to
+an intentional frequency change. The physical operator is accepted for robust
+development, but critic retraining and a large HFSS batch remain locked. Joint
+nominal/9.96 GHz active-RL projection and a symmetric 10.04 GHz physical corner
+must come next. The authoritative snapshot is
+`baselines/2026-07-29-v19-perturbed-operator-hfss-smoke/BASELINE.md`.

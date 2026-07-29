@@ -32,3 +32,6 @@ Current checkpoints:
 - `2026-07-28-v18-frozen-16x16-hfss-smoke`: twenty frozen independent sparse
   candidates and 100 direct saved-field HFSS cases pass the strict pattern and
   semantic active-RL gates; physical-corner critic labels remain locked.
+- `2026-07-29-v19-perturbed-operator-hfss-smoke`: first real 16x16 9.96 GHz
+  physical-operator corner; EEP/direct-HFSS mapping passes, while frozen strict
+  coverage falls to 20% solely because active matching loses margin.

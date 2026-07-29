@@ -1,0 +1,22 @@
+{
+  "protocol": "v18-frozen-candidates-on-physical-frequency-low-operator",
+  "candidate_count": 20,
+  "independent_scene_count": 20,
+  "physical_frequency_ghz": 9.96,
+  "common_mask_and_weights_frozen": true,
+  "thresholds_changed": false,
+  "operator_only_strict_pass_count": 5,
+  "operator_only_strict_pass_rate": 0.25,
+  "physical_plus_source_strict_pass_count": 4,
+  "physical_plus_source_strict_pass_rate": 0.2,
+  "physical_plus_source_k6_pass_count": 4,
+  "failure_root_causes": {
+    "active_rl": 16
+  },
+  "worst_physical_plus_source_psll_db": -0.8577728271484375,
+  "minimum_physical_plus_source_nearest_iso_db": 25.265380859375,
+  "minimum_physical_plus_source_local_iso_db": 20.584259033203125,
+  "minimum_physical_plus_source_active_rl_db": 8.622522885739784,
+  "direct_hfss_superposition_required": true,
+  "critic_training_allowed": false
+}

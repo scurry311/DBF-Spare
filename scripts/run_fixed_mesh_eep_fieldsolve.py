@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import csv
 import json
 import re
 import shutil
@@ -42,6 +43,9 @@ MIN_PHYSICAL_AVAILABLE_GB = 15.0
 AEDT_DISTRIBUTED_MACHINE_LIST: str | None = None
 CRITICAL_PHYSICAL_GB = 0.5
 CRITICAL_COMMIT_GB = 2.5
+CRITICAL_D_FREE_GB = 10.0
+MAX_CRITICAL_POLLS = 3
+RESOURCE_POLL_SECONDS = 30.0
 
 
 def parse_args() -> argparse.Namespace:
@@ -74,6 +78,22 @@ def resources() -> dict[str, float]:
         **fixed.memory_metrics(),
         "d_free_gb": float(shutil.disk_usage(ROOT).free / 1024.0**3),
     }
+
+
+def append_resource_sample(stage: str, values: dict[str, float], solver_pid: int | None = None) -> None:
+    path = OUT_DIR / "resource_history.csv"
+    row = {
+        "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
+        "stage": stage,
+        "solver_pid": "" if solver_pid is None else solver_pid,
+        **values,
+    }
+    write_header = not path.exists()
+    with path.open("a", newline="", encoding="utf-8-sig") as handle:
+        writer = csv.DictWriter(handle, fieldnames=row.keys())
+        if write_header:
+            writer.writeheader()
+        writer.writerow(row)
 
 
 def mesh_link() -> str:
@@ -365,6 +385,7 @@ def wait_for_resources() -> dict[str, float]:
     deadline = time.time() + 8.0 * 3600.0
     while True:
         current = resources()
+        append_resource_sample("waiting_resources", current)
         passed = all(current[key] >= value for key, value in requirements.items())
         write_status(
             state="resource_gate_passed" if passed else "waiting_resources",
@@ -386,6 +407,7 @@ def solve() -> dict[str, Any]:
         raise RuntimeError("Fieldsolve smoke gate must pass before solve")
     fixed.clear_stale_source_lock(OUT_DIR)
     start_resources = wait_for_resources()
+    append_resource_sample("fieldsolve_start", start_resources)
     solve_dir = OUT_DIR / "solve"
     solve_dir.mkdir(parents=True, exist_ok=True)
     scratch = OUT_DIR / "scratch"
@@ -420,10 +442,11 @@ def solve() -> dict[str, Any]:
         critical_polls = 0
         while process.poll() is None:
             current = resources()
+            append_resource_sample("running_fieldsolve", current, process.pid)
             critical = bool(
                 current["physical_available_gb"] < CRITICAL_PHYSICAL_GB
                 or current["commit_headroom_gb"] < CRITICAL_COMMIT_GB
-                or current["d_free_gb"] < 10.0
+                or current["d_free_gb"] < CRITICAL_D_FREE_GB
             )
             critical_polls = critical_polls + 1 if critical else 0
             write_status(
@@ -432,7 +455,7 @@ def solve() -> dict[str, Any]:
                 resources=current,
                 consecutive_critical_resource_polls=critical_polls,
             )
-            if critical_polls >= 3:
+            if critical_polls >= MAX_CRITICAL_POLLS:
                 subprocess.run(
                     ["taskkill", "/PID", str(process.pid), "/T", "/F"],
                     stdout=subprocess.DEVNULL,
@@ -440,8 +463,11 @@ def solve() -> dict[str, Any]:
                     check=False,
                 )
                 process.wait(timeout=120)
-                raise MemoryError("Fieldsolve stopped after three critical resource polls")
-            time.sleep(30.0)
+                raise MemoryError(
+                    "Fieldsolve stopped after "
+                    f"{MAX_CRITICAL_POLLS} consecutive critical resource polls"
+                )
+            time.sleep(RESOURCE_POLL_SECONDS)
         return_code = int(process.returncode)
     profile = direct.changed_profile(results_dir, before)
     message_text = messages.read_text(encoding="utf-8", errors="ignore") if messages.exists() else ""
@@ -464,6 +490,7 @@ def solve() -> dict[str, Any]:
         "solve_and_export_gate_pass": solve_ok,
         "completion_resources": resources(),
     }
+    append_resource_sample("fieldsolve_complete", result["completion_resources"])
     if solve_ok and profile is not None:
         result.update(direct.direct_profile_metrics(copied_profile or profile))
         result.update(s_metrics(TOUCHSTONE))

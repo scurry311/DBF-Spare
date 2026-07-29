@@ -1,0 +1,43 @@
+{
+  "protocol": "v18-small-16x16-perturbed-operator-hfss",
+  "corner": "frequency_low_E2",
+  "frequency_ghz": 9.96,
+  "physical_operator_gate_pass": true,
+  "solve_and_export_complete": true,
+  "numerical_smatrix_valid": true,
+  "operator_structural_gate_pass": true,
+  "matched_passive_rl_min_db": 15.727850918084783,
+  "nominal_vs_physical_max_abs_delta_s": 0.08294761684107785,
+  "nominal_delta_s_0p05_gate_applicable": false,
+  "nominal_delta_s_gate_reason": "The setup frequency changed intentionally; delta S is a physical response, not a same-model direct/DDM consistency error.",
+  "eep_port_complete": true,
+  "eep_grid_point_count": 16471,
+  "frozen_candidate_count": 20,
+  "operator_only_strict_pass_count": 5,
+  "physical_plus_source_strict_pass_count": 4,
+  "physical_plus_source_failure_root_causes": {
+    "active_rl": 16
+  },
+  "direct_hfss_candidate_count": 2,
+  "direct_hfss_case_count": 12,
+  "direct_no_scale_complex_nmse_max": 5.28915236261418e-12,
+  "direct_no_scale_magnitude_rmse_db_max": 2.6736812287708744e-05,
+  "direct_gate_agreement_count": 2,
+  "direct_gate_agreement_rate": 1.0,
+  "direct_fullwave_pattern_gate_count": 2,
+  "direct_semantic_active_rl_gate_count": 1,
+  "resource_summary": {
+    "sample_count": 110,
+    "minimum_physical_available_gb": 0.7959365844726562,
+    "minimum_commit_headroom_gb": 10.666297912597656,
+    "minimum_d_free_gb": 31.966445922851562,
+    "profile_max_memory_per_process_gb": 15.8,
+    "profile_matrix_size": 5576454,
+    "profile_matrix_disk": "42.5 GB",
+    "resource_abort_triggered": false,
+    "aedt_ram_limit_percent": 80
+  },
+  "critic_training_allowed": false,
+  "development_operator_labels_allowed": true,
+  "next_action": "Use nominal and 9.96 GHz S256 jointly in active-RL-constrained weight projection; do not retrain the critic until at least the symmetric 10.04 GHz operator and additional independent physical corners are available."
+}

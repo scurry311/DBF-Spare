@@ -1,0 +1,3 @@
+﻿local_candidate_index,source_candidate_index,sample_index,k,ratio,predicted_physical_operator_gate,direct_hfss_semantic_gate,gate_agreement,predicted_active_rl_floor_db,direct_worst_significant_active_rl_db,direct_combined_active_rl_db
+0,18,426126,6,0.699999988079071,1,1,1,10.06145795090301,10.061457425006267,10.061457958897964
+1,10,426110,4,0.699999988079071,0,0,1,9.872154153809772,9.872154151563022,10.242626021155859
