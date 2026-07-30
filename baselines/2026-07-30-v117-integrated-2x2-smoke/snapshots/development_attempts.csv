@@ -1,0 +1,4 @@
+run,status,reason,valid_label
+run01,stopped_before_solve,intersecting fanout and united patch/probe conductors,0
+run02,memory_guard_manual_stop,542245 tetrahedra and 15.05 GiB peak solver memory,0
+run03,electromagnetic_complete_gate_failed,resource-safe solve; physical matching and cascade-consistency gates failed,1

@@ -1,0 +1,7 @@
+{
+  "return_code": 0,
+  "memory_guard_aborted": false,
+  "minimum_free_memory_gb": 15.762496948242188,
+  "eep_files": 12,
+  "expected_eep_files": 12
+}

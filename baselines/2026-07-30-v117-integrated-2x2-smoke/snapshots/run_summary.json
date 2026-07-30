@@ -1,0 +1,9 @@
+{
+  "replicate": 1,
+  "build_return_code": 0,
+  "project_ready_before_solve": true,
+  "solve_return_code": 1,
+  "memory_guard_aborted": false,
+  "minimum_free_memory_gb_during_solve": 6.494480133056641,
+  "free_memory_gb_before": 17.347904205322266
+}

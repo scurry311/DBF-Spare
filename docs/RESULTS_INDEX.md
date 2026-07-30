@@ -647,3 +647,30 @@ a fallback rather than the active branch. One integrated physical 2x2
 antenna-network smoke is authorized. The 4x4/16x16 expansions, labels, and
 critic remain locked. The authoritative snapshot is
 `baselines/2026-07-30-v116-physical-s8-hfss-optimization/BASELINE.md`.
+
+## Integrated Physical Feed-Antenna 2x2 Smoke v1.17
+
+The v1.16 network is physically placed below the antenna ground and connected
+to four real dual-slot patches through routed microstrip fanout and probes.
+Only the four PRE ports remain as excitations. Three-frequency S4 and twelve
+complex EEP files are exported from the integrated full-wave solution.
+
+| Result | Value | Decision |
+|---|---:|---|
+| Final Delta S | 0.02889 | Converged |
+| Tetrahedra / peak memory | 254,705 / 9.50 GiB | Resource-safe |
+| EEP power relative error | 0.86% | Passed 5% |
+| Passive RL | 8.251 dB | Failed 12 dB |
+| Representative active RL | 1.601 dB | Failed 11 dB |
+| Representative total RL | 8.215 dB | Failed 11 dB |
+| Accepted-to-radiated efficiency | 94.12% | Failed 95% |
+| Transducer efficiency | 81.34% | Failed 85% |
+| Integrated versus S8+S4 max abs Delta S | 0.307 | Failed 0.05 |
+
+The electromagnetic and EEP evidence is credible, but the POST fanout and
+probe transition invalidate the cascade assumption. No independent repeat,
+4x4/16x16 expansion, labels, or critic training is authorized. The next
+hardware branch must equalize routed electrical lengths and optimize the POST
+transition while freezing v1.16 component values and all gates. The
+authoritative snapshot is
+`baselines/2026-07-30-v117-integrated-2x2-smoke/BASELINE.md`.

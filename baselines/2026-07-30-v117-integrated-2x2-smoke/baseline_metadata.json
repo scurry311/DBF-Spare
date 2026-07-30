@@ -1,0 +1,9 @@
+{
+  "version": "v1.17.0-integrated-2x2-smoke",
+  "created_on": "2026-07-30",
+  "parent_tag": "v1.16.0-physical-s8-hfss-optimization",
+  "parent_commit": "bd1c741eeb804123a827387d7f2393878aba4d91",
+  "source_output": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v117_integrated_2x2_smoke_20260730_run03",
+  "evidence_level": "integrated physical feed-network and 2x2 antenna HFSS full-wave",
+  "training_label_authorized": false
+}

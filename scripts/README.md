@@ -142,6 +142,8 @@
 | `summarize_v115_grounded_modal_network.py` | 固化 v1.15 电路、物理 S8、双参考面效率和停止决定。 |
 | `run_v116_physical_s8_hfss_optimization.py` | 用 HFSS LocalVariables 顺序执行物理 S8 粗筛、局部优化和独立复验，并以冻结激励做双参考面门控。 |
 | `summarize_v116_physical_s8_hfss_optimization.py` | 固化 v1.16 的 14 个精确 HFSS S8、最佳元件、独立复验和阶段权限。 |
+| `run_v117_integrated_2x2_smoke.py` | 构建并门控共地双层馈电网络、物理扇出、探针和四贴片一体化 2x2 HFSS，导出 S4、三频 EEP 和功率账本。 |
+| `summarize_v117_integrated_2x2_smoke.py` | 固化 v1.17 一体化 2x2 的资源、S4、EEP、失败门控和后续锁定决定。 |
 
 ## AEDT 启动器与历史快速模型
 
