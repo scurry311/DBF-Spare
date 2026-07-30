@@ -674,3 +674,29 @@ hardware branch must equalize routed electrical lengths and optimize the POST
 transition while freezing v1.16 component values and all gates. The
 authoritative snapshot is
 `baselines/2026-07-30-v117-integrated-2x2-smoke/BASELINE.md`.
+
+## Equalized POST Transition v1.18
+
+All v1.16 component values, Q factors, substrate parameters, trace width, and
+engineering thresholds remain frozen. The compact network is rigidly moved
+and the four non-crossing POST routes are equalized to 23.3928 mm. Their
+length is selected from a proxy fitted to the measured v1.17 integrated S4,
+then checked by a new three-frequency integrated HFSS solve.
+
+| Result | v1.17 | v1.18 | Gate / decision |
+|---|---:|---:|---|
+| Final solver Delta S | 0.02889 | 0.02449 | Converged |
+| Tetrahedra / peak memory | 254,705 / 9.50 GiB | 253,408 / 9.11 GiB | Resource-safe |
+| Passive RL | 8.251 dB | 9.552 dB | Improved, diagnostic |
+| Representative active RL | 1.601 dB | 7.226 dB | Improved, failed 11 dB |
+| Representative total RL | 8.215 dB | 9.353 dB | Improved, diagnostic |
+| Integrated versus cascade max abs Delta S | 0.307 | 0.277 | Failed 0.05 |
+
+The S4 pre-repeat gate fails, so the missing EEP report export does not
+authorize a field rerun. Common and per-port uncoupled transition synthesis
+also has no joint feasible point; its best stepped-line proxy reaches about
+9.97 dB active RL and 0.096 max abs Delta S. Independent repeat, array
+expansion, labels, and critic training remain locked. The next topology must
+use an integrated multiport POST transition/decoupler. The authoritative
+snapshot is
+`baselines/2026-07-30-v118-equalized-post-transition/BASELINE.md`.

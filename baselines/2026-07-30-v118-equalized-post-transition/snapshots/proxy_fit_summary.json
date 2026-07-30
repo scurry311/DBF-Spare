@@ -1,0 +1,51 @@
+{
+  "source_integrated_s4": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v117_integrated_2x2_smoke_20260730_run03\\integrated_2x2_direct01\\v117_integrated_2x2_direct01.s4p",
+  "frozen_v116_components": {
+    "series_inductor_nh": 0.6177283279250902,
+    "ground_capacitor_pf": 0.13874830484346592,
+    "bridge_inductor_nh": 3.099437247401927,
+    "series_q": 80.0,
+    "ground_capacitor_q": 200.0,
+    "bridge_inductor_q": 60.0,
+    "substrate_thickness_mm": 0.254,
+    "relative_permittivity": 2.2,
+    "loss_tangent": 0.0009,
+    "copper_thickness_mm": 0.017,
+    "trace_width_mm": 0.75,
+    "routed_substrate_margin_mm": 0.75,
+    "channel_y_mm_by_port": [
+      -2.75,
+      2.75,
+      -1.25,
+      1.25
+    ],
+    "x_offset_mm": -10.0,
+    "pre_reference_x_local_mm": -1.7,
+    "post_reference_x_local_mm": 0.39936090808367786,
+    "series_gap_center_x_local_mm": -1.4,
+    "series_gap_length_mm": 0.2,
+    "ground_cap_x_local_mm": -1.1995763441189375,
+    "bridge_x_local_mm": 0.29935727382409216,
+    "bridge_sheet_width_mm": 0.3
+  },
+  "old_route_centerline_lengths_mm": [
+    9.225639091916323,
+    4.475639091916323,
+    25.72563909191632,
+    20.97563909191632
+  ],
+  "fit": {
+    "effective_er": 1.73,
+    "common_extra_length_mm": -0.5999999999999996,
+    "fit_rmse": 0.047543648689507036,
+    "fit_max_abs_delta_s": 0.11158112654635975
+  },
+  "guided_wavelength_at_10ghz_mm": 22.79279851202395,
+  "fitted_repeating_length_mm": 23.39279851202395,
+  "selected_proxy_candidate": {
+    "common_centerline_length_mm": 23.39279851202396,
+    "proxy_max_abs_delta_s": 0.009836486997970375,
+    "proxy_active_rl_min_db": 11.816146848793498
+  },
+  "proxy_is_not_hfss_evidence": true
+}

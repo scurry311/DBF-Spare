@@ -1,0 +1,10 @@
+{
+  "post_transition_gate_pass": false,
+  "allow_independent_repeat": false,
+  "independent_repeat_executed": false,
+  "allow_4x4": false,
+  "allow_16x16": false,
+  "allow_training_labels": false,
+  "allow_critic_training": false,
+  "next_hardware_action": "replace uncoupled local POST tuning with an integrated multiport transition/decoupler"
+}

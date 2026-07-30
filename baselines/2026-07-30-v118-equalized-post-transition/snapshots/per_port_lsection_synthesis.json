@@ -1,0 +1,20 @@
+{
+  "success": false,
+  "objective": 1.9844727990432502,
+  "active_rl_min_db": 9.025897055628016,
+  "max_abs_delta_s": 0.14818749473261023,
+  "series_reactance_ohm_10ghz": [
+    27.962958482388938,
+    16.566511479063035,
+    -15.23027855239526,
+    8.239389944526955
+  ],
+  "shunt_susceptance_s_10ghz": [
+    -0.005795166622272242,
+    -0.003685336316879705,
+    -0.007656287650526892,
+    0.004190046451236242
+  ],
+  "feasible": false,
+  "message": "Maximum number of iterations has been exceeded."
+}

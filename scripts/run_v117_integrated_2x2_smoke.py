@@ -156,6 +156,66 @@ Function Mm(value)
 End Function'''
 
 
+def equalized_route_plan(config: dict[str, Any], antenna: dict[str, Any]) -> list[dict[str, Any]]:
+    transition = config.get("post_transition")
+    if not transition or transition.get("mode") != "equalized_rectilinear":
+        return []
+    physical = antenna["physical_topology"]
+    candidate = antenna["one_by_one_candidates"][0]
+    network = config["feed_network"]
+    spacing = float(physical["spacing_mm"])
+    patch_l = float(physical["patch_length_mm"])
+    feed_inset = float(candidate["feed_inset_from_edge_mm"])
+    offset = float(transition.get("network_x_offset_mm", network["x_offset_mm"]))
+    post_x = offset + float(network["post_reference_x_local_mm"])
+    y_channels = [float(value) for value in network["channel_y_mm_by_port"]]
+    lane_x = [float(value) for value in transition["lane_x_mm_by_port"]]
+    target = float(transition["common_centerline_length_mm"])
+    if len(lane_x) != 4:
+        raise ValueError("post_transition.lane_x_mm_by_port must contain four entries")
+    routes = []
+    for port in range(4):
+        ix, iy = divmod(port, 2)
+        feed_x = (ix - 0.5) * spacing
+        feed_y = (iy - 0.5) * spacing - patch_l / 2.0 + feed_inset
+        start_y = y_channels[port]
+        horizontal = abs(lane_x[port] - post_x) + abs(feed_x - lane_x[port])
+        base_length = horizontal + abs(feed_y - start_y)
+        if target + 1.0e-9 < base_length:
+            raise ValueError(
+                f"Equalized target {target:.4f} mm is shorter than port {port} base route "
+                f"{base_length:.4f} mm"
+            )
+        detour = 0.5 * (target - base_length)
+        detour_y = (
+            min(start_y, feed_y) - detour
+            if iy == 0
+            else max(start_y, feed_y) + detour
+        )
+        points = [
+            (post_x, start_y),
+            (lane_x[port], start_y),
+            (lane_x[port], detour_y),
+            (feed_x, detour_y),
+            (feed_x, feed_y),
+        ]
+        actual = sum(
+            abs(second[0] - first[0]) + abs(second[1] - first[1])
+            for first, second in zip(points, points[1:])
+        )
+        routes.append(
+            {
+                "port": port,
+                "target_centerline_length_mm": target,
+                "actual_centerline_length_mm": actual,
+                "lane_x_mm": lane_x[port],
+                "detour_y_mm": detour_y,
+                "points_mm": points,
+            }
+        )
+    return routes
+
+
 def builder_text(project: Path, config: dict[str, Any], antenna: dict[str, Any]) -> str:
     physical = antenna["physical_topology"]
     candidate = antenna["one_by_one_candidates"][0]
@@ -179,7 +239,8 @@ def builder_text(project: Path, config: dict[str, Any], antenna: dict[str, Any])
     trace_w = float(network["trace_width_mm"])
     substrate_margin = float(network["routed_substrate_margin_mm"])
     substrate_ribbon = trace_w + 2.0 * substrate_margin
-    offset = float(network["x_offset_mm"])
+    transition = config.get("post_transition", {})
+    offset = float(transition.get("network_x_offset_mm", network["x_offset_mm"]))
     pre_x = offset + float(network["pre_reference_x_local_mm"])
     post_x = offset + float(network["post_reference_x_local_mm"])
     gap_center = offset + float(network["series_gap_center_x_local_mm"])
@@ -204,6 +265,8 @@ def builder_text(project: Path, config: dict[str, Any], antenna: dict[str, Any])
     antenna_mesh_names: list[str] = []
     geometry: list[str] = []
     assignments: list[str] = []
+    route_plans = equalized_route_plan(config, antenna)
+    route_by_port = {int(route["port"]): route for route in route_plans}
     feed_points: list[tuple[float, float]] = []
     for ix in range(2):
         for iy in range(2):
@@ -219,25 +282,77 @@ def builder_text(project: Path, config: dict[str, Any], antenna: dict[str, Any])
         post_name = f"TracePost_{port}"
         series_name = f"SeriesSheet_{port}"
         cap_name = f"GroundCapSheet_{port}"
-        fan_h = f"FanH_{port}"
-        fan_v = f"FanV_{port}"
         patch_name = f"Patch_{port}"
         probe_name = f"Probe_{port}"
         feed_mesh = f"FeedMesh_{port}"
         port_sheet = f"PrePortSheet_{port}"
         geometry.extend(
             [
-                f'CreateBox oEditor, "NetworkSubH_{port}", {post_x-substrate_margin:.7f}, {y_value-substrate_ribbon/2:.7f}, {signal_top:.7f}, {feed_x-post_x+2*substrate_margin:.7f}, {substrate_ribbon:.7f}, {network_h:.7f}, "RO5880_V117_Network", True',
-                f'UniteObjects oEditor, "NetworkSubstrate", "NetworkSubH_{port}"',
-                f'CreateBox oEditor, "NetworkSubV_{port}", {feed_x-substrate_ribbon/2:.7f}, {min(y_value, feed_y)-substrate_margin:.7f}, {signal_top:.7f}, {substrate_ribbon:.7f}, {abs(feed_y-y_value)+2*substrate_margin:.7f}, {network_h:.7f}, "RO5880_V117_Network", True',
-                f'UniteObjects oEditor, "NetworkSubstrate", "NetworkSubV_{port}"',
                 f'CreateBox oEditor, "{pre_name}", {pre_x:.7f}, {y_value-trace_w/2:.7f}, {signal_bottom:.7f}, {left_end-pre_x:.7f}, {trace_w:.7f}, {network_copper:.7f}, "copper", False',
                 f'CreateBox oEditor, "{post_name}", {right_start:.7f}, {y_value-trace_w/2:.7f}, {signal_bottom:.7f}, {post_x-right_start:.7f}, {trace_w:.7f}, {network_copper:.7f}, "copper", False',
                 f'CreateSheet oEditor, "{series_name}", "Z", {left_end:.7f}, {y_value-trace_w/2:.7f}, {signal_top:.7f}, {gap_length:.7f}, {trace_w:.7f}',
                 f'CreateSheet oEditor, "{cap_name}", "X", {cap_x:.7f}, {y_value-trace_w/4:.7f}, {signal_top:.7f}, {trace_w/2:.7f}, {network_h:.7f}',
                 f'CreateSheet oEditor, "{port_sheet}", "X", {pre_x:.7f}, {y_value-trace_w/2:.7f}, {signal_top:.7f}, {trace_w:.7f}, {network_h:.7f}',
-                f'CreateBox oEditor, "{fan_h}", {post_x:.7f}, {y_value-trace_w/2:.7f}, {signal_bottom:.7f}, {feed_x-post_x:.7f}, {trace_w:.7f}, {network_copper:.7f}, "copper", False',
-                f'CreateBox oEditor, "{fan_v}", {feed_x-trace_w/2:.7f}, {min(y_value, feed_y):.7f}, {signal_bottom:.7f}, {trace_w:.7f}, {abs(feed_y-y_value):.7f}, {network_copper:.7f}, "copper", False',
+            ]
+        )
+        if port in route_by_port:
+            route = route_by_port[port]
+            route_w = float(transition.get("route_width_mm", trace_w))
+            carrier_margin = float(transition.get("carrier_margin_mm", substrate_margin))
+            launch_length = float(transition.get("launch_length_mm", 1.0))
+            launch_width = float(transition.get("launch_width_mm", route_w))
+            launch_pad_radius = float(
+                transition.get("launch_pad_radius_mm", launch_width / 2.0)
+            )
+            points = [tuple(point) for point in route["points_mm"]]
+            for segment_index, (first, second) in enumerate(zip(points, points[1:])):
+                x1, y1 = first
+                x2, y2 = second
+                route_name = f"Route_{port}_{segment_index}"
+                sub_name = f"NetworkSubRoute_{port}_{segment_index}"
+                if abs(y2 - y1) <= 1.0e-9:
+                    geometry.extend(
+                        [
+                            f'CreateBox oEditor, "{route_name}", {min(x1,x2)-route_w/2:.7f}, {y1-route_w/2:.7f}, {signal_bottom:.7f}, {abs(x2-x1)+route_w:.7f}, {route_w:.7f}, {network_copper:.7f}, "copper", False',
+                            f'UniteObjects oEditor, "{post_name}", "{route_name}"',
+                            f'CreateBox oEditor, "{sub_name}", {min(x1,x2)-carrier_margin:.7f}, {y1-route_w/2-carrier_margin:.7f}, {signal_top:.7f}, {abs(x2-x1)+2*carrier_margin:.7f}, {route_w+2*carrier_margin:.7f}, {network_h:.7f}, "RO5880_V117_Network", True',
+                            f'UniteObjects oEditor, "NetworkSubstrate", "{sub_name}"',
+                        ]
+                    )
+                else:
+                    geometry.extend(
+                        [
+                            f'CreateBox oEditor, "{route_name}", {x1-route_w/2:.7f}, {min(y1,y2)-route_w/2:.7f}, {signal_bottom:.7f}, {route_w:.7f}, {abs(y2-y1)+route_w:.7f}, {network_copper:.7f}, "copper", False',
+                            f'UniteObjects oEditor, "{post_name}", "{route_name}"',
+                            f'CreateBox oEditor, "{sub_name}", {x1-route_w/2-carrier_margin:.7f}, {min(y1,y2)-carrier_margin:.7f}, {signal_top:.7f}, {route_w+2*carrier_margin:.7f}, {abs(y2-y1)+2*carrier_margin:.7f}, {network_h:.7f}, "RO5880_V117_Network", True',
+                            f'UniteObjects oEditor, "NetworkSubstrate", "{sub_name}"',
+                        ]
+                    )
+            launch_sign = 1.0 if feed_y > float(route["detour_y_mm"]) else -1.0
+            launch_y = feed_y - launch_sign * launch_length
+            geometry.extend(
+                [
+                    f'CreateBox oEditor, "Launch_{port}", {feed_x-launch_width/2:.7f}, {min(launch_y,feed_y)-launch_width/2:.7f}, {signal_bottom:.7f}, {launch_width:.7f}, {abs(feed_y-launch_y)+launch_width:.7f}, {network_copper:.7f}, "copper", False',
+                    f'UniteObjects oEditor, "{post_name}", "Launch_{port}"',
+                    f'CreateCylinderZ oEditor, "LaunchPad_{port}", {feed_x:.7f}, {feed_y:.7f}, {signal_bottom:.7f}, {launch_pad_radius:.7f}, {network_copper:.7f}, "copper", False',
+                    f'UniteObjects oEditor, "{post_name}", "LaunchPad_{port}"',
+                ]
+            )
+        else:
+            fan_h = f"FanH_{port}"
+            fan_v = f"FanV_{port}"
+            geometry.extend(
+                [
+                    f'CreateBox oEditor, "NetworkSubH_{port}", {post_x-substrate_margin:.7f}, {y_value-substrate_ribbon/2:.7f}, {signal_top:.7f}, {feed_x-post_x+2*substrate_margin:.7f}, {substrate_ribbon:.7f}, {network_h:.7f}, "RO5880_V117_Network", True',
+                    f'UniteObjects oEditor, "NetworkSubstrate", "NetworkSubH_{port}"',
+                    f'CreateBox oEditor, "NetworkSubV_{port}", {feed_x-substrate_ribbon/2:.7f}, {min(y_value, feed_y)-substrate_margin:.7f}, {signal_top:.7f}, {substrate_ribbon:.7f}, {abs(feed_y-y_value)+2*substrate_margin:.7f}, {network_h:.7f}, "RO5880_V117_Network", True',
+                    f'UniteObjects oEditor, "NetworkSubstrate", "NetworkSubV_{port}"',
+                    f'CreateBox oEditor, "{fan_h}", {post_x:.7f}, {y_value-trace_w/2:.7f}, {signal_bottom:.7f}, {feed_x-post_x:.7f}, {trace_w:.7f}, {network_copper:.7f}, "copper", False',
+                    f'CreateBox oEditor, "{fan_v}", {feed_x-trace_w/2:.7f}, {min(y_value, feed_y):.7f}, {signal_bottom:.7f}, {trace_w:.7f}, {abs(feed_y-y_value):.7f}, {network_copper:.7f}, "copper", False',
+                ]
+            )
+        geometry.extend(
+            [
                 f'CreateBox oEditor, "{feed_mesh}", {feed_x-(tongue+2*slot_w+1.2)/2:.7f}, {patch_bottom-0.10:.7f}, {-antenna_h:.7f}, {tongue+2*slot_w+1.2:.7f}, {slot_l+0.5:.7f}, {antenna_h:.7f}, "RO5880_V117_Antenna", True',
                 f'SubtractKeepObject oEditor, "AntennaSubstrate", "{feed_mesh}"',
                 f'CreateCylinderZ oEditor, "GroundHole_{port}", {feed_x:.7f}, {feed_y:.7f}, {ground_bottom-0.05:.7f}, {hole_radius:.7f}, {antenna_copper+0.10:.7f}, "vacuum", True',
@@ -254,8 +369,6 @@ def builder_text(project: Path, config: dict[str, Any], antenna: dict[str, Any])
                 f'SubtractObject oEditor, "{patch_name}", "SlotR_{port}"',
                 f'CreateCylinderZ oEditor, "{probe_name}", {feed_x:.7f}, {feed_y:.7f}, {signal_bottom:.7f}, {probe_radius:.7f}, {-signal_bottom+antenna_copper:.7f}, "copper", False',
                 f'UniteObjects oEditor, "{patch_name}", "{probe_name}"',
-                f'UniteObjects oEditor, "{post_name}", "{fan_h}"',
-                f'UniteObjects oEditor, "{post_name}", "{fan_v}"',
                 f'UniteObjects oEditor, "{post_name}", "{patch_name}"',
             ]
         )
@@ -428,7 +541,11 @@ def prepare(args: argparse.Namespace) -> dict[str, Any]:
         shutil.copy2(resolve(config["trusted_antenna_protocol"]), out_dir / "antenna_protocol_snapshot.json")
     if args.replicate == 2:
         first = case_folder(out_dir, 1) / "analysis.json"
-        if not first.exists() or not read_json(first).get("integrated_gate_pass"):
+        first_result = read_json(first) if first.exists() else {}
+        repeat_key = config.get("scope", {}).get(
+            "repeat_authorization_key", "integrated_gate_pass"
+        )
+        if not first_result.get(repeat_key):
             raise RuntimeError("Independent repeat is locked until direct01 passes")
     folder = case_folder(out_dir, args.replicate)
     if folder.exists():
@@ -449,6 +566,8 @@ def prepare(args: argparse.Namespace) -> dict[str, Any]:
         "solver_path": str(solve.resolve()),
         "pre_reference_ports": [f"PRE_{index}" for index in range(4)],
         "post_reference_plane": "boundary between compact network and physical fanout; no excitation port",
+        "post_transition": config.get("post_transition"),
+        "post_route_plan": equalized_route_plan(config, antenna),
     }
     write_json(folder / "case_manifest.json", manifest)
     return {"prepared": True, "case": manifest}
@@ -514,7 +633,16 @@ def export_fields(args: argparse.Namespace) -> dict[str, Any]:
         for port in range(4)
     ]
     if all(path.exists() and path.stat().st_size > 1000 for path in expected):
-        return {"status": "already_complete", "field_count": len(expected)}
+        summary = {
+            "return_code": 0,
+            "memory_guard_aborted": False,
+            "minimum_free_memory_gb": None,
+            "eep_files": len(expected),
+            "expected_eep_files": len(expected),
+            "status": "already_complete",
+        }
+        write_json(folder / "field_export_summary.json", summary)
+        return summary
     script = folder / "export_fields_only.vbs"
     script.write_text(
         solver_text(project, touchstone, folder, config["frequencies_ghz"], solve_network=False),
@@ -771,6 +899,14 @@ def analyze_case(folder: Path, config: dict[str, Any]) -> dict[str, Any]:
         result["engineering_gate_pass"]
         and summary["active_rl_min_db"] >= float(gates["design_active_rl_db"])
     )
+    result["post_transition_gate_pass"] = bool(
+        result.get("converged") is True
+        and float(result.get("final_delta_s") or math.inf) <= float(gates["maximum_final_delta_s"])
+        and reciprocity <= float(gates["maximum_reciprocity_error"])
+        and passivity <= float(gates["maximum_passivity_sigma"])
+        and summary["active_rl_min_db"] >= float(gates["minimum_active_rl_db"])
+        and integrated_vs_cascade <= float(gates["maximum_integrated_vs_cascade_abs_delta_s"])
+    )
     result["integrated_gate_pass"] = result["engineering_gate_pass"]
     write_csv(folder / "frequency_metrics.csv", frequency_rows)
     write_csv(folder / "stimulus_metrics.csv", source_rows)
@@ -787,6 +923,7 @@ def analyze(args: argparse.Namespace) -> dict[str, Any]:
             results.append(analyze_case(folder, config))
     first = results[0] if results else None
     second = results[1] if len(results) > 1 else None
+    repeat_key = config.get("scope", {}).get("repeat_authorization_key", "integrated_gate_pass")
     repeat_delta = None
     repeat_pass = False
     if first and second:
@@ -796,16 +933,25 @@ def analyze(args: argparse.Namespace) -> dict[str, Any]:
         _, second_s = reordered_network(Path(second_manifest["touchstone_path"]), second_manifest["pre_reference_ports"], 4)
         repeat_delta = float(np.max(np.abs(first_s - second_s)))
         repeat_pass = bool(
-            second.get("integrated_gate_pass")
+            second.get(repeat_key)
             and repeat_delta <= float(config["gates"]["maximum_independent_repeat_abs_delta_s"])
         )
+    first_repeat_gate = bool(first and first.get(repeat_key))
     decision = {
         "first_integrated_gate_pass": bool(first and first.get("integrated_gate_pass")),
         "first_design_reserve_gate_pass": bool(first and first.get("design_reserve_gate_pass")),
-        "allow_independent_repeat": bool(first and first.get("integrated_gate_pass") and second is None),
+        "first_post_transition_gate_pass": bool(first and first.get("post_transition_gate_pass")),
+        "repeat_authorization_key": repeat_key,
+        "allow_independent_repeat": bool(first_repeat_gate and second is None),
         "independent_repeat_max_abs_delta_s": repeat_delta,
         "independent_repeat_pass": repeat_pass,
-        "allow_4x4": repeat_pass,
+        "allow_4x4": bool(
+            repeat_pass
+            and first
+            and second
+            and first.get("integrated_gate_pass")
+            and second.get("integrated_gate_pass")
+        ),
         "allow_16x16": False,
         "allow_training_labels": False,
         "allow_critic_training": False,

@@ -1,0 +1,10 @@
+{
+  "version": "v1.18.0-equalized-post-transition",
+  "created_on": "2026-07-30",
+  "parent_tag": "v1.17.0-integrated-2x2-smoke",
+  "parent_commit": "d4534da335af17e32ae04c5957e1d891c9bbcf4c",
+  "source_output": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v118_equalized_post_transition_20260730_run01",
+  "evidence_level": "integrated physical equal-length 2x2 HFSS S4 pre-repeat gate",
+  "independent_repeat_authorized": false,
+  "training_label_authorized": false
+}

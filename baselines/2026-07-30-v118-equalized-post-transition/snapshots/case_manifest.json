@@ -1,0 +1,149 @@
+{
+  "replicate": 1,
+  "project_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v118_equalized_post_transition_20260730_run01\\candidates\\eq23p393_launch0p95_pad0p50\\integrated_2x2_direct01\\v117_integrated_2x2_direct01.aedt",
+  "touchstone_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v118_equalized_post_transition_20260730_run01\\candidates\\eq23p393_launch0p95_pad0p50\\integrated_2x2_direct01\\v117_integrated_2x2_direct01.s4p",
+  "builder_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v118_equalized_post_transition_20260730_run01\\candidates\\eq23p393_launch0p95_pad0p50\\integrated_2x2_direct01\\build.vbs",
+  "solver_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v118_equalized_post_transition_20260730_run01\\candidates\\eq23p393_launch0p95_pad0p50\\integrated_2x2_direct01\\solve_export.vbs",
+  "pre_reference_ports": [
+    "PRE_0",
+    "PRE_1",
+    "PRE_2",
+    "PRE_3"
+  ],
+  "post_reference_plane": "boundary between compact network and physical fanout; no excitation port",
+  "post_transition": {
+    "mode": "equalized_rectilinear",
+    "network_x_offset_mm": -0.5,
+    "common_centerline_length_mm": 23.39279851202396,
+    "lane_x_mm_by_port": [
+      1.0,
+      2.5,
+      3.5,
+      5.0
+    ],
+    "route_width_mm": 0.75,
+    "carrier_margin_mm": 0.75,
+    "launch_length_mm": 1.0,
+    "launch_width_mm": 0.95,
+    "launch_pad_radius_mm": 0.5,
+    "source": "v1.17 integrated S4 calibrated repeating-length proxy"
+  },
+  "post_route_plan": [
+    {
+      "port": 0,
+      "target_centerline_length_mm": 23.39279851202396,
+      "actual_centerline_length_mm": 23.39279851202396,
+      "lane_x_mm": 1.0,
+      "detour_y_mm": -13.208579710053819,
+      "points_mm": [
+        [
+          -0.10063909191632214,
+          -2.75
+        ],
+        [
+          1.0,
+          -2.75
+        ],
+        [
+          1.0,
+          -13.208579710053819
+        ],
+        [
+          -7.5,
+          -13.208579710053819
+        ],
+        [
+          -7.5,
+          -9.875
+        ]
+      ]
+    },
+    {
+      "port": 1,
+      "target_centerline_length_mm": 23.39279851202396,
+      "actual_centerline_length_mm": 23.39279851202396,
+      "lane_x_mm": 2.5,
+      "detour_y_mm": 9.333579710053819,
+      "points_mm": [
+        [
+          -0.10063909191632214,
+          2.75
+        ],
+        [
+          2.5,
+          2.75
+        ],
+        [
+          2.5,
+          9.333579710053819
+        ],
+        [
+          -7.5,
+          9.333579710053819
+        ],
+        [
+          -7.5,
+          5.125
+        ]
+      ]
+    },
+    {
+      "port": 2,
+      "target_centerline_length_mm": 23.39279851202396,
+      "actual_centerline_length_mm": 23.39279851202396,
+      "lane_x_mm": 3.5,
+      "detour_y_mm": -13.458579710053819,
+      "points_mm": [
+        [
+          -0.10063909191632214,
+          -1.25
+        ],
+        [
+          3.5,
+          -1.25
+        ],
+        [
+          3.5,
+          -13.458579710053819
+        ],
+        [
+          7.5,
+          -13.458579710053819
+        ],
+        [
+          7.5,
+          -9.875
+        ]
+      ]
+    },
+    {
+      "port": 3,
+      "target_centerline_length_mm": 23.39279851202396,
+      "actual_centerline_length_mm": 23.39279851202396,
+      "lane_x_mm": 5.0,
+      "detour_y_mm": 11.083579710053819,
+      "points_mm": [
+        [
+          -0.10063909191632214,
+          1.25
+        ],
+        [
+          5.0,
+          1.25
+        ],
+        [
+          5.0,
+          11.083579710053819
+        ],
+        [
+          7.5,
+          11.083579710053819
+        ],
+        [
+          7.5,
+          5.125
+        ]
+      ]
+    }
+  ]
+}
