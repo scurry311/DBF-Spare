@@ -25,6 +25,7 @@
 | `build_grounded_patch_s256_proxy.py` | 从小阵列/局部耦合信息构建 grounded-patch S256 代理，仅供诊断。 |
 | `design_eep_port_match.py` | 基于完整 S 参数分析端口类别并设计 EEP/端口匹配参数。 |
 | `design_modal_subarray_network.py` | 设计 2x2/4x4 子阵偶模、奇模解耦与匹配网络。 |
+| `design_v115_grounded_modal_network.py` | 在可信 S4 上综合有限 Q 双参考面横向偶奇模网络，并分开计算 transducer/insertion efficiency。 |
 | `design_port_class_matching.py` | 对角点、边缘、内部等端口类别设计匹配网络。 |
 | `experiment_fixed_count_swap_psll.py` | 在固定阵元数下执行局部 swap 搜索以改善 PSLL。 |
 | `generate_iso_lcmv_teacher.py` | 生成带任务隔离约束的 LCMV/ZF teacher 权值。 |
@@ -68,6 +69,7 @@
 | `run_staged_16x16_convergence.py` | 分阶段续算 16x16，记录每轮 Delta S、资源和 RF 门限。 |
 | `run_twoport_balanced_match_fixture.py` | 构建 1x1/2x2 真实两端口平衡馈电与匹配夹具。 |
 | `run_v114_small_cell_broadband_feed.py` | 分阶段构建、求解并门控 v1.14 的 1x1/2x2/4x4 物理宽带馈电候选；硬停止禁止越过失败的小阵门。 |
+| `run_v115_physical_modal_feed_fixture.py` | 构建四 PRE/四 POST 参考面的物理 S8 馈电夹具，回放可信 S4 和冻结代表激励。 |
 | `validate_eep_superposition_smoke.py` | 对比 EEP 直接叠加与相同权值的 direct HFSS 复场。 |
 
 ## 实验性收敛恢复与资源审计
@@ -136,6 +138,8 @@
 | `summarize_active_matching_stage.py` | 汇总有源匹配阶段按 K、ratio、扫描角的真实指标。 |
 | `summarize_eep_hfss_joint_smoke_stage.py` | 汇总 EEP/HFSS 联合 smoke，并生成标签开放/锁定决定。 |
 | `summarize_v114_small_cell_broadband_feed.py` | 汇总 v1.14 小阵馈电、模态耦合、冻结 active-RL 回放和阶段锁定决定。 |
+| `calibrate_v115_physical_fixture.py` | 用物理 S8 校准分布式夹具 surrogate，并仅在同一拓扑内做物理感知重综合。 |
+| `summarize_v115_grounded_modal_network.py` | 固化 v1.15 电路、物理 S8、双参考面效率和停止决定。 |
 
 ## AEDT 启动器与历史快速模型
 

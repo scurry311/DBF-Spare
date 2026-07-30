@@ -1,0 +1,10 @@
+{
+  "tag": "2026-07-30-v115-grounded-modal-network",
+  "version": "v1.15.0-grounded-modal-network",
+  "evidence_scope": "finite-Q circuit plus physical centralized-feed S8 cascaded with trusted antenna S4",
+  "integrated_network_antenna_fullwave": false,
+  "training_labels_locked": true,
+  "hfss_physical_labels_allowed": false,
+  "residual_critic_training_locked": true,
+  "rebuild_16x16_allowed": false
+}

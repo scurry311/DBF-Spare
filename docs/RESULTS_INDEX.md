@@ -1,6 +1,6 @@
 # Result Index
 
-Current stage baseline: `v1.14.0-small-cell-broadband-feed`, frozen on 2026-07-30.
+Current stage baseline: `v1.15.0-grounded-modal-network`, frozen on 2026-07-30.
 
 ## Evidence Levels
 
@@ -600,3 +600,27 @@ matching gate fails. No 4x4 or 16x16 rebuild and no HFSS training labels were
 started. The next physical experiment is a grounded or capacitively loaded
 x-pair even/odd-mode network on the trusted S4. The authoritative snapshot is
 `baselines/2026-07-30-v114-small-cell-broadband-feed/BASELINE.md`.
+
+## Grounded X-Modal Feed Network v1.15
+
+Four source-facing PRE ports and four antenna-facing POST ports are modeled
+explicitly. The physical S8 is cascaded with the trusted antenna S4 before the
+same 285 frozen representative excitations are evaluated.
+
+| Result | Circuit | Best physical S8 | Decision |
+|---|---:|---:|---|
+| Passive RL | 15.663 dB | 13.867 dB | Physical passed 12 dB |
+| Representative active RL | 12.190 dB | 10.932 dB | Physical failed 11 dB |
+| Representative total RL | 13.580 dB | 12.024 dB | Physical passed 11 dB |
+| Actual-load insertion efficiency | 97.57% | 97.64% | Passed 95% |
+| Actual-load transducer efficiency | 93.86% | 92.01% | Reported separately |
+| Physical final Delta S | N/A | 0.00139 | Passed 0.05 |
+| Physical peak solver memory | N/A | 1.32 GiB | Resource-safe |
+
+The circuit concept is feasible and network loss is not the limiting factor,
+but the centralized lumped physical layout misses active RL by 0.068 dB. A
+subsequent reserve-target geometry does not confirm the low-order surrogate,
+so further surrogate extrapolation stops. Integrated antenna-network HFSS,
+independent repeat, 4x4/16x16, labels, and critic remain locked. The
+authoritative snapshot is
+`baselines/2026-07-30-v115-grounded-modal-network/BASELINE.md`.

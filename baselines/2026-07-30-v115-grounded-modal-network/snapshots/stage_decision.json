@@ -1,0 +1,15 @@
+{
+  "version": "v1.15.0-grounded-modal-network",
+  "circuit_gate_pass": true,
+  "physical_dual_reference_plane_gate_pass": false,
+  "best_physical_active_rl_db": 10.931864809489344,
+  "best_physical_active_rl_deficit_db": 0.06813519051065597,
+  "physical_network_insertion_efficiency_gate_pass": true,
+  "physical_integrated_antenna_network_fullwave_completed": false,
+  "allow_independent_repeat": false,
+  "allow_4x4": false,
+  "allow_16x16": false,
+  "allow_hfss_training_labels": false,
+  "allow_critic_training": false,
+  "next_required_experiment": "parameterized fullwave S8 optimization or distributed even_odd hybrid; no further low_order surrogate extrapolation"
+}

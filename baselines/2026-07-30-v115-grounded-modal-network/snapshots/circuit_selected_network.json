@@ -1,0 +1,33 @@
+{
+  "variant": "grounded_lowpass_modal",
+  "objective": -40.379479089464695,
+  "series_reactance_ohm_at_10ghz": 34.017236994528766,
+  "ground_susceptance_siemens_at_10ghz": 0.017468834304874382,
+  "bridge_susceptance_siemens_at_10ghz": -0.005629429863093026,
+  "passive_rl_min_db": 15.663164195909047,
+  "active_rl_min_db": 12.189739544732348,
+  "total_rl_min_db": 13.579966041605383,
+  "actual_load_insertion_efficiency_min": 0.9756558504284875,
+  "actual_load_transducer_efficiency_min": 0.9386137139281472,
+  "matched_load_network_efficiency_min": 0.9789524989292044,
+  "reference_plane_cascade_error_max": 2.7265526925652344e-16,
+  "component_corner_active_rl_min_db": 11.349096992477655,
+  "component_corner_total_rl_min_db": 12.681102464258704,
+  "component_corner_insertion_efficiency_min": 0.9741132263046652,
+  "nominal_gate_pass": true,
+  "component_corner_gate_pass": true,
+  "components": {
+    "series_per_port": {
+      "kind": "series_inductor",
+      "value_h": 5.414011418007743e-10
+    },
+    "ground_branch_per_port": {
+      "kind": "shunt_capacitor_to_ground",
+      "value_f": 2.7802513296740315e-13
+    },
+    "bridge_per_x_pair": {
+      "kind": "x_pair_inductive_bridge",
+      "equivalent_inductance_h": 2.827194706436035e-09
+    }
+  }
+}
