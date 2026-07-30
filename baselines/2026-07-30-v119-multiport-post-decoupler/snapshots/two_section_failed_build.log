@@ -1,0 +1,19 @@
+ 
+Ansys Electronics Desktop Version 2023.1.0, Build: 2022-11-20 22:10:41
+Location: D:\v231\Win64\ansysedt.exe
+Batch Script: D:/codex_workspace/hfss_ura16_quick_model/hfss_outputs/v1192_two_section_multiconductor_post_20260730_run01/physical_s8_direct01/build.vbs
+Starting Batch Run: 11:42:27 下午  7月 30, 2026
+Running as user: SCURRY\aqwer
+Temp directory: D:\HFSS_FeedSheet08_Stage
+Project directory: D:\ansys
+[warning] Script Error (Code 800a01f4) in file:  D:/codex_workspace/hfss_ura16_quick_model/hfss_outputs/v1192_two_section_multiconductor_post_20260730_run01/physical_s8_direct01/build.vbs
+Description: 变量未定义: 'UniteObjects'
+Line(18):  "UniteObjects oEditor, "CoupledTrace_0", "Transition_0_0""
+Cause: Microsoft VBScript 运行时错误
+
+[Exiting application]
+-- Message Window --
+      *Global - Messages
+        [error] Script macro error: Script Error (Code 800a01f4) in file:  D:/codex_workspace/hfss_ura16_quick_model/hfss_outputs/v1192_two_section_multiconductor_post_20260730_run01/physical_s8_direct01/build.vbs Description: 变量未定义: 'UniteObjects' Line(18):  "UniteObjects oEditor, "CoupledTrace_0", "Transition_0_0"" Cause: Microsoft VBScript 运行时错误 
+        [warning] Script Error (Code 800a01f4) in file:  D:/codex_workspace/hfss_ura16_quick_model/hfss_outputs/v1192_two_section_multiconductor_post_20260730_run01/physical_s8_direct01/build.vbs Description: 变量未定义: 'UniteObjects' Line(18):  "UniteObjects oEditor, "CoupledTrace_0", "Transition_0_0"" Cause: Microsoft VBScript 运行时错误 
+-- Message Window --

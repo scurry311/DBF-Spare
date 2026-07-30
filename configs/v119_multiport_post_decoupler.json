@@ -1,0 +1,68 @@
+{
+  "protocol": "v1.19-multiport-post-decoupler",
+  "created_on": "2026-07-30",
+  "parent_tag": "v1.18.0-equalized-post-transition",
+  "frequencies_ghz": [9.96, 10.0, 10.04],
+  "reference_impedance_ohm": 50.0,
+  "integrated_v118_s4": "baselines/2026-07-30-v118-equalized-post-transition/snapshots/equalized_direct01.s4p",
+  "trusted_antenna_s4": "hfss_outputs/v1143_small_cell_surface_mesh_20260730_run07/2x2/st_h_surface_direct01/v114_2x2_st_h_surface_direct01.s4p",
+  "validated_feed_s8": "baselines/2026-07-30-v116-physical-s8-hfss-optimization/snapshots/s8/refine_03_ground_c_plus.s8p",
+  "trusted_stimulus_root": "hfss_outputs/v1143_small_cell_surface_mesh_20260730_run07",
+  "output_directory": "hfss_outputs/v119_multiport_post_decoupler_20260730_run04",
+  "network": {
+    "topology": "input_shunt_bridge__orthogonal_modal_transform__series_modes__inverse_transform__output_shunt_bridge",
+    "shunt_pruning_threshold_s": 0.0002,
+    "inductor_q": 60.0,
+    "capacitor_q": 200.0,
+    "initial_series_modal_reactance_ohm": [-13.568004140028119, 2.8300710989560596, 20.98107618096865, 41.758939621342236],
+    "modal_transform": [
+      [-0.03663081274181378, 0.09127797732668416, 0.7697214185146185, -0.6307578396602513],
+      [-0.5365608212310586, -0.38587644313062786, 0.4876659320732475, 0.5704242232337597],
+      [-0.04334463137925898, -0.8720624321683078, -0.2443187372320203, -0.4218254520161664],
+      [0.841951252513067, -0.2868358692574918, 0.3316914699119132, 0.31436291334483324]
+    ],
+    "initial_input_shunt_susceptance_s": [-0.0008194740005837036, -0.0015191891801806655, -0.00004247105824744751, -0.00015154177607823845, -0.000022074400474478317, -0.00010141533408154717, -0.0005782393178231262, 0.0002789262983494082, -0.0031464104135677197, -0.00026988168065587343],
+    "initial_output_shunt_susceptance_s": [-0.0029766383800207768, 0.0002975429623117721, -0.003398099412726436, 0.006108680378057836, 0.003976863569578016, -0.003367806974379375, 0.002380427189048417, 0.0050582435310796816, -0.003941007416073275, 0.003136406776464367],
+    "branch_order": ["g0", "g1", "g2", "g3", "b01", "b02", "b03", "b12", "b13", "b23"]
+  },
+  "optimization": {
+    "seed": 11930,
+    "population_size": 14,
+    "maximum_iterations": 400,
+    "polish": true,
+    "design_active_rl_db": 12.0,
+    "design_total_rl_db": 12.0,
+    "design_max_abs_delta_s": 0.035
+  },
+  "tolerance_audit": {
+    "samples": 1000,
+    "component_sigma_fraction": 0.01,
+    "q_sigma_fraction": 0.10,
+    "minimum_joint_pass_rate": 0.90,
+    "quantization_series": "E96"
+  },
+  "compact_realization": {
+    "minimum_discrete_inductance_nh": 0.08,
+    "maximum_discrete_inductance_nh": 3.0,
+    "minimum_discrete_capacitance_pf": 0.03,
+    "maximum_discrete_capacitance_pf": 2.0,
+    "maximum_single_givens_angle_deg": 45.0,
+    "estimated_efficiency_per_givens_stage": 0.99,
+    "minimum_estimated_modal_transform_efficiency": 0.95,
+    "minimum_matched_load_network_efficiency": 0.95
+  },
+  "gates": {
+    "minimum_active_rl_db": 11.0,
+    "minimum_total_rl_db": 11.0,
+    "maximum_integrated_vs_target_abs_delta_s": 0.05,
+    "minimum_passive_rl_db": 10.0
+  },
+  "scope": {
+    "allow_one_physical_s8_only_after_tolerance_gate": true,
+    "allow_integrated_2x2_repeat": false,
+    "allow_4x4": false,
+    "allow_16x16": false,
+    "allow_training_labels": false,
+    "allow_critic_training": false
+  }
+}

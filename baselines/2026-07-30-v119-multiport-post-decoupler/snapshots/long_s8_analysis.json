@@ -1,0 +1,21 @@
+{
+  "build_return_code": 0,
+  "solve_return_code": 0,
+  "free_memory_gb_before": 13.524070739746094,
+  "pass_count": 2,
+  "final_delta_s": 0.00166252,
+  "converged": true,
+  "small_mesh_segment_count": 122,
+  "peak_solver_memory_gb": 7.36749267578125,
+  "maximum_tetrahedra": 184659,
+  "reciprocity_error_max": 1.0203300782103175e-15,
+  "passivity_sigma_max": 0.9941034083302768,
+  "physical_vs_target_s8_max_abs_delta": 0.2790299875091286,
+  "active_rl_min_db": 5.903705159668546,
+  "total_rl_min_db": 9.764482594150742,
+  "corrected_vs_target_max_abs_delta_s": 0.27814742646222834,
+  "network_efficiency_min": 0.9682305085196764,
+  "offdiagonal_transmission_max": 0.11669172756055401,
+  "evidence_level": "standalone physical HFSS S8 with fitted external reference phases; not integrated antenna-network HFSS",
+  "physical_s8_gate_pass": false
+}

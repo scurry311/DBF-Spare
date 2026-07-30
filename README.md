@@ -1,5 +1,14 @@
 # DBF-Spare
 
+## Current verified hardware status (v1.19)
+
+The full off-diagonal four-port POST correction is feasible as a finite-Q
+circuit upper bound (E96 active RL 12.52 dB, total RL 13.05 dB, max abs Delta
+S 0.0389), but its compact realization gate fails. Three standalone physical
+HFSS S8 blocks were solved; none passed the joint gate. Array expansion,
+training labels, and critic retraining remain locked. See
+`baselines/2026-07-30-v119-multiport-post-decoupler/BASELINE.md`.
+
 面向低功耗多任务波束的 16x16 稀疏相控阵研究项目。项目以 HFSS 全波模型和
 嵌入单元方向图（EEP）为物理基准，联合优化阵元 mask、任务级复权值、旁瓣、
 任务间隔离度、有源回波损耗与归一化功耗，并为每个任务场景寻找满足工程门限的

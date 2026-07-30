@@ -188,3 +188,11 @@ powershell -ExecutionPolicy Bypass -File scripts\<name>.ps1
 清理脚本具有破坏性，只能在 AEDT/HFSS 进程停止、目标路径审计通过且确认已有必要
 快照后使用。`cleanup_verified_hfss_artifacts.ps1` 默认只准备审计信息，实际删除必须
 显式传入 `-Execute`。
+
+## v1.19 POST Decoupler
+
+| File | Purpose |
+|---|---|
+| `design_v119_multiport_post_decoupler.py` | Synthesize and tolerance-gate the finite-Q full-matrix four-port POST circuit target. |
+| `run_v1191_multiconductor_post_block.py` | Build, solve, phase-align, and gate one/two-section physical multiconductor HFSS S8 blocks. |
+| `summarize_v119_multiport_post_decoupler.py` | Freeze the circuit upper bound and all physical S8 stop evidence. |

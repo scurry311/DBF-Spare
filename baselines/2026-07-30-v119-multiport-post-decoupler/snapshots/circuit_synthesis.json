@@ -1,0 +1,211 @@
+{
+  "protocol": "v1.19-multiport-post-decoupler",
+  "evidence_level": "finite-Q circuit synthesis using deembedded integrated HFSS S4; not a physical HFSS network",
+  "optimizer_success": false,
+  "optimizer_message": "Maximum number of iterations has been exceeded.",
+  "objective": -4.536584288619686,
+  "stimulus_count": 285,
+  "reactive_component_count": 20,
+  "input_shunt_branch_count": 6,
+  "output_shunt_branch_count": 10,
+  "nominal_metrics": {
+    "active_rl_min_db": 12.534119235195147,
+    "total_rl_min_db": 13.053333337726137,
+    "passive_rl_min_db": 14.799746514423614,
+    "integrated_vs_target_max_abs_delta_s": 0.036999339805493914
+  },
+  "e96_quantized_metrics": {
+    "active_rl_min_db": 12.515259322461256,
+    "total_rl_min_db": 13.057468740898916,
+    "passive_rl_min_db": 14.774333511986429,
+    "integrated_vs_target_max_abs_delta_s": 0.03866570760622144
+  },
+  "e96_matched_load_network_efficiency_min": 0.9813670517306242,
+  "tolerance_joint_pass_rate": 1.0,
+  "tolerance_sample_count": 1000,
+  "nominal_gate_pass": true,
+  "tolerance_gate_pass": true,
+  "compact_realization_gate_pass": false,
+  "impractical_discrete_component_count": 12,
+  "impractical_discrete_components": [
+    {
+      "section": "series_mode",
+      "branch": "m1",
+      "type": "L",
+      "value_nh_or_pf": 0.033999999999999996,
+      "allowed_min": 0.08,
+      "allowed_max": 3.0
+    },
+    {
+      "section": "input_shunt",
+      "branch": 0,
+      "type": "L",
+      "value_nh_or_pf": 40.199999999999996,
+      "allowed_min": 0.08,
+      "allowed_max": 3.0
+    },
+    {
+      "section": "input_shunt",
+      "branch": 1,
+      "type": "L",
+      "value_nh_or_pf": 11.499999999999998,
+      "allowed_min": 0.08,
+      "allowed_max": 3.0
+    },
+    {
+      "section": "input_shunt",
+      "branch": 6,
+      "type": "L",
+      "value_nh_or_pf": 15.800000000000002,
+      "allowed_min": 0.08,
+      "allowed_max": 3.0
+    },
+    {
+      "section": "input_shunt",
+      "branch": 7,
+      "type": "C",
+      "value_nh_or_pf": 0.00174,
+      "allowed_min": 0.03,
+      "allowed_max": 2.0
+    },
+    {
+      "section": "input_shunt",
+      "branch": 8,
+      "type": "L",
+      "value_nh_or_pf": 3.3200000000000003,
+      "allowed_min": 0.08,
+      "allowed_max": 3.0
+    },
+    {
+      "section": "input_shunt",
+      "branch": 9,
+      "type": "L",
+      "value_nh_or_pf": 107.0,
+      "allowed_min": 0.08,
+      "allowed_max": 3.0
+    },
+    {
+      "section": "output_shunt",
+      "branch": 0,
+      "type": "L",
+      "value_nh_or_pf": 3.9200000000000004,
+      "allowed_min": 0.08,
+      "allowed_max": 3.0
+    },
+    {
+      "section": "output_shunt",
+      "branch": 1,
+      "type": "C",
+      "value_nh_or_pf": 0.006490000000000001,
+      "allowed_min": 0.03,
+      "allowed_max": 2.0
+    },
+    {
+      "section": "output_shunt",
+      "branch": 2,
+      "type": "L",
+      "value_nh_or_pf": 6.650000000000001,
+      "allowed_min": 0.08,
+      "allowed_max": 3.0
+    },
+    {
+      "section": "output_shunt",
+      "branch": 5,
+      "type": "L",
+      "value_nh_or_pf": 4.99,
+      "allowed_min": 0.08,
+      "allowed_max": 3.0
+    },
+    {
+      "section": "output_shunt",
+      "branch": 8,
+      "type": "L",
+      "value_nh_or_pf": 11.000000000000002,
+      "allowed_min": 0.08,
+      "allowed_max": 3.0
+    }
+  ],
+  "modal_transform_physical_stage_count": 12,
+  "estimated_modal_transform_efficiency": 0.8863848717161292,
+  "optimized_series_modal_reactance_ohm": [
+    -9.627307838980398,
+    2.133622524661912,
+    19.291436445657222,
+    38.208678650395605
+  ],
+  "optimized_input_shunt_susceptance_s": [
+    -0.00039789838229723244,
+    -0.001378415465322849,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    -0.0010113944194443723,
+    0.0001093932758714202,
+    -0.0048233841810884906,
+    -0.00014730903239259507
+  ],
+  "optimized_output_shunt_susceptance_s": [
+    -0.004092704382630225,
+    0.00041268594761941586,
+    -0.002394771215291407,
+    0.00667751499681133,
+    0.003160705686613576,
+    -0.0031779980151810877,
+    0.003391280604732495,
+    0.0048519522692080895,
+    -0.0014479370932886193,
+    0.0019186524614469625
+  ],
+  "modal_transform": [
+    [
+      -0.03663081274181378,
+      0.09127797732668416,
+      0.7697214185146185,
+      -0.6307578396602513
+    ],
+    [
+      -0.5365608212310586,
+      -0.38587644313062786,
+      0.4876659320732475,
+      0.5704242232337597
+    ],
+    [
+      -0.04334463137925898,
+      -0.8720624321683078,
+      -0.2443187372320203,
+      -0.4218254520161664
+    ],
+    [
+      0.841951252513067,
+      -0.2868358692574918,
+      0.3316914699119132,
+      0.31436291334483324
+    ]
+  ],
+  "givens_realization": {
+    "pairs": [
+      "0-1",
+      "2-3",
+      "0-2",
+      "1-3",
+      "0-3",
+      "1-2"
+    ],
+    "angles_deg": [
+      36.26572644128367,
+      -75.84587972422409,
+      67.24166592223573,
+      68.26184392426578,
+      -26.25793595973508,
+      -9.655277854584092
+    ],
+    "column_signs": [
+      -1,
+      -1,
+      -1,
+      -1
+    ],
+    "max_abs_error": 3.3306690738754696e-16
+  }
+}

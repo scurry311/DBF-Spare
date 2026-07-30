@@ -1,0 +1,49 @@
+{
+  "protocol": "v1.19.1-direct-multiconductor-post-block",
+  "created_on": "2026-07-30",
+  "parent_protocol": "configs/v119_multiport_post_decoupler.json",
+  "target_s8": "hfss_outputs/v119_multiport_post_decoupler_20260730_run03/e96_modal_pi_target.s8p",
+  "integrated_v118_s4": "baselines/2026-07-30-v118-equalized-post-transition/snapshots/equalized_direct01.s4p",
+  "trusted_antenna_s4": "hfss_outputs/v1143_small_cell_surface_mesh_20260730_run07/2x2/st_h_surface_direct01/v114_2x2_st_h_surface_direct01.s4p",
+  "validated_feed_s8": "baselines/2026-07-30-v116-physical-s8-hfss-optimization/snapshots/s8/refine_03_ground_c_plus.s8p",
+  "trusted_stimulus_root": "hfss_outputs/v1143_small_cell_surface_mesh_20260730_run07",
+  "output_directory": "hfss_outputs/v1191_multiconductor_post_block_20260730_run01",
+  "ansys_executable": "D:/v231/Win64/ansysedt.exe",
+  "frequencies_ghz": [9.96, 10.0, 10.04],
+  "reference_impedance_ohm": 50.0,
+  "physical_block": {
+    "substrate_relative_permittivity": 2.2,
+    "substrate_loss_tangent": 0.0009,
+    "substrate_thickness_mm": 0.254,
+    "copper_thickness_mm": 0.017,
+    "board_length_mm": 6.4,
+    "board_width_mm": 3.0,
+    "trace_length_mm": 5.4,
+    "trace_width_mm_by_port": [0.32, 0.32, 0.32, 0.32],
+    "port_order_from_negative_y": [3, 1, 0, 2],
+    "adjacent_gap_mm": [0.04, 0.15, 0.20],
+    "mesh_max_length_mm": 0.08,
+    "adaptive_refinement_percent": 5.0,
+    "maximum_passes": 18,
+    "minimum_converged_passes": 2,
+    "minimum_free_memory_gb": 8.0
+  },
+  "gates": {
+    "maximum_final_delta_s": 0.05,
+    "maximum_reciprocity_error": 0.0001,
+    "maximum_passivity_sigma": 1.001,
+    "minimum_network_efficiency": 0.95,
+    "minimum_active_rl_db": 11.0,
+    "minimum_total_rl_db": 11.0,
+    "maximum_corrected_vs_target_abs_delta_s": 0.05,
+    "maximum_physical_vs_target_s8_abs_delta": 0.10
+  },
+  "scope": {
+    "allow_integrated_2x2_only_after_s8_gate": true,
+    "allow_repeat_only_after_s8_gate": true,
+    "allow_4x4": false,
+    "allow_16x16": false,
+    "allow_training_labels": false,
+    "allow_critic_training": false
+  }
+}

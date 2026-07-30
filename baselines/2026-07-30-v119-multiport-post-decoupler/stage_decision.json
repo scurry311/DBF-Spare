@@ -1,0 +1,13 @@
+{
+  "full_matrix_finite_q_circuit_gate_pass": true,
+  "compact_realization_gate_pass": false,
+  "physical_s8_pass_count": 0,
+  "allow_integrated_2x2": false,
+  "allow_independent_repeat": false,
+  "allow_4x4": false,
+  "allow_16x16": false,
+  "allow_training_labels": false,
+  "allow_critic_training": false,
+  "stop_condition": "full-matrix correction is circuit-feasible but not compactly realizable by the tested single-layer one/two-section POST blocks",
+  "next_action": "reduce the correction burden by jointly redesigning the antenna feed and POST fanout under a realizable sparse coupling graph"
+}

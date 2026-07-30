@@ -700,3 +700,23 @@ expansion, labels, and critic training remain locked. The next topology must
 use an integrated multiport POST transition/decoupler. The authoritative
 snapshot is
 `baselines/2026-07-30-v118-equalized-post-transition/BASELINE.md`.
+
+## Full-Matrix Multiport POST Decoupler v1.19
+
+The v1.18 integrated POST load is deembedded and corrected with a reciprocal
+full-matrix finite-Q pi network. The E96 circuit upper bound reaches 12.515 dB
+active RL, 13.057 dB total RL, 0.03867 max absolute Delta S, and a 100% joint
+pass rate over 1000 one-sigma component/Q tolerance trials. This is not a
+physical HFSS result: 12/20 equivalent values are outside the declared 10 GHz
+discrete range, and a twelve-stage exact modal mixer is estimated at only
+88.64% efficiency.
+
+Three standalone physical HFSS S8 blocks were then evaluated. A 5.4 mm single
+section reaches 0.110 maximum off-diagonal transmission and 0.35 dB active RL.
+The 10.8 mm section improves active RL to 5.90 dB but remains at 0.117 coupling.
+A 9+9 mm noncommuting two-section block reaches only 0.123 coupling, -1.11 dB
+active RL, and 94.91% efficiency. All are converged, reciprocal, and passive,
+so the negative result is physically credible. Further section cascading,
+integrated 2x2, array expansion, labels, and critic training are stopped. The
+authoritative snapshot is
+`baselines/2026-07-30-v119-multiport-post-decoupler/BASELINE.md`.

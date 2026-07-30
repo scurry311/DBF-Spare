@@ -1,0 +1,9 @@
+{
+  "version": "v1.19.0-multiport-post-decoupler",
+  "created_on": "2026-07-30",
+  "parent_tag": "v1.18.0-equalized-post-transition",
+  "parent_commit": "cba304d6c98fc9070f05a9d445da16dc8a778193",
+  "evidence_level": "finite-Q full-matrix circuit target plus three standalone physical HFSS S8 candidates",
+  "integrated_2x2_authorized": false,
+  "training_label_authorized": false
+}
