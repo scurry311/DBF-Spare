@@ -1,0 +1,14 @@
+{
+  "version": "v1.14.0-small-cell-broadband-feed",
+  "thresholds_changed": false,
+  "one_by_one_physical_gate_pass": true,
+  "two_by_two_passive_efficiency_convergence_gate_pass": true,
+  "two_by_two_representative_active_rl_gate_pass": false,
+  "isolated_x_parasitic_strip_topology_accepted": false,
+  "allow_4x4": false,
+  "allow_16x16": false,
+  "allow_hfss_candidate_labels": false,
+  "allow_mask_or_weight_optimization": false,
+  "allow_residual_critic_training": false,
+  "next_required_experiment": "grounded_or_capacitively_loaded_x_pair_even_odd_modal_network_on_2x2"
+}

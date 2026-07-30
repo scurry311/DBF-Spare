@@ -1,6 +1,6 @@
 # Result Index
 
-Current baseline: `v1.13.0-broadband-match-replay`, frozen on 2026-07-29.
+Current stage baseline: `v1.14.0-small-cell-broadband-feed`, frozen on 2026-07-30.
 
 ## Evidence Levels
 
@@ -577,3 +577,26 @@ The new circuit network preserves pattern behavior but produces mixed
 active-RL changes and no new strict scene. Candidate optimization, HFSS smoke,
 bulk labels, and critic training remain locked. The authoritative snapshot is
 `baselines/2026-07-29-v113-broadband-match-replay/BASELINE.md`.
+
+## Small-Cell Broadband-Feed Feasibility v1.14
+
+The physical feed is developed and gated on 1x1 and 2x2 only. Frequencies,
+frozen representative excitations, and engineering thresholds remain fixed.
+
+| Result | Value | Decision |
+|---|---:|---|
+| 1x1 three-frequency passive RL | 15.914 dB | Passed 15 dB gate |
+| 1x1 cross-mesh max Delta S | 0.02125 | Passed 0.05 gate |
+| Trusted 2x2 passive RL | 16.656 dB | Passed 12 dB gate |
+| Trusted 2x2 final Delta S | 0.02101 | Passed 0.05 gate |
+| Trusted 2x2 minimum efficiency | 99.08% | Passed 95% gate |
+| Trusted 2x2 representative active RL | 5.553 dB | Failed 11 dB gate |
+| Trusted 2x2 representative total RL | 10.348 dB | Failed 11 dB gate |
+| 10.04 GHz four-port modal active RL | 9.788 dB | Below reserve |
+| Isolated x-strip candidates passing 2x2 | 0/3 | Topology rejected |
+
+The 1x1 feed and lower-memory surface mesh are credible, but the 2x2 active
+matching gate fails. No 4x4 or 16x16 rebuild and no HFSS training labels were
+started. The next physical experiment is a grounded or capacitively loaded
+x-pair even/odd-mode network on the trusted S4. The authoritative snapshot is
+`baselines/2026-07-30-v114-small-cell-broadband-feed/BASELINE.md`.

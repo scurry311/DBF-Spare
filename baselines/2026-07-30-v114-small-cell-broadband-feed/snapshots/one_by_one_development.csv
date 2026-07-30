@@ -1,0 +1,12 @@
+evidence_stage,candidate_id,replicate,passive_rl_min_db,minimum_radiation_efficiency,final_delta_s,cross_mesh_max_abs_delta_s,repeat_or_base_gate_pass,peak_solver_memory_gb,maximum_tetrahedra,source_run
+preregistered topology screen,ds_a,1,8.149135330339588,1.00776797326218,0.0186631,,False,,,v114_small_cell_broadband_feed_20260730_run04
+preregistered topology screen,ds_b,1,8.685529836104028,1.00120569720025,0.0135091,,False,,,v114_small_cell_broadband_feed_20260730_run04
+preregistered topology screen,ds_c,1,9.372802654736812,1.00080656232544,0.0219743,,False,,,v114_small_cell_broadband_feed_20260730_run04
+preregistered topology screen,ds_d,1,8.862752592263693,1.00012813672821,0.0188783,,False,,,v114_small_cell_broadband_feed_20260730_run04
+data-informed engineering development,st_e,1,11.33409740477142,0.998291994992881,0.0176507,,False,3.711688995361328,68110,v1141_small_cell_stepped_tongue_20260730_run05
+data-informed engineering development,st_f,1,13.413117881915188,0.995228292423083,0.0279934,,False,3.7776222229003906,70349,v1141_small_cell_stepped_tongue_20260730_run05
+data-informed engineering development,st_g,1,10.192621528364361,0.994498747140798,0.0245653,,False,4.639789581298828,83917,v1141_small_cell_stepped_tongue_20260730_run05
+feed-depth confirmation and independent direct repeat,st_h,1,15.913665508930686,1.00004400215962,0.0263588,,True,,,v1142_small_cell_feed_depth_20260730_run06
+feed-depth confirmation and independent direct repeat,st_h,2,15.913665508930581,1.00004400215962,0.0263588,,True,,,v1142_small_cell_feed_depth_20260730_run06
+surface-mesh cross-check and independent repeat,st_h_surface,1,16.16771067456724,1.00645627217721,0.0229603,0.021252226177634122,True,2.3612098693847656,56768,v1143_small_cell_surface_mesh_20260730_run07
+surface-mesh cross-check and independent repeat,st_h_surface,2,16.1677106745745,1.00645627217716,0.0229603,0.021252226177634122,True,2.360797882080078,56768,v1143_small_cell_surface_mesh_20260730_run07

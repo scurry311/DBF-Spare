@@ -67,6 +67,7 @@
 | `run_sanitized_endload_validation.py` | 验证消除切触和微小重叠后的单一实体端加载几何。 |
 | `run_staged_16x16_convergence.py` | 分阶段续算 16x16，记录每轮 Delta S、资源和 RF 门限。 |
 | `run_twoport_balanced_match_fixture.py` | 构建 1x1/2x2 真实两端口平衡馈电与匹配夹具。 |
+| `run_v114_small_cell_broadband_feed.py` | 分阶段构建、求解并门控 v1.14 的 1x1/2x2/4x4 物理宽带馈电候选；硬停止禁止越过失败的小阵门。 |
 | `validate_eep_superposition_smoke.py` | 对比 EEP 直接叠加与相同权值的 direct HFSS 复场。 |
 
 ## 实验性收敛恢复与资源审计
@@ -134,6 +135,7 @@
 | `merge_task_lcmv_psll_runs.py` | 合并分批任务级 LCMV/SOCP/PSLL 结果。 |
 | `summarize_active_matching_stage.py` | 汇总有源匹配阶段按 K、ratio、扫描角的真实指标。 |
 | `summarize_eep_hfss_joint_smoke_stage.py` | 汇总 EEP/HFSS 联合 smoke，并生成标签开放/锁定决定。 |
+| `summarize_v114_small_cell_broadband_feed.py` | 汇总 v1.14 小阵馈电、模态耦合、冻结 active-RL 回放和阶段锁定决定。 |
 
 ## AEDT 启动器与历史快速模型
 

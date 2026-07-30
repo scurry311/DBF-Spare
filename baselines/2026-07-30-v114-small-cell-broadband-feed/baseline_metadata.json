@@ -1,0 +1,10 @@
+{
+  "tag": "2026-07-30-v114-small-cell-broadband-feed",
+  "version": "v1.14.0-small-cell-broadband-feed",
+  "evidence_scope": "1x1 and 2x2 physical HFSS only",
+  "training_labels_locked": true,
+  "hfss_physical_labels_allowed": false,
+  "residual_critic_training_locked": true,
+  "four_by_four_allowed": false,
+  "rebuild_16x16_allowed": false
+}

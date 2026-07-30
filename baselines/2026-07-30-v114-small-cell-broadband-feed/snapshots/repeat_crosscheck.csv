@@ -1,0 +1,3 @@
+candidate_id,side,replicate_a,replicate_b,max_abs_delta_s,rms_abs_delta_s,maximum_allowed_abs_delta_s,repeat_gate_pass
+st_h,1,1,2,1.0699131970361253e-13,6.236872543840065e-14,0.05,True
+st_h_surface,1,1,2,1.8811513990803975e-13,1.3436762575740018e-13,0.05,True

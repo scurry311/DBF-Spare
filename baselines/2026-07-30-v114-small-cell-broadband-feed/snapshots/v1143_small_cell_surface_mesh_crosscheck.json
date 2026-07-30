@@ -1,0 +1,86 @@
+{
+  "protocol": "v1.14.3-small-cell-surface-mesh-crosscheck",
+  "created_on": "2026-07-30",
+  "parent_run": "v1142_small_cell_feed_depth_20260730_run06",
+  "development_status": "resource-safe mesh crosscheck before restarting 2x2",
+  "seed": 20260733,
+  "scope": {
+    "maximum_array_side": 4,
+    "rebuild_16x16_allowed": false,
+    "critic_training_allowed": false,
+    "mask_search_allowed": false,
+    "hfss_candidate_labeling_allowed": false
+  },
+  "frequencies_ghz": [9.96, 10.0, 10.04],
+  "cross_mesh_reference": {
+    "touchstone": "hfss_outputs/v1142_small_cell_feed_depth_20260730_run06/1x1/st_h_direct01/v114_1x1_st_h_direct01.s1p",
+    "maximum_abs_delta_s": 0.05
+  },
+  "physical_topology": {
+    "name": "stepped_impedance_dual_slot_probe_feed",
+    "description": "The accepted st_h geometry with 0.18 mm feed-box boundary refinement and adaptive substrate volume refinement.",
+    "spacing_mm": 15.0,
+    "substrate": "RO5880-like",
+    "relative_permittivity": 2.2,
+    "loss_tangent": 0.0009,
+    "substrate_thickness_mm": 0.787,
+    "copper_thickness_mm": 0.035,
+    "patch_width_mm": 11.8,
+    "patch_length_mm": 9.35,
+    "mesh_max_length_mm": 0.18,
+    "mesh_refine_inside": false,
+    "adaptive_refinement_percent": 5.0
+  },
+  "one_by_one_candidates": [
+    {
+      "candidate_id": "st_h_surface",
+      "slot_length_mm": 3.0,
+      "slot_width_mm": 0.3,
+      "tongue_width_mm": 0.55,
+      "feed_inset_from_edge_mm": 2.3
+    }
+  ],
+  "representative_scenes": {
+    "near_boundary": [426105, 426109, 426110],
+    "stress": [426102, 426113],
+    "state_mapping": {
+      "9.96": ["frequency_low_identity", "frequency_low_E2_source"],
+      "10.0": ["nominal_identity"],
+      "10.04": ["frequency_high_identity", "frequency_high_E2_source"]
+    },
+    "source_types": ["combined", "significant_task"]
+  },
+  "gates": {
+    "one_by_one": {
+      "minimum_passive_rl_db_all_frequencies": 15.0,
+      "minimum_network_efficiency": 0.95,
+      "maximum_final_delta_s": 0.05,
+      "maximum_solver_repeat_delta_s": 0.05
+    },
+    "two_by_two_and_four_by_four": {
+      "minimum_passive_rl_db_all_ports_all_frequencies": 12.0,
+      "minimum_active_rl_db_all_representative_sources": 11.0,
+      "minimum_total_rl_db_all_representative_sources": 11.0,
+      "minimum_network_efficiency": 0.95,
+      "maximum_final_delta_s": 0.05,
+      "maximum_solver_repeat_delta_s": 0.05
+    },
+    "hardware_authorization": {
+      "k2_active_rl_pass_min": 6,
+      "k2_scene_count": 7,
+      "k4_active_rl_pass_min": 5,
+      "k4_scene_count": 6,
+      "reserve11_count_min": 1
+    },
+    "joint_authorization": {
+      "fixed_mask_k4_weight_recovery_only_after_hardware_gate": true,
+      "k4_strict_pass_min": 5,
+      "k4_scene_count": 6
+    }
+  },
+  "stop_conditions": {
+    "stop_topology_if_four_by_four_has_no_11db_active_rl_reserve": true,
+    "do_not_expand_failed_topology_to_16x16": true,
+    "do_not_change_engineering_thresholds": true
+  }
+}

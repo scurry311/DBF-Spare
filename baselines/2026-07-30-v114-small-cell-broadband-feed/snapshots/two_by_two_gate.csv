@@ -1,0 +1,5 @@
+topology_stage,candidate_id,passive_rl_min_db,representative_active_rl_min_db,representative_total_rl_min_db,minimum_radiation_efficiency,final_delta_s,peak_solver_memory_gb,maximum_tetrahedra,base_gate_pass,source_run
+trusted base feed,st_h_surface,16.65605113814542,5.553113842577072,10.348346472972228,0.990754734339377,0.0210143,8.553138732910156,234744,False,v1143_small_cell_surface_mesh_20260730_run07
+isolated x-strip development,dx_a,17.617618455775453,4.400062015158401,8.983793262722186,0.992906635698891,0.0429634,8.859142303466797,247453,False,v1144_small_cell_x_decoupler_20260730_run08
+isolated x-strip development,dx_b,14.88784607776563,2.6663129636785143,6.901580174220394,0.990062507390795,0.0353663,9.104248046875,255434,False,v1144_small_cell_x_decoupler_20260730_run08
+isolated x-strip development,dx_c,6.920329702842366,-1.5975768135968016,1.97395970163582,0.937361242905736,0.0255801,9.841796875,270230,False,v1144_small_cell_x_decoupler_20260730_run08
