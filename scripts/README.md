@@ -196,3 +196,11 @@ powershell -ExecutionPolicy Bypass -File scripts\<name>.ps1
 | `design_v119_multiport_post_decoupler.py` | Synthesize and tolerance-gate the finite-Q full-matrix four-port POST circuit target. |
 | `run_v1191_multiconductor_post_block.py` | Build, solve, phase-align, and gate one/two-section physical multiconductor HFSS S8 blocks. |
 | `summarize_v119_multiport_post_decoupler.py` | Freeze the circuit upper bound and all physical S8 stop evidence. |
+
+## v1.20 Joint Feed/Fanout Sparse Graph
+
+| File | Purpose |
+|---|---|
+| `design_v120_joint_feed_fanout_sparse_graph.py` | Project the v1.19 target onto the physical `0-2-3-1` chain and jointly optimize route and finite-Q adjacent loading with manufacturing quantization and tolerance gates. |
+| `run_v120_sparse_graph_physical_front_gate.py` | Build, solve, and gate one single-stage coupled-line/local-loading HFSS S8 front gate without adding another decoupling section. |
+| `analyze_v120_sparse_graph_residual.py` | Compare both physical mappings and quantify how much S8 error remains on the existing diagonal and adjacent graph entries. |

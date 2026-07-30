@@ -1,0 +1,231 @@
+{
+  "protocol": "v1.20-joint-feed-fanout-sparse-graph",
+  "evidence_level": "finite-Q sparse-graph circuit and route surrogate; not physical HFSS",
+  "graph_pairs": [
+    [
+      0,
+      2
+    ],
+    [
+      2,
+      3
+    ],
+    [
+      3,
+      1
+    ]
+  ],
+  "optimizer_success": true,
+  "optimizer_message": "Reused continuous solution from hfss_outputs/v120_joint_feed_fanout_sparse_graph_20260731_run04/synthesis_summary.json; Powell: Optimization terminated successfully.",
+  "objective": -4.021909067870501,
+  "continuous_nominal_metrics": {
+    "active_rl_min_db": 13.231529048204752,
+    "total_rl_min_db": 13.661983479781794,
+    "passive_rl_min_db": 16.318874034061896,
+    "corrected_vs_target_max_abs_delta_s": 0.032072586138487236
+  },
+  "nominal_metrics": {
+    "active_rl_min_db": 13.204638927004066,
+    "total_rl_min_db": 13.669624952884208,
+    "passive_rl_min_db": 16.307699776443453,
+    "corrected_vs_target_max_abs_delta_s": 0.03270799483464841
+  },
+  "physical_translation": {
+    "route_length_mm_by_port": [
+      23.12279851202396,
+      23.67279851202396,
+      24.232798512023958,
+      23.44279851202396
+    ],
+    "route_delta_mm_by_port": [
+      -0.27,
+      0.28,
+      0.84,
+      0.05
+    ],
+    "series_ground_realization": [
+      {
+        "type": "series_inductive_or_high_Z_line",
+        "value_nh": 0.44563384065730693,
+        "reactance_ohm": 28.0
+      },
+      {
+        "type": "series_inductive_or_high_Z_line",
+        "value_nh": 0.412211302608009,
+        "reactance_ohm": 25.900000000000002
+      },
+      {
+        "type": "interdigital_series_capacitor",
+        "value_pf": 3.978873577297384,
+        "reactance_ohm": -4.0
+      },
+      {
+        "type": "interdigital_series_capacitor",
+        "value_pf": 2.6975414083372096,
+        "reactance_ohm": -5.9
+      }
+    ],
+    "series_graph_realization": [
+      {
+        "type": "interdigital_series_capacitor",
+        "value_pf": 2.241618916787258,
+        "reactance_ohm": -7.1000000000000005
+      },
+      {
+        "type": "series_inductive_or_high_Z_line",
+        "value_nh": 0.03023943918746012,
+        "reactance_ohm": 1.9000000000000001
+      },
+      {
+        "type": "interdigital_series_capacitor",
+        "value_pf": 1.7683882565766151,
+        "reactance_ohm": -9.0
+      }
+    ],
+    "input_ground_realization": [
+      {
+        "type": "high_Z_short_stub",
+        "characteristic_impedance_ohm": 100.0,
+        "stub_length_mm": 4.674286400363924,
+        "susceptance_s": -0.0029000000000000002
+      },
+      {
+        "type": "absorbed_by_launch_transition",
+        "susceptance_s": -0.00055
+      },
+      {
+        "type": "high_Z_short_stub",
+        "characteristic_impedance_ohm": 100.0,
+        "stub_length_mm": 4.164260412914985,
+        "susceptance_s": -0.0045000000000000005
+      },
+      {
+        "type": "high_Z_short_stub",
+        "characteristic_impedance_ohm": 100.0,
+        "stub_length_mm": 3.5819635541517285,
+        "susceptance_s": -0.0066
+      }
+    ],
+    "input_graph_realization": [
+      {
+        "type": "high_Z_short_stub",
+        "characteristic_impedance_ohm": 100.0,
+        "stub_length_mm": 5.372594082554229,
+        "susceptance_s": -0.0009000000000000001
+      },
+      {
+        "type": "high_Z_short_stub",
+        "characteristic_impedance_ohm": 100.0,
+        "stub_length_mm": 5.318693647863286,
+        "susceptance_s": -0.0010500000000000002
+      },
+      {
+        "type": "high_Z_short_stub",
+        "characteristic_impedance_ohm": 100.0,
+        "stub_length_mm": 4.574725391861679,
+        "susceptance_s": -0.0032
+      }
+    ],
+    "output_ground_realization": [
+      {
+        "type": "low_Z_open_stub",
+        "characteristic_impedance_ohm": 35.0,
+        "stub_length_mm": 0.1649414274688652,
+        "susceptance_s": 0.0013000000000000002
+      },
+      {
+        "type": "low_Z_open_stub",
+        "characteristic_impedance_ohm": 35.0,
+        "stub_length_mm": 0.5666896667265006,
+        "susceptance_s": 0.0045000000000000005
+      },
+      {
+        "type": "omitted",
+        "susceptance_s": 0.0
+      },
+      {
+        "type": "low_Z_open_stub",
+        "characteristic_impedance_ohm": 35.0,
+        "stub_length_mm": 1.0431239957576786,
+        "susceptance_s": 0.008450000000000001
+      }
+    ],
+    "output_graph_realization": [
+      {
+        "type": "high_Z_short_stub",
+        "characteristic_impedance_ohm": 100.0,
+        "stub_length_mm": 5.247091122352113,
+        "susceptance_s": -0.00125
+      },
+      {
+        "type": "low_Z_open_stub",
+        "characteristic_impedance_ohm": 35.0,
+        "stub_length_mm": 0.2913923695045623,
+        "susceptance_s": 0.0023
+      },
+      {
+        "type": "absorbed_by_coupled_line_even_odd_offset",
+        "susceptance_s": -0.0002
+      }
+    ]
+  },
+  "physical_geometry_gate_pass": true,
+  "nominal_joint_gate_pass": true,
+  "tolerance_sample_count": 1000,
+  "tolerance_joint_pass_rate": 0.985,
+  "joint_sparse_graph_gate_pass": true,
+  "continuous_optimized_parameters": [
+    -0.27274457385072826,
+    0.2818626821907653,
+    0.8440191412018255,
+    0.04699742348359416,
+    27.955616703229573,
+    25.874838543925886,
+    -3.9916475675268877,
+    -5.894610546503204,
+    -7.115410897192266,
+    1.8818370140490188,
+    -8.962816576884018,
+    -0.0029031968989158595,
+    -0.0005370741059904091,
+    -0.004516952008890298,
+    -0.006602449216475755,
+    -0.0008928563279938992,
+    -0.0010297475824249606,
+    -0.0032191832070411984,
+    0.0012986203686293923,
+    0.004514876359449118,
+    2.8056620365452053e-05,
+    0.00843675147935497,
+    -0.0012648772302528866,
+    0.002290836761563516,
+    -0.00019963604853995648
+  ],
+  "optimized_parameters": [
+    -0.27,
+    0.28,
+    0.84,
+    0.05,
+    28.0,
+    25.900000000000002,
+    -4.0,
+    -5.9,
+    -7.1000000000000005,
+    1.9000000000000001,
+    -9.0,
+    -0.0029000000000000002,
+    -0.00055,
+    -0.0045000000000000005,
+    -0.0066,
+    -0.0009000000000000001,
+    -0.0010500000000000002,
+    -0.0032,
+    0.0013000000000000002,
+    0.0045000000000000005,
+    0.0,
+    0.008450000000000001,
+    -0.00125,
+    0.0023,
+    -0.0002
+  ]
+}

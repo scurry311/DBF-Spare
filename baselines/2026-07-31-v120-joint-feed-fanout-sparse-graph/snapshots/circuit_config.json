@@ -1,0 +1,78 @@
+{
+  "protocol": "v1.20-joint-feed-fanout-sparse-graph",
+  "created_on": "2026-07-31",
+  "parent_tag": "v1.19.0-multiport-post-decoupler",
+  "frequencies_ghz": [9.96, 10.0, 10.04],
+  "reference_impedance_ohm": 50.0,
+  "integrated_v118_s4": "baselines/2026-07-30-v118-equalized-post-transition/snapshots/equalized_direct01.s4p",
+  "trusted_antenna_s4": "hfss_outputs/v1143_small_cell_surface_mesh_20260730_run07/2x2/st_h_surface_direct01/v114_2x2_st_h_surface_direct01.s4p",
+  "validated_feed_s8": "baselines/2026-07-30-v116-physical-s8-hfss-optimization/snapshots/s8/refine_03_ground_c_plus.s8p",
+  "trusted_stimulus_root": "hfss_outputs/v1143_small_cell_surface_mesh_20260730_run07",
+  "v119_full_matrix_summary": "baselines/2026-07-30-v119-multiport-post-decoupler/snapshots/circuit_synthesis.json",
+  "output_directory": "hfss_outputs/v120_joint_feed_fanout_sparse_graph_20260731_run05",
+  "manufacturable_graph_pairs": [[0, 2], [2, 3], [3, 1]],
+  "fanout": {
+    "baseline_common_length_mm": 23.39279851202396,
+    "minimum_route_length_mm": 18.0,
+    "maximum_route_length_mm": 29.0,
+    "maximum_route_spread_mm": 8.0,
+    "effective_relative_permittivity": 1.73,
+    "trace_impedance_ohm": 50.0,
+    "open_stub_impedance_ohm": 35.0,
+    "short_stub_impedance_ohm": 100.0,
+    "minimum_distributed_stub_length_mm": 0.15,
+    "maximum_stub_length_mm": 5.5
+  },
+  "network": {
+    "series_inductor_q": 60.0,
+    "series_capacitor_q": 200.0,
+    "shunt_inductor_q": 60.0,
+    "shunt_capacitor_q": 200.0,
+    "series_reactance_bound_ohm": 45.0,
+    "graph_series_reactance_bound_ohm": 25.0,
+    "shunt_susceptance_bound_s": 0.012,
+    "route_quantization_mm": 0.01,
+    "series_reactance_quantization_ohm": 0.1,
+    "series_prune_threshold_ohm": 0.25,
+    "shunt_susceptance_quantization_s": 0.00005,
+    "shunt_prune_threshold_s": 0.0001,
+    "maximum_absorbed_shunt_susceptance_s": 0.00075,
+    "maximum_series_capacitance_pf": 4.0,
+    "maximum_series_inductance_nh": 0.8
+  },
+  "optimization": {
+    "seed": 12031,
+    "population_size": 16,
+    "maximum_iterations": 550,
+    "polish": true,
+    "reuse_solution_summary": "baselines/2026-07-31-v120-joint-feed-fanout-sparse-graph/snapshots/circuit_synthesis.json",
+    "local_refinement": true,
+    "local_maximum_iterations": 160,
+    "design_active_rl_db": 12.5,
+    "design_total_rl_db": 12.5,
+    "design_max_abs_delta_s": 0.032,
+    "delta_penalty_weight": 150000.0,
+    "series_capacitance_penalty_weight": 100.0
+  },
+  "tolerance_audit": {
+    "samples": 1000,
+    "route_sigma_mm": 0.05,
+    "reactance_sigma_fraction": 0.02,
+    "q_sigma_fraction": 0.10,
+    "minimum_joint_pass_rate": 0.90
+  },
+  "gates": {
+    "minimum_active_rl_db": 11.0,
+    "minimum_total_rl_db": 11.0,
+    "minimum_passive_rl_db": 10.0,
+    "maximum_corrected_vs_target_abs_delta_s": 0.05
+  },
+  "scope": {
+    "allow_one_physical_front_gate_only_after_joint_gate": true,
+    "allow_integrated_2x2": false,
+    "allow_4x4": false,
+    "allow_16x16": false,
+    "allow_training_labels": false,
+    "allow_critic_training": false
+  }
+}

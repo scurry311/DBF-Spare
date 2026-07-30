@@ -1,0 +1,123 @@
+{
+  "protocol": "v1.20-sparse-graph-physical-residual-audit",
+  "graph_pairs": [
+    [
+      0,
+      2
+    ],
+    [
+      2,
+      3
+    ],
+    [
+      3,
+      1
+    ]
+  ],
+  "runs": {
+    "run01_nonuniform_width": {
+      "analysis": {
+        "build_return_code": 0,
+        "solve_return_code": 0,
+        "free_memory_gb_before": 13.58115005493164,
+        "pass_count": 2,
+        "final_delta_s": 0.00279406,
+        "converged": true,
+        "small_mesh_segment_count": 156,
+        "peak_solver_memory_gb": 9.509895324707031,
+        "maximum_tetrahedra": 236655,
+        "reciprocity_error_max": 1.0370338861126152e-15,
+        "passivity_sigma_max": 0.9934589213015146,
+        "physical_vs_target_s8_max_abs_delta": 0.4643597362199999,
+        "active_rl_min_db": 4.680629961671676,
+        "total_rl_min_db": 8.034049886827082,
+        "corrected_vs_target_max_abs_delta_s": 0.43417594763950906,
+        "network_efficiency_min": 0.9561578807913026,
+        "evidence_level": "single-stage distributed coupled-line plus local sparse RLC loading; not integrated antenna HFSS",
+        "exported_port_order": [
+          "POST_0",
+          "POST_1",
+          "POST_2",
+          "POST_3",
+          "PRE_0",
+          "PRE_1",
+          "PRE_2",
+          "PRE_3"
+        ],
+        "analysis_port_order": [
+          "PRE_0",
+          "PRE_1",
+          "PRE_2",
+          "PRE_3",
+          "POST_0",
+          "POST_1",
+          "POST_2",
+          "POST_3"
+        ],
+        "physical_front_gate_pass": false
+      },
+      "minimum_supported_residual_energy_fraction": 0.9801608186752802,
+      "maximum_unsupported_abs_residual": 0.03831311152317142
+    },
+    "run02_uniform_50ohm_width": {
+      "analysis": {
+        "build_return_code": 0,
+        "solve_return_code": 0,
+        "free_memory_gb_before": 13.7232666015625,
+        "pass_count": 2,
+        "final_delta_s": 0.00239715,
+        "converged": true,
+        "small_mesh_segment_count": 262,
+        "peak_solver_memory_gb": 14.921714782714844,
+        "maximum_tetrahedra": 389943,
+        "reciprocity_error_max": 1.0129834521696388e-15,
+        "passivity_sigma_max": 0.9941489608052856,
+        "physical_vs_target_s8_max_abs_delta": 0.47775047937589216,
+        "active_rl_min_db": 3.2522118740728394,
+        "total_rl_min_db": 7.597991890178123,
+        "corrected_vs_target_max_abs_delta_s": 0.41460791466668323,
+        "network_efficiency_min": 0.9301010282077796,
+        "evidence_level": "single-stage distributed coupled-line plus local sparse RLC loading; not integrated antenna HFSS",
+        "exported_port_order": [
+          "POST_0",
+          "POST_1",
+          "POST_2",
+          "POST_3",
+          "PRE_0",
+          "PRE_1",
+          "PRE_2",
+          "PRE_3"
+        ],
+        "analysis_port_order": [
+          "PRE_0",
+          "PRE_1",
+          "PRE_2",
+          "PRE_3",
+          "POST_0",
+          "POST_1",
+          "POST_2",
+          "POST_3"
+        ],
+        "physical_front_gate_pass": false
+      },
+      "minimum_supported_residual_energy_fraction": 0.9609937030184479,
+      "maximum_unsupported_abs_residual": 0.06689293273279731
+    }
+  },
+  "paired_change_run02_minus_run01": {
+    "active_rl_min_db": -1.4284180875988368,
+    "total_rl_min_db": -0.4360579966489597,
+    "network_efficiency_min": -0.02605685258352297,
+    "physical_vs_target_s8_max_abs_delta": 0.013390743155892282,
+    "corrected_vs_target_max_abs_delta_s": -0.019568032972825833
+  },
+  "decision": {
+    "same_sparse_graph_contains_residual": true,
+    "width_reference_plane_remap_successful": false,
+    "allow_more_decoupling_stages": false,
+    "allow_integrated_2x2": false,
+    "allow_4x4_or_16x16": false,
+    "allow_training_labels": false,
+    "next_action": "parameterize and jointly optimize the radiator feed-point/launch and the existing single-stage POST transition against physical S8 sensitivities; do not add another decoupling stage"
+  }
+}

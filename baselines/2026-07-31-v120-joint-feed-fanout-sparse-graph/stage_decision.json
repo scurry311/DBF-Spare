@@ -1,0 +1,14 @@
+{
+  "sparse_graph_circuit_gate_pass": true,
+  "sparse_graph_tolerance_pass_rate": 0.985,
+  "physical_s8_pass_count": 0,
+  "allow_more_decoupling_stages": false,
+  "allow_independent_repeat": false,
+  "allow_integrated_2x2": false,
+  "allow_4x4": false,
+  "allow_16x16": false,
+  "allow_training_labels": false,
+  "allow_critic_training": false,
+  "stop_condition": "the adjacent-graph circuit surrogate passes, but two converged physical S8 mappings remain far below the active-RL and Delta-S gates",
+  "next_action": "jointly parameterize the radiator feed-point/launch and existing single-stage POST transition in HFSS; do not add another decoupling stage"
+}

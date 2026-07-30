@@ -1,6 +1,6 @@
 # Result Index
 
-Current stage baseline: `v1.15.0-grounded-modal-network`, frozen on 2026-07-30.
+Current hardware-development baseline: `v1.20.0-joint-feed-fanout-sparse-graph`, frozen on 2026-07-31. The trusted 16x16 field/operator baseline below remains unchanged.
 
 ## Evidence Levels
 

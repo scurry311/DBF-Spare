@@ -10,6 +10,11 @@ as an engineering label.
 
 Current checkpoints:
 
+- `2026-07-31-v120-joint-feed-fanout-sparse-graph`: the adjacent-chain
+  finite-Q surrogate passes its matching, Delta-S, and tolerance gates, while
+  two physical HFSS S8 mappings fail active-RL and physical-correlation gates;
+  further decoupling stages, integrated 2x2, array expansion, and labels are
+  locked pending direct feed-point/POST physical sensitivity optimization.
 - `2026-07-21`: blocked 16x16 adaptive-mesh physics gate.
 - `2026-07-24`: trusted fixed-mesh S256 and EEP reconstruction; active-RL and
   strict engineering critic labels remain blocked.

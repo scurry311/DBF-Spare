@@ -1,13 +1,14 @@
 # DBF-Spare
 
-## Current verified hardware status (v1.19)
+## Current verified hardware status (v1.20)
 
-The full off-diagonal four-port POST correction is feasible as a finite-Q
-circuit upper bound (E96 active RL 12.52 dB, total RL 13.05 dB, max abs Delta
-S 0.0389), but its compact realization gate fails. Three standalone physical
-HFSS S8 blocks were solved; none passed the joint gate. Array expansion,
-training labels, and critic retraining remain locked. See
-`baselines/2026-07-30-v119-multiport-post-decoupler/BASELINE.md`.
+The required correction was reduced to the physical adjacent chain
+`0-2-3-1`. Its finite-Q route/circuit surrogate passes with active RL 13.20 dB,
+max abs Delta S 0.0327, and a 98.5% tolerance pass rate. Two converged physical
+HFSS S8 mappings fail, however: best active RL is 4.68 dB and best corrected
+Delta S is 0.415. Integrated 2x2, array expansion, training labels, and critic
+retraining remain locked. See
+`baselines/2026-07-31-v120-joint-feed-fanout-sparse-graph/BASELINE.md`.
 
 面向低功耗多任务波束的 16x16 稀疏相控阵研究项目。项目以 HFSS 全波模型和
 嵌入单元方向图（EEP）为物理基准，联合优化阵元 mask、任务级复权值、旁瓣、

@@ -1,0 +1,8 @@
+{
+  "version": "v1.20.0-joint-feed-fanout-sparse-graph",
+  "created_on": "2026-07-31",
+  "parent_tag": "v1.19.0-multiport-post-decoupler",
+  "evidence_level": "finite-Q sparse-graph surrogate plus two standalone physical HFSS S8 front gates",
+  "integrated_2x2_authorized": false,
+  "training_label_authorized": false
+}
