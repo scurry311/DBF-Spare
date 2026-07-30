@@ -7,11 +7,11 @@
 
 ## 项目状态
 
-当前最新阶段基线为 `v1.15.0-grounded-modal-network`（2026-07-30）。有限 Q
-双参考面电路达到 active RL `12.190 dB` 和 insertion efficiency `97.57%`；
-物理集中式 S8 馈电板与可信天线 S4 级联后的最好 active RL 为 `10.932 dB`，
-距固定的 11 dB 门限仍差 `0.068 dB`。因此该物理布局尚未合格，独立重复、
-集成天线-网络全波、4x4/16x16、HFSS 标签和 critic 训练继续锁定。
+当前最新阶段基线为 `v1.16.0-physical-s8-hfss-optimization`（2026-07-30）。
+在保留 PRE/POST 双参考面的条件下，13 个 HFSS 变量搜索点将物理 S8 与可信
+天线 S4 级联后的最差 active RL 从 `10.932 dB` 提升到 `11.937 dB`，插入效率
+为 `97.66%`。独立工程复验的 `max |Delta S|=1.06e-13`，通过 11.5 dB 设计门。
+当前仅开放一体化物理 2x2 smoke；4x4/16x16、HFSS 标签和 critic 训练继续锁定。
 
 ## 目录结构
 

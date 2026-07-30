@@ -624,3 +624,26 @@ so further surrogate extrapolation stops. Integrated antenna-network HFSS,
 independent repeat, 4x4/16x16, labels, and critic remain locked. The
 authoritative snapshot is
 `baselines/2026-07-30-v115-grounded-modal-network/BASELINE.md`.
+
+## Exact-HFSS Physical S8 Optimization v1.16
+
+The v1.15 near-gate geometry is retained while finite-Q component values are
+exposed as HFSS local variables. Seven coarse and six refinement candidates
+are solved exactly and evaluated at the same PRE/POST reference planes with
+the same 285 frozen representative sources.
+
+| Result | Nominal | Selected / repeat | Decision |
+|---|---:|---:|---|
+| Passive RL | 13.867 dB | 15.402 dB | Passed 12 dB |
+| Representative active RL | 10.932 dB | 11.937 dB | Passed 11.5 dB design gate |
+| Representative total RL | 12.024 dB | 13.048 dB | Passed 11 dB |
+| Actual-load insertion efficiency | 97.64% | 97.66% | Passed 95% |
+| Actual-load transducer efficiency | 92.01% | 93.33% | Reported separately |
+| Physical final Delta S | 0.00139 | 0.00127 | Passed 0.05 |
+| Independent repeat max absolute Delta S | N/A | 1.06e-13 | Passed |
+
+The grounded x-modal topology is retained, so the distributed hybrid remains
+a fallback rather than the active branch. One integrated physical 2x2
+antenna-network smoke is authorized. The 4x4/16x16 expansions, labels, and
+critic remain locked. The authoritative snapshot is
+`baselines/2026-07-30-v116-physical-s8-hfss-optimization/BASELINE.md`.

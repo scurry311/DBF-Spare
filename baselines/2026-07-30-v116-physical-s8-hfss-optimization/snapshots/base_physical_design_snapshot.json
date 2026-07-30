@@ -1,0 +1,34 @@
+{
+  "variant": "physical_aware_grounded_lowpass_modal",
+  "calibration_source": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v115_physical_modal_feed_fixture_20260730_run02\\physical_s8_direct01\\v115_physical_modal_feed_s8_direct01.s8p",
+  "distributed_surrogate": {
+    "characteristic_impedance_ohm": 46.43227684945148,
+    "phase_constant_rad_per_mm_at_10ghz": 0.34861048924852145,
+    "attenuation_np_per_mm_at_10ghz": 0.0012717907904152698,
+    "fit_rms_abs_delta_s": 0.01938552356458597,
+    "fit_max_abs_delta_s": 0.04944905523712966
+  },
+  "physical_component_values": {
+    "series_inductor_nh": 0.6571577956649897,
+    "ground_capacitor_pf": 0.13214124270806277,
+    "bridge_inductor_nh": 3.099437247401927
+  },
+  "physical_fixture_override": {
+    "pre_reference_x_mm": -1.7,
+    "post_reference_x_mm": 0.39936090808367786,
+    "series_gap_center_x_mm": -1.4,
+    "ground_cap_x_mm": -1.1995763441189375,
+    "bridge_x_mm": 0.29935727382409216
+  },
+  "predicted_metrics": {
+    "passive_rl_min_db": 15.606451245610016,
+    "active_rl_min_db": 12.10862951819476,
+    "total_rl_min_db": 13.326744044977154,
+    "actual_load_insertion_efficiency_min": 0.9724249059378669,
+    "actual_load_transducer_efficiency_min": 0.9337606828217245,
+    "matched_load_network_efficiency_min": 0.9775162039599616
+  },
+  "component_corner_active_rl_min_db": 11.158001445876732,
+  "component_corner_insertion_efficiency_min": 0.9711315097082985,
+  "physical_aware_gate_pass": true
+}

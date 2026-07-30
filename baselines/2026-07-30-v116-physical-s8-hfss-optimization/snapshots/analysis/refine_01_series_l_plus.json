@@ -1,0 +1,80 @@
+{
+  "candidate_id": "refine_01_series_l_plus",
+  "stage": "refine",
+  "factors": {
+    "series_l": 0.9682,
+    "ground_c": 1.0,
+    "bridge_l": 1.0
+  },
+  "component_values": {
+    "series_inductor_nh": 0.6362601777628429,
+    "ground_capacitor_pf": 0.13214124270806277,
+    "bridge_inductor_nh": 3.099437247401927
+  },
+  "project_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v116_physical_s8_hfss_optimization_20260730_run02\\candidates\\refine_01_series_l_plus\\refine_01_series_l_plus.aedt",
+  "touchstone_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v116_physical_s8_hfss_optimization_20260730_run02\\candidates\\refine_01_series_l_plus\\refine_01_series_l_plus.s8p",
+  "builder_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v116_physical_s8_hfss_optimization_20260730_run02\\candidates\\refine_01_series_l_plus\\build.vbs",
+  "solver_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v116_physical_s8_hfss_optimization_20260730_run02\\candidates\\refine_01_series_l_plus\\solve_export.vbs",
+  "pre_reference_ports": [
+    "PRE_0",
+    "PRE_1",
+    "PRE_2",
+    "PRE_3"
+  ],
+  "post_reference_ports": [
+    "POST_0",
+    "POST_1",
+    "POST_2",
+    "POST_3"
+  ],
+  "build_return_code": 0,
+  "solve_return_code": 0,
+  "project_ready_before_solve": true,
+  "free_memory_gb_before": 13.221683502197266,
+  "pass_count": 2,
+  "final_delta_s": 0.00133013,
+  "converged": true,
+  "small_mesh_segment_count": 24,
+  "peak_solver_memory_gb": 1.3203239440917969,
+  "maximum_tetrahedra": 42072,
+  "passive_rl_min_db": 14.343495840152375,
+  "active_rl_min_db": 11.251929320959558,
+  "total_rl_min_db": 12.341619671572893,
+  "actual_load_insertion_efficiency_min": 0.9767333383658117,
+  "actual_load_transducer_efficiency_min": 0.9247340339514518,
+  "matched_load_network_efficiency_min": 0.9797818614773529,
+  "reciprocity_error_max": 1.971232166893511e-15,
+  "passivity_sigma_max": 0.9963072407814773,
+  "engineering_gate_pass": true,
+  "design_gate_pass": false,
+  "optimization_score": -0.2480706790404419,
+  "frequency_rows": [
+    {
+      "frequency_ghz": 9.96,
+      "passive_rl_min_db": 23.45685068045753,
+      "active_rl_min_db": 13.616513071315081,
+      "total_rl_min_db": 17.86497749911389,
+      "actual_load_insertion_efficiency_min": 0.9767333383658117,
+      "actual_load_transducer_efficiency_min": 0.9654356692148605,
+      "matched_load_network_efficiency_min": 0.9798762537454174
+    },
+    {
+      "frequency_ghz": 10.0,
+      "passive_rl_min_db": 17.742564324405535,
+      "active_rl_min_db": 13.320932370834747,
+      "total_rl_min_db": 14.988032225117447,
+      "actual_load_insertion_efficiency_min": 0.9788486450530414,
+      "actual_load_transducer_efficiency_min": 0.9497363584506544,
+      "matched_load_network_efficiency_min": 0.9798292673012284
+    },
+    {
+      "frequency_ghz": 10.04,
+      "passive_rl_min_db": 14.343495840152375,
+      "active_rl_min_db": 11.251929320959558,
+      "total_rl_min_db": 12.341619671572893,
+      "actual_load_insertion_efficiency_min": 0.9804745836546963,
+      "actual_load_transducer_efficiency_min": 0.9247340339514518,
+      "matched_load_network_efficiency_min": 0.9797818614773529
+    }
+  ]
+}

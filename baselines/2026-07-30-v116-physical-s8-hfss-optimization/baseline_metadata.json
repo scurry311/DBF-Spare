@@ -1,0 +1,9 @@
+{
+  "version": "v1.16.0-physical-s8-hfss-optimization",
+  "created_on": "2026-07-30",
+  "parent_tag": "v1.15.0-grounded-modal-network",
+  "source_output": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v116_physical_s8_hfss_optimization_20260730_run02",
+  "parent_commit": "0a393dfc65c67f6dfea477852b229ae629380229",
+  "candidate_count": 14,
+  "evidence_level": "physical HFSS S8 cascaded with trusted antenna S4; not integrated antenna-network full-wave"
+}

@@ -96,6 +96,9 @@ End Sub
 Sub AssignRLC(boundary, boundaryName, sheetName, rlcType, useR, resistanceOhm, useL, inductanceNh, useC, capacitancePf, x1, y1, z1, x2, y2, z2)
     boundary.AssignLumpedRLC Array("NAME:" & boundaryName, "Objects:=", Array(sheetName), Array("NAME:CurrentLine", "Start:=", Array(Mm(x1), Mm(y1), Mm(z1)), "End:=", Array(Mm(x2), Mm(y2), Mm(z2))), "RLC Type:=", rlcType, "UseResist:=", useR, "Resistance:=", CStr(resistanceOhm) & "ohm", "UseInduct:=", useL, "Inductance:=", CStr(inductanceNh) & "nH", "UseCap:=", useC, "Capacitance:=", CStr(capacitancePf) & "pF")
 End Sub
+Sub AssignRLCExpr(boundary, boundaryName, sheetName, rlcType, useR, resistanceExpr, useL, inductanceExpr, useC, capacitanceExpr, x1, y1, z1, x2, y2, z2)
+    boundary.AssignLumpedRLC Array("NAME:" & boundaryName, "Objects:=", Array(sheetName), Array("NAME:CurrentLine", "Start:=", Array(Mm(x1), Mm(y1), Mm(z1)), "End:=", Array(Mm(x2), Mm(y2), Mm(z2))), "RLC Type:=", rlcType, "UseResist:=", useR, "Resistance:=", resistanceExpr, "UseInduct:=", useL, "Inductance:=", inductanceExpr, "UseCap:=", useC, "Capacitance:=", capacitanceExpr)
+End Sub
 Function Mm(value)
     Mm = CStr(Round(CDbl(value), 7)) & "mm"
 End Function'''
@@ -145,6 +148,26 @@ def builder_text(project: Path, protocol: dict[str, Any], selected: dict[str, An
     if min(series_l_nh, ground_c_pf, bridge_l_nh) <= 0.0:
         raise ValueError("The physical fixture requires the selected grounded-lowpass component signs")
 
+    parameterized = bool(selected.get("hfss_parameterize_components", False))
+    variable_block = ""
+    if parameterized:
+        variable_block = f'''oDesign.ChangeProperty Array( _
+    "NAME:AllTabs", _
+    Array( _
+        "NAME:LocalVariableTab", _
+        Array("NAME:PropServers", "LocalVariables"), _
+        Array( _
+            "NAME:NewProps", _
+            Array("NAME:v_series_l", "PropType:=", "VariableProp", "UserDef:=", True, "Value:=", "{series_l_nh:.10f}nH"), _
+            Array("NAME:v_series_r", "PropType:=", "VariableProp", "UserDef:=", True, "Value:=", "{series_r:.10f}ohm"), _
+            Array("NAME:v_ground_c", "PropType:=", "VariableProp", "UserDef:=", True, "Value:=", "{ground_c_pf:.10f}pF"), _
+            Array("NAME:v_ground_r", "PropType:=", "VariableProp", "UserDef:=", True, "Value:=", "{ground_parallel_r:.10f}ohm"), _
+            Array("NAME:v_bridge_l", "PropType:=", "VariableProp", "UserDef:=", True, "Value:=", "{bridge_l_nh:.10f}nH"), _
+            Array("NAME:v_bridge_r", "PropType:=", "VariableProp", "UserDef:=", True, "Value:=", "{bridge_parallel_r:.10f}ohm") _
+        ) _
+    ) _
+)'''
+
     geometry: list[str] = []
     assignments: list[str] = []
     mesh_names: list[str] = []
@@ -165,12 +188,20 @@ def builder_text(project: Path, protocol: dict[str, Any], selected: dict[str, An
                 f'CreateSheet oEditor, "{post_port}", "X", {post_x:.7f}, {y_value-trace_w/2:.7f}, {-h:.7f}, {trace_w:.7f}, {h:.7f}',
             ]
         )
-        assignments.extend(
-            [
-                f'AssignRLC oBoundary, "SeriesL_{port}", "{series_name}", "Serial", True, {series_r:.10f}, True, {series_l_nh:.10f}, False, 1, {left_end:.7f}, {y_value:.7f}, 0, {right_start:.7f}, {y_value:.7f}, 0',
-                f'AssignRLC oBoundary, "GroundC_{port}", "{cap_name}", "Parallel", True, {ground_parallel_r:.10f}, False, 1, True, {ground_c_pf:.10f}, {cap_x:.7f}, {y_value:.7f}, 0, {cap_x:.7f}, {y_value:.7f}, {-h:.7f}',
-            ]
-        )
+        if parameterized:
+            assignments.extend(
+                [
+                    f'AssignRLCExpr oBoundary, "SeriesL_{port}", "{series_name}", "Serial", True, "v_series_r", True, "v_series_l", False, "1pF", {left_end:.7f}, {y_value:.7f}, 0, {right_start:.7f}, {y_value:.7f}, 0',
+                    f'AssignRLCExpr oBoundary, "GroundC_{port}", "{cap_name}", "Parallel", True, "v_ground_r", False, "1nH", True, "v_ground_c", {cap_x:.7f}, {y_value:.7f}, 0, {cap_x:.7f}, {y_value:.7f}, {-h:.7f}',
+                ]
+            )
+        else:
+            assignments.extend(
+                [
+                    f'AssignRLC oBoundary, "SeriesL_{port}", "{series_name}", "Serial", True, {series_r:.10f}, True, {series_l_nh:.10f}, False, 1, {left_end:.7f}, {y_value:.7f}, 0, {right_start:.7f}, {y_value:.7f}, 0',
+                    f'AssignRLC oBoundary, "GroundC_{port}", "{cap_name}", "Parallel", True, {ground_parallel_r:.10f}, False, 1, True, {ground_c_pf:.10f}, {cap_x:.7f}, {y_value:.7f}, 0, {cap_x:.7f}, {y_value:.7f}, {-h:.7f}',
+                ]
+            )
         mesh_names.extend((pre_name, post_name, series_name, cap_name))
 
     pair_rows = [(0, 2), (1, 3)]
@@ -182,9 +213,14 @@ def builder_text(project: Path, protocol: dict[str, Any], selected: dict[str, An
         geometry.append(
             f'CreateSheet oEditor, "{bridge_name}", "Z", {bridge_x-bridge_width/2:.7f}, {gap_y0:.7f}, 0, {bridge_width:.7f}, {gap_height:.7f}'
         )
-        assignments.append(
-            f'AssignRLC oBoundary, "BridgeL_{pair_index}", "{bridge_name}", "Parallel", True, {bridge_parallel_r:.10f}, True, {bridge_l_nh:.10f}, False, 1, {bridge_x:.7f}, {gap_y0:.7f}, 0, {bridge_x:.7f}, {gap_y0+gap_height:.7f}, 0'
-        )
+        if parameterized:
+            assignments.append(
+                f'AssignRLCExpr oBoundary, "BridgeL_{pair_index}", "{bridge_name}", "Parallel", True, "v_bridge_r", True, "v_bridge_l", False, "1pF", {bridge_x:.7f}, {gap_y0:.7f}, 0, {bridge_x:.7f}, {gap_y0+gap_height:.7f}, 0'
+            )
+        else:
+            assignments.append(
+                f'AssignRLC oBoundary, "BridgeL_{pair_index}", "{bridge_name}", "Parallel", True, {bridge_parallel_r:.10f}, True, {bridge_l_nh:.10f}, False, 1, {bridge_x:.7f}, {gap_y0:.7f}, 0, {bridge_x:.7f}, {gap_y0+gap_height:.7f}, 0'
+            )
         mesh_names.append(bridge_name)
 
     # Assign all PRE ports before POST ports so the exported S8 partition is deterministic.
@@ -210,6 +246,7 @@ Set oEditor = oDesign.SetActiveEditor("3D Modeler")
 oEditor.SetModelUnits Array("NAME:Units Parameter", "Units:=", "mm", "Rescale:=", False)
 Set oBoundary = oDesign.GetModule("BoundarySetup")
 Set oAnalysis = oDesign.GetModule("AnalysisSetup")
+{variable_block}
 CreateBox oEditor, "Substrate", {-board_l/2:.7f}, {-board_w/2:.7f}, {-h:.7f}, {board_l:.7f}, {board_w:.7f}, {h:.7f}, "RO5880_V115", True
 CreateBox oEditor, "Ground", {-board_l/2:.7f}, {-board_w/2:.7f}, {-h-copper:.7f}, {board_l:.7f}, {board_w:.7f}, {copper:.7f}, "copper", False
 {chr(10).join(geometry)}

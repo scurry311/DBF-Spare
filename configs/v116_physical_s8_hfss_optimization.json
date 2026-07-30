@@ -1,0 +1,36 @@
+{
+  "protocol": "v1.16-physical-s8-hfss-variable-search",
+  "created_on": "2026-07-30",
+  "parent_tag": "v1.15.0-grounded-modal-network",
+  "base_protocol": "configs/v115_grounded_modal_network.json",
+  "base_physical_design": "hfss_outputs/v115_physical_aware_resynthesis_20260730_run01/physical_aware_selected.json",
+  "ansys_executable": "D:/v231/Win64/ansysedt.exe",
+  "output_directory": "hfss_outputs/v116_physical_s8_hfss_optimization_20260730_run02",
+  "search": {
+    "coarse_factors": [
+      {"name": "nominal", "series_l": 1.0, "ground_c": 1.0, "bridge_l": 1.0},
+      {"name": "series_l_minus_6pct", "series_l": 0.94, "ground_c": 1.0, "bridge_l": 1.0},
+      {"name": "series_l_plus_6pct", "series_l": 1.06, "ground_c": 1.0, "bridge_l": 1.0},
+      {"name": "ground_c_minus_10pct", "series_l": 1.0, "ground_c": 0.9, "bridge_l": 1.0},
+      {"name": "ground_c_plus_10pct", "series_l": 1.0, "ground_c": 1.1, "bridge_l": 1.0},
+      {"name": "bridge_l_minus_8pct", "series_l": 1.0, "ground_c": 1.0, "bridge_l": 0.92},
+      {"name": "bridge_l_plus_8pct", "series_l": 1.0, "ground_c": 1.0, "bridge_l": 1.08}
+    ],
+    "refine_step_fraction": {
+      "series_l": 0.03,
+      "ground_c": 0.05,
+      "bridge_l": 0.04
+    },
+    "design_active_rl_db": 11.5,
+    "engineering_active_rl_db": 11.0,
+    "minimum_free_memory_gb": 8.0
+  },
+  "scope": {
+    "allow_one_candidate_at_a_time": true,
+    "allow_independent_repeat_only_after_design_gate": true,
+    "allow_4x4": false,
+    "allow_16x16": false,
+    "allow_training_labels": false,
+    "allow_critic_training": false
+  }
+}

@@ -140,6 +140,8 @@
 | `summarize_v114_small_cell_broadband_feed.py` | 汇总 v1.14 小阵馈电、模态耦合、冻结 active-RL 回放和阶段锁定决定。 |
 | `calibrate_v115_physical_fixture.py` | 用物理 S8 校准分布式夹具 surrogate，并仅在同一拓扑内做物理感知重综合。 |
 | `summarize_v115_grounded_modal_network.py` | 固化 v1.15 电路、物理 S8、双参考面效率和停止决定。 |
+| `run_v116_physical_s8_hfss_optimization.py` | 用 HFSS LocalVariables 顺序执行物理 S8 粗筛、局部优化和独立复验，并以冻结激励做双参考面门控。 |
+| `summarize_v116_physical_s8_hfss_optimization.py` | 固化 v1.16 的 14 个精确 HFSS S8、最佳元件、独立复验和阶段权限。 |
 
 ## AEDT 启动器与历史快速模型
 
