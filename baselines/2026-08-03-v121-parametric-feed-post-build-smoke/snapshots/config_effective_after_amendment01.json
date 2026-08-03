@@ -1,0 +1,199 @@
+{
+  "protocol": "v1.21-parametric-feed-post-physical-calibration",
+  "created_on": "2026-08-03",
+  "parent_commit": "94aae2f694b406b777d3eaa50cb7b792dc2a2cb0",
+  "parent_tag": "v1.20.0-joint-feed-fanout-sparse-graph",
+  "synthesis_config": "configs/v120_joint_feed_fanout_sparse_graph.json",
+  "synthesis_summary": "baselines/2026-07-31-v120-joint-feed-fanout-sparse-graph/snapshots/circuit_synthesis.json",
+  "trusted_antenna_protocol": "configs/v1143_small_cell_surface_mesh_crosscheck.json",
+  "trusted_antenna_s4": "hfss_outputs/v1143_small_cell_surface_mesh_20260730_run07/2x2/st_h_surface_direct01/v114_2x2_st_h_surface_direct01.s4p",
+  "trusted_stimulus_root": "hfss_outputs/v1143_small_cell_surface_mesh_20260730_run07",
+  "target_s8_definition": "finite-Q sparse_pi_s8 reconstructed from the frozen v1.20 circuit synthesis parameters",
+  "ansys_executable": "D:/v231/Win64/ansysedt.exe",
+  "output_directory": "hfss_outputs/v121_parametric_feed_post_20260803_run01",
+  "frequencies_ghz": [
+    9.96,
+    10.0,
+    10.04
+  ],
+  "reference_impedance_ohm": 50.0,
+  "fixed_topology": {
+    "port_order_from_negative_y": [
+      0,
+      2,
+      3,
+      1
+    ],
+    "manufacturable_graph_pairs": [
+      [
+        0,
+        2
+      ],
+      [
+        2,
+        3
+      ],
+      [
+        3,
+        1
+      ]
+    ],
+    "decoupling_stages": 1,
+    "allow_nonadjacent_connections": false,
+    "array_spacing_mm": 15.0,
+    "network_substrate_relative_permittivity": 2.2,
+    "network_substrate_loss_tangent": 0.0009,
+    "network_substrate_thickness_mm": 0.254,
+    "network_copper_thickness_mm": 0.017,
+    "base_trace_length_mm": 10.8,
+    "component_sheet_width_mm": 0.2
+  },
+  "variables": [
+    {
+      "name": "feed_inset_mm",
+      "nominal": 2.3,
+      "minimum": 1.9,
+      "maximum": 2.7,
+      "scope": "integrated"
+    },
+    {
+      "name": "feed_x_offset_mm",
+      "nominal": 0.0,
+      "minimum": -0.25,
+      "maximum": 0.25,
+      "scope": "integrated"
+    },
+    {
+      "name": "probe_radius_mm",
+      "nominal": 0.25,
+      "minimum": 0.18,
+      "maximum": 0.32,
+      "scope": "integrated"
+    },
+    {
+      "name": "ground_clearance_radius_mm",
+      "nominal": 0.6,
+      "minimum": 0.45,
+      "maximum": 0.8,
+      "scope": "integrated"
+    },
+    {
+      "name": "launch_pad_radius_mm",
+      "nominal": 0.5,
+      "minimum": 0.35,
+      "maximum": 0.7,
+      "scope": "integrated"
+    },
+    {
+      "name": "launch_taper_length_mm",
+      "nominal": 1.0,
+      "minimum": 0.6,
+      "maximum": 1.6,
+      "scope": "integrated"
+    },
+    {
+      "name": "common_trace_width_mm",
+      "nominal": 0.75,
+      "minimum": 0.45,
+      "maximum": 0.9,
+      "scope": "shared"
+    },
+    {
+      "name": "outer_edge_gap_mm",
+      "nominal": 0.07,
+      "minimum": 0.04,
+      "maximum": 0.16,
+      "scope": "shared"
+    },
+    {
+      "name": "center_edge_gap_mm",
+      "nominal": 0.22,
+      "minimum": 0.1,
+      "maximum": 0.35,
+      "scope": "shared"
+    },
+    {
+      "name": "shunt_reference_offset_mm",
+      "nominal": 0.4,
+      "minimum": 0.25,
+      "maximum": 0.8,
+      "scope": "network"
+    },
+    {
+      "name": "common_post_length_delta_mm",
+      "nominal": 0.0,
+      "minimum": -1.0,
+      "maximum": 1.0,
+      "scope": "shared"
+    }
+  ],
+  "geometric_constraints": {
+    "minimum_clearance_over_probe_mm": 0.15,
+    "minimum_pad_over_trace_half_width_mm": 0.05,
+    "minimum_component_plane_separation_mm": 0.25,
+    "route_target_must_not_be_shorter_than_manhattan_base": true,
+    "parameter_change_must_preserve_topology": true
+  },
+  "doe": {
+    "method": "maximin_latin_hypercube",
+    "seed": 12103,
+    "network_only_sample_count": 16,
+    "network_only_frequency_ghz": 10.0,
+    "network_observable_variables": [
+      "common_trace_width_mm",
+      "outer_edge_gap_mm",
+      "center_edge_gap_mm",
+      "shunt_reference_offset_mm",
+      "common_post_length_delta_mm"
+    ],
+    "three_frequency_pareto_candidate_count_min": 3,
+    "three_frequency_pareto_candidate_count_max": 5
+  },
+  "mesh": {
+    "network_component_max_length_mm": 0.08,
+    "fanout_and_probe_max_length_mm": 0.18,
+    "antenna_feed_max_length_mm": 0.18,
+    "adaptive_refinement_percent": 5.0,
+    "maximum_passes": 20,
+    "minimum_converged_passes": 2
+  },
+  "resources": {
+    "minimum_free_memory_before_hfss_gib": 13.0,
+    "minimum_free_memory_before_build_smoke_gib": 8.0,
+    "abort_free_memory_during_solve_gib": 3.0,
+    "maximum_concurrent_aedt_instances": 1,
+    "poll_interval_seconds": 5
+  },
+  "gates": {
+    "maximum_final_delta_s": 0.05,
+    "maximum_reciprocity_error": 0.0001,
+    "maximum_passivity_sigma": 1.001,
+    "minimum_network_efficiency": 0.95,
+    "minimum_passive_rl_db": 10.0,
+    "preferred_passive_rl_db": 12.0,
+    "minimum_active_rl_db": 11.0,
+    "minimum_total_rl_db": 11.0,
+    "maximum_physical_vs_target_s8_abs_delta": 0.1,
+    "maximum_independent_direct_ddm_abs_delta_s": 0.05,
+    "preferred_independent_direct_ddm_abs_delta_s": 0.02,
+    "maximum_integrated_vs_s8_cascade_abs_delta_s": 0.05
+  },
+  "stop_conditions": {
+    "maximum_total_physical_candidates": 30,
+    "review_after_physical_candidates": 20,
+    "stop_if_best_active_rl_below_db": 10.0,
+    "stop_if_best_efficiency_below": 0.95,
+    "stop_if_best_physical_vs_target_above": 0.15,
+    "stop_if_nonadjacent_residual_increases": true,
+    "stop_if_independent_validation_exceeds_safe_memory": true
+  },
+  "scope": {
+    "allow_build_smoke": true,
+    "allow_network_only_doe_after_build_smoke": true,
+    "allow_integrated_2x2_only_after_three_frequency_s8_gate": true,
+    "allow_4x4": false,
+    "allow_16x16": false,
+    "allow_training_labels": false,
+    "allow_critic_training": false
+  }
+}

@@ -1,0 +1,7 @@
+candidate_id,model,return_code,memory_aborted,minimum_free_memory_gib,elapsed_seconds,project_exists,project_bytes
+nominal,network_s8,0,False,11.832122802734375,45.153127908706665,True,228928
+nominal,integrated_2x2,1,False,11.870716094970703,35.0990891456604,False,0
+lower_safe,network_s8,0,False,11.883010864257812,25.070566415786743,True,226002
+lower_safe,integrated_2x2,1,False,11.848468780517578,35.08577871322632,False,0
+upper_bound,network_s8,0,False,11.834159851074219,25.095539569854736,True,227121
+upper_bound,integrated_2x2,1,False,11.77340316772461,35.078306674957275,False,0

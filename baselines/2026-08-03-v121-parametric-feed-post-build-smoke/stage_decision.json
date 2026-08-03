@@ -1,0 +1,17 @@
+{
+  "stage_a_baseline_audit_pass": true,
+  "shared_cad_build_smoke_pass_count": 6,
+  "shared_cad_build_smoke_case_count": 6,
+  "prepared_10ghz_lhs_candidate_count": 16,
+  "formal_hfss_memory_gate_pass": false,
+  "allow_10ghz_network_doe": false,
+  "allow_three_frequency_optimization": false,
+  "allow_independent_direct_ddm": false,
+  "allow_integrated_2x2_solve": false,
+  "allow_4x4": false,
+  "allow_16x16": false,
+  "allow_training_labels": false,
+  "allow_critic_training": false,
+  "stop_condition": "free memory at the final audit was below the preregistered 13 GiB solve launch threshold",
+  "next_action": "when at least 13 GiB is free, run the frozen 16-case 10 GHz network-only DOE serially with a 3 GiB abort guard"
+}

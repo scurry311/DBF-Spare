@@ -720,3 +720,30 @@ so the negative result is physically credible. Further section cascading,
 integrated 2x2, array expansion, labels, and critic training are stopped. The
 authoritative snapshot is
 `baselines/2026-07-30-v119-multiport-post-decoupler/BASELINE.md`.
+
+## Parametric Feed/POST Physical Calibration v1.21
+
+The v1.20 sparse neighbor chain `0-2-3-1` is retained, but the physical
+translation is replaced by one shared eleven-parameter CAD definition for a
+network-only S8 and an integrated 2x2 S4. The v1.20 commit/tag audit passed.
+
+| Result | Value | Decision |
+|---|---:|---|
+| Shared parameter dimensions | 11 | Frozen |
+| 10 GHz network-only LHS cases | 16 | Prepared, not solved |
+| Network-only build smoke | 3/3 | Passed |
+| Integrated 2x2 build smoke | 3/3 | Passed |
+| Port/topology/geometry-warning audit | 6/6 | Passed |
+| Free memory after audit | about 12.53 GiB | Failed 13 GiB solve launch gate |
+
+Before any S-parameter solve, preregistration amendment 01 added the physical
+route-length feasibility constraint. It projects only `doe12_lhs` POST length
+from -0.9587 mm to -0.9287 mm; thresholds and parameter ranges are unchanged.
+
+The first integrated build attempt is preserved: it failed because a mesh
+operation referenced patch/probe names removed by a prior Boolean union. The
+corrected build meshes the surviving united conductor and changes no physical
+parameter or gate. No electromagnetic performance result is claimed yet.
+Three-frequency optimization, independent direct/DDM validation, integrated
+solving, 4x4/16x16, labels, and critic training remain locked. See
+`docs/V121_PARAMETRIC_FEED_POST_STAGE_20260803.md`.

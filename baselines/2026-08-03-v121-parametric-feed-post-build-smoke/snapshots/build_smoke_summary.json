@@ -1,0 +1,92 @@
+{
+  "rows": [
+    {
+      "candidate_id": "nominal",
+      "model": "network_s8",
+      "return_code": 0,
+      "project_valid": true,
+      "port_set_valid": true,
+      "graph_valid": true,
+      "single_stage_valid": true,
+      "small_segment_or_geometry_warnings": "[]",
+      "warning_free": true,
+      "build_smoke_pass": true
+    },
+    {
+      "candidate_id": "nominal",
+      "model": "integrated_2x2",
+      "return_code": 0,
+      "project_valid": true,
+      "port_set_valid": true,
+      "graph_valid": true,
+      "single_stage_valid": true,
+      "small_segment_or_geometry_warnings": "[]",
+      "warning_free": true,
+      "build_smoke_pass": true
+    },
+    {
+      "candidate_id": "lower_safe",
+      "model": "network_s8",
+      "return_code": 0,
+      "project_valid": true,
+      "port_set_valid": true,
+      "graph_valid": true,
+      "single_stage_valid": true,
+      "small_segment_or_geometry_warnings": "[]",
+      "warning_free": true,
+      "build_smoke_pass": true
+    },
+    {
+      "candidate_id": "lower_safe",
+      "model": "integrated_2x2",
+      "return_code": 0,
+      "project_valid": true,
+      "port_set_valid": true,
+      "graph_valid": true,
+      "single_stage_valid": true,
+      "small_segment_or_geometry_warnings": "[]",
+      "warning_free": true,
+      "build_smoke_pass": true
+    },
+    {
+      "candidate_id": "upper_bound",
+      "model": "network_s8",
+      "return_code": 0,
+      "project_valid": true,
+      "port_set_valid": true,
+      "graph_valid": true,
+      "single_stage_valid": true,
+      "small_segment_or_geometry_warnings": "[]",
+      "warning_free": true,
+      "build_smoke_pass": true
+    },
+    {
+      "candidate_id": "upper_bound",
+      "model": "integrated_2x2",
+      "return_code": 0,
+      "project_valid": true,
+      "port_set_valid": true,
+      "graph_valid": true,
+      "single_stage_valid": true,
+      "small_segment_or_geometry_warnings": "[]",
+      "warning_free": true,
+      "build_smoke_pass": true
+    }
+  ],
+  "decision": {
+    "stage": "B_build_smoke_complete",
+    "build_smoke_pass": true,
+    "build_smoke_pass_count": 6,
+    "build_smoke_case_count": 6,
+    "free_memory_gib": 12.533859252929688,
+    "formal_hfss_memory_gate_pass": false,
+    "allow_10ghz_network_doe": false,
+    "allow_three_frequency_optimization": false,
+    "allow_integrated_2x2": false,
+    "allow_4x4": false,
+    "allow_16x16": false,
+    "allow_training_labels": false,
+    "allow_critic_training": false,
+    "reason": "10 GHz DOE is authorized only when all six build cases pass and at least 13 GiB is free."
+  }
+}

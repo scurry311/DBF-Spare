@@ -204,3 +204,10 @@ powershell -ExecutionPolicy Bypass -File scripts\<name>.ps1
 | `design_v120_joint_feed_fanout_sparse_graph.py` | Project the v1.19 target onto the physical `0-2-3-1` chain and jointly optimize route and finite-Q adjacent loading with manufacturing quantization and tolerance gates. |
 | `run_v120_sparse_graph_physical_front_gate.py` | Build, solve, and gate one single-stage coupled-line/local-loading HFSS S8 front gate without adding another decoupling section. |
 | `analyze_v120_sparse_graph_residual.py` | Compare both physical mappings and quantify how much S8 error remains on the existing diagonal and adjacent graph entries. |
+
+## v1.21 Parametric Feed/POST Calibration
+
+| File | Purpose |
+|---|---|
+| `v121_shared_cad.py` | Generate the shared-parameter network-only S8 and integrated 2x2 S4/EEP CAD definitions while retaining the single `0-2-3-1` sparse graph. This builder alone is not solved HFSS evidence. |
+| `run_v121_parametric_feed_post.py` | Enforce preregistration, route-feasible LHS generation, serial memory guards, build smoke, physical sensitivity/Pareto analysis, three-frequency gating, independent direct/DDM validation, and the final integrated 2x2 decision. |

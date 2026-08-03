@@ -1,0 +1,10 @@
+{
+  "version": "v1.21.0-parametric-feed-post-build-smoke",
+  "created_on": "2026-08-03",
+  "parent_tag": "v1.20.0-joint-feed-fanout-sparse-graph",
+  "parent_commit": "94aae2f694b406b777d3eaa50cb7b792dc2a2cb0",
+  "evidence_level": "shared parameterized HFSS CAD build smoke; no solved electromagnetic performance",
+  "network_doe_authorized": false,
+  "integrated_2x2_solve_authorized": false,
+  "training_label_authorized": false
+}

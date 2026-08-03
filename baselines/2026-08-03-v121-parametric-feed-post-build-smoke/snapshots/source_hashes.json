@@ -1,0 +1,6 @@
+{
+  "protocol_config": "D:\\codex_workspace\\hfss_ura16_quick_model\\configs\\v121_parametric_feed_post_preregistered.json",
+  "protocol_config_sha256": "d7e21f664ae3ba93b6aec218805288907eedb6547bdc17442d899dc664d6ad31",
+  "v120_synthesis_sha256": "51014eb3db1b1c67390dd19c4c93e0e32a913530da66fa4e73cd6224f2db1cfb",
+  "trusted_antenna_protocol_sha256": "353edc51c2e501c768263dbad99643ccb77e2430062d0ec2137d0c6bd4d965f0"
+}

@@ -1,0 +1,19 @@
+{
+  "timestamp_local": "2026-08-03T11:42:53+0800",
+  "expected_parent_commit": "94aae2f694b406b777d3eaa50cb7b792dc2a2cb0",
+  "head_commit": "94aae2f694b406b777d3eaa50cb7b792dc2a2cb0",
+  "parent_tag": "v1.20.0-joint-feed-fanout-sparse-graph",
+  "parent_tag_commit": "94aae2f694b406b777d3eaa50cb7b792dc2a2cb0",
+  "baseline_hash_match": true,
+  "worktree_clean_before_v121": true,
+  "worktree_status_at_audit": [
+    "?? configs/v121_parametric_feed_post_preregistered.json",
+    "?? scripts/run_v121_parametric_feed_post.py",
+    "?? scripts/v121_shared_cad.py"
+  ],
+  "unrelated_worktree_status": [],
+  "ansys_executable": "D:\\v231\\Win64\\ansysedt.exe",
+  "ansys_executable_exists": true,
+  "free_memory_gib": 12.587566375732422,
+  "aedt_processes": []
+}

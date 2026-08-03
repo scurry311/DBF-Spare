@@ -1,0 +1,12 @@
+name,nominal,minimum,maximum,scope,network_only_doe,manufacturing_range_frozen
+feed_inset_mm,2.3,1.9,2.7,integrated,False,True
+feed_x_offset_mm,0.0,-0.25,0.25,integrated,False,True
+probe_radius_mm,0.25,0.18,0.32,integrated,False,True
+ground_clearance_radius_mm,0.6,0.45,0.8,integrated,False,True
+launch_pad_radius_mm,0.5,0.35,0.7,integrated,False,True
+launch_taper_length_mm,1.0,0.6,1.6,integrated,False,True
+common_trace_width_mm,0.75,0.45,0.9,shared,True,True
+outer_edge_gap_mm,0.07,0.04,0.16,shared,True,True
+center_edge_gap_mm,0.22,0.1,0.35,shared,True,True
+shunt_reference_offset_mm,0.4,0.25,0.8,network,True,True
+common_post_length_delta_mm,0.0,-1.0,1.0,shared,True,True

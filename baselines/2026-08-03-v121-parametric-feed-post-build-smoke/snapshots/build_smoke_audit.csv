@@ -1,0 +1,7 @@
+candidate_id,model,return_code,project_valid,port_set_valid,graph_valid,single_stage_valid,small_segment_or_geometry_warnings,warning_free,build_smoke_pass
+nominal,network_s8,0,True,True,True,True,[],True,True
+nominal,integrated_2x2,0,True,True,True,True,[],True,True
+lower_safe,network_s8,0,True,True,True,True,[],True,True
+lower_safe,integrated_2x2,0,True,True,True,True,[],True,True
+upper_bound,network_s8,0,True,True,True,True,[],True,True
+upper_bound,integrated_2x2,0,True,True,True,True,[],True,True
