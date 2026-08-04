@@ -1,0 +1,141 @@
+{
+  "protocol": "v1.23-physical-load-aware-modal-transformer-smoke",
+  "created_on": "2026-08-04",
+  "parent_commit": "78a5d41b71e4b6e11a5e6b0d47dba528a32eda0b",
+  "parent_tag": "v1.22.0-balanced-modal-branch-stop-gate",
+  "ansys_executable": "D:/v231/Win64/ansysedt.exe",
+  "output_directory": "hfss_outputs/v123_physical_modal_transformer_20260804_run01",
+  "frequency_ghz": 10.0,
+  "reference_impedance_ohm": 50.0,
+  "upstream": {
+    "circuit_output_directory": "hfss_outputs/v123_load_aware_modal_transformer_20260804_run01",
+    "stage_decision": "hfss_outputs/v123_load_aware_modal_transformer_20260804_run01/stage_decision.json",
+    "stage_decision_sha256": "dc4a95d13d918a7bd6181384714cf5d4e6844e0b8de92b81a33cb3f9cf03973f",
+    "finite_q_upper_bound": "hfss_outputs/v123_load_aware_modal_transformer_20260804_run01/finite_q_physical_upper_bound.json",
+    "finite_q_upper_bound_sha256": "0511b53fbc13a5a338c1e2b3b397c4c0bcba26028aee46102ac07c2a1f6f4ee5",
+    "selected_circuit_operator": "hfss_outputs/v123_load_aware_modal_transformer_20260804_run01/selected_circuit_operator.npz",
+    "selected_circuit_operator_sha256": "f1a6d83c450df17dfaa5f1f9037612b330e9e1765cf58d893aaeb91a19bf86a6",
+    "trusted_antenna_s4": "hfss_outputs/v1143_small_cell_surface_mesh_20260730_run07/2x2/st_h_surface_direct01/v114_2x2_st_h_surface_direct01.s4p",
+    "trusted_stimulus_root": "hfss_outputs/v1143_small_cell_surface_mesh_20260730_run07"
+  },
+  "frozen_launch": {
+    "source": "v122_balanced_modal_branch_20260804_run06",
+    "substrate_material": "RO5880_V123",
+    "relative_permittivity": 2.2,
+    "loss_tangent": 0.0009,
+    "substrate_thickness_mm": 0.127,
+    "copper_thickness_mm": 0.07,
+    "board_length_mm": 16.0,
+    "board_width_mm": 12.0,
+    "pre_reference_x_mm": -7.0,
+    "post_reference_x_mm": 7.0,
+    "pair_center_pitch_mm": 1.1,
+    "trace_width_mm": 1.0,
+    "channel_y_mm_by_antenna_port": [
+      -3.6,
+      3.6,
+      -1.2,
+      1.2
+    ],
+    "physical_channel_order_negative_to_positive_y": [
+      0,
+      2,
+      3,
+      1
+    ],
+    "local_x_neighbor_pairs": [
+      [
+        0,
+        2
+      ],
+      [
+        3,
+        1
+      ]
+    ],
+    "conductor_representation": "two-sided-finite-conductivity-sheet",
+    "pre_post_reference_planes_changed": false,
+    "launch_trace_dimensions_changed": false,
+    "substrate_changed": false
+  },
+  "single_local_block": {
+    "description": "Output-loaded finite-Q modal correction on the frozen balanced run06 traces; two staggered local air-bridge RLC sheets avoid false planar crossings",
+    "correction_blocks": 1,
+    "additional_cascade_stages": 0,
+    "nonlocal_connections": false,
+    "coupled_region_center_x_mm": 0.0,
+    "coupled_region_length_mm": 2.196,
+    "ground_load_x_mm": 1.098,
+    "ground_sheet_width_mm": 0.12,
+    "bridge_x_mm_by_polarity": [
+      0.72,
+      1.48
+    ],
+    "bridge_height_mm": 0.25,
+    "bridge_sheet_width_mm": 0.12,
+    "differential_equivalent_ground_capacitance_pf": 0.19763911772561318,
+    "per_conductor_ground_capacitance_pf": 0.39527823545122637,
+    "ground_capacitor_q": 200.0,
+    "differential_equivalent_bridge_inductance_nh": 2.9636055611785896,
+    "per_polarity_bridge_inductance_nh": 1.4818027805892948,
+    "bridge_inductor_q": 60.0,
+    "component_mapping_scope": "HFSS lumped finite-Q component sheets with explicit local connections; not a packaged-component manufacturing model"
+  },
+  "mesh": {
+    "trace_max_length_mm": 0.12,
+    "component_max_length_mm": 0.06,
+    "adaptive_refinement_percent": 5.0,
+    "maximum_passes": 18,
+    "minimum_passes": 2,
+    "minimum_converged_passes": 2,
+    "solver_type": "iterative",
+    "iterative_residual": 1e-06
+  },
+  "resources": {
+    "minimum_free_memory_before_build_gib": 8.0,
+    "minimum_free_memory_before_solve_gib": 13.0,
+    "abort_free_memory_during_solve_gib": 3.0,
+    "poll_interval_seconds": 5,
+    "maximum_concurrent_aedt_instances": 1
+  },
+  "gates": {
+    "maximum_final_delta_s": 0.05,
+    "maximum_reciprocity_error": 0.0001,
+    "maximum_passivity_sigma": 1.001,
+    "minimum_matched_load_passive_rl_db": 12.0,
+    "minimum_representative_active_rl_db": 11.0,
+    "minimum_representative_total_rl_db": 11.0,
+    "minimum_matched_load_network_efficiency": 0.95,
+    "minimum_actual_load_insertion_efficiency": 0.95,
+    "minimum_actual_load_transducer_efficiency": 0.9,
+    "maximum_physical_vs_target_abs_delta_s": 0.1,
+    "maximum_small_mesh_segment_count": 0,
+    "minimum_small_mesh_segment_length_mm": 0.005
+  },
+  "scope": {
+    "allow_one_10ghz_network_only_s8": true,
+    "allow_three_frequency_hfss_before_10ghz_gate": false,
+    "allow_integrated_2x2": false,
+    "allow_4x4": false,
+    "allow_16x16": false,
+    "allow_training_labels": false,
+    "allow_critic_training": false
+  },
+  "runtime_audit": {
+    "head_commit": "78a5d41b71e4b6e11a5e6b0d47dba528a32eda0b",
+    "parent_tag_commit": "78a5d41b71e4b6e11a5e6b0d47dba528a32eda0b",
+    "verified_upstream_hashes": {
+      "stage_decision": "dc4a95d13d918a7bd6181384714cf5d4e6844e0b8de92b81a33cb3f9cf03973f",
+      "finite_q_upper_bound": "0511b53fbc13a5a338c1e2b3b397c4c0bcba26028aee46102ac07c2a1f6f4ee5",
+      "selected_circuit_operator": "f1a6d83c450df17dfaa5f1f9037612b330e9e1765cf58d893aaeb91a19bf86a6"
+    },
+    "free_memory_gib": 13.596881866455078,
+    "aedt_processes": []
+  },
+  "evidence_rules": {
+    "only_one_10ghz_network_only_s8_authorized": true,
+    "no_three_frequency_hfss_before_this_gate": true,
+    "no_integrated_model_or_training_labels": true,
+    "lumped_component_smoke_is_not_a_packaged_component_manufacturing_validation": true
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "version": "v1.23.0-load-aware-modal-transformer-stop-gate",
+  "created_on": "2026-08-04",
+  "parent_tag": "v1.22.0-balanced-modal-branch-stop-gate",
+  "evidence_level": "finite-Q three-frequency circuit upper bound plus one network-only physical HFSS S8 at 10 GHz; trusted-S4 cascade only",
+  "selected_candidate": "v123_physical_modal_transformer_20260804_run01",
+  "circuit_upper_bound_gate_pass": true,
+  "physical_10ghz_s8_gate_pass": false,
+  "three_frequency_hfss_authorized": false,
+  "independent_repeat_authorized": false,
+  "integrated_2x2_authorized": false,
+  "array_expansion_authorized": false,
+  "training_label_authorized": false,
+  "critic_training_authorized": false
+}

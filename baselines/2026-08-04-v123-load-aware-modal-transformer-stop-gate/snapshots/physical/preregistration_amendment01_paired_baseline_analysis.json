@@ -1,0 +1,14 @@
+{
+  "amendment": "v1.23-physical-smoke-analysis-only-paired-run06-comparison",
+  "created_on": "2026-08-04",
+  "timing": "after the frozen 10 GHz physical S8 solve and gate decision",
+  "reason": "Quantify whether the fixed component mapping improves or degrades the trusted run06 physical network under identical S4 termination and identical frozen stimuli.",
+  "frozen_run06_s8_10ghz": "baselines/2026-08-04-v122-balanced-modal-branch-stop-gate/snapshots/v122_balanced_2x2_f_10p00ghz.s8p",
+  "frozen_run06_s8_10ghz_sha256": "32ac6e9f0631da52fb1d9d6d5443e6423f51bb5705f95b3b80ddf5422219c917",
+  "physical_geometry_changed": false,
+  "component_values_changed": false,
+  "engineering_thresholds_changed": false,
+  "gate_decision_changed": false,
+  "optimization_allowed": false,
+  "additional_hfss_allowed": false
+}

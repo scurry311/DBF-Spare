@@ -1,0 +1,50 @@
+{
+  "passive_rl_min_db": 17.728117603104053,
+  "active_rl_min_db": 12.367713985901434,
+  "total_rl_min_db": 14.963187407827439,
+  "correction_block_efficiency_min": 0.9855264825105836,
+  "launch_plus_block_efficiency_min": 0.9332011563480815,
+  "actual_load_insertion_efficiency_min": 0.9347760772722746,
+  "actual_load_transducer_efficiency_min": 0.9058051168511042,
+  "parameters": [
+    76.29637709029527,
+    69.9970393719399,
+    33.3537997341422,
+    0.9402585756414201,
+    0.012418032006175092,
+    -0.005370314632173972,
+    5.411421223876721e-06
+  ],
+  "components": {
+    "even_mode_impedance_ohm": 76.29637709029527,
+    "odd_mode_impedance_ohm": 69.9970393719399,
+    "even_mode_electrical_length_deg_at_10ghz": 33.3537997341422,
+    "odd_mode_electrical_length_deg_at_10ghz": 31.36119623025372,
+    "odd_to_even_electrical_length_ratio": 0.9402585756414201,
+    "symmetric_ground_branch": {
+      "kind": "capacitive",
+      "value_pf": 0.19763911772561318,
+      "susceptance_s": 0.012418032006175092
+    },
+    "pair_bridge_branch": {
+      "kind": "inductive",
+      "value_nh": 2.9636055611785896,
+      "susceptance_s": -0.005370314632173972
+    },
+    "input_loading_fraction": 5.411421223876721e-06,
+    "output_loading_fraction": 0.9999945885787761
+  },
+  "objective": -48.07145442986962,
+  "iterations": 240,
+  "evaluations": 28096,
+  "gate_checks": {
+    "active_rl": true,
+    "total_rl": true,
+    "passive_rl": true,
+    "launch_plus_block_efficiency": false,
+    "actual_load_insertion_efficiency": false,
+    "correction_block_efficiency": true,
+    "even_odd_impedance_order": true
+  },
+  "gate_pass": false
+}

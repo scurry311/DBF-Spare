@@ -1,0 +1,15 @@
+{
+  "physical_minus_run06_max_abs_delta_s": 0.22382748996620686,
+  "physical_minus_target_max_abs_delta_s": 0.5329017056322377,
+  "physical_minus_run06_modal_max_abs_delta_s": 0.22123092893317536,
+  "physical_minus_target_modal_max_abs_delta_s": 0.5462014021448536,
+  "physical_vs_run06_active_rl_change_db": -3.078059686994668,
+  "physical_vs_run06_total_rl_change_db": -4.4985831486858,
+  "physical_vs_run06_efficiency_change": -0.010187142780411551,
+  "physical_vs_run06_insertion_change": -0.017260835390752405,
+  "stimulus_count": 57,
+  "events_improved_active_rl_count": 1,
+  "events_degraded_active_rl_count": 56,
+  "median_active_rl_change_db": -4.170315803648376,
+  "conclusion": "The fixed finite-Q component mapping is diagnostic only; no optimization or later HFSS stage is authorized."
+}

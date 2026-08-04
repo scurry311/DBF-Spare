@@ -1,0 +1,13 @@
+{
+  "stage": "C_10ghz_physical_s8_gate_complete",
+  "physical_10ghz_gate_pass": false,
+  "allow_three_frequency_hfss": false,
+  "allow_independent_repeat": false,
+  "allow_integrated_2x2": false,
+  "allow_4x4": false,
+  "allow_16x16": false,
+  "allow_training_labels": false,
+  "allow_critic_training": false,
+  "stop_current_topology": true,
+  "reason": "The 10 GHz physical S8 failed: mesh_segment_count, passive_rl, active_rl, total_rl, network_efficiency, actual_load_insertion_efficiency, actual_load_transducer_efficiency, physical_vs_target"
+}

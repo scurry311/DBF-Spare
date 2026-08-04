@@ -1,0 +1,10 @@
+{
+  "amendment": "v1.23 correction-block versus full-chain efficiency semantics",
+  "created_on": "2026-08-04",
+  "timing": "After the circuit optimization and before any v1.23 HFSS build or solve.",
+  "numerical_thresholds_changed": false,
+  "physical_parameters_changed": false,
+  "change": "Apply the stated 97% circuit-upper-bound efficiency gate to the new correction block. Retain launch-plus-block and actual-load 95% requirements as separate mandatory physical-chain gates.",
+  "reason": "The frozen launch alone has approximately 95.27% insertion efficiency, so a 97% combined passive-chain requirement is physically impossible and was not the user-stated circuit-upper-bound criterion.",
+  "authorization_limit": "At most one 10 GHz network-only physical S8 smoke; three-frequency and integrated HFSS remain locked."
+}

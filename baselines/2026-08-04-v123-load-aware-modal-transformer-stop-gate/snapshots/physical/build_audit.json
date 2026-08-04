@@ -1,0 +1,18 @@
+{
+  "return_code": 0,
+  "project_exists": true,
+  "free_memory_gib_before": 13.62225341796875,
+  "expected_port_count": 8,
+  "differential_port_definition_count": 8,
+  "ground_capacitor_count": 8,
+  "bridge_inductor_count": 4,
+  "bridge_via_count": 8,
+  "floating_branch_count": 0,
+  "warning_counts": {
+    "script error": 0,
+    "invalid geometry": 0,
+    "small segment": 0,
+    "too many conductors touch lumped port": 0
+  },
+  "gate_pass": true
+}

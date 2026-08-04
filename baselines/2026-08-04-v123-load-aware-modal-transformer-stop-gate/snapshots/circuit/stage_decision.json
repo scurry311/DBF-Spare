@@ -1,0 +1,19 @@
+{
+  "stage": "v1.23_circuit_upper_bound_complete",
+  "decision": "allow_one_10ghz_network_only_s8_smoke",
+  "topology_support_gate_pass": true,
+  "ideal_local_modal_capability_gate_pass": true,
+  "finite_q_correction_block_gate_pass": true,
+  "requested_tolerance_gate_pass": true,
+  "circuit_upper_bound_gate_pass": true,
+  "full_chain_nominal_efficiency_gate_pass": false,
+  "full_chain_tolerance_gate_pass": false,
+  "allow_initial_10ghz_network_only_s8": true,
+  "allow_three_frequency_hfss": false,
+  "allow_integrated_2x2": false,
+  "allow_4x4": false,
+  "allow_16x16": false,
+  "allow_training_labels": false,
+  "allow_critic_training": false,
+  "warning": "The correction-block upper bound passes, but full-chain efficiency is predicted to fail; only one 10 GHz physical smoke is authorized."
+}

@@ -1,15 +1,15 @@
 # DBF-Spare
 
-## Current verified hardware status (v1.22)
+## Current verified hardware status (v1.23)
 
 The true balanced differential 1x1 launch passes its three-frequency HFSS S2
-gate with 24.99 dB input RL and 95.27% insertion efficiency. The physical 2x2
-model with one local floating even/odd correction branch is converged,
-reciprocal, passive, and well matched under passive termination, but reaches
-only 5.74 dB worst active RL and fails loaded-efficiency gates under 285 frozen
-excitations. Independent repeat, integrated 2x2, array expansion, training
-labels, and critic retraining remain locked. See
-`baselines/2026-08-04-v122-balanced-modal-branch-stop-gate/BASELINE.md`.
+gate with 24.99 dB input RL and 95.27% insertion efficiency. A load-aware
+single-block modal circuit passed its finite-Q and tolerance upper-bound gates,
+but its 10 GHz physical S8 mapping reached only 3.15 dB active RL and 92.51%
+actual-load insertion efficiency. It degraded 56 of 57 paired frozen stimuli,
+so three-frequency HFSS, integrated 2x2, array expansion, training labels, and
+critic retraining remain locked. See
+`baselines/2026-08-04-v123-load-aware-modal-transformer-stop-gate/BASELINE.md`.
 
 面向低功耗多任务波束的 16x16 稀疏相控阵研究项目。项目以 HFSS 全波模型和
 嵌入单元方向图（EEP）为物理基准，联合优化阵元 mask、任务级复权值、旁瓣、

@@ -1,0 +1,113 @@
+{
+  "protocol": "v1.23-load-aware-single-block-modal-transformer",
+  "created_on": "2026-08-04",
+  "parent_commit": "78a5d41b71e4b6e11a5e6b0d47dba528a32eda0b",
+  "parent_tag": "v1.22.0-balanced-modal-branch-stop-gate",
+  "seed": 20260804,
+  "output_directory": "hfss_outputs/v123_load_aware_modal_transformer_20260804_run01",
+  "frequencies_ghz": [9.96, 10.0, 10.04],
+  "reference_impedance_ohm": 50.0,
+  "inputs": {
+    "frozen_launch_s2": "baselines/2026-08-04-v122-balanced-modal-branch-stop-gate/snapshots/v122_balanced_1x1.s2p",
+    "frozen_launch_s2_sha256": "2e3f64a823b0fb28f085174d7a31573e03fb1658cbe6741193ae32e0d93a6bf8",
+    "trusted_antenna_s4": "hfss_outputs/v1143_small_cell_surface_mesh_20260730_run07/2x2/st_h_surface_direct01/v114_2x2_st_h_surface_direct01.s4p",
+    "trusted_antenna_s4_sha256": "33cd8c0528233fe3e4bb22b4664898bfe527d33120f4f32e086edf156bbfb3db",
+    "stimulus_csv": "hfss_outputs/v1143_small_cell_surface_mesh_20260730_run07/stimuli/representative_stimuli.csv",
+    "stimulus_csv_sha256": "471325becc296bde8e151a26fb71170d52dfc21075e851700b17a80cef0575e5",
+    "stimulus_npz": "hfss_outputs/v1143_small_cell_surface_mesh_20260730_run07/stimuli/representative_stimuli.npz",
+    "stimulus_npz_sha256": "0bcf89510ac398eff0eb8faa92b402a434774d91e11608676cbd69c476f205e9",
+    "stimulus_root": "hfss_outputs/v1143_small_cell_surface_mesh_20260730_run07",
+    "current_modal_s8_by_frequency": {
+      "9.96": "baselines/2026-08-04-v122-balanced-modal-branch-stop-gate/snapshots/v122_balanced_2x2_f_9p96ghz.s8p",
+      "10.0": "baselines/2026-08-04-v122-balanced-modal-branch-stop-gate/snapshots/v122_balanced_2x2_f_10p00ghz.s8p",
+      "10.04": "baselines/2026-08-04-v122-balanced-modal-branch-stop-gate/snapshots/v122_balanced_2x2_f_10p04ghz.s8p"
+    },
+    "current_modal_s8_sha256_by_frequency": {
+      "9.96": "caf4d2b5eb706d39f436c0e92ede259aa6edfb729ff62408fce27930b0194d60",
+      "10.0": "32ac6e9f0631da52fb1d9d6d5443e6423f51bb5705f95b3b80ddf5422219c917",
+      "10.04": "5002d9e894f8d222cf8e762edb3c2639d3bae71f5b7df8d05c3b8321dfd37d55"
+    }
+  },
+  "topology": {
+    "x_neighbor_pairs": [[0, 2], [3, 1]],
+    "mode_order": ["pair02_even", "pair02_odd", "pair31_even", "pair31_odd"],
+    "correction_blocks": 1,
+    "additional_cascade_stages": 0,
+    "nonlocal_connections": false,
+    "physical_common_parameter_bounds": {
+      "even_mode_impedance_ohm": [55.0, 110.0],
+      "odd_mode_impedance_ohm": [25.0, 70.0],
+      "even_mode_electrical_length_deg_at_10ghz": [8.0, 110.0],
+      "odd_to_even_electrical_length_ratio": [0.94, 1.06],
+      "symmetric_ground_susceptance_s_at_10ghz": [-0.03, 0.03],
+      "pair_bridge_susceptance_s_at_10ghz": [-0.03, 0.03],
+      "input_loading_fraction": [0.0, 1.0]
+    },
+    "ideal_local_mode_bounds": {
+      "mode_impedance_ohm": [20.0, 140.0],
+      "mode_electrical_length_deg_at_10ghz": [2.0, 160.0],
+      "mode_shunt_susceptance_s_at_10ghz": [-0.06, 0.06],
+      "mode_input_loading_fraction": [0.0, 1.0]
+    },
+    "finite_q": {
+      "coupled_line_unloaded_q": 100.0,
+      "ground_capacitor_q": 200.0,
+      "ground_inductor_q": 80.0,
+      "bridge_capacitor_q": 150.0,
+      "bridge_inductor_q": 60.0
+    }
+  },
+  "optimization": {
+    "ideal_maxiter": 180,
+    "ideal_popsize": 12,
+    "physical_maxiter": 240,
+    "physical_popsize": 16,
+    "tolerance": 1e-8,
+    "polish": true,
+    "robust_design_scenarios": [
+      "nominal",
+      "coupling_high",
+      "coupling_low",
+      "phase_high",
+      "phase_low",
+      "loading_high",
+      "loading_low",
+      "q_low"
+    ]
+  },
+  "tolerance": {
+    "sample_count": 1000,
+    "impedance_sigma_fraction": 0.02,
+    "electrical_length_sigma_fraction": 0.01,
+    "loading_sigma_fraction": 0.05,
+    "q_sigma_fraction": 0.10,
+    "clip_sigma": 3.0
+  },
+  "gates": {
+    "maximum_unsupported_modal_energy_fraction": 0.10,
+    "minimum_ideal_active_rl_db": 12.0,
+    "minimum_ideal_total_rl_db": 12.0,
+    "minimum_nominal_active_rl_db": 12.0,
+    "minimum_nominal_total_rl_db": 12.0,
+    "minimum_nominal_passive_rl_db": 12.0,
+    "minimum_correction_block_efficiency": 0.97,
+    "minimum_launch_plus_block_efficiency": 0.95,
+    "minimum_actual_load_insertion_efficiency": 0.95,
+    "minimum_even_minus_odd_impedance_ohm": 5.0,
+    "minimum_tolerance_active_rl_db": 11.0,
+    "minimum_tolerance_total_rl_db": 11.0,
+    "minimum_tolerance_passive_rl_db": 10.0,
+    "minimum_tolerance_joint_pass_rate": 0.95
+  },
+  "scope": {
+    "allow_circuit_and_modal_audit": true,
+    "allow_hfss_only_after_all_circuit_gates": true,
+    "allow_initial_10ghz_network_only_s8": false,
+    "allow_three_frequency_hfss": false,
+    "allow_integrated_2x2": false,
+    "allow_4x4": false,
+    "allow_16x16": false,
+    "allow_training_labels": false,
+    "allow_critic_training": false
+  }
+}

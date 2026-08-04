@@ -1,0 +1,18 @@
+{
+  "sample_count": 1000,
+  "joint_pass_count": 0,
+  "joint_pass_rate": 0.0,
+  "required_pass_rate": 0.95,
+  "gate_pass": false,
+  "worst_active_rl_db": 10.470483168799415,
+  "worst_total_rl_db": 13.725696962468971,
+  "worst_correction_block_efficiency": 0.9796316185988654,
+  "worst_launch_plus_block_efficiency": 0.9277696657159968,
+  "requested_circuit_joint_pass_count": 997,
+  "requested_circuit_joint_pass_rate": 0.997,
+  "requested_circuit_gate_pass": true,
+  "full_chain_joint_pass_count": 0,
+  "full_chain_joint_pass_rate": 0.0,
+  "full_chain_gate_pass": false,
+  "gate_semantics": "The 97% preregistered circuit gate applies to the new correction block. Combined-launch and actual-load efficiency are retained as the subsequent physical-chain gate."
+}

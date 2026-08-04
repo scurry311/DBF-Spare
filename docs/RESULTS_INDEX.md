@@ -1,6 +1,22 @@
 # Result Index
 
-Current hardware-development baseline: `v1.21.1-parametric-feed-post-stop-gate`, frozen on 2026-08-04. The trusted 16x16 field/operator baseline below remains unchanged.
+Current hardware-development baseline: `v1.23.0-load-aware-modal-transformer-stop-gate`, frozen on 2026-08-04. Its finite-Q circuit upper bound passes, but the single authorized 10 GHz physical S8 fails active matching, loaded efficiency, and physical-to-target consistency. The trusted 16x16 field/operator baseline below remains unchanged.
+
+## Current Hardware Stop Gate
+
+| Result | Value | Decision |
+|---|---:|---|
+| Finite-Q circuit worst active RL | 12.37 dB | Upper bound passed |
+| 1000-trial circuit tolerance pass rate | 99.7% | Upper bound passed |
+| Physical 10 GHz final Delta S | 0.0174 | Numerical gate passed |
+| Physical worst active / total RL | 3.15 / 6.54 dB | Failed |
+| Physical matched / actual-load efficiency | 94.26% / 92.51% | Failed |
+| Physical-to-target max abs Delta S | 0.533 | Failed |
+| Paired stimuli degraded | 56/57 | Stop topology |
+
+This is network-only diagnostic HFSS evidence, not an integrated antenna or
+array result. No additional frequency solve, independent repeat, EEP export,
+training-label generation, or critic training is authorized from this branch.
 
 ## Evidence Levels
 
