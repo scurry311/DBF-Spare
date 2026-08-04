@@ -1,0 +1,5 @@
+case_id,side,feed_pattern,feed_center_mm,feed_delta_mm,pass_count,final_delta_s,converged,small_mesh_segment_count,peak_solver_memory_gb,maximum_tetrahedra,frequency_max_error_ghz,passive_rl_min_db,reciprocity_error,passivity_sigma,minimum_radiation_efficiency,topology_warning_count,gate_pass
+uniform_1p95,1,uniform,1.95,0.0,6,0.0269587,True,76,2.174816131591797,54942,0.0,15.28854824565306,0.0,0.17201748261938296,1.00881755650323,0,True
+uniform_2p10,1,uniform,2.1,0.0,6,0.0276017,True,78,2.308422088623047,57790,0.0,16.7658737824326,0.0,0.14511299674931202,1.00338976553154,0,True
+uniform_2p50,1,uniform,2.5,0.0,6,0.0285575,True,78,2.3655242919921875,57800,0.0,12.596384408095213,0.0,0.234520482807053,1.00747944206009,0,False
+uniform_2p65,1,uniform,2.65,0.0,6,0.0249628,True,76,2.2409515380859375,56516,0.0,10.693894823208861,0.0,0.29194783489347,1.00826118776972,0,False

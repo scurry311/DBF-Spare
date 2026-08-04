@@ -1,0 +1,88 @@
+{
+  "cases": [
+    {
+      "case_id": "uniform_1p95",
+      "side": 1,
+      "port_count": 1,
+      "candidate": {
+        "candidate_id": "uniform_1p95",
+        "slot_length_mm": 3.0,
+        "slot_width_mm": 0.3,
+        "tongue_width_mm": 0.55,
+        "feed_inset_from_edge_mm": 2.3,
+        "feed_pattern": "uniform",
+        "feed_center_mm": 1.95,
+        "feed_delta_mm": 0.0
+      },
+      "project_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v125_feedpoint_input_impedance_20260805_run01\\1x1\\uniform_1p95\\v125_1x1_uniform_1p95.aedt",
+      "touchstone_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v125_feedpoint_input_impedance_20260805_run01\\1x1\\uniform_1p95\\v125_1x1_uniform_1p95.s1p",
+      "efficiency_csv_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v125_feedpoint_input_impedance_20260805_run01\\1x1\\uniform_1p95\\radiation_efficiency.csv",
+      "builder_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v125_feedpoint_input_impedance_20260805_run01\\1x1\\uniform_1p95\\build.vbs",
+      "solver_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v125_feedpoint_input_impedance_20260805_run01\\1x1\\uniform_1p95\\solve_export.vbs",
+      "evidence_scope": "physical patch/coax HFSS with modified feed point; no external matching or bridge network"
+    },
+    {
+      "case_id": "uniform_2p10",
+      "side": 1,
+      "port_count": 1,
+      "candidate": {
+        "candidate_id": "uniform_2p10",
+        "slot_length_mm": 3.0,
+        "slot_width_mm": 0.3,
+        "tongue_width_mm": 0.55,
+        "feed_inset_from_edge_mm": 2.3,
+        "feed_pattern": "uniform",
+        "feed_center_mm": 2.1,
+        "feed_delta_mm": 0.0
+      },
+      "project_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v125_feedpoint_input_impedance_20260805_run01\\1x1\\uniform_2p10\\v125_1x1_uniform_2p10.aedt",
+      "touchstone_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v125_feedpoint_input_impedance_20260805_run01\\1x1\\uniform_2p10\\v125_1x1_uniform_2p10.s1p",
+      "efficiency_csv_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v125_feedpoint_input_impedance_20260805_run01\\1x1\\uniform_2p10\\radiation_efficiency.csv",
+      "builder_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v125_feedpoint_input_impedance_20260805_run01\\1x1\\uniform_2p10\\build.vbs",
+      "solver_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v125_feedpoint_input_impedance_20260805_run01\\1x1\\uniform_2p10\\solve_export.vbs",
+      "evidence_scope": "physical patch/coax HFSS with modified feed point; no external matching or bridge network"
+    },
+    {
+      "case_id": "uniform_2p50",
+      "side": 1,
+      "port_count": 1,
+      "candidate": {
+        "candidate_id": "uniform_2p50",
+        "slot_length_mm": 3.0,
+        "slot_width_mm": 0.3,
+        "tongue_width_mm": 0.55,
+        "feed_inset_from_edge_mm": 2.3,
+        "feed_pattern": "uniform",
+        "feed_center_mm": 2.5,
+        "feed_delta_mm": 0.0
+      },
+      "project_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v125_feedpoint_input_impedance_20260805_run01\\1x1\\uniform_2p50\\v125_1x1_uniform_2p50.aedt",
+      "touchstone_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v125_feedpoint_input_impedance_20260805_run01\\1x1\\uniform_2p50\\v125_1x1_uniform_2p50.s1p",
+      "efficiency_csv_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v125_feedpoint_input_impedance_20260805_run01\\1x1\\uniform_2p50\\radiation_efficiency.csv",
+      "builder_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v125_feedpoint_input_impedance_20260805_run01\\1x1\\uniform_2p50\\build.vbs",
+      "solver_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v125_feedpoint_input_impedance_20260805_run01\\1x1\\uniform_2p50\\solve_export.vbs",
+      "evidence_scope": "physical patch/coax HFSS with modified feed point; no external matching or bridge network"
+    },
+    {
+      "case_id": "uniform_2p65",
+      "side": 1,
+      "port_count": 1,
+      "candidate": {
+        "candidate_id": "uniform_2p65",
+        "slot_length_mm": 3.0,
+        "slot_width_mm": 0.3,
+        "tongue_width_mm": 0.55,
+        "feed_inset_from_edge_mm": 2.3,
+        "feed_pattern": "uniform",
+        "feed_center_mm": 2.65,
+        "feed_delta_mm": 0.0
+      },
+      "project_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v125_feedpoint_input_impedance_20260805_run01\\1x1\\uniform_2p65\\v125_1x1_uniform_2p65.aedt",
+      "touchstone_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v125_feedpoint_input_impedance_20260805_run01\\1x1\\uniform_2p65\\v125_1x1_uniform_2p65.s1p",
+      "efficiency_csv_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v125_feedpoint_input_impedance_20260805_run01\\1x1\\uniform_2p65\\radiation_efficiency.csv",
+      "builder_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v125_feedpoint_input_impedance_20260805_run01\\1x1\\uniform_2p65\\build.vbs",
+      "solver_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v125_feedpoint_input_impedance_20260805_run01\\1x1\\uniform_2p65\\solve_export.vbs",
+      "evidence_scope": "physical patch/coax HFSS with modified feed point; no external matching or bridge network"
+    }
+  ]
+}

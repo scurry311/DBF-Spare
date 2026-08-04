@@ -1,0 +1,5 @@
+case_id,side,build_return_code,solve_return_code,memory_aborted,free_memory_gib_before,minimum_free_memory_gib,touchstone_exists,topology_warning_count
+uniform_1p95,1,0,0,False,14.385292053222656,11.52773666381836,True,0
+uniform_2p10,1,0,0,False,14.394664764404297,11.532833099365234,True,0
+uniform_2p50,1,0,0,False,14.454299926757812,11.246826171875,True,0
+uniform_2p65,1,0,0,False,14.373638153076172,11.123271942138672,True,0

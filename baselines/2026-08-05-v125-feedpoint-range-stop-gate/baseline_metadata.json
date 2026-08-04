@@ -1,0 +1,15 @@
+{
+  "version": "v1.25.0-feedpoint-range-stop-gate",
+  "created_on": "2026-08-05",
+  "parent_tag": "v1.24.0-physical-loadpull-jacobian-stop-gate",
+  "evidence_level": "four independent three-frequency physical HFSS 1x1 feed-inset cases",
+  "selected_development_feed_inset_mm": 2.1,
+  "one_by_one_gate_pass_count": 2,
+  "one_by_one_case_count": 4,
+  "periodic_range_gate_pass": false,
+  "periodic_two_by_two_authorized": false,
+  "uniform_2p10_two_by_two_smoke_authorized_as_new_stage": true,
+  "array_expansion_authorized": false,
+  "training_label_authorized": false,
+  "critic_training_authorized": false
+}

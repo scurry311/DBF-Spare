@@ -1,15 +1,16 @@
 # DBF-Spare
 
-## Current verified hardware status (v1.24)
+## Current verified hardware status (v1.25)
 
 The true balanced differential 1x1 launch passes its three-frequency HFSS S2
-gate with 24.99 dB input RL and 95.27% insertion efficiency. A ten-case physical
-load-pull/modal Jacobian audit shows that the v1.23 local correction block can
-explain only 6.64% of the required active-response residual. Its bounded linear
-optimum predicts only 3.52 dB active RL, so the local bridge topology is stopped
-without a confirmation solve. The next hardware branch changes the antenna
-feed point/input impedance. See
-`baselines/2026-08-05-v124-physical-loadpull-jacobian-stop-gate/BASELINE.md`.
+gate with 24.99 dB input RL and 95.27% insertion efficiency. The local bridge
+topology is stopped after its physical Jacobian explains only 6.64% of the
+required active-response residual. A direct 1x1 feed-point screen finds that
+1.95 and 2.10 mm preserve the three-frequency passive gate, while 2.50 and
+2.65 mm fail. The preregistered periodic feed range is therefore blocked before
+2x2; the next independent smoke tests only the best 2.10 mm uniform feed in a
+physical 2x2 S4. See
+`baselines/2026-08-05-v125-feedpoint-range-stop-gate/BASELINE.md`.
 
 面向低功耗多任务波束的 16x16 稀疏相控阵研究项目。项目以 HFSS 全波模型和
 嵌入单元方向图（EEP）为物理基准，联合优化阵元 mask、任务级复权值、旁瓣、

@@ -1,0 +1,72 @@
+{
+  "protocol": "v1.25-periodic-feedpoint-input-impedance-screen",
+  "created_on": "2026-08-05",
+  "parent_commit": "19b4755da66236dfc2db29a740682fcd3834a006",
+  "parent_tag": "v1.24.0-physical-loadpull-jacobian-stop-gate",
+  "ansys_executable": "D:/v231/Win64/ansysedt.exe",
+  "output_directory": "hfss_outputs/v125_feedpoint_input_impedance_20260805_run01",
+  "inputs": {
+    "builder_source": "scripts/run_v114_small_cell_broadband_feed.py",
+    "builder_source_sha256": "67f3ecc2712439e0b36c269b8ecc6bfc944bf8849cf91628903478cb4c91b98d",
+    "trusted_protocol": "hfss_outputs/v1143_small_cell_surface_mesh_20260730_run07/protocol_snapshot.json",
+    "trusted_protocol_sha256": "353edc51c2e501c768263dbad99643ccb77e2430062d0ec2137d0c6bd4d965f0",
+    "trusted_geometry": "hfss_outputs/v1143_small_cell_surface_mesh_20260730_run07/selected_geometry.json",
+    "trusted_geometry_sha256": "e09bec70cc2f0fb7ce79d795a5425850b1dc1e5253167ff134ce7228b7e4d3b9",
+    "trusted_s4": "hfss_outputs/v1143_small_cell_surface_mesh_20260730_run07/2x2/st_h_surface_direct01/v114_2x2_st_h_surface_direct01.s4p",
+    "trusted_s4_sha256": "33cd8c0528233fe3e4bb22b4664898bfe527d33120f4f32e086edf156bbfb3db",
+    "stimulus_root": "hfss_outputs/v1143_small_cell_surface_mesh_20260730_run07",
+    "stimulus_csv": "hfss_outputs/v1143_small_cell_surface_mesh_20260730_run07/stimuli/representative_stimuli.csv",
+    "stimulus_csv_sha256": "471325becc296bde8e151a26fb71170d52dfc21075e851700b17a80cef0575e5",
+    "stimulus_npz": "hfss_outputs/v1143_small_cell_surface_mesh_20260730_run07/stimuli/representative_stimuli.npz",
+    "stimulus_npz_sha256": "0bcf89510ac398eff0eb8faa92b402a434774d91e11608676cbd69c476f205e9"
+  },
+  "frozen_geometry": {
+    "spacing_mm": 15.0,
+    "substrate_thickness_mm": 0.787,
+    "patch_width_mm": 11.8,
+    "patch_length_mm": 9.35,
+    "slot_length_mm": 3.0,
+    "slot_width_mm": 0.3,
+    "tongue_width_mm": 0.55,
+    "probe_radius_mm": 0.25,
+    "coax_inner_radius_mm": 0.60,
+    "coax_outer_radius_mm": 1.10,
+    "mesh_max_length_mm": 0.18,
+    "adaptive_refinement_percent": 5.0
+  },
+  "one_by_one_feed_insets_mm": [1.95, 2.10, 2.50, 2.65],
+  "candidate_ranges": [
+    {"delta_mm": 0.35, "low_mm": 1.95, "high_mm": 2.65, "priority": 1},
+    {"delta_mm": 0.20, "low_mm": 2.10, "high_mm": 2.50, "priority": 2}
+  ],
+  "two_by_two_patterns": ["checkerboard", "x_stripe", "y_stripe", "uniform_best"],
+  "frequencies_ghz": [9.96, 10.0, 10.04],
+  "gates": {
+    "maximum_final_delta_s": 0.05,
+    "maximum_reciprocity_error": 0.0001,
+    "maximum_passivity_sigma": 1.001,
+    "minimum_1x1_passive_rl_db": 15.0,
+    "minimum_1x1_radiation_efficiency": 0.95,
+    "minimum_2x2_passive_rl_db": 12.0,
+    "minimum_2x2_active_rl_db": 11.0,
+    "minimum_2x2_total_rl_db": 11.0,
+    "minimum_2x2_radiation_efficiency": 0.95,
+    "maximum_port_topology_warning_count": 0
+  },
+  "resources": {
+    "minimum_free_memory_before_1x1_gib": 8.0,
+    "minimum_free_memory_before_2x2_gib": 13.0,
+    "abort_free_memory_during_solve_gib": 3.0,
+    "poll_interval_seconds": 5,
+    "memory_recovery_wait_seconds": 900,
+    "maximum_concurrent_aedt_instances": 1
+  },
+  "scope": {
+    "allow_1x1_feedpoint_screen": true,
+    "allow_2x2_only_after_1x1_range_gate": true,
+    "allow_4x4": false,
+    "allow_16x16": false,
+    "allow_training_labels": false,
+    "allow_critic_training": false
+  }
+}

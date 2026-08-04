@@ -1,0 +1,9 @@
+{
+  "stage": "B_1x1_feedpoint_gate_complete",
+  "one_by_one_range_gate_pass": false,
+  "allow_2x2_prepare": false,
+  "allow_2x2_run": false,
+  "transition_to_radiator_input_geometry": true,
+  "allow_training_labels": false,
+  "allow_critic_training": false
+}

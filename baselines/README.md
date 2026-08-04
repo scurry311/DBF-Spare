@@ -10,6 +10,9 @@ as an engineering label.
 
 Current checkpoints:
 
+- `2026-08-05-v125-feedpoint-range-stop-gate`: a direct three-frequency 1x1
+  feed-inset screen passes at 1.95/2.10 mm and fails at 2.50/2.65 mm; the
+  preregistered periodic high/low feed range stops before 2x2.
 - `2026-08-05-v124-physical-loadpull-jacobian-stop-gate`: ten independent
   physical S8 center differences show that five manufacturable local-block
   geometry directions explain only 6.64% of the required active-response

@@ -1,0 +1,14 @@
+! Touchstone file exported from HFSS 2023.1.0
+!        File:           D:/codex_workspace/hfss_ura16_quick_model/hfss_outputs/v125_feedpoint_input_impedance_20260805_run01/1x1/uniform_2p10/v125_1x1_uniform_2p10.aedt
+!        Generated:      1:41:26 %x4E0A%x5348  8%x6708 05, 2026
+!        Design:         SmallCell_DualSlot_10GHz
+!        Project:        v125_1x1_uniform_2p10
+!        Setup:          Setup_10GHz
+!        Solution:       Sweep_Gate3
+!
+# GHz S MA R 50.000000
+! Terminal data exported
+! Port[1] = P000
+9.96                           0.145112996749312 20.9514853753513 
+10                             0.111387733589537 47.2420237264513 
+10.04                          0.123819827212201 79.8630708110401 

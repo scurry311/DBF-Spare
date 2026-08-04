@@ -1,6 +1,6 @@
 # Result Index
 
-Current hardware-development baseline: `v1.24.0-physical-loadpull-jacobian-stop-gate`, frozen on 2026-08-05. Ten independent 10 GHz physical S8 perturbations show that the current local correction geometry cannot span the required reflection and active-load directions. The trusted 16x16 field/operator baseline below remains unchanged.
+Current hardware-development baseline: `v1.25.0-feedpoint-range-stop-gate`, frozen on 2026-08-05. The local correction geometry is unreachable, and a direct three-frequency 1x1 feed-point screen finds only the low-inset side of the proposed periodic range physically matched. The periodic 2x2 branch is blocked; one independent uniform 2.10 mm 2x2 smoke is the next development experiment. The trusted 16x16 field/operator baseline below remains unchanged.
 
 ## Current Hardware Stop Gate
 
@@ -17,6 +17,9 @@ Current hardware-development baseline: `v1.24.0-physical-loadpull-jacobian-stop-
 | Supported reflection residual explained | 9.55% | Failed |
 | Active-response residual explained | 6.64% | Failed |
 | Predicted best active RL | 3.52 dB | Failed |
+| 1x1 feed inset 1.95 / 2.10 mm | 15.29 / 16.77 dB RL | Passed |
+| 1x1 feed inset 2.50 / 2.65 mm | 12.60 / 10.69 dB RL | Failed |
+| Periodic feed range | No paired passing endpoints | Blocked before 2x2 |
 
 This is network-only diagnostic HFSS evidence, not an integrated antenna or
 array result. No predicted-geometry confirmation, additional frequency solve,
