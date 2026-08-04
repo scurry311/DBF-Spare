@@ -1,0 +1,17 @@
+{
+  "version": "v1.26.0-feedpoint-s4-stop-gate",
+  "created_on": "2026-08-05",
+  "parent_tag": "v1.25.0-feedpoint-range-stop-gate",
+  "evidence_level": "physical 2x2 antenna S4 from three serial single-frequency HFSS solves",
+  "passive_rl_min_db": 15.096650353304588,
+  "active_rl_min_db": 5.079858141132623,
+  "total_rl_min_db": 11.313266967920708,
+  "minimum_radiation_efficiency": 0.992392272057383,
+  "active_gate_pass_count": 113,
+  "stimulus_count": 285,
+  "uniform_sii_upper_bound_db": 8.810302814151097,
+  "per_port_sii_upper_bound_db": 9.49275117700357,
+  "hardware_gate_pass": false,
+  "training_label_authorized": false,
+  "critic_training_authorized": false
+}

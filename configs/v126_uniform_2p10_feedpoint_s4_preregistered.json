@@ -1,0 +1,62 @@
+{
+  "protocol": "v1.26-uniform-2p10-feedpoint-physical-s4-smoke",
+  "created_on": "2026-08-05",
+  "parent_commit": "0cb77b83476f9ef7b8031f0aec7318fbc46dd9b3",
+  "parent_tag": "v1.25.0-feedpoint-range-stop-gate",
+  "ansys_executable": "D:/v231/Win64/ansysedt.exe",
+  "output_directory": "hfss_outputs/v126_uniform_2p10_feedpoint_s4_20260805_run01",
+  "inputs": {
+    "builder_source": "scripts/run_v114_small_cell_broadband_feed.py",
+    "builder_source_sha256": "67f3ecc2712439e0b36c269b8ecc6bfc944bf8849cf91628903478cb4c91b98d",
+    "trusted_protocol": "hfss_outputs/v1143_small_cell_surface_mesh_20260730_run07/protocol_snapshot.json",
+    "trusted_protocol_sha256": "353edc51c2e501c768263dbad99643ccb77e2430062d0ec2137d0c6bd4d965f0",
+    "trusted_geometry": "hfss_outputs/v1143_small_cell_surface_mesh_20260730_run07/selected_geometry.json",
+    "trusted_geometry_sha256": "e09bec70cc2f0fb7ce79d795a5425850b1dc1e5253167ff134ce7228b7e4d3b9",
+    "trusted_s4": "hfss_outputs/v1143_small_cell_surface_mesh_20260730_run07/2x2/st_h_surface_direct01/v114_2x2_st_h_surface_direct01.s4p",
+    "trusted_s4_sha256": "33cd8c0528233fe3e4bb22b4664898bfe527d33120f4f32e086edf156bbfb3db",
+    "stimulus_root": "hfss_outputs/v1143_small_cell_surface_mesh_20260730_run07",
+    "stimulus_csv": "hfss_outputs/v1143_small_cell_surface_mesh_20260730_run07/stimuli/representative_stimuli.csv",
+    "stimulus_csv_sha256": "471325becc296bde8e151a26fb71170d52dfc21075e851700b17a80cef0575e5",
+    "stimulus_npz": "hfss_outputs/v1143_small_cell_surface_mesh_20260730_run07/stimuli/representative_stimuli.npz",
+    "stimulus_npz_sha256": "0bcf89510ac398eff0eb8faa92b402a434774d91e11608676cbd69c476f205e9"
+  },
+  "candidate": {
+    "candidate_id": "uniform_feed_2p10",
+    "feed_pattern": "uniform",
+    "feed_center_mm": 2.1,
+    "feed_delta_mm": 0.0
+  },
+  "frequencies_ghz": [9.96, 10.0, 10.04],
+  "gates": {
+    "maximum_final_delta_s": 0.05,
+    "maximum_reciprocity_error": 0.0001,
+    "maximum_passivity_sigma": 1.001,
+    "minimum_2x2_passive_rl_db": 12.0,
+    "minimum_2x2_active_rl_db": 11.0,
+    "minimum_2x2_total_rl_db": 11.0,
+    "minimum_2x2_radiation_efficiency": 0.95,
+    "maximum_port_topology_warning_count": 0
+  },
+  "resources": {
+    "minimum_free_memory_before_1x1_gib": 8.0,
+    "minimum_free_memory_before_2x2_gib": 13.0,
+    "abort_free_memory_during_solve_gib": 3.0,
+    "poll_interval_seconds": 5,
+    "memory_recovery_wait_seconds": 900,
+    "maximum_concurrent_aedt_instances": 1
+  },
+  "scope": {
+    "allow_one_uniform_2x2_smoke": true,
+    "allow_periodic_feed_patterns": false,
+    "allow_feedpoint_retuning_after_result": false,
+    "allow_4x4": false,
+    "allow_16x16": false,
+    "allow_training_labels": false,
+    "allow_critic_training": false
+  },
+  "stop_conditions": {
+    "stop_feedpoint_only_branch_if_active_rl_below_db": 11.0,
+    "next_physics_if_failed": "modify radiator input impedance using slot, tongue, patch-input, or balanced feed geometry",
+    "do_not_return_to_bridge_component_tuning": true
+  }
+}

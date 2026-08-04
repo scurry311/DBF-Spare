@@ -1,6 +1,6 @@
 # Result Index
 
-Current hardware-development baseline: `v1.25.0-feedpoint-range-stop-gate`, frozen on 2026-08-05. The local correction geometry is unreachable, and a direct three-frequency 1x1 feed-point screen finds only the low-inset side of the proposed periodic range physically matched. The periodic 2x2 branch is blocked; one independent uniform 2.10 mm 2x2 smoke is the next development experiment. The trusted 16x16 field/operator baseline below remains unchanged.
+Current hardware-development baseline: `v1.26.0-feedpoint-s4-stop-gate`, frozen on 2026-08-05. The local correction geometry is unreachable, and the best 1x1 feed point also fails the true physical 2x2 active-RL gate. An optimistic diagonal-only load-pull bound proves that Sii correction alone cannot reach 11 dB while the measured non-diagonal coupling is frozen. The next branch must modify the radiator/input geometry so both diagonal and coupling terms move. The trusted 16x16 field/operator baseline below remains unchanged.
 
 ## Current Hardware Stop Gate
 
@@ -20,12 +20,18 @@ Current hardware-development baseline: `v1.25.0-feedpoint-range-stop-gate`, froz
 | 1x1 feed inset 1.95 / 2.10 mm | 15.29 / 16.77 dB RL | Passed |
 | 1x1 feed inset 2.50 / 2.65 mm | 12.60 / 10.69 dB RL | Failed |
 | Periodic feed range | No paired passing endpoints | Blocked before 2x2 |
+| Uniform 2.10 mm physical 2x2 passive / total RL | 15.10 / 11.31 dB | Passed |
+| Uniform 2.10 mm physical 2x2 active RL | 5.08 dB | Failed |
+| Active-RL 11 dB stimulus pass rate | 113/285 (39.65%) | Failed |
+| Ideal shared-Sii active-RL upper bound | 8.81 dB worst corner | Failed |
+| Ideal per-port-Sii active-RL upper bound | 9.49 dB worst corner | Failed |
 
-This is network-only diagnostic HFSS evidence, not an integrated antenna or
-array result. No predicted-geometry confirmation, additional frequency solve,
-independent repeat, EEP export, training-label generation, or critic training
-is authorized from this branch. The next physical experiment must change the
-antenna feed point or input impedance rather than the local bridge values.
+The v1.24 S8 result is network-only diagnostic evidence. The v1.26 result is a
+physical 2x2 antenna S4 with the unchanged radiator and a relocated feed point;
+it is not 4x4 or array evidence. No independent repeat, EEP export,
+training-label generation, or critic training is authorized. The next physical
+experiment must change the radiator/input geometry and mutual coupling rather
+than the local bridge values or feed inset alone.
 
 ## Evidence Levels
 

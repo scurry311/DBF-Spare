@@ -1,0 +1,11 @@
+{
+  "stage": "B_serial_uniform_2p10_s4_gate_complete",
+  "feedpoint_only_active_rl_feasible": false,
+  "allow_independent_repeat": false,
+  "transition_to_radiator_input_geometry": true,
+  "allow_4x4": false,
+  "allow_16x16": false,
+  "allow_training_labels": false,
+  "allow_critic_training": false,
+  "reason": "Feed relocation alone failed the physical active-RL gate; change radiator/input geometry and do not tune the bridge again."
+}

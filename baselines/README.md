@@ -81,3 +81,8 @@ Current checkpoints:
   replayed through uniform and three-class finite-Q broadband circuit networks;
   rebuilt three-frequency S256/EEP operators pass structural checks, but K=2
   4/7, K=4 2/6, and an empty 11 dB reserve keep algorithms and HFSS locked.
+- `2026-08-05-v126-feedpoint-s4-stop-gate`: the best v1.25 1x1 feed point is
+  tested in a true three-frequency physical 2x2 S4. Passive RL, efficiency, and
+  numerical gates pass, but worst active RL is 5.08 dB. Even independent ideal
+  per-port Sii load-pull cannot exceed a 9.49 dB worst-corner upper bound with
+  physical coupling frozen, so bridge and feed-point-only tuning stop.

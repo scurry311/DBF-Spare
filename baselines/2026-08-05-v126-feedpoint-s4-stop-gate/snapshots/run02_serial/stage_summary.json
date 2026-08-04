@@ -1,0 +1,24 @@
+{
+  "execution_mode": "three_independent_single_frequency_adaptive_solves",
+  "frequency_max_error_ghz": 0.0,
+  "maximum_final_delta_s": 0.0386218,
+  "reciprocity_error": 0.0,
+  "passivity_sigma": 0.3065268418466112,
+  "minimum_radiation_efficiency": 0.992392272057383,
+  "passive_rl_min_db": 15.096650353304588,
+  "representative_active_rl_min_db": 5.079858141132623,
+  "representative_total_rl_min_db": 11.313266967920708,
+  "representative_source_count": 285,
+  "gate_pass": false,
+  "trusted_control": {
+    "passive_rl_min_db": 16.65605113814542,
+    "representative_active_rl_min_db": 5.553113842577072,
+    "representative_total_rl_min_db": 10.348346472972228
+  },
+  "physical_minus_control": {
+    "passive_rl_db": -1.5594007848408307,
+    "active_rl_db": -0.4732557014444492,
+    "total_rl_db": 0.9649204949484798,
+    "max_abs_s4_change": 0.08225858955206608
+  }
+}

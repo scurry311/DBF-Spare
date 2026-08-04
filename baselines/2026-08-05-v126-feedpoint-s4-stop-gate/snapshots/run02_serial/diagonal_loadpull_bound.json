@@ -1,0 +1,10 @@
+{
+  "evidence_scope": "optimistic frequency-specific diagonal load-pull on measured physical S4; non-diagonal terms frozen",
+  "uniform_sii_worst_frequency_upper_bound_active_rl_db": 8.810302814151097,
+  "per_port_sii_worst_frequency_upper_bound_active_rl_db": 9.49275117700357,
+  "active_rl_gate_db": 11.0,
+  "uniform_diagonal_only_gate_pass": false,
+  "per_port_diagonal_only_gate_pass": false,
+  "requires_non_diagonal_physical_change": true,
+  "decision": "Change radiator/feed input geometry so both Sii and mutual-coupling terms move; do not tune the existing bridge."
+}

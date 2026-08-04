@@ -1,0 +1,4 @@
+case_id,frequency_ghz,build_return_code,solve_return_code,memory_aborted,free_memory_gib_before,minimum_free_memory_gib,touchstone_exists,topology_warning_count
+f_9p96ghz,9.96,0,0,False,15.537933349609375,6.966915130615234,True,0
+f_10p00ghz,10.0,0,0,False,14.962589263916016,6.631507873535156,True,0
+f_10p04ghz,10.04,0,0,False,15.01877212524414,6.421642303466797,True,0

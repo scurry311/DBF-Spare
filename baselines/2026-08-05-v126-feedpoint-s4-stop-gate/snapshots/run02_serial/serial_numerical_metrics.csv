@@ -1,0 +1,4 @@
+case_id,target_frequency_ghz,actual_frequency_ghz,pass_count,final_delta_s,converged,small_mesh_segment_count,peak_solver_memory_gb,maximum_tetrahedra,radiation_efficiency,topology_warning_count
+f_9p96ghz,9.96,9.96,6,0.0386218,True,326,8.277503967285156,227297,0.99310274149236,0
+f_10p00ghz,10.0,10.0,7,0.0212403,True,380,8.559860229492188,236512,0.993318664402533,0
+f_10p04ghz,10.04,10.04,6,0.0363737,True,326,8.230533599853516,227305,0.992392272057383,0

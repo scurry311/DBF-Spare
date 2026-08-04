@@ -1,0 +1,22 @@
+{
+  "case_id": "f_10p04ghz",
+  "frequency_ghz": 10.04,
+  "side": 2,
+  "port_count": 4,
+  "candidate": {
+    "candidate_id": "uniform_feed_2p10",
+    "slot_length_mm": 3.0,
+    "slot_width_mm": 0.3,
+    "tongue_width_mm": 0.55,
+    "feed_inset_from_edge_mm": 2.3,
+    "feed_pattern": "uniform",
+    "feed_center_mm": 2.1,
+    "feed_delta_mm": 0.0
+  },
+  "project_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v126_uniform_2p10_feedpoint_s4_20260805_run02_serial\\2x2_serial\\f_10p04ghz\\v126_2x2_uniform_2p10_f_10p04ghz.aedt",
+  "touchstone_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v126_uniform_2p10_feedpoint_s4_20260805_run02_serial\\2x2_serial\\f_10p04ghz\\v126_2x2_uniform_2p10_f_10p04ghz.s4p",
+  "efficiency_csv_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v126_uniform_2p10_feedpoint_s4_20260805_run02_serial\\2x2_serial\\f_10p04ghz\\radiation_efficiency.csv",
+  "builder_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v126_uniform_2p10_feedpoint_s4_20260805_run02_serial\\2x2_serial\\f_10p04ghz\\build.vbs",
+  "solver_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v126_uniform_2p10_feedpoint_s4_20260805_run02_serial\\2x2_serial\\f_10p04ghz\\solve_export.vbs",
+  "solution": "Setup_10GHz:LastAdaptive"
+}
