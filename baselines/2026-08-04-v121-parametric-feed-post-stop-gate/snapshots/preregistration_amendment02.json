@@ -1,0 +1,24 @@
+{
+  "amendment": "v1.21-preregistration-amendment-02-iterative-resource-smoke",
+  "created_on": "2026-08-03",
+  "timing": "after one direct-solver memory abort and before any S-parameter result",
+  "effective_protocol_sha256": "753f1a2a5251a7635895e92587bd81943a6db8e81acec0f84d87c2da37bd4e3b",
+  "physical_geometry_changed": false,
+  "mesh_definition_changed": false,
+  "engineering_thresholds_changed": false,
+  "performance_results_observed_before_amendment": false,
+  "failed_direct_resource_probe": {
+    "candidate_id": "doe00_nominal",
+    "initial_mesh_tetrahedra": 356315,
+    "matrix_size": 1885474,
+    "hfss_estimated_total_memory_gib": 14.55,
+    "s8_exported": false,
+    "stop_reason": "the preregistered 3 GiB free-memory abort guard was reached"
+  },
+  "numerical_change": {
+    "from_solver": "Auto/Direct Solver",
+    "to_solver": "Iterative Solver",
+    "iterative_residual": 1e-06,
+    "scope": "10 GHz network-only DOE; final Pareto candidates still require independent direct/DDM validation"
+  }
+}

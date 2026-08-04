@@ -1,0 +1,12 @@
+{
+  "version": "v1.21.1-parametric-feed-post-stop-gate",
+  "created_on": "2026-08-04",
+  "parent_tag": "v1.21.0-parametric-feed-post-build-smoke",
+  "evidence_level": "20 solved 10 GHz network-only HFSS S8 candidates; no integrated or array evidence",
+  "physical_candidate_count": 20,
+  "network_gate_pass_count": 0,
+  "stop_current_post_topology": true,
+  "three_frequency_authorized": false,
+  "integrated_2x2_authorized": false,
+  "training_label_authorized": false
+}

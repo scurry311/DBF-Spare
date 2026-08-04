@@ -137,6 +137,7 @@ def network_only_builder_text(
     solver_options = {
         "auto": "",
         "direct": ', "DrivenSolverType:=", "Direct Solver"',
+        "iterative": ', "DrivenSolverType:=", "Iterative Solver", "IterativeResidual:=", 0.000001',
         "ddm": ', "DrivenSolverType:=", "Domain Decomposition", "IterativeResidual:=", 0.000001, "DDMSolverResidual:=", 0.000001',
     }
     if solver_type not in solver_options:

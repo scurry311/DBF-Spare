@@ -234,6 +234,43 @@ def apply_route_amendment(config: dict[str, Any]) -> dict[str, Any]:
     return amendment
 
 
+def apply_solver_amendment(config: dict[str, Any]) -> dict[str, Any]:
+    out = output_root(config)
+    amendment_path = out / "preregistration_amendment02.json"
+    if amendment_path.exists():
+        raise FileExistsError(f"Refusing to overwrite solver amendment: {amendment_path}")
+    solved = list(out.glob("doe_10ghz_network_s8/**/*.s8p"))
+    if solved:
+        raise RuntimeError("Cannot amend the DOE solver after an S8 result exists")
+    amendment = {
+        "amendment": "v1.21-preregistration-amendment-02-iterative-resource-smoke",
+        "created_on": "2026-08-03",
+        "timing": "after one direct-solver memory abort and before any S-parameter result",
+        "effective_protocol_sha256": sha256(DEFAULT_CONFIG),
+        "physical_geometry_changed": False,
+        "mesh_definition_changed": False,
+        "engineering_thresholds_changed": False,
+        "performance_results_observed_before_amendment": False,
+        "failed_direct_resource_probe": {
+            "candidate_id": "doe00_nominal",
+            "initial_mesh_tetrahedra": 356315,
+            "matrix_size": 1885474,
+            "hfss_estimated_total_memory_gib": 14.55,
+            "s8_exported": False,
+            "stop_reason": "the preregistered 3 GiB free-memory abort guard was reached",
+        },
+        "numerical_change": {
+            "from_solver": "Auto/Direct Solver",
+            "to_solver": "Iterative Solver",
+            "iterative_residual": float(config["doe"]["iterative_residual"]),
+            "scope": "10 GHz network-only DOE; final Pareto candidates still require independent direct/DDM validation",
+        },
+    }
+    write_json(amendment_path, amendment)
+    write_json(out / "config_effective_after_amendment02.json", config)
+    return amendment
+
+
 def preregister(config: dict[str, Any]) -> dict[str, Any]:
     out = output_root(config)
     if out.exists() and any(out.iterdir()):
@@ -512,7 +549,16 @@ def prepare_doe(config: dict[str, Any]) -> dict[str, Any]:
     for row in rows:
         candidate = {"candidate_id": row["candidate_id"]}
         candidate.update({item["name"]: float(row[item["name"]]) for item in config["variables"]})
-        manifests.append(prepare_case(config, candidate, "network_s8", root / row["candidate_id"], [10.0]))
+        manifests.append(
+            prepare_case(
+                config,
+                candidate,
+                "network_s8",
+                root / row["candidate_id"],
+                [10.0],
+                solver_type=str(config["doe"].get("network_solver_type", "auto")),
+            )
+        )
     write_json(root / "doe_manifest.json", {"cases": manifests})
     return {"prepared_cases": len(manifests), "root": str(root)}
 
@@ -553,7 +599,7 @@ def refresh_resource_gate(config: dict[str, Any]) -> dict[str, Any]:
     return decision
 
 
-def run_doe(config: dict[str, Any]) -> dict[str, Any]:
+def run_doe(config: dict[str, Any], maximum_new_cases: int | None = None) -> dict[str, Any]:
     out = output_root(config)
     decision = refresh_resource_gate(config)
     if not decision.get("allow_10ghz_network_doe"):
@@ -566,17 +612,21 @@ def run_doe(config: dict[str, Any]) -> dict[str, Any]:
     abort = float(config["resources"]["abort_free_memory_during_solve_gib"])
     poll = float(config["resources"]["poll_interval_seconds"])
     rows = []
+    new_cases = 0
     for manifest in cases:
         touchstone = Path(manifest["touchstone_path"])
         if touchstone.exists() and touchstone.stat().st_size > 100:
             rows.append({"candidate_id": manifest["candidate_id"], "status": "already_complete"})
             continue
+        if maximum_new_cases is not None and new_cases >= maximum_new_cases:
+            break
         require_no_aedt()
         free = memory_available_gb()
         if math.isfinite(free) and free < minimum_start:
             rows.append({"candidate_id": manifest["candidate_id"], "status": "stopped_before_start_low_memory", "free_memory_gib": free})
             break
         folder = Path(manifest["builder_path"]).parent
+        new_cases += 1
         build_code, _, build_min = run_process_with_memory_guard([executable, "-RunScriptAndExit", manifest["builder_path"]], folder / "build.log", abort, poll)
         solve_code = None
         solve_aborted = False
@@ -595,6 +645,10 @@ def run_doe(config: dict[str, Any]) -> dict[str, Any]:
         if solve_aborted:
             break
     return {"cases": rows}
+
+
+def run_doe_smoke(config: dict[str, Any]) -> dict[str, Any]:
+    return run_doe(config, maximum_new_cases=1)
 
 
 def _minimum_passive_rl(matrix: np.ndarray) -> float:
@@ -698,6 +752,22 @@ def sensitivity_rows(config: dict[str, Any], rows: list[dict[str, Any]]) -> list
     return output
 
 
+def network_gate_pass(config: dict[str, Any], row: dict[str, Any]) -> bool:
+    gates = config["gates"]
+    return bool(
+        row["converged"] is True
+        and float(row["final_delta_s"] or math.inf) <= float(gates["maximum_final_delta_s"])
+        and row["reciprocity_error"] <= float(gates["maximum_reciprocity_error"])
+        and row["passivity_sigma"] <= float(gates["maximum_passivity_sigma"])
+        and row["network_efficiency_min"] >= float(gates["minimum_network_efficiency"])
+        and row["passive_rl_min_db"] >= float(gates["minimum_passive_rl_db"])
+        and row["active_rl_min_db"] >= float(gates["minimum_active_rl_db"])
+        and row["total_rl_min_db"] >= float(gates["minimum_total_rl_db"])
+        and row["physical_vs_target_s8_max_abs_delta"]
+        <= float(gates["maximum_physical_vs_target_s8_abs_delta"])
+    )
+
+
 def analyze_doe(config: dict[str, Any]) -> dict[str, Any]:
     out = output_root(config)
     root = out / "doe_10ghz_network_s8"
@@ -707,20 +777,9 @@ def analyze_doe(config: dict[str, Any]) -> dict[str, Any]:
         raise RuntimeError(f"Only {len(complete)} complete DOE cases; at least 12 are required")
     rows = [analyze_network_case(config, manifest) for manifest in complete]
     flags = pareto_flags(rows)
-    gates = config["gates"]
     for row, flag in zip(rows, flags):
         row["pareto_nondominated"] = flag
-        row["network_gate_pass_10ghz"] = bool(
-            row["converged"] is True
-            and float(row["final_delta_s"] or math.inf) <= float(gates["maximum_final_delta_s"])
-            and row["reciprocity_error"] <= float(gates["maximum_reciprocity_error"])
-            and row["passivity_sigma"] <= float(gates["maximum_passivity_sigma"])
-            and row["network_efficiency_min"] >= float(gates["minimum_network_efficiency"])
-            and row["passive_rl_min_db"] >= float(gates["minimum_passive_rl_db"])
-            and row["active_rl_min_db"] >= float(gates["minimum_active_rl_db"])
-            and row["total_rl_min_db"] >= float(gates["minimum_total_rl_db"])
-            and row["physical_vs_target_s8_max_abs_delta"] <= float(gates["maximum_physical_vs_target_s8_abs_delta"])
-        )
+        row["network_gate_pass_10ghz"] = network_gate_pass(config, row)
     write_csv(root / "doe_physical_metrics.csv", rows)
     write_csv(root / "physical_sensitivity_jacobian.csv", sensitivity_rows(config, rows))
     pareto = sorted(
@@ -747,6 +806,232 @@ def analyze_doe(config: dict[str, Any]) -> dict[str, Any]:
     }
     write_json(out / "stage_decision.json", decision)
     return {"decision": decision, "best_rows": pareto[:5]}
+
+
+def local_refinement_candidates(config: dict[str, Any]) -> list[dict[str, Any]]:
+    nominal = parameter_map(config)
+    definitions = [
+        (
+            "local16_gradient_corner",
+            {
+                "common_trace_width_mm": 0.45,
+                "outer_edge_gap_mm": 0.16,
+                "center_edge_gap_mm": 0.35,
+                "shunt_reference_offset_mm": 0.25,
+                "common_post_length_delta_mm": 1.0,
+            },
+            "Jacobian corner maximizing predicted active, total and passive RL while reducing target-S8 error.",
+        ),
+        (
+            "local17_efficiency_balance",
+            {
+                "common_trace_width_mm": 0.45,
+                "outer_edge_gap_mm": 0.16,
+                "center_edge_gap_mm": 0.22,
+                "shunt_reference_offset_mm": 0.25,
+                "common_post_length_delta_mm": 1.0,
+            },
+            "Same high-RL corner with nominal center gap retained to reduce the observed efficiency tradeoff.",
+        ),
+        (
+            "local18_doe09_shunt_fix",
+            {
+                "common_trace_width_mm": 0.50,
+                "outer_edge_gap_mm": 0.145,
+                "center_edge_gap_mm": 0.32,
+                "shunt_reference_offset_mm": 0.30,
+                "common_post_length_delta_mm": 0.95,
+            },
+            "Local refinement of the best-active-RL DOE09 point, primarily correcting its adverse shunt offset.",
+        ),
+        (
+            "local19_conservative_knee",
+            {
+                "common_trace_width_mm": 0.48,
+                "outer_edge_gap_mm": 0.145,
+                "center_edge_gap_mm": 0.30,
+                "shunt_reference_offset_mm": 0.40,
+                "common_post_length_delta_mm": 0.80,
+            },
+            "Conservative Pareto-knee interpolation that avoids placing every variable on a bound.",
+        ),
+    ]
+    candidates = []
+    for candidate_id, updates, rationale in definitions:
+        values = dict(nominal)
+        values.update(updates)
+        validate_parameters(config, values)
+        integrated_builder_text(ROOT / "v121_local_route_feasibility_probe.aedt", config, values)
+        candidates.append({"candidate_id": candidate_id, **values, "selection_rationale": rationale})
+    return candidates
+
+
+def linear_prediction_rows(
+    config: dict[str, Any],
+    observed: list[dict[str, Any]],
+    candidates: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    names = list(config["doe"]["network_observable_variables"])
+    metrics = [
+        "active_rl_min_db",
+        "total_rl_min_db",
+        "passive_rl_min_db",
+        "network_efficiency_min",
+        "physical_vs_target_s8_max_abs_delta",
+    ]
+    matrix = np.asarray([[float(row[name]) for name in names] for row in observed])
+    center = matrix.mean(axis=0)
+    scale = np.maximum(matrix.std(axis=0), EPS)
+    design = np.column_stack([np.ones(len(observed)), (matrix - center) / scale])
+    candidate_matrix = np.asarray([[float(row[name]) for name in names] for row in candidates])
+    candidate_design = np.column_stack([np.ones(len(candidates)), (candidate_matrix - center) / scale])
+    predictions: dict[str, np.ndarray] = {}
+    for metric in metrics:
+        target = np.asarray([float(row[metric]) for row in observed])
+        predictions[metric] = candidate_design @ np.linalg.lstsq(design, target, rcond=None)[0]
+    rows = []
+    for index, candidate in enumerate(candidates):
+        row = dict(candidate)
+        for metric in metrics:
+            row[f"linear_predicted_{metric}"] = float(predictions[metric][index])
+        rows.append(row)
+    return rows
+
+
+def prepare_local_refinement(config: dict[str, Any]) -> dict[str, Any]:
+    out = output_root(config)
+    doe_root = out / "doe_10ghz_network_s8"
+    metrics_path = doe_root / "doe_physical_metrics.csv"
+    decision = read_json(out / "stage_decision.json")
+    if decision.get("stage") != "C_10ghz_physical_sensitivity_complete":
+        raise RuntimeError("Complete and analyze the original 10 GHz DOE first")
+    if int(decision.get("network_gate_pass_count", 0)) != 0:
+        raise RuntimeError("Local rescue is only authorized when the original DOE has no gate pass")
+    root = out / "doe_10ghz_local_refinement01"
+    if root.exists():
+        raise FileExistsError(f"Refusing to overwrite local refinement: {root}")
+    observed = list(csv.DictReader(metrics_path.open(encoding="utf-8")))
+    candidates = local_refinement_candidates(config)
+    predicted = linear_prediction_rows(config, observed, candidates)
+    plan = {
+        "protocol": "v1.21-10ghz-local-refinement-stop-gate",
+        "created_on": "2026-08-04",
+        "source_case_count": len(observed),
+        "frozen_candidate_count": len(candidates),
+        "physical_topology_changed": False,
+        "mesh_definition_changed": False,
+        "engineering_thresholds_changed": False,
+        "solver_type": str(config["doe"].get("network_solver_type", "auto")),
+        "selection_basis": "Observed 16-case Jacobian and Pareto set; exactly four directional candidates before the preregistered 20-case review.",
+        "stop_rule": config["stop_conditions"],
+        "candidate_ids": [row["candidate_id"] for row in candidates],
+    }
+    write_json(root / "local_refinement_preregistration.json", plan)
+    write_csv(root / "local_refinement_candidates_with_predictions.csv", predicted)
+    manifests = []
+    for candidate in candidates:
+        physical_candidate = {key: value for key, value in candidate.items() if key != "selection_rationale"}
+        manifests.append(
+            prepare_case(
+                config,
+                physical_candidate,
+                "network_s8",
+                root / candidate["candidate_id"],
+                [10.0],
+                solver_type=str(config["doe"].get("network_solver_type", "auto")),
+            )
+        )
+    write_json(root / "local_refinement_manifest.json", {"cases": manifests})
+    return {"prepared_cases": len(manifests), "root": str(root), "predictions": predicted}
+
+
+def run_local_refinement(config: dict[str, Any]) -> dict[str, Any]:
+    root = output_root(config) / "doe_10ghz_local_refinement01"
+    return run_case_collection(config, root, "local_refinement_manifest.json")
+
+
+def analyze_local_refinement(config: dict[str, Any]) -> dict[str, Any]:
+    out = output_root(config)
+    doe_root = out / "doe_10ghz_network_s8"
+    local_root = out / "doe_10ghz_local_refinement01"
+    local_manifests = read_json(local_root / "local_refinement_manifest.json")["cases"]
+    complete = [
+        manifest
+        for manifest in local_manifests
+        if Path(manifest["touchstone_path"]).exists() and Path(manifest["touchstone_path"]).stat().st_size > 100
+    ]
+    if len(complete) != len(local_manifests):
+        raise RuntimeError(f"Only {len(complete)}/{len(local_manifests)} local-refinement cases are complete")
+    original = list(csv.DictReader((doe_root / "doe_physical_metrics.csv").open(encoding="utf-8")))
+    local = [analyze_network_case(config, manifest) for manifest in complete]
+    combined: list[dict[str, Any]] = []
+    for source, rows in (("original_doe", original), ("local_refinement01", local)):
+        for row in rows:
+            converted = dict(row)
+            for key in (
+                "frequency_ghz",
+                "final_delta_s",
+                "reciprocity_error",
+                "passivity_sigma",
+                "passive_rl_min_db",
+                "active_rl_min_db",
+                "total_rl_min_db",
+                "network_efficiency_min",
+                "physical_vs_target_s8_max_abs_delta",
+                "corrected_vs_reference_max_abs_delta_s",
+            ):
+                if converted.get(key) not in (None, ""):
+                    converted[key] = float(converted[key])
+            converted["converged"] = converted.get("converged") is True or str(converted.get("converged")).lower() == "true"
+            converted["source_stage"] = source
+            combined.append(converted)
+    flags = pareto_flags(combined)
+    for row, flag in zip(combined, flags):
+        row["pareto_nondominated"] = flag
+        row["network_gate_pass_10ghz"] = network_gate_pass(config, row)
+    write_csv(local_root / "local_refinement_physical_metrics.csv", [row for row in combined if row["source_stage"] == "local_refinement01"])
+    write_csv(local_root / "combined_20case_physical_metrics.csv", combined)
+    pareto = sorted(
+        [row for row in combined if row["pareto_nondominated"]],
+        key=lambda row: (not row["network_gate_pass_10ghz"], row["physical_vs_target_s8_max_abs_delta"], -row["active_rl_min_db"]),
+    )
+    write_csv(local_root / "combined_20case_pareto.csv", pareto)
+    best_active = max(float(row["active_rl_min_db"]) for row in combined)
+    best_efficiency = max(float(row["network_efficiency_min"]) for row in combined)
+    best_target_delta = min(float(row["physical_vs_target_s8_max_abs_delta"]) for row in combined)
+    pass_count = sum(bool(row["network_gate_pass_10ghz"]) for row in combined)
+    stop = config["stop_conditions"]
+    review_reached = len(combined) >= int(stop["review_after_physical_candidates"])
+    stop_reasons = []
+    if best_active < float(stop["stop_if_best_active_rl_below_db"]):
+        stop_reasons.append("best_active_rl_below_stop_threshold")
+    if best_efficiency < float(stop["stop_if_best_efficiency_below"]):
+        stop_reasons.append("best_network_efficiency_below_stop_threshold")
+    if best_target_delta > float(stop["stop_if_best_physical_vs_target_above"]):
+        stop_reasons.append("best_physical_vs_target_delta_above_stop_threshold")
+    stop_topology = review_reached and pass_count == 0 and bool(stop_reasons)
+    decision = {
+        "stage": "C_local_refinement_stop_gate_complete",
+        "complete_case_count": len(combined),
+        "local_refinement_case_count": len(local),
+        "network_gate_pass_count": pass_count,
+        "pareto_candidate_count": len(pareto),
+        "best_active_rl_db": best_active,
+        "best_network_efficiency": best_efficiency,
+        "best_physical_vs_target_s8_abs_delta": best_target_delta,
+        "review_after_physical_candidates_reached": review_reached,
+        "stop_current_post_topology": stop_topology,
+        "stop_reasons": stop_reasons,
+        "allow_three_frequency_optimization": pass_count > 0 and len(pareto) >= 3 and not stop_topology,
+        "allow_integrated_2x2": False,
+        "allow_4x4": False,
+        "allow_16x16": False,
+        "allow_training_labels": False,
+        "allow_critic_training": False,
+    }
+    write_json(out / "stage_decision.json", decision)
+    write_json(local_root / "stop_gate_summary.json", decision)
+    return {"decision": decision, "local_rows": local, "best_rows": pareto[:5]}
 
 
 def run_case_collection(config: dict[str, Any], root: Path, manifest_name: str) -> dict[str, Any]:
@@ -1154,13 +1439,18 @@ def main() -> None:
         choices=(
             "preregister",
             "apply-route-amendment",
+            "apply-solver-amendment",
             "prepare-smoke",
             "run-build-smoke",
             "audit-smoke",
             "prepare-doe",
             "refresh-resource-gate",
             "run-doe",
+            "run-doe-smoke",
             "analyze-doe",
+            "prepare-local-refinement",
+            "run-local-refinement",
+            "analyze-local-refinement",
             "prepare-three-frequency",
             "run-three-frequency",
             "analyze-three-frequency",
@@ -1179,13 +1469,18 @@ def main() -> None:
     actions = {
         "preregister": preregister,
         "apply-route-amendment": apply_route_amendment,
+        "apply-solver-amendment": apply_solver_amendment,
         "prepare-smoke": prepare_smoke,
         "run-build-smoke": run_build_smoke,
         "audit-smoke": audit_smoke,
         "prepare-doe": prepare_doe,
         "refresh-resource-gate": refresh_resource_gate,
         "run-doe": run_doe,
+        "run-doe-smoke": run_doe_smoke,
         "analyze-doe": analyze_doe,
+        "prepare-local-refinement": prepare_local_refinement,
+        "run-local-refinement": run_local_refinement,
+        "analyze-local-refinement": analyze_local_refinement,
         "prepare-three-frequency": prepare_three_frequency,
         "run-three-frequency": run_three_frequency,
         "analyze-three-frequency": analyze_three_frequency,

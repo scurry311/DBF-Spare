@@ -1,0 +1,5 @@
+candidate_id,solver_type,status,build_return_code,solve_return_code,memory_aborted,minimum_free_memory_gib
+local16_gradient_corner,iterative,complete,0,0,False,8.294288635253906
+local17_efficiency_balance,iterative,complete,0,0,False,7.878200531005859
+local18_doe09_shunt_fix,iterative,complete,0,0,False,7.7293548583984375
+local19_conservative_knee,iterative,complete,0,0,False,7.619884490966797

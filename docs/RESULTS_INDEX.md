@@ -1,6 +1,6 @@
 # Result Index
 
-Current hardware-development baseline: `v1.20.0-joint-feed-fanout-sparse-graph`, frozen on 2026-07-31. The trusted 16x16 field/operator baseline below remains unchanged.
+Current hardware-development baseline: `v1.21.1-parametric-feed-post-stop-gate`, frozen on 2026-08-04. The trusted 16x16 field/operator baseline below remains unchanged.
 
 ## Evidence Levels
 
@@ -730,20 +730,37 @@ network-only S8 and an integrated 2x2 S4. The v1.20 commit/tag audit passed.
 | Result | Value | Decision |
 |---|---:|---|
 | Shared parameter dimensions | 11 | Frozen |
-| 10 GHz network-only LHS cases | 16 | Prepared, not solved |
+| Original 10 GHz network-only LHS cases | 16/16 | Converged |
+| Frozen Jacobian/Pareto local refinements | 4/4 | Converged |
 | Network-only build smoke | 3/3 | Passed |
 | Integrated 2x2 build smoke | 3/3 | Passed |
 | Port/topology/geometry-warning audit | 6/6 | Passed |
-| Free memory after audit | about 12.53 GiB | Failed 13 GiB solve launch gate |
+| Complete 10 GHz network gate | 0/20 | Failed |
+| Best worst-case active RL | 5.076 dB | Below 10 dB stop threshold |
+| Best total RL | 9.657 dB | Below 11 dB gate |
+| Best physical-to-target S8 error | 0.293 | Above 0.15 stop threshold |
+| Best network efficiency | 96.596% | Passed efficiency threshold |
 
 Before any S-parameter solve, preregistration amendment 01 added the physical
 route-length feasibility constraint. It projects only `doe12_lhs` POST length
 from -0.9587 mm to -0.9287 mm; thresholds and parameter ranges are unchanged.
 
-The first integrated build attempt is preserved: it failed because a mesh
-operation referenced patch/probe names removed by a prior Boolean union. The
-corrected build meshes the surviving united conductor and changes no physical
-parameter or gate. No electromagnetic performance result is claimed yet.
-Three-frequency optimization, independent direct/DDM validation, integrated
-solving, 4x4/16x16, labels, and critic training remain locked. See
-`docs/V121_PARAMETRIC_FEED_POST_STAGE_20260803.md`.
+The first nominal direct solve was stopped by the 3 GiB free-memory guard
+before producing S8. Amendment 02 changed only the low-cost 10 GHz DOE solver
+to the HFSS iterative solver with residual `1e-6`; it did not change geometry,
+mesh, parameter ranges, or engineering gates. All subsequent DOE and local
+cases completed serially without a memory abort.
+
+The four local refinements were selected from the observed sensitivity and
+Pareto results before their HFSS runs. The response surface predicted 8.124 dB
+active RL for the gradient corner, but HFSS returned 2.566 dB, demonstrating
+that first-order extrapolation cannot represent the boundary multiport/modal
+interaction. Only the HFSS metrics drive the decision.
+
+The 20-candidate review threshold is reached, so the current POST/local-loading
+topology stops. Three-frequency optimization, independent direct/DDM
+promotion, integrated solving, 4x4/16x16, labels, and critic training remain
+locked. The preferred next minimum model is a true balanced/differential launch
+with one local 2x2 even/odd-mode correction branch. See
+`docs/V121_PARAMETRIC_FEED_POST_STAGE_20260803.md` and
+`baselines/2026-08-04-v121-parametric-feed-post-stop-gate/BASELINE.md`.

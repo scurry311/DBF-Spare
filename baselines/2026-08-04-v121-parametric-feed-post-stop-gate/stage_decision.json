@@ -1,0 +1,22 @@
+{
+  "stage": "C_local_refinement_stop_gate_complete",
+  "complete_case_count": 20,
+  "local_refinement_case_count": 4,
+  "network_gate_pass_count": 0,
+  "pareto_candidate_count": 6,
+  "best_active_rl_db": 5.076490947623792,
+  "best_network_efficiency": 0.9659560234502546,
+  "best_physical_vs_target_s8_abs_delta": 0.2932985052330154,
+  "review_after_physical_candidates_reached": true,
+  "stop_current_post_topology": true,
+  "stop_reasons": [
+    "best_active_rl_below_stop_threshold",
+    "best_physical_vs_target_delta_above_stop_threshold"
+  ],
+  "allow_three_frequency_optimization": false,
+  "allow_integrated_2x2": false,
+  "allow_4x4": false,
+  "allow_16x16": false,
+  "allow_training_labels": false,
+  "allow_critic_training": false
+}

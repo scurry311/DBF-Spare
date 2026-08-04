@@ -10,6 +10,14 @@ as an engineering label.
 
 Current checkpoints:
 
+- `2026-08-04-v121-parametric-feed-post-stop-gate`: twenty converged 10 GHz
+  physical S8 candidates produce no complete gate pass; best active RL is
+  5.08 dB and best physical-to-target S8 error is 0.293, so the single-stage
+  POST/local-loading topology stops before three-frequency, integrated 2x2,
+  array expansion, labels, or critic training.
+- `2026-08-03-v121-parametric-feed-post-build-smoke`: shared network-only S8
+  and integrated 2x2 CAD builders pass 6/6 construction audits; this checkpoint
+  contains no solved electromagnetic performance.
 - `2026-07-31-v120-joint-feed-fanout-sparse-graph`: the adjacent-chain
   finite-Q surrogate passes its matching, Delta-S, and tolerance gates, while
   two physical HFSS S8 mappings fail active-RL and physical-correlation gates;

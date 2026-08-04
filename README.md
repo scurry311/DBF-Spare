@@ -1,14 +1,14 @@
 # DBF-Spare
 
-## Current verified hardware status (v1.20)
+## Current verified hardware status (v1.21)
 
-The required correction was reduced to the physical adjacent chain
-`0-2-3-1`. Its finite-Q route/circuit surrogate passes with active RL 13.20 dB,
-max abs Delta S 0.0327, and a 98.5% tolerance pass rate. Two converged physical
-HFSS S8 mappings fail, however: best active RL is 4.68 dB and best corrected
-Delta S is 0.415. Integrated 2x2, array expansion, training labels, and critic
-retraining remain locked. See
-`baselines/2026-07-31-v120-joint-feed-fanout-sparse-graph/BASELINE.md`.
+Twenty converged 10 GHz network-only HFSS S8 candidates have now tested the
+single-stage `0-2-3-1` POST/local-loading topology. None passes the complete
+physical gate: best worst-case active RL is 5.08 dB and best
+physical-to-target S8 error is 0.293. The preregistered 20-case stop condition
+therefore ends this topology before three-frequency promotion, integrated 2x2,
+array expansion, training labels, or critic retraining. See
+`baselines/2026-08-04-v121-parametric-feed-post-stop-gate/BASELINE.md`.
 
 面向低功耗多任务波束的 16x16 稀疏相控阵研究项目。项目以 HFSS 全波模型和
 嵌入单元方向图（EEP）为物理基准，联合优化阵元 mask、任务级复权值、旁瓣、

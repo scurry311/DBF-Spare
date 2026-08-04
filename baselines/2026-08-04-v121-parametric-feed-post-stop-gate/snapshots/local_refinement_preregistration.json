@@ -1,0 +1,26 @@
+{
+  "protocol": "v1.21-10ghz-local-refinement-stop-gate",
+  "created_on": "2026-08-04",
+  "source_case_count": 16,
+  "frozen_candidate_count": 4,
+  "physical_topology_changed": false,
+  "mesh_definition_changed": false,
+  "engineering_thresholds_changed": false,
+  "solver_type": "iterative",
+  "selection_basis": "Observed 16-case Jacobian and Pareto set; exactly four directional candidates before the preregistered 20-case review.",
+  "stop_rule": {
+    "maximum_total_physical_candidates": 30,
+    "review_after_physical_candidates": 20,
+    "stop_if_best_active_rl_below_db": 10.0,
+    "stop_if_best_efficiency_below": 0.95,
+    "stop_if_best_physical_vs_target_above": 0.15,
+    "stop_if_nonadjacent_residual_increases": true,
+    "stop_if_independent_validation_exceeds_safe_memory": true
+  },
+  "candidate_ids": [
+    "local16_gradient_corner",
+    "local17_efficiency_balance",
+    "local18_doe09_shunt_fix",
+    "local19_conservative_knee"
+  ]
+}

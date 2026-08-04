@@ -11,11 +11,33 @@
   "target_s8_definition": "finite-Q sparse_pi_s8 reconstructed from the frozen v1.20 circuit synthesis parameters",
   "ansys_executable": "D:/v231/Win64/ansysedt.exe",
   "output_directory": "hfss_outputs/v121_parametric_feed_post_20260803_run01",
-  "frequencies_ghz": [9.96, 10.0, 10.04],
+  "frequencies_ghz": [
+    9.96,
+    10.0,
+    10.04
+  ],
   "reference_impedance_ohm": 50.0,
   "fixed_topology": {
-    "port_order_from_negative_y": [0, 2, 3, 1],
-    "manufacturable_graph_pairs": [[0, 2], [2, 3], [3, 1]],
+    "port_order_from_negative_y": [
+      0,
+      2,
+      3,
+      1
+    ],
+    "manufacturable_graph_pairs": [
+      [
+        0,
+        2
+      ],
+      [
+        2,
+        3
+      ],
+      [
+        3,
+        1
+      ]
+    ],
     "decoupling_stages": 1,
     "allow_nonadjacent_connections": false,
     "array_spacing_mm": 15.0,
@@ -27,23 +49,88 @@
     "component_sheet_width_mm": 0.2
   },
   "variables": [
-    {"name": "feed_inset_mm", "nominal": 2.3, "minimum": 1.9, "maximum": 2.7, "scope": "integrated"},
-    {"name": "feed_x_offset_mm", "nominal": 0.0, "minimum": -0.25, "maximum": 0.25, "scope": "integrated"},
-    {"name": "probe_radius_mm", "nominal": 0.25, "minimum": 0.18, "maximum": 0.32, "scope": "integrated"},
-    {"name": "ground_clearance_radius_mm", "nominal": 0.6, "minimum": 0.45, "maximum": 0.8, "scope": "integrated"},
-    {"name": "launch_pad_radius_mm", "nominal": 0.5, "minimum": 0.35, "maximum": 0.7, "scope": "integrated"},
-    {"name": "launch_taper_length_mm", "nominal": 1.0, "minimum": 0.6, "maximum": 1.6, "scope": "integrated"},
-    {"name": "common_trace_width_mm", "nominal": 0.75, "minimum": 0.45, "maximum": 0.9, "scope": "shared"},
-    {"name": "outer_edge_gap_mm", "nominal": 0.07, "minimum": 0.04, "maximum": 0.16, "scope": "shared"},
-    {"name": "center_edge_gap_mm", "nominal": 0.22, "minimum": 0.1, "maximum": 0.35, "scope": "shared"},
-    {"name": "shunt_reference_offset_mm", "nominal": 0.4, "minimum": 0.25, "maximum": 0.8, "scope": "network"},
-    {"name": "common_post_length_delta_mm", "nominal": 0.0, "minimum": -1.0, "maximum": 1.0, "scope": "shared"}
+    {
+      "name": "feed_inset_mm",
+      "nominal": 2.3,
+      "minimum": 1.9,
+      "maximum": 2.7,
+      "scope": "integrated"
+    },
+    {
+      "name": "feed_x_offset_mm",
+      "nominal": 0.0,
+      "minimum": -0.25,
+      "maximum": 0.25,
+      "scope": "integrated"
+    },
+    {
+      "name": "probe_radius_mm",
+      "nominal": 0.25,
+      "minimum": 0.18,
+      "maximum": 0.32,
+      "scope": "integrated"
+    },
+    {
+      "name": "ground_clearance_radius_mm",
+      "nominal": 0.6,
+      "minimum": 0.45,
+      "maximum": 0.8,
+      "scope": "integrated"
+    },
+    {
+      "name": "launch_pad_radius_mm",
+      "nominal": 0.5,
+      "minimum": 0.35,
+      "maximum": 0.7,
+      "scope": "integrated"
+    },
+    {
+      "name": "launch_taper_length_mm",
+      "nominal": 1.0,
+      "minimum": 0.6,
+      "maximum": 1.6,
+      "scope": "integrated"
+    },
+    {
+      "name": "common_trace_width_mm",
+      "nominal": 0.75,
+      "minimum": 0.45,
+      "maximum": 0.9,
+      "scope": "shared"
+    },
+    {
+      "name": "outer_edge_gap_mm",
+      "nominal": 0.07,
+      "minimum": 0.04,
+      "maximum": 0.16,
+      "scope": "shared"
+    },
+    {
+      "name": "center_edge_gap_mm",
+      "nominal": 0.22,
+      "minimum": 0.1,
+      "maximum": 0.35,
+      "scope": "shared"
+    },
+    {
+      "name": "shunt_reference_offset_mm",
+      "nominal": 0.4,
+      "minimum": 0.25,
+      "maximum": 0.8,
+      "scope": "network"
+    },
+    {
+      "name": "common_post_length_delta_mm",
+      "nominal": 0.0,
+      "minimum": -1.0,
+      "maximum": 1.0,
+      "scope": "shared"
+    }
   ],
   "geometric_constraints": {
     "minimum_clearance_over_probe_mm": 0.15,
     "minimum_pad_over_trace_half_width_mm": 0.05,
     "minimum_component_plane_separation_mm": 0.25,
-    "route_target_must_not_be_shorter_than_manhattan_base": true,
     "parameter_change_must_preserve_topology": true
   },
   "doe": {
@@ -51,8 +138,6 @@
     "seed": 12103,
     "network_only_sample_count": 16,
     "network_only_frequency_ghz": 10.0,
-    "network_solver_type": "iterative",
-    "iterative_residual": 1e-6,
     "network_observable_variables": [
       "common_trace_width_mm",
       "outer_edge_gap_mm",
@@ -109,5 +194,30 @@
     "allow_16x16": false,
     "allow_training_labels": false,
     "allow_critic_training": false
+  },
+  "runtime_baseline_audit": {
+    "timestamp_local": "2026-08-03T11:42:53+0800",
+    "expected_parent_commit": "94aae2f694b406b777d3eaa50cb7b792dc2a2cb0",
+    "head_commit": "94aae2f694b406b777d3eaa50cb7b792dc2a2cb0",
+    "parent_tag": "v1.20.0-joint-feed-fanout-sparse-graph",
+    "parent_tag_commit": "94aae2f694b406b777d3eaa50cb7b792dc2a2cb0",
+    "baseline_hash_match": true,
+    "worktree_clean_before_v121": true,
+    "worktree_status_at_audit": [
+      "?? configs/v121_parametric_feed_post_preregistered.json",
+      "?? scripts/run_v121_parametric_feed_post.py",
+      "?? scripts/v121_shared_cad.py"
+    ],
+    "unrelated_worktree_status": [],
+    "ansys_executable": "D:\\v231\\Win64\\ansysedt.exe",
+    "ansys_executable_exists": true,
+    "free_memory_gib": 12.587566375732422,
+    "aedt_processes": []
+  },
+  "evidence_rules": {
+    "network_only_s8_is_not_integrated_hfss": true,
+    "integrated_s4_is_not_16x16_evidence": true,
+    "circuit_or_cascade_metrics_are_not_hfss_metrics": true,
+    "no_gate_or_parameter_changes_after_three_frequency_freeze": true
   }
 }

@@ -1,0 +1,17 @@
+candidate_id,status,build_return_code,solve_return_code,solve_memory_aborted,minimum_free_memory_gib
+doe00_nominal,already_complete,,,,
+doe01_lhs,complete,0,0,False,6.950084686279297
+doe02_lhs,complete,0,0,False,3.756683349609375
+doe03_lhs,complete,0,0,False,7.893177032470703
+doe04_lhs,complete,0,0,False,4.209232330322266
+doe05_lhs,complete,0,0,False,13.77862548828125
+doe06_lhs,complete,0,0,False,8.653182983398438
+doe07_lhs,complete,0,0,False,6.045932769775391
+doe08_lhs,complete,0,0,False,3.577411651611328
+doe09_lhs,complete,0,0,False,7.307586669921875
+doe10_lhs,complete,0,0,False,13.181640625
+doe11_lhs,complete,0,0,False,13.70941162109375
+doe12_lhs,complete,0,0,False,13.748931884765625
+doe13_lhs,complete,0,0,False,8.793498992919922
+doe14_lhs,complete,0,0,False,13.722312927246094
+doe15_lhs,complete,0,0,False,13.744552612304688

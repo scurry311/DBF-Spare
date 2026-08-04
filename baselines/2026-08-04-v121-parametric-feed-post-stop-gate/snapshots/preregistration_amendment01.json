@@ -1,0 +1,19 @@
+{
+  "amendment": "v1.21-preregistration-amendment-01-route-feasibility",
+  "created_on": "2026-08-03",
+  "timing": "after CAD-only construction rejection and before any S-parameter solve",
+  "original_protocol_sha256": "d7e21f664ae3ba93b6aec218805288907eedb6547bdc17442d899dc664d6ad31",
+  "effective_protocol_sha256": "918991a9fa8d2fafaec6cccad5da456050f756f2385b8ee5675b5fe97aefa082",
+  "added_constraint": "route target length must not be shorter than the physical Manhattan base route",
+  "performance_results_observed_before_amendment": false,
+  "engineering_thresholds_changed": false,
+  "parameter_ranges_changed": false,
+  "doe_projection_changes": [
+    {
+      "candidate_id": "doe12_lhs",
+      "parameter": "common_post_length_delta_mm",
+      "before": -0.9587031734742703,
+      "after": -0.9287031734742702
+    }
+  ]
+}

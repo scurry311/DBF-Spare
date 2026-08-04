@@ -57,31 +57,70 @@ The three network projects are approximately 226 KB. The integrated projects
 are 1.32-1.35 MB. Port sets, six input/output neighbor-loading sheets, and the
 single-stage constraint are valid in every generated project.
 
-## Gate Decision
+## Stage C Physical Results
 
-The CAD build gate passes 6/6. The formal HFSS solve gate remains closed
-because free memory after the build audit was about 12.53 GiB, below the
-preregistered 13 GiB launch threshold. The 16-point 10 GHz Latin-hypercube DOE
-is prepared but has not been solved.
+The first nominal direct-solver resource probe produced no S8. Its initial
+mesh had 356,315 tetrahedra, its matrix dimension reached 1,885,474, and HFSS
+estimated about 14.55 GiB total memory. The preregistered 3 GiB free-memory
+guard stopped the solve. Amendment 02 therefore changed only the low-cost
+10 GHz DOE solver to the HFSS iterative solver with residual `1e-6`; geometry,
+mesh, ranges, and engineering thresholds were unchanged. Independent direct
+and DDM validation remained mandatory for any promoted candidate.
 
-Consequently, v1.21 currently provides no new S8, active-RL, efficiency,
-direct/DDM, or integrated full-wave performance claim. Three-frequency
-optimization, integrated solved validation, array expansion, labels, and
-critic training remain locked.
+All 16 original DOE cases then converged and exported valid S8 files. None
+passed the complete 10 GHz physical gate. The observed Pareto set contained
+four candidates, but its best worst-case active RL was only 5.08 dB and its
+best physical-to-target S8 error remained far above 0.10.
 
-## Resume Order
+Four additional candidates were frozen from the observed Jacobian and Pareto
+set before solving. They brought the physical review count to the
+preregistered 20-case checkpoint. All four converged without a memory abort;
+the lowest remaining system memory was 7.62 GiB.
 
-1. Re-audit that no AEDT process is running and free memory is at least 13 GiB.
-2. Run the 16 serial 10 GHz network-only cases with the 3 GiB abort guard.
-3. Analyze at least 12 complete cases, compute the physical Jacobian, and rank
-   the Pareto set using RL, efficiency, and physical-to-target S8 error.
-4. Run 3-5 Pareto candidates at 9.96/10.00/10.04 GHz.
-5. Only after one candidate passes every three-frequency S8 gate, freeze it
-   for independent direct/DDM validation and then one integrated 2x2 solve.
+| Local candidate | Passive RL (dB) | Active RL (dB) | Total RL (dB) | Efficiency | Target S8 error |
+|---|---:|---:|---:|---:|---:|
+| gradient corner | 12.93 | 2.57 | 9.66 | 96.60% | 0.293 |
+| efficiency balance | 12.72 | 1.82 | 9.52 | 96.55% | 0.294 |
+| DOE09 shunt fix | 13.44 | 3.08 | 8.95 | 96.54% | 0.335 |
+| conservative knee | 13.40 | 3.71 | 9.15 | 96.47% | 0.335 |
 
-The resume commands are:
+Across all 20 cases, convergence/Delta-S and passivity were generally sound,
+15 passed the 95% efficiency threshold, and 10 passed passive RL >= 10 dB.
+However, zero passed active RL >= 11 dB, zero passed total RL >= 11 dB, and
+zero achieved physical-to-target S8 error <= 0.10.
 
-```powershell
-python scripts\run_v121_parametric_feed_post.py --mode refresh-resource-gate
-python scripts\run_v121_parametric_feed_post.py --mode run-doe
-```
+The linear response model predicted 8.12 dB active RL for the gradient corner,
+whereas HFSS produced 2.57 dB. This is evidence that the first-order
+sensitivity extrapolation is invalid at the multi-variable boundary: coupled
+phase and modal changes dominate the independent trends. The linear model was
+used only to select physical tests and is not promoted as performance
+evidence.
+
+## Stop Decision
+
+The 20-case review gate is complete and the current single-stage POST/local
+loading topology is stopped:
+
+- best active RL: 5.08 dB, below the 10 dB stop threshold and 11 dB gate;
+- best physical-to-target S8 error: 0.293, above the 0.15 stop threshold;
+- complete 10 GHz network-gate passes: 0/20.
+
+Three-frequency optimization, direct/DDM promotion, integrated 2x2 solving,
+4x4/16x16 expansion, training-label generation, and critic retraining remain
+locked. No v1.21 network-only result is described as an integrated antenna or
+array result.
+
+## Next Physical Model
+
+The next minimum model should replace the feed body instead of adding another
+decoupling stage. Start with a true balanced/differential launch plus one local
+2x2 even/odd-mode correction branch, because the frozen failures are driven by
+active modal reflection rather than passive loss. Keep PRE/POST reference
+planes and transducer efficiency explicit.
+
+Screen that model on 1x1 and one physical 2x2 at 9.96/10.00/10.04 GHz. If it
+cannot provide passive RL >= 12 dB, representative active RL >= 11 dB,
+efficiency >= 95%, and repeat-solve Delta-S <= 0.05, stop it before any larger
+array. Aperture-coupled or dual-resonant coupled feeds are the next alternatives
+when the balanced local-mode model cannot create the required bandwidth and
+active-RL reserve.
