@@ -1,0 +1,62 @@
+{
+  "case_count": 10,
+  "numerical_case_pass_count": 3,
+  "effective_geometry_variable_count": 5,
+  "maximum_full_s8_central_nonlinearity_ratio": 1.370664302216826,
+  "active_response_jacobian_condition_number": 15.41011157830503,
+  "projection_energy_fractions": {
+    "supported_reflection": 0.09546267544215004,
+    "load_operator": 0.05044880085451353,
+    "active_response": 0.06640154571745027,
+    "modal_full_s8": 0.011366418165030034,
+    "full_s8": 0.011366418165030034
+  },
+  "nominal_metrics": {
+    "passive_rl_min_db": 11.8312215813856,
+    "active_rl_min_db": 3.148625581942725,
+    "total_rl_min_db": 6.537160886359782,
+    "matched_efficiency_min": 0.9425948137490906,
+    "actual_load_insertion_min": 0.9250791070126757,
+    "actual_load_transducer_min": 0.7197442009551976,
+    "passivity_sigma": 0.977071224764484,
+    "reciprocity_error": 1.4653793936353286e-06
+  },
+  "linear_predicted_best_metrics": {
+    "passive_rl_min_db": 10.856524103281306,
+    "active_rl_min_db": 3.5181673869996324,
+    "total_rl_min_db": 6.640260581129751,
+    "matched_efficiency_min": 0.9450087463039016,
+    "actual_load_insertion_min": 0.9311768672047643,
+    "actual_load_transducer_min": 0.7293373864080301,
+    "passivity_sigma": 0.9772520616853422,
+    "reciprocity_error": 1.3446159634565508e-05,
+    "objective": 65.42056178396734,
+    "iterations": 180,
+    "evaluations": 12676
+  },
+  "gate_checks": {
+    "all_numerical_cases": false,
+    "effective_variable_count": true,
+    "central_linearity": false,
+    "jacobian_condition": true,
+    "supported_reflection_reachability": false,
+    "load_operator_reachability": false,
+    "active_response_reachability": false,
+    "predicted_active_rl": false,
+    "predicted_total_rl": false,
+    "predicted_matched_efficiency": false,
+    "predicted_actual_load_insertion": false
+  },
+  "failed_gates": [
+    "all_numerical_cases",
+    "central_linearity",
+    "supported_reflection_reachability",
+    "load_operator_reachability",
+    "active_response_reachability",
+    "predicted_active_rl",
+    "predicted_total_rl",
+    "predicted_matched_efficiency",
+    "predicted_actual_load_insertion"
+  ],
+  "geometry_reachability_gate_pass": false
+}

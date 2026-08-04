@@ -1,0 +1,112 @@
+{
+  "supported_reflection": {
+    "bounded_energy_fraction": 0.09546267544215004,
+    "unbounded_energy_fraction": 0.26760700371617796,
+    "rank": 5,
+    "condition_number": 13.263715634921805,
+    "bounded_coordinates": [
+      -0.9999999999999694,
+      -0.9999999999999999,
+      -0.9999999999999999,
+      0.9999999999999999,
+      -0.6938006767742192
+    ],
+    "unbounded_coordinates": [
+      -2.4599836257167325,
+      -9.871051632959496,
+      -17.066039021239952,
+      6.88466853567226,
+      -11.250853162732971
+    ],
+    "bounded_coordinate_max_abs": 0.9999999999999999,
+    "bounded_solver_success": true
+  },
+  "load_operator": {
+    "bounded_energy_fraction": 0.05044880085451353,
+    "unbounded_energy_fraction": 0.11400655496632028,
+    "rank": 5,
+    "condition_number": 13.475350482265396,
+    "bounded_coordinates": [
+      -0.9999999999999999,
+      -0.999999998238539,
+      -0.9999999999999999,
+      0.9999999999999999,
+      -0.9999999999999999
+    ],
+    "unbounded_coordinates": [
+      -1.195428121691245,
+      -3.322167445694168,
+      -13.334761272742965,
+      9.596999161520642,
+      -8.535411142157276
+    ],
+    "bounded_coordinate_max_abs": 0.9999999999999999,
+    "bounded_solver_success": true
+  },
+  "active_response": {
+    "bounded_energy_fraction": 0.06640154571745027,
+    "unbounded_energy_fraction": 0.10098863297557115,
+    "rank": 5,
+    "condition_number": 15.41011157830503,
+    "bounded_coordinates": [
+      -0.9999999999999862,
+      -0.01915388817997416,
+      -0.9999999999999948,
+      0.9999999999999999,
+      -0.9999999996474133
+    ],
+    "unbounded_coordinates": [
+      -1.3264539774442896,
+      -2.83239084673952,
+      -10.23253906197965,
+      8.189746364271771,
+      -7.5061025370218974
+    ],
+    "bounded_coordinate_max_abs": 0.9999999999999999,
+    "bounded_solver_success": true
+  },
+  "modal_full_s8": {
+    "bounded_energy_fraction": 0.011366418165030034,
+    "unbounded_energy_fraction": 0.12243171951202303,
+    "rank": 5,
+    "condition_number": 10.494171857202149,
+    "bounded_coordinates": [
+      -0.4571278740336708,
+      -0.9999999999999999,
+      -0.9999999999439185,
+      -0.9999999703929497,
+      -0.9999999999999999
+    ],
+    "unbounded_coordinates": [
+      -0.3256794106842759,
+      -12.312714830815933,
+      -28.482654289987185,
+      -6.677029970783309,
+      -35.73015850901218
+    ],
+    "bounded_coordinate_max_abs": 0.9999999999999999,
+    "bounded_solver_success": true
+  },
+  "full_s8": {
+    "bounded_energy_fraction": 0.011366418165030034,
+    "unbounded_energy_fraction": 0.12243171951202347,
+    "rank": 5,
+    "condition_number": 10.494171857202153,
+    "bounded_coordinates": [
+      -0.4571278740336708,
+      -0.9999999999999999,
+      -0.9999999999439185,
+      -0.9999999703929497,
+      -0.9999999999999999
+    ],
+    "unbounded_coordinates": [
+      -0.32567941068427636,
+      -12.312714830815981,
+      -28.482654289987238,
+      -6.677029970783391,
+      -35.7301585090123
+    ],
+    "bounded_coordinate_max_abs": 0.9999999999999999,
+    "bounded_solver_success": true
+  }
+}

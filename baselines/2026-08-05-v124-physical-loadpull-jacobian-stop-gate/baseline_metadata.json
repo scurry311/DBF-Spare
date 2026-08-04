@@ -1,0 +1,14 @@
+{
+  "version": "v1.24.0-physical-loadpull-jacobian-stop-gate",
+  "created_on": "2026-08-05",
+  "parent_tag": "v1.23.0-load-aware-modal-transformer-stop-gate",
+  "evidence_level": "ten independent 10 GHz network-only physical HFSS S8 center-difference cases with frozen component values",
+  "selected_run": "v124_physical_loadpull_jacobian_20260805_run01",
+  "case_count": 10,
+  "geometry_reachability_gate_pass": false,
+  "predicted_geometry_confirmation_authorized": false,
+  "feedpoint_input_impedance_branch_authorized": true,
+  "array_expansion_authorized": false,
+  "training_label_authorized": false,
+  "critic_training_authorized": false
+}

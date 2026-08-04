@@ -1,0 +1,11 @@
+case_id,variable,sign,return_code,memory_aborted,free_memory_gib_before,minimum_free_memory_gib,touchstone_exists
+ground_load_x_mm_minus,ground_load_x_mm,-1,0,False,13.444190979003906,3.810626983642578,True
+ground_load_x_mm_plus,ground_load_x_mm,1,0,False,13.343891143798828,4.2027435302734375,True
+bridge_common_x_mm_minus,bridge_common_x_mm,-1,0,False,13.368400573730469,4.090023040771484,True
+bridge_common_x_mm_plus,bridge_common_x_mm,1,0,False,13.456066131591797,4.020641326904297,True
+bridge_half_stagger_mm_minus,bridge_half_stagger_mm,-1,0,False,13.673423767089844,4.302589416503906,True
+bridge_half_stagger_mm_plus,bridge_half_stagger_mm,1,0,False,13.445270538330078,4.423000335693359,True
+bridge_height_mm_minus,bridge_height_mm,-1,0,False,14.312675476074219,4.763889312744141,True
+bridge_height_mm_plus,bridge_height_mm,1,0,False,14.200702667236328,4.590579986572266,True
+bridge_sheet_width_mm_minus,bridge_sheet_width_mm,-1,0,False,14.224048614501953,5.041339874267578,True
+bridge_sheet_width_mm_plus,bridge_sheet_width_mm,1,0,False,14.325767517089844,4.668178558349609,True

@@ -1,0 +1,334 @@
+{
+  "cases": [
+    {
+      "case_id": "ground_load_x_mm_minus",
+      "variable": "ground_load_x_mm",
+      "sign": -1,
+      "normalized_coordinate": -1.0,
+      "geometry_values": {
+        "ground_load_x_mm": 0.8480000000000001,
+        "bridge_common_x_mm": 1.1,
+        "bridge_half_stagger_mm": 0.38,
+        "bridge_height_mm": 0.25,
+        "bridge_sheet_width_mm": 0.12
+      },
+      "fixed_component_values": {
+        "ground_capacitance_pf": 0.39527823545122637,
+        "ground_capacitor_esr_ohm": 0.20132014467001128,
+        "bridge_inductance_nh": 1.4818027805892948,
+        "bridge_inductor_esr_ohm": 1.5517402431894187
+      },
+      "project_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v124_physical_loadpull_jacobian_20260805_run01\\cases\\ground_load_x_mm_minus\\v124_ground_load_x_mm_minus.aedt",
+      "touchstone_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v124_physical_loadpull_jacobian_20260805_run01\\cases\\ground_load_x_mm_minus\\v124_ground_load_x_mm_minus.s8p",
+      "builder_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v124_physical_loadpull_jacobian_20260805_run01\\cases\\ground_load_x_mm_minus\\build.vbs",
+      "solver_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v124_physical_loadpull_jacobian_20260805_run01\\cases\\ground_load_x_mm_minus\\solve_export.vbs",
+      "expected_port_order": [
+        "PRE_0",
+        "PRE_1",
+        "PRE_2",
+        "PRE_3",
+        "POST_0",
+        "POST_1",
+        "POST_2",
+        "POST_3"
+      ]
+    },
+    {
+      "case_id": "ground_load_x_mm_plus",
+      "variable": "ground_load_x_mm",
+      "sign": 1,
+      "normalized_coordinate": 1.0,
+      "geometry_values": {
+        "ground_load_x_mm": 1.348,
+        "bridge_common_x_mm": 1.1,
+        "bridge_half_stagger_mm": 0.38,
+        "bridge_height_mm": 0.25,
+        "bridge_sheet_width_mm": 0.12
+      },
+      "fixed_component_values": {
+        "ground_capacitance_pf": 0.39527823545122637,
+        "ground_capacitor_esr_ohm": 0.20132014467001128,
+        "bridge_inductance_nh": 1.4818027805892948,
+        "bridge_inductor_esr_ohm": 1.5517402431894187
+      },
+      "project_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v124_physical_loadpull_jacobian_20260805_run01\\cases\\ground_load_x_mm_plus\\v124_ground_load_x_mm_plus.aedt",
+      "touchstone_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v124_physical_loadpull_jacobian_20260805_run01\\cases\\ground_load_x_mm_plus\\v124_ground_load_x_mm_plus.s8p",
+      "builder_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v124_physical_loadpull_jacobian_20260805_run01\\cases\\ground_load_x_mm_plus\\build.vbs",
+      "solver_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v124_physical_loadpull_jacobian_20260805_run01\\cases\\ground_load_x_mm_plus\\solve_export.vbs",
+      "expected_port_order": [
+        "PRE_0",
+        "PRE_1",
+        "PRE_2",
+        "PRE_3",
+        "POST_0",
+        "POST_1",
+        "POST_2",
+        "POST_3"
+      ]
+    },
+    {
+      "case_id": "bridge_common_x_mm_minus",
+      "variable": "bridge_common_x_mm",
+      "sign": -1,
+      "normalized_coordinate": -1.0,
+      "geometry_values": {
+        "ground_load_x_mm": 1.098,
+        "bridge_common_x_mm": 0.8500000000000001,
+        "bridge_half_stagger_mm": 0.38,
+        "bridge_height_mm": 0.25,
+        "bridge_sheet_width_mm": 0.12
+      },
+      "fixed_component_values": {
+        "ground_capacitance_pf": 0.39527823545122637,
+        "ground_capacitor_esr_ohm": 0.20132014467001128,
+        "bridge_inductance_nh": 1.4818027805892948,
+        "bridge_inductor_esr_ohm": 1.5517402431894187
+      },
+      "project_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v124_physical_loadpull_jacobian_20260805_run01\\cases\\bridge_common_x_mm_minus\\v124_bridge_common_x_mm_minus.aedt",
+      "touchstone_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v124_physical_loadpull_jacobian_20260805_run01\\cases\\bridge_common_x_mm_minus\\v124_bridge_common_x_mm_minus.s8p",
+      "builder_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v124_physical_loadpull_jacobian_20260805_run01\\cases\\bridge_common_x_mm_minus\\build.vbs",
+      "solver_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v124_physical_loadpull_jacobian_20260805_run01\\cases\\bridge_common_x_mm_minus\\solve_export.vbs",
+      "expected_port_order": [
+        "PRE_0",
+        "PRE_1",
+        "PRE_2",
+        "PRE_3",
+        "POST_0",
+        "POST_1",
+        "POST_2",
+        "POST_3"
+      ]
+    },
+    {
+      "case_id": "bridge_common_x_mm_plus",
+      "variable": "bridge_common_x_mm",
+      "sign": 1,
+      "normalized_coordinate": 1.0,
+      "geometry_values": {
+        "ground_load_x_mm": 1.098,
+        "bridge_common_x_mm": 1.35,
+        "bridge_half_stagger_mm": 0.38,
+        "bridge_height_mm": 0.25,
+        "bridge_sheet_width_mm": 0.12
+      },
+      "fixed_component_values": {
+        "ground_capacitance_pf": 0.39527823545122637,
+        "ground_capacitor_esr_ohm": 0.20132014467001128,
+        "bridge_inductance_nh": 1.4818027805892948,
+        "bridge_inductor_esr_ohm": 1.5517402431894187
+      },
+      "project_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v124_physical_loadpull_jacobian_20260805_run01\\cases\\bridge_common_x_mm_plus\\v124_bridge_common_x_mm_plus.aedt",
+      "touchstone_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v124_physical_loadpull_jacobian_20260805_run01\\cases\\bridge_common_x_mm_plus\\v124_bridge_common_x_mm_plus.s8p",
+      "builder_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v124_physical_loadpull_jacobian_20260805_run01\\cases\\bridge_common_x_mm_plus\\build.vbs",
+      "solver_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v124_physical_loadpull_jacobian_20260805_run01\\cases\\bridge_common_x_mm_plus\\solve_export.vbs",
+      "expected_port_order": [
+        "PRE_0",
+        "PRE_1",
+        "PRE_2",
+        "PRE_3",
+        "POST_0",
+        "POST_1",
+        "POST_2",
+        "POST_3"
+      ]
+    },
+    {
+      "case_id": "bridge_half_stagger_mm_minus",
+      "variable": "bridge_half_stagger_mm",
+      "sign": -1,
+      "normalized_coordinate": -1.0,
+      "geometry_values": {
+        "ground_load_x_mm": 1.098,
+        "bridge_common_x_mm": 1.1,
+        "bridge_half_stagger_mm": 0.28,
+        "bridge_height_mm": 0.25,
+        "bridge_sheet_width_mm": 0.12
+      },
+      "fixed_component_values": {
+        "ground_capacitance_pf": 0.39527823545122637,
+        "ground_capacitor_esr_ohm": 0.20132014467001128,
+        "bridge_inductance_nh": 1.4818027805892948,
+        "bridge_inductor_esr_ohm": 1.5517402431894187
+      },
+      "project_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v124_physical_loadpull_jacobian_20260805_run01\\cases\\bridge_half_stagger_mm_minus\\v124_bridge_half_stagger_mm_minus.aedt",
+      "touchstone_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v124_physical_loadpull_jacobian_20260805_run01\\cases\\bridge_half_stagger_mm_minus\\v124_bridge_half_stagger_mm_minus.s8p",
+      "builder_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v124_physical_loadpull_jacobian_20260805_run01\\cases\\bridge_half_stagger_mm_minus\\build.vbs",
+      "solver_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v124_physical_loadpull_jacobian_20260805_run01\\cases\\bridge_half_stagger_mm_minus\\solve_export.vbs",
+      "expected_port_order": [
+        "PRE_0",
+        "PRE_1",
+        "PRE_2",
+        "PRE_3",
+        "POST_0",
+        "POST_1",
+        "POST_2",
+        "POST_3"
+      ]
+    },
+    {
+      "case_id": "bridge_half_stagger_mm_plus",
+      "variable": "bridge_half_stagger_mm",
+      "sign": 1,
+      "normalized_coordinate": 1.0,
+      "geometry_values": {
+        "ground_load_x_mm": 1.098,
+        "bridge_common_x_mm": 1.1,
+        "bridge_half_stagger_mm": 0.48,
+        "bridge_height_mm": 0.25,
+        "bridge_sheet_width_mm": 0.12
+      },
+      "fixed_component_values": {
+        "ground_capacitance_pf": 0.39527823545122637,
+        "ground_capacitor_esr_ohm": 0.20132014467001128,
+        "bridge_inductance_nh": 1.4818027805892948,
+        "bridge_inductor_esr_ohm": 1.5517402431894187
+      },
+      "project_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v124_physical_loadpull_jacobian_20260805_run01\\cases\\bridge_half_stagger_mm_plus\\v124_bridge_half_stagger_mm_plus.aedt",
+      "touchstone_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v124_physical_loadpull_jacobian_20260805_run01\\cases\\bridge_half_stagger_mm_plus\\v124_bridge_half_stagger_mm_plus.s8p",
+      "builder_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v124_physical_loadpull_jacobian_20260805_run01\\cases\\bridge_half_stagger_mm_plus\\build.vbs",
+      "solver_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v124_physical_loadpull_jacobian_20260805_run01\\cases\\bridge_half_stagger_mm_plus\\solve_export.vbs",
+      "expected_port_order": [
+        "PRE_0",
+        "PRE_1",
+        "PRE_2",
+        "PRE_3",
+        "POST_0",
+        "POST_1",
+        "POST_2",
+        "POST_3"
+      ]
+    },
+    {
+      "case_id": "bridge_height_mm_minus",
+      "variable": "bridge_height_mm",
+      "sign": -1,
+      "normalized_coordinate": -1.0,
+      "geometry_values": {
+        "ground_load_x_mm": 1.098,
+        "bridge_common_x_mm": 1.1,
+        "bridge_half_stagger_mm": 0.38,
+        "bridge_height_mm": 0.16999999999999998,
+        "bridge_sheet_width_mm": 0.12
+      },
+      "fixed_component_values": {
+        "ground_capacitance_pf": 0.39527823545122637,
+        "ground_capacitor_esr_ohm": 0.20132014467001128,
+        "bridge_inductance_nh": 1.4818027805892948,
+        "bridge_inductor_esr_ohm": 1.5517402431894187
+      },
+      "project_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v124_physical_loadpull_jacobian_20260805_run01\\cases\\bridge_height_mm_minus\\v124_bridge_height_mm_minus.aedt",
+      "touchstone_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v124_physical_loadpull_jacobian_20260805_run01\\cases\\bridge_height_mm_minus\\v124_bridge_height_mm_minus.s8p",
+      "builder_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v124_physical_loadpull_jacobian_20260805_run01\\cases\\bridge_height_mm_minus\\build.vbs",
+      "solver_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v124_physical_loadpull_jacobian_20260805_run01\\cases\\bridge_height_mm_minus\\solve_export.vbs",
+      "expected_port_order": [
+        "PRE_0",
+        "PRE_1",
+        "PRE_2",
+        "PRE_3",
+        "POST_0",
+        "POST_1",
+        "POST_2",
+        "POST_3"
+      ]
+    },
+    {
+      "case_id": "bridge_height_mm_plus",
+      "variable": "bridge_height_mm",
+      "sign": 1,
+      "normalized_coordinate": 1.0,
+      "geometry_values": {
+        "ground_load_x_mm": 1.098,
+        "bridge_common_x_mm": 1.1,
+        "bridge_half_stagger_mm": 0.38,
+        "bridge_height_mm": 0.33,
+        "bridge_sheet_width_mm": 0.12
+      },
+      "fixed_component_values": {
+        "ground_capacitance_pf": 0.39527823545122637,
+        "ground_capacitor_esr_ohm": 0.20132014467001128,
+        "bridge_inductance_nh": 1.4818027805892948,
+        "bridge_inductor_esr_ohm": 1.5517402431894187
+      },
+      "project_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v124_physical_loadpull_jacobian_20260805_run01\\cases\\bridge_height_mm_plus\\v124_bridge_height_mm_plus.aedt",
+      "touchstone_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v124_physical_loadpull_jacobian_20260805_run01\\cases\\bridge_height_mm_plus\\v124_bridge_height_mm_plus.s8p",
+      "builder_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v124_physical_loadpull_jacobian_20260805_run01\\cases\\bridge_height_mm_plus\\build.vbs",
+      "solver_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v124_physical_loadpull_jacobian_20260805_run01\\cases\\bridge_height_mm_plus\\solve_export.vbs",
+      "expected_port_order": [
+        "PRE_0",
+        "PRE_1",
+        "PRE_2",
+        "PRE_3",
+        "POST_0",
+        "POST_1",
+        "POST_2",
+        "POST_3"
+      ]
+    },
+    {
+      "case_id": "bridge_sheet_width_mm_minus",
+      "variable": "bridge_sheet_width_mm",
+      "sign": -1,
+      "normalized_coordinate": -1.0,
+      "geometry_values": {
+        "ground_load_x_mm": 1.098,
+        "bridge_common_x_mm": 1.1,
+        "bridge_half_stagger_mm": 0.38,
+        "bridge_height_mm": 0.25,
+        "bridge_sheet_width_mm": 0.09
+      },
+      "fixed_component_values": {
+        "ground_capacitance_pf": 0.39527823545122637,
+        "ground_capacitor_esr_ohm": 0.20132014467001128,
+        "bridge_inductance_nh": 1.4818027805892948,
+        "bridge_inductor_esr_ohm": 1.5517402431894187
+      },
+      "project_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v124_physical_loadpull_jacobian_20260805_run01\\cases\\bridge_sheet_width_mm_minus\\v124_bridge_sheet_width_mm_minus.aedt",
+      "touchstone_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v124_physical_loadpull_jacobian_20260805_run01\\cases\\bridge_sheet_width_mm_minus\\v124_bridge_sheet_width_mm_minus.s8p",
+      "builder_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v124_physical_loadpull_jacobian_20260805_run01\\cases\\bridge_sheet_width_mm_minus\\build.vbs",
+      "solver_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v124_physical_loadpull_jacobian_20260805_run01\\cases\\bridge_sheet_width_mm_minus\\solve_export.vbs",
+      "expected_port_order": [
+        "PRE_0",
+        "PRE_1",
+        "PRE_2",
+        "PRE_3",
+        "POST_0",
+        "POST_1",
+        "POST_2",
+        "POST_3"
+      ]
+    },
+    {
+      "case_id": "bridge_sheet_width_mm_plus",
+      "variable": "bridge_sheet_width_mm",
+      "sign": 1,
+      "normalized_coordinate": 1.0,
+      "geometry_values": {
+        "ground_load_x_mm": 1.098,
+        "bridge_common_x_mm": 1.1,
+        "bridge_half_stagger_mm": 0.38,
+        "bridge_height_mm": 0.25,
+        "bridge_sheet_width_mm": 0.15
+      },
+      "fixed_component_values": {
+        "ground_capacitance_pf": 0.39527823545122637,
+        "ground_capacitor_esr_ohm": 0.20132014467001128,
+        "bridge_inductance_nh": 1.4818027805892948,
+        "bridge_inductor_esr_ohm": 1.5517402431894187
+      },
+      "project_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v124_physical_loadpull_jacobian_20260805_run01\\cases\\bridge_sheet_width_mm_plus\\v124_bridge_sheet_width_mm_plus.aedt",
+      "touchstone_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v124_physical_loadpull_jacobian_20260805_run01\\cases\\bridge_sheet_width_mm_plus\\v124_bridge_sheet_width_mm_plus.s8p",
+      "builder_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v124_physical_loadpull_jacobian_20260805_run01\\cases\\bridge_sheet_width_mm_plus\\build.vbs",
+      "solver_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v124_physical_loadpull_jacobian_20260805_run01\\cases\\bridge_sheet_width_mm_plus\\solve_export.vbs",
+      "expected_port_order": [
+        "PRE_0",
+        "PRE_1",
+        "PRE_2",
+        "PRE_3",
+        "POST_0",
+        "POST_1",
+        "POST_2",
+        "POST_3"
+      ]
+    }
+  ]
+}

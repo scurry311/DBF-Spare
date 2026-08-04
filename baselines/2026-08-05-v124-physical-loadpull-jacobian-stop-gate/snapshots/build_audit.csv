@@ -1,0 +1,11 @@
+case_id,return_code,project_valid,differential_port_count,ground_capacitor_count,bridge_inductor_count,bridge_via_count,fixed_component_values_match,warning_count,gate_pass
+ground_load_x_mm_minus,0,True,8,8,4,8,True,0,True
+ground_load_x_mm_plus,0,True,8,8,4,8,True,0,True
+bridge_common_x_mm_minus,0,True,8,8,4,8,True,0,True
+bridge_common_x_mm_plus,0,True,8,8,4,8,True,0,True
+bridge_half_stagger_mm_minus,0,True,8,8,4,8,True,0,True
+bridge_half_stagger_mm_plus,0,True,8,8,4,8,True,0,True
+bridge_height_mm_minus,0,True,8,8,4,8,True,0,True
+bridge_height_mm_plus,0,True,8,8,4,8,True,0,True
+bridge_sheet_width_mm_minus,0,True,8,8,4,8,True,0,True
+bridge_sheet_width_mm_plus,0,True,8,8,4,8,True,0,True

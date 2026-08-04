@@ -1,6 +1,6 @@
 # Result Index
 
-Current hardware-development baseline: `v1.23.0-load-aware-modal-transformer-stop-gate`, frozen on 2026-08-04. Its finite-Q circuit upper bound passes, but the single authorized 10 GHz physical S8 fails active matching, loaded efficiency, and physical-to-target consistency. The trusted 16x16 field/operator baseline below remains unchanged.
+Current hardware-development baseline: `v1.24.0-physical-loadpull-jacobian-stop-gate`, frozen on 2026-08-05. Ten independent 10 GHz physical S8 perturbations show that the current local correction geometry cannot span the required reflection and active-load directions. The trusted 16x16 field/operator baseline below remains unchanged.
 
 ## Current Hardware Stop Gate
 
@@ -13,10 +13,16 @@ Current hardware-development baseline: `v1.23.0-load-aware-modal-transformer-sto
 | Physical matched / actual-load efficiency | 94.26% / 92.51% | Failed |
 | Physical-to-target max abs Delta S | 0.533 | Failed |
 | Paired stimuli degraded | 56/57 | Stop topology |
+| Physical geometry Jacobian rank / condition | 5 / 15.41 | Numerically independent |
+| Supported reflection residual explained | 9.55% | Failed |
+| Active-response residual explained | 6.64% | Failed |
+| Predicted best active RL | 3.52 dB | Failed |
 
 This is network-only diagnostic HFSS evidence, not an integrated antenna or
-array result. No additional frequency solve, independent repeat, EEP export,
-training-label generation, or critic training is authorized from this branch.
+array result. No predicted-geometry confirmation, additional frequency solve,
+independent repeat, EEP export, training-label generation, or critic training
+is authorized from this branch. The next physical experiment must change the
+antenna feed point or input impedance rather than the local bridge values.
 
 ## Evidence Levels
 

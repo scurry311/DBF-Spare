@@ -1,0 +1,116 @@
+{
+  "protocol": "v1.24-physical-loadpull-modal-jacobian-audit",
+  "created_on": "2026-08-05",
+  "parent_commit": "b8f481f6f4a0a5084a65312d41dac031717ea2ba",
+  "parent_tag": "v1.23.0-load-aware-modal-transformer-stop-gate",
+  "seed": 20260805,
+  "ansys_executable": "D:/v231/Win64/ansysedt.exe",
+  "output_directory": "hfss_outputs/v124_physical_loadpull_jacobian_20260805_run01",
+  "frequency_ghz": 10.0,
+  "reference_impedance_ohm": 50.0,
+  "inputs": {
+    "nominal_physical_config": "configs/v123_physical_modal_transformer_smoke_preregistered.json",
+    "nominal_physical_config_sha256": "25fa93587462b79392fd303e34fe2763b0632d710d450d0a478272742545668a",
+    "nominal_physical_s8": "baselines/2026-08-04-v123-load-aware-modal-transformer-stop-gate/snapshots/physical/v123_physical_modal_transformer_10ghz.s8p",
+    "nominal_physical_s8_sha256": "37cfca5a2cdb12486dd11a0146a5c8aba1a3ff5eae2d6a54a9821886af506d7a",
+    "target_circuit_operator": "baselines/2026-08-04-v123-load-aware-modal-transformer-stop-gate/snapshots/circuit/selected_circuit_operator.npz",
+    "target_circuit_operator_sha256": "f1a6d83c450df17dfaa5f1f9037612b330e9e1765cf58d893aaeb91a19bf86a6",
+    "trusted_antenna_s4": "hfss_outputs/v1143_small_cell_surface_mesh_20260730_run07/2x2/st_h_surface_direct01/v114_2x2_st_h_surface_direct01.s4p",
+    "trusted_antenna_s4_sha256": "33cd8c0528233fe3e4bb22b4664898bfe527d33120f4f32e086edf156bbfb3db",
+    "stimulus_csv": "hfss_outputs/v1143_small_cell_surface_mesh_20260730_run07/stimuli/representative_stimuli.csv",
+    "stimulus_csv_sha256": "471325becc296bde8e151a26fb71170d52dfc21075e851700b17a80cef0575e5",
+    "stimulus_npz": "hfss_outputs/v1143_small_cell_surface_mesh_20260730_run07/stimuli/representative_stimuli.npz",
+    "stimulus_npz_sha256": "0bcf89510ac398eff0eb8faa92b402a434774d91e11608676cbd69c476f205e9",
+    "stimulus_root": "hfss_outputs/v1143_small_cell_surface_mesh_20260730_run07"
+  },
+  "frozen_physics": {
+    "component_values_and_q": true,
+    "substrate_and_conductor_model": true,
+    "trace_width_and_differential_pitch": true,
+    "pre_post_reference_planes": true,
+    "antenna_s4_and_stimuli": true,
+    "additional_decoupling_stage_allowed": false,
+    "component_value_optimization_allowed": false
+  },
+  "geometry_variables": [
+    {
+      "name": "ground_load_x_mm",
+      "nominal": 1.098,
+      "step": 0.25,
+      "minimum": 0.50,
+      "maximum": 1.70,
+      "manufacturing_role": "common longitudinal location of the eight balanced ground branches"
+    },
+    {
+      "name": "bridge_common_x_mm",
+      "nominal": 1.10,
+      "step": 0.25,
+      "minimum": 0.40,
+      "maximum": 1.80,
+      "manufacturing_role": "common longitudinal center of the two staggered air-bridge polarities"
+    },
+    {
+      "name": "bridge_half_stagger_mm",
+      "nominal": 0.38,
+      "step": 0.10,
+      "minimum": 0.15,
+      "maximum": 0.60,
+      "manufacturing_role": "half-spacing between N and P bridge locations"
+    },
+    {
+      "name": "bridge_height_mm",
+      "nominal": 0.25,
+      "step": 0.08,
+      "minimum": 0.12,
+      "maximum": 0.45,
+      "manufacturing_role": "air-bridge clearance above the frozen traces"
+    },
+    {
+      "name": "bridge_sheet_width_mm",
+      "nominal": 0.12,
+      "step": 0.03,
+      "minimum": 0.08,
+      "maximum": 0.20,
+      "manufacturing_role": "shared bridge strip and via-post width"
+    }
+  ],
+  "numerical_gates": {
+    "maximum_final_delta_s": 0.05,
+    "maximum_reciprocity_error": 0.0001,
+    "maximum_passivity_sigma": 1.001,
+    "maximum_small_mesh_segment_count": 400,
+    "minimum_small_mesh_segment_length_mm": 0.005,
+    "maximum_central_nonlinearity_ratio": 0.50,
+    "minimum_pair_signal_max_abs_delta_s": 0.01,
+    "minimum_effective_geometry_variables": 3,
+    "maximum_jacobian_condition_number": 10000.0
+  },
+  "reachability_gates": {
+    "minimum_supported_reflection_energy_fraction": 0.60,
+    "minimum_load_operator_energy_fraction": 0.60,
+    "minimum_active_response_energy_fraction": 0.60,
+    "minimum_linear_predicted_active_rl_db": 10.5,
+    "minimum_linear_predicted_total_rl_db": 10.5,
+    "minimum_linear_predicted_matched_efficiency": 0.95,
+    "minimum_linear_predicted_actual_load_insertion": 0.95,
+    "maximum_bounded_parameter_magnitude": 1.0
+  },
+  "resources": {
+    "minimum_free_memory_before_build_gib": 8.0,
+    "minimum_free_memory_before_solve_gib": 13.0,
+    "abort_free_memory_during_solve_gib": 3.0,
+    "poll_interval_seconds": 5,
+    "memory_recovery_wait_seconds": 900,
+    "maximum_concurrent_aedt_instances": 1
+  },
+  "scope": {
+    "allow_ten_center_difference_hfss_cases": true,
+    "allow_one_predicted_geometry_confirmation_only_if_reachable": true,
+    "allow_three_frequency_hfss": false,
+    "allow_integrated_2x2": false,
+    "allow_4x4": false,
+    "allow_16x16": false,
+    "allow_training_labels": false,
+    "allow_critic_training": false
+  }
+}

@@ -10,6 +10,14 @@ as an engineering label.
 
 Current checkpoints:
 
+- `2026-08-05-v124-physical-loadpull-jacobian-stop-gate`: ten independent
+  physical S8 center differences show that five manufacturable local-block
+  geometry directions explain only 6.64% of the required active-response
+  residual; the block is stopped and the feed-point/input-impedance branch is
+  authorized.
+- `2026-08-04-v123-load-aware-modal-transformer-stop-gate`: a finite-Q local
+  modal circuit passes its upper-bound gates, but its physical S8 mapping
+  reaches 3.15 dB active RL and degrades 56/57 paired stimuli.
 - `2026-08-04-v122-balanced-modal-branch-stop-gate`: the true differential
   1x1 launch passes its three-frequency S2 gate, while the single local 2x2
   floating modal branch reaches only 5.74 dB active RL and fails loaded
