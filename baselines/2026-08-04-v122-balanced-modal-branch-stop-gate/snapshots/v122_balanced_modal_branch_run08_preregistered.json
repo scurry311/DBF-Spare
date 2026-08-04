@@ -1,0 +1,27 @@
+{
+  "extends": "configs/v122_balanced_modal_branch_run06_preregistered.json",
+  "protocol": "v1.22-balanced-differential-launch-local-modal-branch-run08",
+  "created_on": "2026-08-04",
+  "output_directory": "hfss_outputs/v122_balanced_modal_branch_20260804_run08",
+  "derived_from": [
+    "hfss_outputs/v122_balanced_modal_branch_20260804_run06/launch_1x1_s2/analysis.json",
+    "hfss_outputs/v122_balanced_modal_branch_20260804_run07/launch_1x1_s2/analysis.json"
+  ],
+  "derivation": {
+    "observed_run06_characteristic_impedance_ohm": 53.03,
+    "observed_run07_insertion_efficiency_min": 0.944588,
+    "change_scope": "Return to a standard 10 mil substrate, retain finite-conductivity sheets and the shorter reference-plane spacing, and use empirically calibrated wide differential traces; gates unchanged",
+    "calibrated_coupled_microstrip_target_ohm": 50.1
+  },
+  "physical_model": {
+    "substrate_thickness_mm": 0.254,
+    "board_width_1x1_mm": 6.0,
+    "board_width_2x2_mm": 20.0,
+    "pre_reference_x_mm": -7.0,
+    "post_reference_x_mm": 7.0,
+    "pair_center_pitch_mm": 1.9,
+    "pre_pad_width_mm": 1.8,
+    "main_trace_width_mm": 1.8,
+    "channel_y_mm_by_antenna_port": [-6.0, 6.0, -2.0, 2.0]
+  }
+}

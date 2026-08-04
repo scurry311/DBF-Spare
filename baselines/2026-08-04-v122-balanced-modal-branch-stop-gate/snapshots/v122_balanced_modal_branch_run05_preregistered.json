@@ -1,0 +1,16 @@
+{
+  "extends": "configs/v122_balanced_modal_branch_run04_preregistered.json",
+  "protocol": "v1.22-balanced-differential-launch-local-modal-branch-run05",
+  "created_on": "2026-08-04",
+  "output_directory": "hfss_outputs/v122_balanced_modal_branch_20260804_run05",
+  "derived_from": "hfss_outputs/v122_balanced_modal_branch_20260804_run04/launch_1x1_s2/analysis.json",
+  "derivation": {
+    "observed_three_frequency_input_rl_min_db": 31.1915,
+    "observed_three_frequency_transducer_efficiency_min": 0.971334,
+    "observed_small_segment_length_range_mm": [0.011552, 0.016226],
+    "change_scope": "Use manufacturable 2 oz copper thickness to eliminate sub-threshold volumetric edge fragments; planar electrical dimensions and gates unchanged"
+  },
+  "physical_model": {
+    "copper_thickness_mm": 0.07
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "pass_count": 2,
+  "final_delta_s": 0.0240531,
+  "converged": true,
+  "small_mesh_segment_count": 292,
+  "peak_solver_memory_gb": 8.378036499023438,
+  "maximum_tetrahedra": 437684,
+  "small_mesh_segment_min_length_mm": 0.005458,
+  "small_mesh_segment_max_length_mm": 0.018969,
+  "reciprocity_error": 1.3652013286995985e-05,
+  "passivity_sigma": 0.9791947657717285,
+  "solver_execution_mode": "exact_single_frequency_adaptive_serial",
+  "per_frequency_profiles": [
+    {
+      "pass_count": 2,
+      "final_delta_s": 0.0236328,
+      "converged": true,
+      "small_mesh_segment_count": 292,
+      "peak_solver_memory_gb": 8.368698120117188,
+      "maximum_tetrahedra": 437684
+    },
+    {
+      "pass_count": 2,
+      "final_delta_s": 0.0238722,
+      "converged": true,
+      "small_mesh_segment_count": 292,
+      "peak_solver_memory_gb": 8.360774993896484,
+      "maximum_tetrahedra": 437682
+    },
+    {
+      "pass_count": 2,
+      "final_delta_s": 0.0240531,
+      "converged": true,
+      "small_mesh_segment_count": 292,
+      "peak_solver_memory_gb": 8.378036499023438,
+      "maximum_tetrahedra": 437680
+    }
+  ],
+  "matched_load_passive_rl_min_db": 20.73656388552767,
+  "representative_active_rl_min_db": 5.7375812491804705,
+  "representative_total_rl_min_db": 10.054048166942673,
+  "matched_load_network_efficiency_min": 0.9526772812866677,
+  "actual_load_insertion_efficiency_min": 0.9396604585710214,
+  "actual_load_transducer_efficiency_min": 0.8468565782817775,
+  "gate_checks": {
+    "converged": true,
+    "final_delta_s": true,
+    "mesh_segment_count": true,
+    "mesh_segment_length": true,
+    "reciprocity": true,
+    "passivity": true,
+    "passive_rl": true,
+    "active_rl": false,
+    "total_rl": false,
+    "network_efficiency": true,
+    "actual_load_insertion_efficiency": false,
+    "actual_load_transducer_efficiency": false
+  },
+  "failed_gates": [
+    "active_rl",
+    "total_rl",
+    "actual_load_insertion_efficiency",
+    "actual_load_transducer_efficiency"
+  ],
+  "engineering_margins": {
+    "active_rl_db": -5.2624187508195295,
+    "total_rl_db": -0.9459518330573271,
+    "actual_load_insertion_efficiency": -0.010339541428978527,
+    "actual_load_transducer_efficiency": -0.053143421718222505
+  },
+  "gate_pass": false
+}

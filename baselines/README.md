@@ -10,6 +10,11 @@ as an engineering label.
 
 Current checkpoints:
 
+- `2026-08-04-v122-balanced-modal-branch-stop-gate`: the true differential
+  1x1 launch passes its three-frequency S2 gate, while the single local 2x2
+  floating modal branch reaches only 5.74 dB active RL and fails loaded
+  efficiency gates; independent repeat, integration, array expansion, labels,
+  and critic training remain locked.
 - `2026-08-04-v121-parametric-feed-post-stop-gate`: twenty converged 10 GHz
   physical S8 candidates produce no complete gate pass; best active RL is
   5.08 dB and best physical-to-target S8 error is 0.293, so the single-stage

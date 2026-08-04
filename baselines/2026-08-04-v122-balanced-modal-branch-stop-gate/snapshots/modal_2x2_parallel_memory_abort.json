@@ -1,0 +1,7 @@
+{
+  "case": "modal_2x2",
+  "return_code": 99,
+  "memory_aborted": true,
+  "minimum_free_memory_gib": 1.868194580078125,
+  "touchstone_exists": false
+}

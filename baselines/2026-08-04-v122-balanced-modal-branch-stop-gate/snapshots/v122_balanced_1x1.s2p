@@ -1,0 +1,15 @@
+! Touchstone file exported from HFSS 2023.1.0
+!        File:           D:/codex_workspace/hfss_ura16_quick_model/hfss_outputs/v122_balanced_modal_branch_20260804_run06/launch_1x1_s2/v122_balanced_1x1.aedt
+!        Generated:      7:07:42 %x4E0B%x5348  8%x6708 04, 2026
+!        Design:         V122_Balanced_Modal_Branch
+!        Project:        v122_balanced_1x1
+!        Setup:          Setup_10GHz
+!        Solution:       Sweep_Gate3
+!
+# GHz S MA R 50.000000
+! Terminal data exported
+! Port[1] = POST_0
+! Port[2] = PRE_0
+9.96                           0.0563329972175807 25.6978062084901 0.974624792300895 113.430413250595 0.97462469692123 113.430418185922 0.0562875338837598 25.9875065472094 
+10                             0.0532346116890365 24.9003942111085 0.974731258431207 112.423775944282 0.974732547331339 112.423799475605 0.0531860285715287 25.1891369234346 
+10.04                          0.0500969588655337 24.1294325874534 0.974832697787829 111.417049603005 0.974832598879867 111.417054656134 0.0500454681484976 24.4165593174222 

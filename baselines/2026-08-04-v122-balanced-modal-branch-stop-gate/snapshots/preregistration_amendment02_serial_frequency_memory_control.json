@@ -1,0 +1,11 @@
+{
+  "amendment": "v1.22 serial exact-frequency memory control",
+  "created_on": "2026-08-04",
+  "timing": "After the first 2x2 discrete sweep was memory-aborted and before any complete S8 result existed.",
+  "physical_geometry_changed": false,
+  "engineering_thresholds_changed": false,
+  "failed_attempt_minimum_free_memory_gib": 1.868194580078125,
+  "failed_attempt_touchstone_complete": false,
+  "change": "Replace the concurrent three-point discrete sweep execution with three strictly serial single-frequency LastAdaptive HFSS solves at 9.96, 10.00, and 10.04 GHz.",
+  "evidence_rule": "All three exact-frequency S8 files must exist and pass the unchanged joint gate; an interpolated frequency response is not used."
+}

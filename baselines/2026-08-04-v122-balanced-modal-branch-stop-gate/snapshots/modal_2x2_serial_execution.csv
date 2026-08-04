@@ -1,0 +1,4 @@
+frequency_ghz,stage,return_code,memory_aborted,minimum_free_memory_gib,touchstone_exists
+9.96,solve,0,False,4.851413726806641,True
+10.0,solve,0,False,4.760036468505859,True
+10.04,solve,0,False,4.918262481689453,True

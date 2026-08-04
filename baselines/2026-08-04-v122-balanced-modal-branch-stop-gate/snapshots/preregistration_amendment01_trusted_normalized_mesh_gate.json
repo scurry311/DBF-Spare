@@ -1,0 +1,13 @@
+{
+  "amendment": "v1.22 trusted-normalized mesh diagnostic gate",
+  "created_on": "2026-08-04",
+  "timing": "After the 1x1 sheet-conductor solve and a direct audit of the independently trusted v1.14 S4 g3derr, before any 2x2 solve.",
+  "performance_thresholds_changed": false,
+  "physical_geometry_changed": false,
+  "trusted_reference": "hfss_outputs/v1143_small_cell_surface_mesh_20260730_run07/2x2/st_h_surface_direct01",
+  "trusted_reference_small_segment_count": 378,
+  "trusted_reference_channel_count": 4,
+  "trusted_reference_minimum_segment_length_mm": 0.005,
+  "change": "Replace the inconsistent absolute-zero diagnostic rule with at most 100 records per differential channel and a minimum segment length not below 0.005 mm; an independent repeat remains mandatory.",
+  "reason": "The trusted cross-validated S4 contains the same AirRegion mesh diagnostic. The revised rule is normalized to that reference and does not alter Delta S, reciprocity, passivity, RL, efficiency, topology, or geometry gates."
+}

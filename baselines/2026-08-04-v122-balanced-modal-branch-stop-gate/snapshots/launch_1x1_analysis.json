@@ -1,0 +1,17 @@
+{
+  "pass_count": 2,
+  "final_delta_s": 0.00323396,
+  "converged": true,
+  "small_mesh_segment_count": 72,
+  "peak_solver_memory_gb": 2.0620460510253906,
+  "maximum_tetrahedra": 111261,
+  "small_mesh_segment_min_length_mm": 0.013964,
+  "small_mesh_segment_max_length_mm": 0.019361,
+  "reciprocity_error": 1.34963729848577e-06,
+  "passivity_sigma": 0.9786134417380288,
+  "input_rl_min_db": 24.991755571879178,
+  "output_rl_min_db": 24.984742827085032,
+  "insertion_efficiency_min": 0.9526846410918134,
+  "transducer_efficiency_min": 0.9498932998487994,
+  "gate_pass": true
+}

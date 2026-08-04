@@ -764,3 +764,23 @@ locked. The preferred next minimum model is a true balanced/differential launch
 with one local 2x2 even/odd-mode correction branch. See
 `docs/V121_PARAMETRIC_FEED_POST_STAGE_20260803.md` and
 `baselines/2026-08-04-v121-parametric-feed-post-stop-gate/BASELINE.md`.
+
+## Balanced Differential Launch and Local Modal Branch v1.22
+
+The finite-conductivity-sheet 1x1 differential launch passes the complete
+three-frequency S2 gate: final Delta S is 0.00323, input/output RL is at least
+24.98 dB, insertion efficiency is 95.27%, and transducer efficiency is 94.99%.
+
+The unchanged 2x2 geometry is solved as three exact serial LastAdaptive cases
+after the concurrent sweep is memory-aborted without an S8 result. All serial
+cases converge with worst final Delta S 0.02405, reciprocity error 1.37e-5,
+passivity sigma 0.9792, passive RL 20.74 dB, and network efficiency 95.27%.
+When terminated by the trusted antenna S4 and replayed against 285 frozen
+sources, worst active RL is 5.74 dB, total RL is 10.05 dB, loaded insertion
+efficiency is 93.97%, and transducer efficiency is 84.69%. The physical S8 gate
+therefore fails, with 10.04 GHz as the worst corner.
+
+The single local floating modal branch is stopped. Independent repeat,
+integrated 2x2, array expansion, labels, and critic training remain locked. The
+authoritative snapshot is
+`baselines/2026-08-04-v122-balanced-modal-branch-stop-gate/BASELINE.md`.

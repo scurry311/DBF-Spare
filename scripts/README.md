@@ -211,3 +211,9 @@ powershell -ExecutionPolicy Bypass -File scripts\<name>.ps1
 |---|---|
 | `v121_shared_cad.py` | Generate the shared-parameter network-only S8 and integrated 2x2 S4/EEP CAD definitions while retaining the single `0-2-3-1` sparse graph. This builder alone is not solved HFSS evidence. |
 | `run_v121_parametric_feed_post.py` | Enforce preregistration, route-feasible LHS generation, serial memory guards, build smoke, physical sensitivity/Pareto analysis, three-frequency gating, independent direct/DDM validation, and the final integrated 2x2 decision. |
+
+## v1.22 Balanced Launch and Local Modal Branch
+
+| File | Purpose |
+|---|---|
+| `run_v122_balanced_modal_branch.py` | Build and gate a physical differential 1x1 S2 launch and a 2x2 S8 fixture containing one local floating-copper even/odd correction section. It supports exact single-frequency serial execution when a concurrent three-point sweep exceeds the memory guard. |

@@ -1,0 +1,62 @@
+{
+  "execution_mode": "exact_single_frequency_adaptive_serial",
+  "reason": "The original discrete three-frequency sweep exceeded the memory stop line by launching concurrent hf3d workers.",
+  "physical_geometry_changed": false,
+  "engineering_thresholds_changed": false,
+  "cases": [
+    {
+      "frequency_ghz": 9.96,
+      "project_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v122_balanced_modal_branch_20260804_run06\\modal_2x2_s8_serial\\f_9p96ghz\\v122_balanced_2x2_f_9p96ghz.aedt",
+      "touchstone_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v122_balanced_modal_branch_20260804_run06\\modal_2x2_s8_serial\\f_9p96ghz\\v122_balanced_2x2_f_9p96ghz.s8p",
+      "builder_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v122_balanced_modal_branch_20260804_run06\\modal_2x2_s8_serial\\f_9p96ghz\\build.vbs",
+      "solver_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v122_balanced_modal_branch_20260804_run06\\modal_2x2_s8_serial\\f_9p96ghz\\solve_export.vbs",
+      "expected_port_order": [
+        "PRE_0",
+        "PRE_1",
+        "PRE_2",
+        "PRE_3",
+        "POST_0",
+        "POST_1",
+        "POST_2",
+        "POST_3"
+      ],
+      "solution": "Setup_10GHz:LastAdaptive"
+    },
+    {
+      "frequency_ghz": 10.0,
+      "project_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v122_balanced_modal_branch_20260804_run06\\modal_2x2_s8_serial\\f_10p00ghz\\v122_balanced_2x2_f_10p00ghz.aedt",
+      "touchstone_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v122_balanced_modal_branch_20260804_run06\\modal_2x2_s8_serial\\f_10p00ghz\\v122_balanced_2x2_f_10p00ghz.s8p",
+      "builder_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v122_balanced_modal_branch_20260804_run06\\modal_2x2_s8_serial\\f_10p00ghz\\build.vbs",
+      "solver_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v122_balanced_modal_branch_20260804_run06\\modal_2x2_s8_serial\\f_10p00ghz\\solve_export.vbs",
+      "expected_port_order": [
+        "PRE_0",
+        "PRE_1",
+        "PRE_2",
+        "PRE_3",
+        "POST_0",
+        "POST_1",
+        "POST_2",
+        "POST_3"
+      ],
+      "solution": "Setup_10GHz:LastAdaptive"
+    },
+    {
+      "frequency_ghz": 10.04,
+      "project_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v122_balanced_modal_branch_20260804_run06\\modal_2x2_s8_serial\\f_10p04ghz\\v122_balanced_2x2_f_10p04ghz.aedt",
+      "touchstone_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v122_balanced_modal_branch_20260804_run06\\modal_2x2_s8_serial\\f_10p04ghz\\v122_balanced_2x2_f_10p04ghz.s8p",
+      "builder_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v122_balanced_modal_branch_20260804_run06\\modal_2x2_s8_serial\\f_10p04ghz\\build.vbs",
+      "solver_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v122_balanced_modal_branch_20260804_run06\\modal_2x2_s8_serial\\f_10p04ghz\\solve_export.vbs",
+      "expected_port_order": [
+        "PRE_0",
+        "PRE_1",
+        "PRE_2",
+        "PRE_3",
+        "POST_0",
+        "POST_1",
+        "POST_2",
+        "POST_3"
+      ],
+      "solution": "Setup_10GHz:LastAdaptive"
+    }
+  ]
+}

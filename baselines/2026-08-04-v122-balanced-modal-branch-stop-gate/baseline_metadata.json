@@ -1,0 +1,13 @@
+{
+  "version": "v1.22.0-balanced-modal-branch-stop-gate",
+  "created_on": "2026-08-04",
+  "parent_tag": "v1.21.1-parametric-feed-post-stop-gate",
+  "evidence_level": "physical HFSS 1x1 S2 and network-only 2x2 S8 at 9.96, 10.00, and 10.04 GHz; trusted-S4 cascade only",
+  "selected_candidate": "v122_balanced_modal_branch_20260804_run06",
+  "launch_gate_pass": true,
+  "modal_s8_gate_pass": false,
+  "independent_repeat_authorized": false,
+  "integrated_2x2_authorized": false,
+  "array_expansion_authorized": false,
+  "training_label_authorized": false
+}

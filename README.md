@@ -1,14 +1,15 @@
 # DBF-Spare
 
-## Current verified hardware status (v1.21)
+## Current verified hardware status (v1.22)
 
-Twenty converged 10 GHz network-only HFSS S8 candidates have now tested the
-single-stage `0-2-3-1` POST/local-loading topology. None passes the complete
-physical gate: best worst-case active RL is 5.08 dB and best
-physical-to-target S8 error is 0.293. The preregistered 20-case stop condition
-therefore ends this topology before three-frequency promotion, integrated 2x2,
-array expansion, training labels, or critic retraining. See
-`baselines/2026-08-04-v121-parametric-feed-post-stop-gate/BASELINE.md`.
+The true balanced differential 1x1 launch passes its three-frequency HFSS S2
+gate with 24.99 dB input RL and 95.27% insertion efficiency. The physical 2x2
+model with one local floating even/odd correction branch is converged,
+reciprocal, passive, and well matched under passive termination, but reaches
+only 5.74 dB worst active RL and fails loaded-efficiency gates under 285 frozen
+excitations. Independent repeat, integrated 2x2, array expansion, training
+labels, and critic retraining remain locked. See
+`baselines/2026-08-04-v122-balanced-modal-branch-stop-gate/BASELINE.md`.
 
 面向低功耗多任务波束的 16x16 稀疏相控阵研究项目。项目以 HFSS 全波模型和
 嵌入单元方向图（EEP）为物理基准，联合优化阵元 mask、任务级复权值、旁瓣、
