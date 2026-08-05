@@ -1,0 +1,7 @@
+case_id,build_return_code,solve_return_code,memory_aborted,free_memory_gib_before,minimum_free_memory_gib,touchstone_exists,topology_warning_count
+target_g_e_short_stub,0,0,False,12.965526580810547,3.2695655822753906,True,0
+target_h_balanced_mid,0,0,False,12.831417083740234,3.0840835571289062,True,0
+target_i_b_e_interpolate,0,0,False,12.86175537109375,2.8597564697265625,True,0
+target_j_strong_aperture,0,0,False,12.948055267333984,2.9900436401367188,True,0
+target_k_b_resistance_lift,0,0,False,12.886451721191406,3.003284454345703,True,0
+target_l_lower_aperture_q,0,0,False,12.903656005859375,3.271038055419922,True,0

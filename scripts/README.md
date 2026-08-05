@@ -217,3 +217,11 @@ powershell -ExecutionPolicy Bypass -File scripts\<name>.ps1
 | File | Purpose |
 |---|---|
 | `run_v122_balanced_modal_branch.py` | Build and gate a physical differential 1x1 S2 launch and a 2x2 S8 fixture containing one local floating-copper even/odd correction section. It supports exact single-frequency serial execution when a concurrent three-point sweep exceeds the memory guard. |
+
+## v1.27 Aperture-Coupled Radiator/Input
+
+| File | Purpose |
+|---|---|
+| `run_v127_aperture_coupled_radiator.py` | Build and serially solve the physical dual-slot/tongue patch, coupling aperture, bottom feed, and local GSG launch with deterministic local mesh partitions. |
+| `run_v127_joint_radiator_input_doe.py` | Preregister, memory-guard, solve, and gate fixed 1x1 joint radiator/input candidate sets without opening 2x2 or downstream work. |
+| `analyze_v127_aperture_topology_stop_gate.py` | Aggregate the 18 frozen physical candidates, audit complex-impedance reachability and controlled tongue/stub sensitivity, and issue the topology stop decision. |

@@ -1,17 +1,16 @@
 # DBF-Spare
 
-## Current verified hardware status (v1.26)
+## Current verified hardware status (v1.27)
 
-The physical S8 Jacobian stops the local bridge because it explains only 6.64%
-of the required active-response residual. A direct physical 2x2 test of the
-best 1x1 feed point (2.10 mm) converges at all three frequencies and retains
-15.10 dB passive RL and 99.24% radiation efficiency, but its worst active RL is
-only 5.08 dB over 285 frozen excitations. Even an optimistic frequency-specific,
-per-port ideal-Sii load-pull bound reaches only 9.49 dB while the physical
-off-diagonal terms are frozen. Bridge and feed-point-only tuning are stopped;
-the next hardware branch must alter the radiator/input structure so diagonal
-and mutual-coupling terms move together. See
-`baselines/2026-08-05-v126-feedpoint-s4-stop-gate/BASELINE.md`.
+The new aperture-coupled dual-slot/tongue radiator branch completed 18
+converged physical 10 GHz 1x1 candidates. All pass the numerical Delta S gate,
+but none reaches the 10 dB passive-RL prerequisite; the best result is only
+4.148 dB. The tested tongue-length change is nearly invisible at the input,
+while the open stub reverses reactance only through a high-resistance
+resonance. The current topology is stopped before 2x2, so no mutual-coupling
+improvement is claimed. Three-frequency, 4x4/16x16, EEP, labels, and critic
+training remain locked. See
+`baselines/2026-08-06-v127-aperture-radiator-stop-gate/BASELINE.md`.
 
 面向低功耗多任务波束的 16x16 稀疏相控阵研究项目。项目以 HFSS 全波模型和
 嵌入单元方向图（EEP）为物理基准，联合优化阵元 mask、任务级复权值、旁瓣、

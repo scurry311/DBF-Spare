@@ -1,0 +1,12 @@
+{
+  "stage": "D_aperture_center_gate_complete",
+  "center_gate_pass": false,
+  "allow_joint_1x1_doe": false,
+  "allow_2x2_jacobian": false,
+  "allow_4x4": false,
+  "allow_16x16": false,
+  "allow_eep_export": false,
+  "allow_training_labels": false,
+  "allow_critic_training": false,
+  "reason": "Center aperture-coupled radiator failed the 1x1 physical gate; 2x2 and all downstream work remain locked."
+}

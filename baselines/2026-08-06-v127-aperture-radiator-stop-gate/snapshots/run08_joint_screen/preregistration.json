@@ -1,0 +1,130 @@
+{
+  "protocol": "v1.27-joint-radiator-input-1x1-doe",
+  "created_on": "2026-08-06",
+  "parent_commit": "9b1bbc259c43519c0572a8f517db3d0693433449",
+  "parent_tag": "v1.26.0-feedpoint-s4-stop-gate",
+  "ansys_executable": "D:/v231/Win64/ansysedt.exe",
+  "output_directory": "hfss_outputs/v127_joint_radiator_input_doe_20260806_run08_fixed_aperture_mesh",
+  "inputs": {
+    "numerically_valid_center_s1": "hfss_outputs/v127_aperture_coupled_radiator_20260806_run06_local_mesh/1x1/aperture_center_v1_port_margin/v127_1x1_aperture_center_v1_port_margin.s1p",
+    "numerically_valid_center_s1_sha256": "5d6ce3b02cd90cbcfffd45799688a339a02a93cf605e8addf3dbea02bde2228b"
+  },
+  "frozen_geometry": {
+    "spacing_mm": 15.0,
+    "top_substrate_thickness_mm": 0.787,
+    "feed_substrate_thickness_mm": 0.787,
+    "relative_permittivity": 2.2,
+    "loss_tangent": 0.0009,
+    "copper_thickness_mm": 0.035,
+    "patch_width_mm": 11.8,
+    "patch_length_mm": 9.35,
+    "dual_slot_width_mm": 0.3,
+    "feed_line_start_offset_mm": -6.5,
+    "port_sheet_margin_mm": 0.1,
+    "launch_gap_mm": 0.2,
+    "launch_ground_pad_width_mm": 1.0,
+    "launch_ground_pad_length_mm": 0.8,
+    "launch_via_radius_mm": 0.2,
+    "launch_port_margin_mm": 0.05,
+    "local_mesh_max_length_mm": 0.18,
+    "adaptive_refinement_percent": 5.0
+  },
+  "candidates": [
+    {
+      "candidate_id": "joint_a_short_low",
+      "dual_slot_length_mm": 2.6,
+      "dual_slot_center_separation_mm": 0.7,
+      "coupling_aperture_length_mm": 5.0,
+      "coupling_aperture_width_mm": 0.6,
+      "coupling_aperture_y_offset_mm": -0.2,
+      "feed_line_width_mm": 2.0,
+      "open_stub_length_mm": 1.2
+    },
+    {
+      "candidate_id": "joint_b_long_high",
+      "dual_slot_length_mm": 3.4,
+      "dual_slot_center_separation_mm": 1.05,
+      "coupling_aperture_length_mm": 5.0,
+      "coupling_aperture_width_mm": 0.85,
+      "coupling_aperture_y_offset_mm": 0.4,
+      "feed_line_width_mm": 2.6,
+      "open_stub_length_mm": 4.4
+    },
+    {
+      "candidate_id": "joint_c_wide_short",
+      "dual_slot_length_mm": 2.6,
+      "dual_slot_center_separation_mm": 1.05,
+      "coupling_aperture_length_mm": 6.2,
+      "coupling_aperture_width_mm": 0.85,
+      "coupling_aperture_y_offset_mm": 0.1,
+      "feed_line_width_mm": 2.3,
+      "open_stub_length_mm": 2.0
+    },
+    {
+      "candidate_id": "joint_d_wide_long",
+      "dual_slot_length_mm": 3.4,
+      "dual_slot_center_separation_mm": 0.7,
+      "coupling_aperture_length_mm": 6.2,
+      "coupling_aperture_width_mm": 0.6,
+      "coupling_aperture_y_offset_mm": 0.1,
+      "feed_line_width_mm": 1.8,
+      "open_stub_length_mm": 3.5
+    },
+    {
+      "candidate_id": "joint_e_mid_capacitive",
+      "dual_slot_length_mm": 3.0,
+      "dual_slot_center_separation_mm": 0.75,
+      "coupling_aperture_length_mm": 5.6,
+      "coupling_aperture_width_mm": 0.75,
+      "coupling_aperture_y_offset_mm": -0.1,
+      "feed_line_width_mm": 2.6,
+      "open_stub_length_mm": 4.0
+    },
+    {
+      "candidate_id": "joint_f_mid_inductive",
+      "dual_slot_length_mm": 3.1,
+      "dual_slot_center_separation_mm": 0.95,
+      "coupling_aperture_length_mm": 5.6,
+      "coupling_aperture_width_mm": 0.65,
+      "coupling_aperture_y_offset_mm": 0.3,
+      "feed_line_width_mm": 2.0,
+      "open_stub_length_mm": 1.6
+    }
+  ],
+  "frequency_ghz": 10.0,
+  "gates": {
+    "maximum_final_delta_s": 0.05,
+    "minimum_screen_passive_rl_db": 10.0,
+    "maximum_port_topology_warning_count": 0
+  },
+  "resources": {
+    "minimum_free_memory_before_1x1_gib": 8.0,
+    "abort_free_memory_during_solve_gib": 3.0,
+    "poll_interval_seconds": 5,
+    "memory_recovery_wait_seconds": 900,
+    "maximum_concurrent_aedt_instances": 1
+  },
+  "scope": {
+    "allow_joint_1x1_doe": true,
+    "allow_three_frequency_1x1_only_after_screen_pass": true,
+    "allow_2x2_jacobian": false,
+    "allow_4x4": false,
+    "allow_16x16": false,
+    "allow_eep_export": false,
+    "allow_training_labels": false,
+    "allow_critic_training": false,
+    "allow_existing_bridge_tuning": false
+  },
+  "runtime_audit": {
+    "head_commit": "9b1bbc259c43519c0572a8f517db3d0693433449",
+    "tag_commit": "9b1bbc259c43519c0572a8f517db3d0693433449",
+    "free_memory_gib": 13.233867645263672,
+    "aedt_processes": []
+  },
+  "evidence_rules": {
+    "all_candidates_fixed_before_solve": true,
+    "engineering_thresholds_unchanged": true,
+    "one_by_one_only": true,
+    "two_by_two_locked": true
+  }
+}

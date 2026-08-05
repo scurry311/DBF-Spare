@@ -1,0 +1,41 @@
+{
+  "case": {
+    "case_id": "aperture_center_v1_port_margin",
+    "side": 1,
+    "frequency_ghz": 10.0,
+    "geometry": {
+      "candidate_id": "aperture_center_v1_port_margin",
+      "spacing_mm": 15.0,
+      "top_substrate_thickness_mm": 0.787,
+      "feed_substrate_thickness_mm": 0.787,
+      "relative_permittivity": 2.2,
+      "loss_tangent": 0.0009,
+      "copper_thickness_mm": 0.035,
+      "patch_width_mm": 11.8,
+      "patch_length_mm": 9.35,
+      "dual_slot_length_mm": 3.0,
+      "dual_slot_width_mm": 0.3,
+      "dual_slot_center_separation_mm": 0.85,
+      "coupling_aperture_length_mm": 4.2,
+      "coupling_aperture_width_mm": 0.45,
+      "coupling_aperture_y_offset_mm": 0.0,
+      "feed_line_width_mm": 2.3,
+      "feed_line_start_offset_mm": -6.5,
+      "open_stub_length_mm": 2.2,
+      "port_sheet_margin_mm": 0.1,
+      "launch_gap_mm": 0.2,
+      "launch_ground_pad_width_mm": 1.0,
+      "launch_ground_pad_length_mm": 0.8,
+      "launch_via_radius_mm": 0.2,
+      "launch_port_margin_mm": 0.05,
+      "local_mesh_max_length_mm": 0.18,
+      "adaptive_refinement_percent": 5.0
+    },
+    "project_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v127_aperture_coupled_radiator_20260806_run06_local_mesh\\1x1\\aperture_center_v1_port_margin\\v127_1x1_aperture_center_v1_port_margin.aedt",
+    "touchstone_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v127_aperture_coupled_radiator_20260806_run06_local_mesh\\1x1\\aperture_center_v1_port_margin\\v127_1x1_aperture_center_v1_port_margin.s1p",
+    "efficiency_csv_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v127_aperture_coupled_radiator_20260806_run06_local_mesh\\1x1\\aperture_center_v1_port_margin\\radiation_efficiency.csv",
+    "builder_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v127_aperture_coupled_radiator_20260806_run06_local_mesh\\1x1\\aperture_center_v1_port_margin\\build.vbs",
+    "solver_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v127_aperture_coupled_radiator_20260806_run06_local_mesh\\1x1\\aperture_center_v1_port_margin\\solve_export.vbs",
+    "evidence_scope": "physical aperture-coupled dual-slot patch; center 1x1 smoke only"
+  }
+}

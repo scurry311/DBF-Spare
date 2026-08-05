@@ -1,0 +1,12 @@
+{
+  "baseline": "v1.27-aperture-radiator-stop-gate",
+  "created_on": "2026-08-06",
+  "parent_commit": "9b1bbc259c43519c0572a8f517db3d0693433449",
+  "parent_tag": "v1.26.0-feedpoint-s4-stop-gate",
+  "planned_tag": "v1.27.0-aperture-radiator-stop-gate",
+  "evidence_level": "B_diagnostic_physical_1x1",
+  "physical_candidate_count": 18,
+  "passive_rl_10db_pass_count": 0,
+  "best_passive_rl_db": 4.147924916948661,
+  "downstream_locked": true
+}

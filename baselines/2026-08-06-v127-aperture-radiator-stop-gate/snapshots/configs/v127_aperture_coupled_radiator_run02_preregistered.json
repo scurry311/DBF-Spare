@@ -1,0 +1,85 @@
+{
+  "protocol": "v1.27-aperture-coupled-dual-slot-radiator-port-margin-run02",
+  "created_on": "2026-08-06",
+  "parent_commit": "9b1bbc259c43519c0572a8f517db3d0693433449",
+  "parent_tag": "v1.26.0-feedpoint-s4-stop-gate",
+  "ansys_executable": "D:/v231/Win64/ansysedt.exe",
+  "output_directory": "hfss_outputs/v127_aperture_coupled_radiator_20260806_run02",
+  "inputs": {
+    "v126_physical_s4": "hfss_outputs/v126_uniform_2p10_feedpoint_s4_20260805_run02_serial/2x2_serial/f_10p00ghz/v126_2x2_uniform_2p10_f_10p00ghz.s4p",
+    "v126_physical_s4_sha256": "141cd6f6bb3c7ac8b41d8ab7ccceddd450d2686a00a14a5c67b080e0b9f72a55",
+    "v126_diagonal_bound": "hfss_outputs/v126_uniform_2p10_feedpoint_s4_20260805_run02_serial/diagonal_loadpull_bound.json",
+    "v126_diagonal_bound_sha256": "41add06a1428a0f30eda42acb72842df0ab722cec73111610d4b36510b39cc46"
+  },
+  "central_geometry": {
+    "candidate_id": "aperture_center_v1_port_margin",
+    "spacing_mm": 15.0,
+    "top_substrate_thickness_mm": 0.787,
+    "feed_substrate_thickness_mm": 0.787,
+    "relative_permittivity": 2.2,
+    "loss_tangent": 0.0009,
+    "copper_thickness_mm": 0.035,
+    "patch_width_mm": 11.8,
+    "patch_length_mm": 9.35,
+    "dual_slot_length_mm": 3.0,
+    "dual_slot_width_mm": 0.3,
+    "dual_slot_center_separation_mm": 0.85,
+    "coupling_aperture_length_mm": 4.2,
+    "coupling_aperture_width_mm": 0.45,
+    "coupling_aperture_y_offset_mm": 0.0,
+    "feed_line_width_mm": 2.3,
+    "feed_line_start_offset_mm": -6.5,
+    "open_stub_length_mm": 2.2,
+    "port_sheet_margin_mm": 0.1,
+    "launch_gap_mm": 0.2,
+    "launch_ground_pad_width_mm": 1.0,
+    "launch_ground_pad_length_mm": 0.8,
+    "launch_via_radius_mm": 0.2,
+    "launch_port_margin_mm": 0.05,
+    "local_mesh_max_length_mm": 0.18,
+    "adaptive_refinement_percent": 5.0
+  },
+  "frequency_ghz": 10.0,
+  "gates": {
+    "maximum_final_delta_s": 0.05,
+    "maximum_reciprocity_error": 0.0001,
+    "maximum_passivity_sigma": 1.001,
+    "minimum_center_passive_rl_db": 10.0,
+    "minimum_radiation_efficiency": 0.95,
+    "maximum_port_topology_warning_count": 0,
+    "minimum_small_segment_length_mm": 0.005
+  },
+  "resources": {
+    "minimum_free_memory_before_1x1_gib": 8.0,
+    "abort_free_memory_during_solve_gib": 3.0,
+    "poll_interval_seconds": 5,
+    "maximum_concurrent_aedt_instances": 1
+  },
+  "scope": {
+    "allow_center_1x1": true,
+    "allow_joint_1x1_doe_only_after_center_gate": true,
+    "allow_2x2_jacobian_only_after_1x1_gate": true,
+    "allow_4x4": false,
+    "allow_16x16": false,
+    "allow_eep_export": false,
+    "allow_training_labels": false,
+    "allow_critic_training": false,
+    "allow_existing_bridge_tuning": false
+  },
+  "planned_joint_variables": [
+    "dual_slot_length_mm",
+    "dual_slot_center_separation_mm",
+    "coupling_aperture_length_mm",
+    "coupling_aperture_width_mm",
+    "coupling_aperture_y_offset_mm",
+    "feed_line_width_mm",
+    "open_stub_length_mm"
+  ],
+  "two_by_two_jacobian_targets": [
+    "complex_diagonal_sii",
+    "nearest_x_coupling",
+    "nearest_y_coupling",
+    "even_odd_modal_reflection",
+    "frozen_stimulus_active_reflection"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "decision": "stop_current_aperture_tongue_stub_topology",
+  "reason": "Zero of 18 converged physical candidates reached 10 dB passive RL at 10 GHz.",
+  "allow_three_frequency_1x1": false,
+  "allow_2x2_jacobian": false,
+  "allow_4x4": false,
+  "allow_16x16": false,
+  "allow_eep_export": false,
+  "allow_training_labels": false,
+  "allow_critic_training": false,
+  "next_hardware_branch": "Use a true balanced or dual-resonant input with an independent impedance-transforming degree of freedom before any coupling audit."
+}

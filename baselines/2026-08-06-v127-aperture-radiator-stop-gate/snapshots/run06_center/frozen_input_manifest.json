@@ -1,0 +1,16 @@
+{
+  "inputs": [
+    {
+      "role": "v126_physical_s4",
+      "path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v126_uniform_2p10_feedpoint_s4_20260805_run02_serial\\2x2_serial\\f_10p00ghz\\v126_2x2_uniform_2p10_f_10p00ghz.s4p",
+      "sha256": "141cd6f6bb3c7ac8b41d8ab7ccceddd450d2686a00a14a5c67b080e0b9f72a55",
+      "size_bytes": 1324
+    },
+    {
+      "role": "v126_diagonal_bound",
+      "path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v126_uniform_2p10_feedpoint_s4_20260805_run02_serial\\diagonal_loadpull_bound.json",
+      "sha256": "41add06a1428a0f30eda42acb72842df0ab722cec73111610d4b36510b39cc46",
+      "size_bytes": 587
+    }
+  ]
+}

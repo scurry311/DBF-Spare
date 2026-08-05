@@ -1,0 +1,12 @@
+! Touchstone file exported from HFSS 2023.1.0
+!        File:           D:/codex_workspace/hfss_ura16_quick_model/hfss_outputs/v127_tongue_resonance_recovery_20260806_run12_partitioned_mesh/1x1_doe/res_o_mid_tongue_aperture/v127_doe_res_o_mid_tongue_aperture.aedt
+!        Generated:      1:59:09 %x4E0A%x5348  8%x6708 06, 2026
+!        Design:         V127_ApertureCoupled_DualSlot
+!        Project:        v127_doe_res_o_mid_tongue_aperture
+!        Setup:          Setup_10GHz
+!        Solution:       LastAdaptive
+!
+# GHz S MA R 50.000000
+! Terminal data exported
+! Port[1] = P000
+10                             0.691695291167511 -43.7150591047698 

@@ -1,0 +1,12 @@
+! Touchstone file exported from HFSS 2023.1.0
+!        File:           D:/codex_workspace/hfss_ura16_quick_model/hfss_outputs/v127_joint_radiator_input_doe_20260806_run08_fixed_aperture_mesh/1x1_doe/joint_d_wide_long/v127_doe_joint_d_wide_long.aedt
+!        Generated:      12:52:28 %x4E0A%x5348  8%x6708 06, 2026
+!        Design:         V127_ApertureCoupled_DualSlot
+!        Project:        v127_doe_joint_d_wide_long
+!        Setup:          Setup_10GHz
+!        Solution:       LastAdaptive
+!
+# GHz S MA R 50.000000
+! Terminal data exported
+! Port[1] = P000
+10                             0.839827547006017 -12.3551486094021 

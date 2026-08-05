@@ -1,0 +1,7 @@
+case_id,build_return_code,solve_return_code,memory_aborted,free_memory_gib_before,minimum_free_memory_gib,touchstone_exists,topology_warning_count
+res_m_e_tongue_3p40,0,0,False,13.034553527832031,3.4560813903808594,True,0
+res_n_e_tongue_3p65,0,0,False,12.79671859741211,3.0510902404785156,True,0
+res_o_mid_tongue_aperture,0,0,False,12.82550048828125,2.8113670349121094,True,0
+res_p_narrow_tongue_lower_q,0,0,False,13.018421173095703,3.8761634826660156,True,0
+res_q_b_aperture_lift,0,0,False,13.12990951538086,2.3651466369628906,True,0
+res_r_joint_resonance,0,0,False,13.128543853759766,3.035663604736328,True,0

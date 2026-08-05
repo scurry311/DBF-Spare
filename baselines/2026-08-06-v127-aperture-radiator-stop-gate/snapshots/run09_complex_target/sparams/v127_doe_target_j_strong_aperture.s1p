@@ -1,0 +1,12 @@
+! Touchstone file exported from HFSS 2023.1.0
+!        File:           D:/codex_workspace/hfss_ura16_quick_model/hfss_outputs/v127_targeted_complex_impedance_doe_20260806_run09/1x1_doe/target_j_strong_aperture/v127_doe_target_j_strong_aperture.aedt
+!        Generated:      1:26:04 %x4E0A%x5348  8%x6708 06, 2026
+!        Design:         V127_ApertureCoupled_DualSlot
+!        Project:        v127_doe_target_j_strong_aperture
+!        Setup:          Setup_10GHz
+!        Solution:       LastAdaptive
+!
+# GHz S MA R 50.000000
+! Terminal data exported
+! Port[1] = P000
+10                             0.849761934982448 12.7159119103443 

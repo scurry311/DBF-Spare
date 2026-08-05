@@ -1,0 +1,12 @@
+! Touchstone file exported from HFSS 2023.1.0
+!        File:           D:/codex_workspace/hfss_ura16_quick_model/hfss_outputs/v127_tongue_resonance_recovery_20260806_run12_partitioned_mesh/1x1_doe/res_r_joint_resonance/v127_doe_res_r_joint_resonance.aedt
+!        Generated:      2:16:44 %x4E0A%x5348  8%x6708 06, 2026
+!        Design:         V127_ApertureCoupled_DualSlot
+!        Project:        v127_doe_res_r_joint_resonance
+!        Setup:          Setup_10GHz
+!        Solution:       LastAdaptive
+!
+# GHz S MA R 50.000000
+! Terminal data exported
+! Port[1] = P000
+10                             0.664122619942143 -61.5259797084444 

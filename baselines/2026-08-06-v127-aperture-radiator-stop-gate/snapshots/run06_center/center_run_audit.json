@@ -1,0 +1,8 @@
+{
+  "solve_return_code": 0,
+  "memory_aborted": false,
+  "free_memory_gib_before": 13.108142852783203,
+  "minimum_free_memory_gib": 3.763813018798828,
+  "touchstone_exists": true,
+  "topology_warning_count": 0
+}

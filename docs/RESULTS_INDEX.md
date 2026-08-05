@@ -1,8 +1,32 @@
 # Result Index
 
-Current hardware-development baseline: `v1.26.0-feedpoint-s4-stop-gate`, frozen on 2026-08-05. The local correction geometry is unreachable, and the best 1x1 feed point also fails the true physical 2x2 active-RL gate. An optimistic diagonal-only load-pull bound proves that Sii correction alone cannot reach 11 dB while the measured non-diagonal coupling is frozen. The next branch must modify the radiator/input geometry so both diagonal and coupling terms move. The trusted 16x16 field/operator baseline below remains unchanged.
+Current hardware-development baseline: `v1.27.0-aperture-radiator-stop-gate`,
+frozen on 2026-08-06. A new aperture-coupled dual-slot/tongue input moves the
+1x1 impedance over a broad range, but none of 18 converged physical candidates
+reaches the 10 dB passive-RL prerequisite. The branch stops before 2x2, so it
+provides no nearest-neighbor coupling evidence. The trusted 16x16
+field/operator baseline below remains unchanged.
 
-## Current Hardware Stop Gate
+## v1.27 Radiator/Input Stop Gate
+
+| Result | Value | Decision |
+|---|---:|---|
+| Physical 1x1 candidates | 18/18 converged | Complete |
+| Final Delta S <= 0.05 | 18/18 | Passed |
+| Topology warnings | 0/18 | Passed |
+| Passive RL >= 10 dB | 0/18 | Failed |
+| Best passive RL | 4.148 dB | Failed |
+| Best input impedance | 19.61 - j39.11 ohm | Diagnostic |
+| Tongue-length maximum RL change | 0.008 dB | Insufficient control |
+| Minimum observed free memory | 2.365 GiB | Expansion risk |
+| Nearest-neighbor Sij | Not measured | 2x2 locked |
+
+The 1x1 prerequisite failed, so three-frequency verification, 2x2, 4x4,
+16x16, EEP export, labels, and critic training remain locked. The next branch
+must introduce an independent balanced or dual-resonant impedance
+transformation before a coupling Jacobian is meaningful.
+
+## v1.26 Feed-Point S4 Stop Gate
 
 | Result | Value | Decision |
 |---|---:|---|

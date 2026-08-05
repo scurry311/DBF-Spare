@@ -10,6 +10,10 @@ as an engineering label.
 
 Current checkpoints:
 
+- `2026-08-06-v127-aperture-radiator-stop-gate`: eighteen converged physical
+  10 GHz 1x1 joint dual-slot/tongue, aperture, and feed candidates all fail the
+  10 dB passive-RL prerequisite; 2x2 coupling evidence and all downstream
+  array, EEP, label, and critic work remain locked.
 - `2026-08-05-v125-feedpoint-range-stop-gate`: a direct three-frequency 1x1
   feed-inset screen passes at 1.95/2.10 mm and fails at 2.50/2.65 mm; the
   preregistered periodic high/low feed range stops before 2x2.

@@ -1,0 +1,14 @@
+{
+  "pass_count": 2,
+  "final_delta_s": 0.0127391,
+  "converged": true,
+  "small_mesh_segment_count": 132,
+  "peak_solver_memory_gb": 9.028457641601562,
+  "maximum_tetrahedra": 198427,
+  "frequency_ghz": 10.0,
+  "passive_rl_db": 0.7565630386697692,
+  "passivity_sigma": 0.916583105539907,
+  "radiation_efficiency": null,
+  "topology_warning_count": 0,
+  "center_gate_pass": false
+}

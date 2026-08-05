@@ -1,0 +1,11 @@
+{
+  "case_id": "res_m_e_tongue_3p40",
+  "physical_result_valid": false,
+  "failure_class": "local_mesh_partition_intersection",
+  "error": "TopApertureMesh_000 and TopSlotMesh_000 intersected",
+  "solve_return_code": 1,
+  "touchstone_exists": false,
+  "geometry_dimensions_changed_in_fix": false,
+  "fix": "Partition TopSlotMesh by subtracting and retaining TopApertureMesh",
+  "corrected_run": "v127_tongue_resonance_recovery_20260806_run12_partitioned_mesh"
+}

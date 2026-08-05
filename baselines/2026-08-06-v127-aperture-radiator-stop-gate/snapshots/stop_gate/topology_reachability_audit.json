@@ -1,0 +1,94 @@
+{
+  "stage": "v1.27_aperture_coupled_radiator_stop_gate",
+  "evidence_level": "B_diagnostic_physical_1x1",
+  "candidate_count": 18,
+  "converged_count": 18,
+  "delta_s_gate_pass_count": 18,
+  "topology_clean_count": 18,
+  "passive_rl_10db_pass_count": 0,
+  "best_physical_candidate": {
+    "case_id": "joint_b_long_high",
+    "source_run": "joint_screen",
+    "passive_rl_db": 4.147924916948661,
+    "s11_magnitude": 0.620302818011832,
+    "input_impedance_ohm": [
+      19.61087740510414,
+      -39.109085144318406
+    ],
+    "final_delta_s": 0.0230806
+  },
+  "source_best": {
+    "joint_screen": {
+      "case_id": "joint_b_long_high",
+      "passive_rl_db": 4.147924916948661,
+      "input_impedance_ohm": [
+        19.61087740510414,
+        -39.109085144318406
+      ]
+    },
+    "complex_impedance_target": {
+      "case_id": "target_k_b_resistance_lift",
+      "passive_rl_db": 2.3965023603701257,
+      "input_impedance_ohm": [
+        141.14829983811026,
+        -173.28177666482813
+      ]
+    },
+    "tongue_resonance_recovery": {
+      "case_id": "res_q_b_aperture_lift",
+      "passive_rl_db": 4.0361642083259035,
+      "input_impedance_ohm": [
+        27.3847557095449,
+        -55.330888218053
+      ]
+    }
+  },
+  "observed_impedance_envelope_ohm": {
+    "resistance_min": 6.0371352649516075,
+    "resistance_max": 476.872565351062,
+    "reactance_min": -278.36108020904595,
+    "reactance_max": 291.10162531817537
+  },
+  "tongue_length_sensitivity": {
+    "reference_case": "joint_e_mid_capacitive",
+    "reference_slot_length_mm": 3.0,
+    "tested_slot_lengths_mm": [
+      3.4,
+      3.65
+    ],
+    "maximum_abs_resistance_change_ohm": 0.3754351366032722,
+    "maximum_abs_reactance_change_ohm": 0.20396616373803056,
+    "maximum_abs_rl_change_db": 0.007625255251282326,
+    "interpretation": "The aperture-fed input is nearly insensitive to the tested tongue-length increase at 10 GHz."
+  },
+  "stub_crossing_diagnostic": {
+    "long_stub_case": "joint_e_mid_capacitive",
+    "long_stub_length_mm": 4.0,
+    "long_stub_impedance_ohm": [
+      58.538952360224414,
+      -100.83725932368827
+    ],
+    "short_stub_case": "target_g_e_short_stub",
+    "short_stub_length_mm": 2.8,
+    "short_stub_impedance_ohm": [
+      239.6527303742541,
+      262.96806470192854
+    ],
+    "interpretation": "The stub reverses reactance only by traversing a high-resistance resonance, so it is not an independent matching control."
+  },
+  "ideal_series_reactance_cancellation_diagnostic": {
+    "case_id": "res_o_mid_tongue_aperture",
+    "upper_bound_rl_db": 27.329535508421134,
+    "not_a_physical_result": true,
+    "interpretation": "A new feed topology needs an independent, manufacturable reactance transformation; the present topology does not provide it."
+  },
+  "mutual_coupling_claim": {
+    "nearest_neighbor_sij_measured": false,
+    "reason": "The 1x1 passive-RL prerequisite failed, so no 2x2 solve was authorized."
+  },
+  "resource_risk": {
+    "minimum_observed_free_memory_gib": 2.3651466369628906,
+    "memory_aborted_cases": 0,
+    "interpretation": "Several short excursions fell below 3 GiB; expansion is not resource-authorized."
+  }
+}
