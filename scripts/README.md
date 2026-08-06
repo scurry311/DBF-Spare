@@ -236,3 +236,4 @@ powershell -ExecutionPolicy Bypass -File scripts\<name>.ps1
 | `run_v131_dual_resonant_recovery.py` | Freeze the best CPS and test whether dual-resonant load changes can recover the planar input match. |
 | `run_v132_vertical_differential_launch.py` | Build and screen a short vertical differential via pair with independent bottom-pad matching capacitance. |
 | `run_v133_vertical_differential_three_frequency.py` | Freeze the selected via/pad geometry and run serial 9.96/10.00/10.04 GHz 1x1 validation. |
+| `analyze_v137_vertical_mesh_audit.py` | Attribute `.g3derr` small-segment messages to conductor versus dielectric/air bodies across the v1.32-v1.37 CAD repairs and enforce both gates. |

@@ -1,0 +1,13 @@
+{
+  "stage": "v137_mesh_segment_audit_complete",
+  "selected_case": "v137_square_finite_sheet_partitioned_substrate",
+  "strict_total_small_segment_gate_pass": false,
+  "conductor_geometry_gate_pass": true,
+  "matching_numerical_gate_pass": true,
+  "allow_three_frequency_rerun": false,
+  "allow_2x2": false,
+  "allow_eep_export": false,
+  "allow_training_labels": false,
+  "allow_critic_training": false,
+  "reason": "Conductive-sheet slivers are eliminated, but the preregistered zero-total-warning gate still fails on dielectric/air mesh messages; downstream stages remain locked."
+}

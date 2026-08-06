@@ -1,0 +1,13 @@
+{
+  "baseline_id": "2026-08-07-v137-vertical-differential-geometry-audit",
+  "created_on": "2026-08-07",
+  "parent_commit": "e168f9afb681e5106c84fdb61da8d2d86fc41fa3",
+  "selected_case": "v137_square_finite_sheet_partitioned_substrate",
+  "passive_rl_db": 18.044137586810113,
+  "final_delta_s": 0.00251825,
+  "total_small_segment_message_count": 60,
+  "conductor_small_segment_message_count": 0,
+  "strict_total_gate_pass": false,
+  "conductor_geometry_gate_pass": true,
+  "training_labels_authorized": false
+}

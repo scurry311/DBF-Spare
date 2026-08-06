@@ -62,6 +62,12 @@ The true-balanced vertical differential branch passes the 1x1 three-frequency
 passive matching gate with more than 8.8 dB margin over the 10 dB threshold.
 It supersedes the long planar CPS branch as the preferred input architecture.
 
+A subsequent `.g3derr` audit found 98 small-segment messages in the selected
+volume-copper model, including 54 on the conductive bodies. The completed
+v1.37 audit therefore retains the v1.33 numbers as matching-feasibility
+evidence but does not promote them to a geometry-trusted engineering
+reference.
+
 This is not yet an array engineering conclusion. Before 2x2, the same frozen
 candidate must pass radiation-efficiency export and an independent repeated
 solve. Before 16x16 or new labels, a physical 2x2 must demonstrate acceptable

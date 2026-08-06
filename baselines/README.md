@@ -95,3 +95,8 @@ Current checkpoints:
   all six 10 GHz candidates pass 10 dB and the frozen best candidate passes
   9.96/10.00/10.04 GHz with minimum RL 18.87 dB. Efficiency, independent
   repeat, and physical 2x2 remain required before any array or learning work.
+- `2026-08-07-v137-vertical-differential-geometry-audit`: finite-conductivity
+  sheets and a square differential post eliminate all conductive-body small
+  segments while retaining 18.04 dB RL; 60 dielectric/air messages keep the
+  strict zero-total geometry gate, three-frequency rerun, and downstream work
+  locked.

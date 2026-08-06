@@ -16,6 +16,10 @@ RL 18.87 dB and maximum final Delta S 0.002095.
 
 ## Gate State
 
-The 1x1 three-frequency passive matching gate passes. Radiation efficiency
-and an independent repeated solve are authorized next. 2x2, 4x4, 16x16, EEP,
-training labels, and critic training remain locked.
+The 1x1 three-frequency passive matching gate passes. A later `.g3derr` audit
+found 98 small-segment messages in the selected volume-copper geometry,
+including 54 on conductive bodies. This checkpoint is therefore retained as
+matching-feasibility evidence, not as the final geometry-trusted baseline.
+The completed v1.37 geometry audit keeps radiation efficiency, 2x2, 4x4,
+16x16, EEP, training labels, and critic training locked because its strict
+zero-total small-segment gate did not pass.

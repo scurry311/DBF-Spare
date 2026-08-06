@@ -1,0 +1,81 @@
+{
+  "protocol": "v1.34-vertical-differential-stable-boolean-smoke",
+  "created_on": "2026-08-07",
+  "parent_commit": "e168f9afb681e5106c84fdb61da8d2d86fc41fa3",
+  "parent_tag": "v1.33.0-vertical-differential-three-frequency",
+  "ansys_executable": "D:/v231/Win64/ansysedt.exe",
+  "output_directory": "hfss_outputs/v134_vertical_differential_geometry_smoke_20260807_run01",
+  "inputs": {
+    "selected_direct_radiator": "hfss_outputs/v129_true_balanced_radiator_screen_20260806_run01/stage_summary.json",
+    "stopped_planar_cps": "hfss_outputs/v131_dual_resonant_recovery_20260807_run01/stage_summary.json"
+  },
+  "frequency_ghz": 10.0,
+  "frozen_geometry": {
+    "board_x_mm": 15.0,
+    "board_y_mm": 15.0,
+    "substrate_thickness_mm": 0.787,
+    "relative_permittivity": 2.2,
+    "loss_tangent": 0.0009,
+    "copper_thickness_mm": 0.035,
+    "primary_inner_gap_mm": 0.6,
+    "primary_arm_length_mm": 5.2,
+    "primary_arm_width_mm": 0.8,
+    "secondary_arm_length_mm": 4.5,
+    "secondary_arm_width_mm": 0.55,
+    "secondary_arm_offset_y_mm": 1.0,
+    "secondary_neck_length_x_mm": 0.9,
+    "secondary_neck_overlap_mm": 0.2,
+    "via_num_sides": 16,
+    "port_sheet_margin_mm": 0.04,
+    "local_mesh_max_length_mm": 0.1,
+    "adaptive_refinement_percent": 8.0,
+    "maximum_passes": 16
+  },
+  "candidates": [
+    {
+      "candidate_id": "via_v0_stable_boolean",
+      "via_pair_pitch_mm": 1.1,
+      "via_radius_mm": 0.18,
+      "bottom_pad_width_mm": 0.5,
+      "bottom_pad_length_y_mm": 0.8
+    }
+  ],
+  "gates": {
+    "maximum_final_delta_s": 0.05,
+    "minimum_screen_passive_rl_db": 10.0,
+    "preferred_passive_rl_db": 15.0,
+    "maximum_port_topology_warning_count": 0,
+    "maximum_small_mesh_segment_count": 0
+  },
+  "resources": {
+    "minimum_free_memory_before_1x1_gib": 8.0,
+    "abort_free_memory_during_solve_gib": 3.0,
+    "poll_interval_seconds": 5,
+    "memory_recovery_wait_seconds": 900,
+    "maximum_concurrent_aedt_instances": 1
+  },
+  "scope": {
+    "allow_vertical_differential_1x1": true,
+    "allow_three_frequency_only_after_10ghz_gate": true,
+    "allow_2x2": false,
+    "allow_4x4": false,
+    "allow_16x16": false,
+    "allow_eep_export": false,
+    "allow_training_labels": false,
+    "allow_critic_training": false
+  },
+  "runtime_audit": {
+    "head_commit": "e168f9afb681e5106c84fdb61da8d2d86fc41fa3",
+    "tag_commit": "e168f9afb681e5106c84fdb61da8d2d86fc41fa3",
+    "free_memory_gib": 12.494636535644531,
+    "aedt_processes": []
+  },
+  "evidence_rules": {
+    "radiator_frozen_from_v129": true,
+    "planar_cps_stopped_after_v130_v131": true,
+    "true_vertical_differential_pair_without_ground": true,
+    "via_inductance_and_pad_capacitance_independent": true,
+    "all_six_candidates_fixed_before_solve": true,
+    "array_and_learning_stages_locked": true
+  }
+}

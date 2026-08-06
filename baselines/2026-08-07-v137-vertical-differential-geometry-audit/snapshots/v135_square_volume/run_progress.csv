@@ -1,0 +1,2 @@
+case_id,build_return_code,solve_return_code,memory_aborted,free_memory_gib_before,minimum_free_memory_gib,touchstone_exists,topology_warning_count
+post_v0_stable_cad,0,0,False,12.482105255126953,6.911792755126953,True,0

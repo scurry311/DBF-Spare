@@ -1,0 +1,2 @@
+case_id,via_pair_pitch_mm,via_radius_mm,bottom_pad_width_mm,bottom_pad_length_y_mm,pass_count,final_delta_s,converged,small_mesh_segment_count,peak_solver_memory_gb,maximum_tetrahedra,frequency_ghz,s11_real,s11_imag,s11_magnitude,s11_phase_deg,input_resistance_ohm,input_reactance_ohm,passive_rl_db,topology_warning_count,screen_gate_pass
+post_v0_stable_cad,1.1,0.18,0.5,0.8,2,0.00239198,True,90,5.4393157958984375,138223,10.0,-0.09883241602561998,-0.07191398540386014,0.122227115461864,-143.959030069154,40.61755893509457,-5.93054019480245,18.25664874780516,0,False

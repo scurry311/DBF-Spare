@@ -1,0 +1,6 @@
+case_id,passive_rl_db,final_delta_s,converged,total_small_segment_message_count,conductor_small_segment_message_count,dielectric_air_small_segment_message_count,minimum_segment_length_mm,maximum_segment_length_mm,body_counts_json,strict_total_gate_pass,conductor_geometry_gate_pass,matching_numerical_gate_pass
+v132_round_volume,19.834318109854724,0.00209527,True,98,54,44,0.009494,0.015671,"{""AirRegion"":20,""PrimaryN"":46,""PrimaryP"":8,""Substrate"":24}",False,False,True
+v134_round_volume_stable_overlap,19.88648876261621,0.00222347,True,90,46,44,0.013486,0.015705,"{""AirRegion"":8,""PrimaryN"":26,""PrimaryP"":20,""Substrate"":36}",False,False,True
+v135_square_volume,18.25664874780516,0.00239198,True,90,56,34,0.010589,0.015107,"{""AirRegion"":16,""PrimaryN"":18,""PrimaryP"":38,""Substrate"":18}",False,False,True
+v136_square_finite_sheet_boolean_hole,18.049935963857532,0.00257852,True,60,0,60,0.014663,0.020989,"{""AirRegion"":26,""Substrate"":34}",False,True,True
+v137_square_finite_sheet_partitioned_substrate,18.044137586810113,0.00251825,True,60,0,60,0.019392,0.022318,"{""AirRegion"":48,""Substrate"":12}",False,True,True

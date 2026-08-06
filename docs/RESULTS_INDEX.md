@@ -857,3 +857,11 @@ minimum RL 18.87 dB and maximum final Delta S 0.002095. Radiation efficiency
 and independent repeat are next; 2x2, arrays, EEP, labels, and critic remain
 locked. See `docs/V133_VERTICAL_DIFFERENTIAL_THREE_FREQUENCY_20260807.md` and
 `baselines/2026-08-07-v133-vertical-differential-three-frequency/BASELINE.md`.
+
+Post-audit v1.37 shows that the v1.33 volume-copper result contains 98
+small-segment messages, 54 on conductors. Finite-conductivity sheets and a
+square differential post reduce conductor messages to zero while preserving
+18.04 dB RL, but 60 substrate/air messages remain. The strict zero-total gate
+therefore fails and supersedes the earlier authorization for efficiency work.
+See `docs/V137_VERTICAL_DIFFERENTIAL_GEOMETRY_AUDIT_20260807.md` and
+`baselines/2026-08-07-v137-vertical-differential-geometry-audit/BASELINE.md`.

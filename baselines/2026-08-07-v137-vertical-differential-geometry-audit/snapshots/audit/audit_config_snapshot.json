@@ -1,0 +1,41 @@
+{
+  "protocol": "v1.37-vertical-differential-small-segment-audit",
+  "created_on": "2026-08-07",
+  "output_directory": "hfss_outputs/v137_vertical_differential_mesh_audit_20260807",
+  "cases": [
+    {
+      "case_id": "v132_round_volume",
+      "folder": "hfss_outputs/v132_vertical_differential_launch_20260807_run03_via_holes/vertical_diff_1x1/via_v0_open_pad"
+    },
+    {
+      "case_id": "v134_round_volume_stable_overlap",
+      "folder": "hfss_outputs/v134_vertical_differential_geometry_smoke_20260807_run01/vertical_diff_1x1/via_v0_stable_boolean"
+    },
+    {
+      "case_id": "v135_square_volume",
+      "folder": "hfss_outputs/v135_vertical_differential_square_post_20260807_run01/vertical_diff_1x1/post_v0_stable_cad"
+    },
+    {
+      "case_id": "v136_square_finite_sheet_boolean_hole",
+      "folder": "hfss_outputs/v136_vertical_differential_finite_sheet_20260807_run02_sheet_boundary/vertical_diff_1x1/sheet_post_v0_stable_cad"
+    },
+    {
+      "case_id": "v137_square_finite_sheet_partitioned_substrate",
+      "folder": "hfss_outputs/v137_vertical_differential_partitioned_substrate_20260807_run01/vertical_diff_1x1/sheet_post_partitioned_v0"
+    }
+  ],
+  "conductive_body_names": [
+    "PrimaryN",
+    "PrimaryP",
+    "PadN",
+    "PadP",
+    "ViaN",
+    "ViaP"
+  ],
+  "gates": {
+    "maximum_total_small_mesh_segment_count": 0,
+    "maximum_conductor_small_mesh_segment_count": 0,
+    "maximum_final_delta_s": 0.05,
+    "minimum_passive_rl_db": 10.0
+  }
+}

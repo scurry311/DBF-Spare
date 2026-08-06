@@ -1,0 +1,49 @@
+{
+  "cases": [
+    {
+      "case_id": "sheet_post_partitioned_v0",
+      "frequency_ghz": 10.0,
+      "geometry": {
+        "board_x_mm": 15.0,
+        "board_y_mm": 15.0,
+        "substrate_thickness_mm": 0.787,
+        "relative_permittivity": 2.2,
+        "loss_tangent": 0.0009,
+        "copper_thickness_mm": 0.035,
+        "primary_inner_gap_mm": 0.6,
+        "primary_arm_length_mm": 5.2,
+        "primary_arm_width_mm": 0.8,
+        "secondary_arm_length_mm": 4.5,
+        "secondary_arm_width_mm": 0.55,
+        "secondary_arm_offset_y_mm": 1.0,
+        "secondary_neck_length_x_mm": 0.9,
+        "secondary_neck_overlap_mm": 0.2,
+        "planar_conductor_representation": "finite_conductivity_sheet",
+        "vertical_conductor_shape": "square_post",
+        "substrate_hole_representation": "partitioned_boxes",
+        "port_sheet_margin_mm": 0.04,
+        "local_mesh_max_length_mm": 0.1,
+        "adaptive_refinement_percent": 8.0,
+        "maximum_passes": 16,
+        "candidate_id": "sheet_post_partitioned_v0",
+        "via_pair_pitch_mm": 1.1,
+        "via_radius_mm": 0.18,
+        "bottom_pad_width_mm": 0.5,
+        "bottom_pad_length_y_mm": 0.8
+      },
+      "project_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v137_vertical_differential_partitioned_substrate_20260807_run01\\vertical_diff_1x1\\sheet_post_partitioned_v0\\v132_sheet_post_partitioned_v0.aedt",
+      "touchstone_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v137_vertical_differential_partitioned_substrate_20260807_run01\\vertical_diff_1x1\\sheet_post_partitioned_v0\\v132_sheet_post_partitioned_v0.s1p",
+      "builder_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v137_vertical_differential_partitioned_substrate_20260807_run01\\vertical_diff_1x1\\sheet_post_partitioned_v0\\build.vbs",
+      "solver_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v137_vertical_differential_partitioned_substrate_20260807_run01\\vertical_diff_1x1\\sheet_post_partitioned_v0\\solve_export.vbs",
+      "cad_audit": {
+        "differential_port_definition_count": 1,
+        "reference_ground_count": 0,
+        "vertical_via_pair": true,
+        "independent_bottom_pad_pair": true,
+        "fixed_bottom_reference_plane": true,
+        "three_section_pair": true,
+        "fixed_reference_statement": true
+      }
+    }
+  ]
+}

@@ -29,11 +29,14 @@ def helpers() -> str:
     return r'''Sub CreateBox(editor, objName, x, y, z, dx, dy, dz, material, solveInside)
     editor.CreateBox Array("NAME:BoxParameters", "XPosition:=", Mm(x), "YPosition:=", Mm(y), "ZPosition:=", Mm(z), "XSize:=", Mm(dx), "YSize:=", Mm(dy), "ZSize:=", Mm(dz)), Array("NAME:Attributes", "Name:=", objName, "Flags:=", "", "Color:=", "(220 150 55)", "Transparency:=", 0, "PartCoordinateSystem:=", "Global", "MaterialValue:=", """" & material & """", "SolveInside:=", solveInside)
 End Sub
-Sub CreateVia(editor, objName, x, y, z, radius, height)
-    editor.CreateCylinder Array("NAME:CylinderParameters", "XCenter:=", Mm(x), "YCenter:=", Mm(y), "ZCenter:=", Mm(z), "Radius:=", Mm(radius), "Height:=", Mm(height), "WhichAxis:=", "Z", "NumSides:=", "24"), Array("NAME:Attributes", "Name:=", objName, "Flags:=", "", "Color:=", "(230 160 60)", "Transparency:=", 0, "PartCoordinateSystem:=", "Global", "MaterialValue:=", """copper""", "SolveInside:=", False)
+Sub CreateVia(editor, objName, x, y, z, radius, height, numSides)
+    editor.CreateCylinder Array("NAME:CylinderParameters", "XCenter:=", Mm(x), "YCenter:=", Mm(y), "ZCenter:=", Mm(z), "Radius:=", Mm(radius), "Height:=", Mm(height), "WhichAxis:=", "Z", "NumSides:=", CStr(numSides)), Array("NAME:Attributes", "Name:=", objName, "Flags:=", "", "Color:=", "(230 160 60)", "Transparency:=", 0, "PartCoordinateSystem:=", "Global", "MaterialValue:=", """copper""", "SolveInside:=", False)
 End Sub
 Sub CreateSheetZ(editor, objName, x, y, z, width, height)
     editor.CreateRectangle Array("NAME:RectangleParameters", "IsCovered:=", True, "XStart:=", Mm(x), "YStart:=", Mm(y), "ZStart:=", Mm(z), "Width:=", Mm(width), "Height:=", Mm(height), "WhichAxis:=", "Z"), Array("NAME:Attributes", "Name:=", objName, "Flags:=", "", "Color:=", "(80 120 255)", "Transparency:=", 0.15, "PartCoordinateSystem:=", "Global", "MaterialValue:=", """vacuum""", "SolveInside:=", True)
+End Sub
+Sub CreateMetalSheetZ(editor, objName, x, y, z, width, height)
+    editor.CreateRectangle Array("NAME:RectangleParameters", "IsCovered:=", True, "XStart:=", Mm(x), "YStart:=", Mm(y), "ZStart:=", Mm(z), "Width:=", Mm(width), "Height:=", Mm(height), "WhichAxis:=", "Z"), Array("NAME:Attributes", "Name:=", objName, "Flags:=", "", "Color:=", "(230 160 60)", "Transparency:=", 0, "PartCoordinateSystem:=", "Global", "MaterialValue:=", """vacuum""", "SolveInside:=", True)
 End Sub
 Sub UniteSelection(editor, names)
     editor.Unite Array("NAME:Selections", "Selections:=", names), Array("NAME:UniteParameters", "KeepOriginals:=", False)
@@ -62,8 +65,13 @@ def builder_text(project: Path, geometry: dict[str, Any], frequency_ghz: float) 
     secondary_w = float(g["secondary_arm_width_mm"])
     secondary_y = float(g["secondary_arm_offset_y_mm"])
     neck_l = float(g["secondary_neck_length_x_mm"])
+    neck_overlap = float(g.get("secondary_neck_overlap_mm", 0.02))
     pitch = float(g["via_pair_pitch_mm"])
     via_radius = float(g["via_radius_mm"])
+    via_num_sides = int(g.get("via_num_sides", 24))
+    vertical_shape = str(g.get("vertical_conductor_shape", "round_via"))
+    finite_sheet = str(g.get("planar_conductor_representation", "volume_copper")) == "finite_conductivity_sheet"
+    partitioned_substrate = str(g.get("substrate_hole_representation", "boolean_subtract")) == "partitioned_boxes"
     pad_w = float(g["bottom_pad_width_mm"])
     pad_y = float(g["bottom_pad_length_y_mm"])
     pad_gap = pitch - pad_w
@@ -75,11 +83,74 @@ def builder_text(project: Path, geometry: dict[str, Any], frequency_ghz: float) 
     max_passes = int(g["maximum_passes"])
     primary_bottom = -primary_w / 2.0
     secondary_bottom = secondary_y - secondary_w / 2.0
-    neck_height = secondary_bottom - primary_bottom + 0.02
+    neck_height = secondary_bottom - primary_bottom + neck_overlap
     left_center = -pitch / 2.0
     right_center = pitch / 2.0
-    bottom_z = -h - copper
-    via_height = h + 2.0 * copper
+    bottom_z = -h if finite_sheet else -h - copper
+    via_height = h if finite_sheet else h + 2.0 * copper
+    post_width = 2.0 * via_radius
+    if partitioned_substrate:
+        if vertical_shape != "square_post":
+            raise ValueError("Partitioned substrate holes require square vertical posts")
+        board_left = -board_x / 2.0
+        board_bottom = -board_y / 2.0
+        post_half = post_width / 2.0
+        left_hole_min = left_center - post_half
+        left_hole_max = left_center + post_half
+        right_hole_min = right_center - post_half
+        right_hole_max = right_center + post_half
+        substrate_creation = f'''CreateBox oEditor, "Substrate", {board_left:.7f}, {board_bottom:.7f}, {-h:.7f}, {board_x:.7f}, {board_y/2-post_half:.7f}, {h:.7f}, "RO5880_V132", True
+CreateBox oEditor, "SubstrateTop", {board_left:.7f}, {post_half:.7f}, {-h:.7f}, {board_x:.7f}, {board_y/2-post_half:.7f}, {h:.7f}, "RO5880_V132", True
+CreateBox oEditor, "SubstrateRowLeft", {board_left:.7f}, {-post_half:.7f}, {-h:.7f}, {left_hole_min-board_left:.7f}, {post_width:.7f}, {h:.7f}, "RO5880_V132", True
+CreateBox oEditor, "SubstrateRowCenter", {left_hole_max:.7f}, {-post_half:.7f}, {-h:.7f}, {right_hole_min-left_hole_max:.7f}, {post_width:.7f}, {h:.7f}, "RO5880_V132", True
+CreateBox oEditor, "SubstrateRowRight", {right_hole_max:.7f}, {-post_half:.7f}, {-h:.7f}, {board_x/2-right_hole_max:.7f}, {post_width:.7f}, {h:.7f}, "RO5880_V132", True
+UniteSelection oEditor, "Substrate,SubstrateTop,SubstrateRowLeft,SubstrateRowCenter,SubstrateRowRight"'''
+        clear_negative_post = ""
+        clear_positive_post = ""
+    else:
+        substrate_creation = f'CreateBox oEditor, "Substrate", {-board_x/2:.7f}, {-board_y/2:.7f}, {-h:.7f}, {board_x:.7f}, {board_y:.7f}, {h:.7f}, "RO5880_V132", True'
+        clear_negative_post = 'SubtractKeepObject oEditor, "Substrate", "ViaN"'
+        clear_positive_post = 'SubtractKeepObject oEditor, "Substrate", "ViaP"'
+    if vertical_shape == "square_post":
+        create_negative_vertical = f'CreateBox oEditor, "ViaN", {left_center-post_width/2:.7f}, {-post_width/2:.7f}, {bottom_z:.7f}, {post_width:.7f}, {post_width:.7f}, {via_height:.7f}, "copper", False'
+        create_positive_vertical = f'CreateBox oEditor, "ViaP", {right_center-post_width/2:.7f}, {-post_width/2:.7f}, {bottom_z:.7f}, {post_width:.7f}, {post_width:.7f}, {via_height:.7f}, "copper", False'
+    elif vertical_shape == "round_via":
+        create_negative_vertical = f'CreateVia oEditor, "ViaN", {left_center:.7f}, 0, {bottom_z:.7f}, {via_radius:.7f}, {via_height:.7f}, {via_num_sides}'
+        create_positive_vertical = f'CreateVia oEditor, "ViaP", {right_center:.7f}, 0, {bottom_z:.7f}, {via_radius:.7f}, {via_height:.7f}, {via_num_sides}'
+    else:
+        raise ValueError(f"Unsupported vertical conductor shape: {vertical_shape}")
+    if finite_sheet:
+        negative_conductor = f'''CreateMetalSheetZ oEditor, "PrimaryN", {-gap/2-primary_l:.7f}, {primary_bottom:.7f}, 0, {primary_l:.7f}, {primary_w:.7f}
+CreateMetalSheetZ oEditor, "SecondaryN", {-gap/2-secondary_l:.7f}, {secondary_bottom:.7f}, 0, {secondary_l:.7f}, {secondary_w:.7f}
+CreateMetalSheetZ oEditor, "NeckN", {-gap/2-neck_l:.7f}, {primary_bottom:.7f}, 0, {neck_l:.7f}, {neck_height:.7f}
+UniteSelection oEditor, "PrimaryN,SecondaryN,NeckN"
+{create_negative_vertical}
+CreateMetalSheetZ oEditor, "PadN", {left_center-pad_w/2:.7f}, {-pad_y/2:.7f}, {bottom_z:.7f}, {pad_w:.7f}, {pad_y:.7f}
+{clear_negative_post}'''
+        positive_conductor = f'''CreateMetalSheetZ oEditor, "PrimaryP", {gap/2:.7f}, {primary_bottom:.7f}, 0, {primary_l:.7f}, {primary_w:.7f}
+CreateMetalSheetZ oEditor, "SecondaryP", {gap/2:.7f}, {secondary_bottom:.7f}, 0, {secondary_l:.7f}, {secondary_w:.7f}
+CreateMetalSheetZ oEditor, "NeckP", {gap/2:.7f}, {primary_bottom:.7f}, 0, {neck_l:.7f}, {neck_height:.7f}
+UniteSelection oEditor, "PrimaryP,SecondaryP,NeckP"
+{create_positive_vertical}
+CreateMetalSheetZ oEditor, "PadP", {right_center-pad_w/2:.7f}, {-pad_y/2:.7f}, {bottom_z:.7f}, {pad_w:.7f}, {pad_y:.7f}
+{clear_positive_post}'''
+        finite_conductivity = f'oBoundary.AssignFiniteCond Array("NAME:CopperSheetFiniteConductivity", "Objects:=", Array("PrimaryN", "PrimaryP", "PadN", "PadP"), "UseMaterial:=", True, "Material:=", "copper", "UseThickness:=", True, "Thickness:=", "{copper:.7f}mm", "Roughness:=", "0um", "InfGroundPlane:=", False, "IsTwoSided:=", True, "IsShellElement:=", False)'
+    else:
+        negative_conductor = f'''CreateBox oEditor, "PrimaryN", {-gap/2-primary_l:.7f}, {primary_bottom:.7f}, 0, {primary_l:.7f}, {primary_w:.7f}, {copper:.7f}, "copper", False
+CreateBox oEditor, "SecondaryN", {-gap/2-secondary_l:.7f}, {secondary_bottom:.7f}, 0, {secondary_l:.7f}, {secondary_w:.7f}, {copper:.7f}, "copper", False
+CreateBox oEditor, "NeckN", {-gap/2-neck_l:.7f}, {primary_bottom:.7f}, 0, {neck_l:.7f}, {neck_height:.7f}, {copper:.7f}, "copper", False
+{create_negative_vertical}
+CreateBox oEditor, "PadN", {left_center-pad_w/2:.7f}, {-pad_y/2:.7f}, {bottom_z:.7f}, {pad_w:.7f}, {pad_y:.7f}, {copper:.7f}, "copper", False
+{clear_negative_post}
+UniteSelection oEditor, "PrimaryN,SecondaryN,NeckN,ViaN,PadN"'''
+        positive_conductor = f'''CreateBox oEditor, "PrimaryP", {gap/2:.7f}, {primary_bottom:.7f}, 0, {primary_l:.7f}, {primary_w:.7f}, {copper:.7f}, "copper", False
+CreateBox oEditor, "SecondaryP", {gap/2:.7f}, {secondary_bottom:.7f}, 0, {secondary_l:.7f}, {secondary_w:.7f}, {copper:.7f}, "copper", False
+CreateBox oEditor, "NeckP", {gap/2:.7f}, {primary_bottom:.7f}, 0, {neck_l:.7f}, {neck_height:.7f}, {copper:.7f}, "copper", False
+{create_positive_vertical}
+CreateBox oEditor, "PadP", {right_center-pad_w/2:.7f}, {-pad_y/2:.7f}, {bottom_z:.7f}, {pad_w:.7f}, {pad_y:.7f}, {copper:.7f}, "copper", False
+{clear_positive_post}
+UniteSelection oEditor, "PrimaryP,SecondaryP,NeckP,ViaP,PadP"'''
+        finite_conductivity = ""
     return f'''Option Explicit
 Dim oAnsoftApp, oDesktop, oProject, oDesign, oEditor, oBoundary, oAnalysis, oRad, oMesh
 Set oAnsoftApp = CreateObject("Ansoft.ElectronicsDesktop")
@@ -93,25 +164,14 @@ Set oEditor = oDesign.SetActiveEditor("3D Modeler")
 oEditor.SetModelUnits Array("NAME:Units Parameter", "Units:=", "mm", "Rescale:=", False)
 Set oBoundary = oDesign.GetModule("BoundarySetup")
 Set oAnalysis = oDesign.GetModule("AnalysisSetup")
-CreateBox oEditor, "Substrate", {-board_x/2:.7f}, {-board_y/2:.7f}, {-h:.7f}, {board_x:.7f}, {board_y:.7f}, {h:.7f}, "RO5880_V132", True
+{substrate_creation}
 
 ' Negative conductor: frozen fork, one short via, and one bottom capacitive launch pad.
-CreateBox oEditor, "PrimaryN", {-gap/2-primary_l:.7f}, {primary_bottom:.7f}, 0, {primary_l:.7f}, {primary_w:.7f}, {copper:.7f}, "copper", False
-CreateBox oEditor, "SecondaryN", {-gap/2-secondary_l:.7f}, {secondary_bottom:.7f}, 0, {secondary_l:.7f}, {secondary_w:.7f}, {copper:.7f}, "copper", False
-CreateBox oEditor, "NeckN", {-gap/2-neck_l:.7f}, {primary_bottom:.7f}, 0, {neck_l:.7f}, {neck_height:.7f}, {copper:.7f}, "copper", False
-CreateVia oEditor, "ViaN", {left_center:.7f}, 0, {bottom_z:.7f}, {via_radius:.7f}, {via_height:.7f}
-CreateBox oEditor, "PadN", {left_center-pad_w/2:.7f}, {-pad_y/2:.7f}, {bottom_z:.7f}, {pad_w:.7f}, {pad_y:.7f}, {copper:.7f}, "copper", False
-SubtractKeepObject oEditor, "Substrate", "ViaN"
-UniteSelection oEditor, "PrimaryN,SecondaryN,NeckN,ViaN,PadN"
+{negative_conductor}
 
 ' Positive conductor is the exact x mirror; no common reference ground exists.
-CreateBox oEditor, "PrimaryP", {gap/2:.7f}, {primary_bottom:.7f}, 0, {primary_l:.7f}, {primary_w:.7f}, {copper:.7f}, "copper", False
-CreateBox oEditor, "SecondaryP", {gap/2:.7f}, {secondary_bottom:.7f}, 0, {secondary_l:.7f}, {secondary_w:.7f}, {copper:.7f}, "copper", False
-CreateBox oEditor, "NeckP", {gap/2:.7f}, {primary_bottom:.7f}, 0, {neck_l:.7f}, {neck_height:.7f}, {copper:.7f}, "copper", False
-CreateVia oEditor, "ViaP", {right_center:.7f}, 0, {bottom_z:.7f}, {via_radius:.7f}, {via_height:.7f}
-CreateBox oEditor, "PadP", {right_center-pad_w/2:.7f}, {-pad_y/2:.7f}, {bottom_z:.7f}, {pad_w:.7f}, {pad_y:.7f}, {copper:.7f}, "copper", False
-SubtractKeepObject oEditor, "Substrate", "ViaP"
-UniteSelection oEditor, "PrimaryP,SecondaryP,NeckP,ViaP,PadP"
+{positive_conductor}
+{finite_conductivity}
 
 ' The bottom reference plane is fixed; pad gap/area and via radius are independent matching controls.
 CreateSheetZ oEditor, "PortSheet_DIFF", {-pad_gap/2-margin:.7f}, {-pad_y/2:.7f}, {bottom_z:.7f}, {pad_gap+2*margin:.7f}, {pad_y:.7f}
@@ -246,6 +306,7 @@ def analyze(config: dict[str, Any]) -> dict[str, Any]:
         passed = bool(
             profile.get("converged") is True
             and float(profile.get("final_delta_s") or math.inf) <= float(gates["maximum_final_delta_s"])
+            and int(profile.get("small_mesh_segment_count") or 0) <= int(gates.get("maximum_small_mesh_segment_count", 10**9))
             and topology_warning_count(folder) <= int(gates["maximum_port_topology_warning_count"])
             and passive_rl >= float(gates["minimum_screen_passive_rl_db"])
         )
