@@ -1,0 +1,12 @@
+{
+  "stage": "B_fixed_reference_cps_screen_complete",
+  "allow_run": true,
+  "allow_three_frequency": false,
+  "allow_2x2": false,
+  "allow_4x4": false,
+  "allow_16x16": false,
+  "allow_eep_export": false,
+  "allow_training_labels": false,
+  "allow_critic_training": false,
+  "reason": "The independent CPS transformer screen failed at 10 GHz; all array and learning stages remain locked."
+}

@@ -1,0 +1,8 @@
+case_id,build_return_code,solve_return_code,memory_aborted,free_memory_gib_before,minimum_free_memory_gib,touchstone_exists,topology_warning_count
+load_d0_center,0,0,False,12.464988708496094,9.174541473388672,True,0
+load_d2_both_long,0,0,False,12.483497619628906,8.392925262451172,True,0
+load_d3_split_close,0,0,False,12.443809509277344,10.234291076660156,True,0
+load_d4_split_far,0,0,False,12.476455688476562,9.394855499267578,True,0
+load_d5_primary_mid_secondary_long,0,0,False,12.566688537597656,9.244667053222656,True,0
+load_d6_both_shorter,0,0,False,12.485363006591797,9.934917449951172,True,0
+load_d7_primary_short_secondary_mid,0,0,False,12.500015258789062,10.231277465820312,True,0

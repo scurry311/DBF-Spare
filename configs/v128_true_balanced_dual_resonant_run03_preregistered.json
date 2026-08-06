@@ -1,0 +1,10 @@
+{
+  "extends": "configs/v128_true_balanced_dual_resonant_run02_preregistered.json",
+  "protocol": "v1.28-true-balanced-dual-resonant-independent-transformer-run03",
+  "output_directory": "hfss_outputs/v128_true_balanced_dual_resonant_20260806_run03_port_axis",
+  "derived_from": "hfss_outputs/v128_true_balanced_dual_resonant_20260806_run02_port_margin/build_audit.json",
+  "change_scope": "Correct only the AEDT local Width/Height ordering for the same Y-normal differential port sheet; conductor geometry, physical port extent, integration line, and gates are unchanged.",
+  "central_geometry": {
+    "candidate_id": "balanced_fork_center_v1_port_axis"
+  }
+}

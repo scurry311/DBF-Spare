@@ -1,0 +1,12 @@
+! Touchstone file exported from HFSS 2023.1.0
+!        File:           D:/codex_workspace/hfss_ura16_quick_model/hfss_outputs/v128_true_balanced_dual_resonant_20260806_run03_port_axis/center_1x1/balanced_fork_center_v1_port_axis/v128_balanced_fork_center_v1_port_axis.aedt
+!        Generated:      11:40:18 %x4E0B%x5348  8%x6708 06, 2026
+!        Design:         V128_TrueBalanced_DualResonant
+!        Project:        v128_balanced_fork_center_v1_port_axis
+!        Setup:          Setup_10GHz
+!        Solution:       LastAdaptive
+!
+# GHz S MA R 50.000000
+! Terminal data exported
+! Port[1] = P_DIFF
+10                             0.877695937680212 -7.06577348723235

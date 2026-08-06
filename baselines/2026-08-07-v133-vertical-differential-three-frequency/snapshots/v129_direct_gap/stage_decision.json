@@ -1,0 +1,13 @@
+{
+  "stage": "B_direct_gap_screen_complete",
+  "allow_run": true,
+  "allow_fixed_reference_transformer": true,
+  "allow_three_frequency": false,
+  "allow_2x2": false,
+  "allow_4x4": false,
+  "allow_16x16": false,
+  "allow_eep_export": false,
+  "allow_training_labels": false,
+  "allow_critic_training": false,
+  "reason": "A numerically credible radiator impedance is inside the preregistered transformer-reachable region; a fixed-reference three-section CPS transformer screen is authorized."
+}

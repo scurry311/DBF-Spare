@@ -1,0 +1,11 @@
+{
+  "build_return_code": 0,
+  "project_exists": true,
+  "topology_warning_count": 0,
+  "differential_port_definition_count": 1,
+  "reference_ground_count": 0,
+  "negative_positive_conductor_pair": true,
+  "independent_transformer_objects": true,
+  "secondary_resonator_objects": true,
+  "build_gate_pass": true
+}

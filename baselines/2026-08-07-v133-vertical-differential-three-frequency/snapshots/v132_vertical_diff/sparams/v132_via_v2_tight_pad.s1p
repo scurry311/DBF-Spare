@@ -1,0 +1,12 @@
+! Touchstone file exported from HFSS 2023.1.0
+!        File:           D:/codex_workspace/hfss_ura16_quick_model/hfss_outputs/v132_vertical_differential_launch_20260807_run03_via_holes/vertical_diff_1x1/via_v2_tight_pad/v132_via_v2_tight_pad.aedt
+!        Generated:      12:36:20 %x4E0A%x5348  8%x6708 07, 2026
+!        Design:         V132_VerticalDifferential
+!        Project:        v132_via_v2_tight_pad
+!        Setup:          Setup_10GHz
+!        Solution:       LastAdaptive
+!
+# GHz S MA R 50.000000
+! Terminal data exported
+! Port[1] = P_DIFF
+10                             0.182299897298929 -125.179388354886

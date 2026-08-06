@@ -225,3 +225,14 @@ powershell -ExecutionPolicy Bypass -File scripts\<name>.ps1
 | `run_v127_aperture_coupled_radiator.py` | Build and serially solve the physical dual-slot/tongue patch, coupling aperture, bottom feed, and local GSG launch with deterministic local mesh partitions. |
 | `run_v127_joint_radiator_input_doe.py` | Preregister, memory-guard, solve, and gate fixed 1x1 joint radiator/input candidate sets without opening 2x2 or downstream work. |
 | `analyze_v127_aperture_topology_stop_gate.py` | Aggregate the 18 frozen physical candidates, audit complex-impedance reachability and controlled tongue/stub sensitivity, and issue the topology stop decision. |
+
+## v1.28-v1.33 True-Balanced Differential Input
+
+| File | Purpose |
+|---|---|
+| `run_v128_true_balanced_dual_resonant.py` | Build and gate the first groundless differential fork center model and audit the original mixed feed/transformer reference plane. |
+| `run_v129_true_balanced_radiator_screen.py` | Move the reference plane to the radiator gap and screen frozen dual-resonant fork impedances. |
+| `run_v130_fixed_reference_cps_transformer.py` | Keep port and total feed path fixed while independently screening CPS transformer width and length. |
+| `run_v131_dual_resonant_recovery.py` | Freeze the best CPS and test whether dual-resonant load changes can recover the planar input match. |
+| `run_v132_vertical_differential_launch.py` | Build and screen a short vertical differential via pair with independent bottom-pad matching capacitance. |
+| `run_v133_vertical_differential_three_frequency.py` | Freeze the selected via/pad geometry and run serial 9.96/10.00/10.04 GHz 1x1 validation. |

@@ -1,0 +1,8 @@
+{
+  "candidate_count": 6,
+  "screen_gate_pass_count": 6,
+  "preferred_15db_count": 3,
+  "selected_candidate": "via_v0_open_pad",
+  "best_passive_rl_db": 19.834318109854724,
+  "allow_three_frequency": true
+}

@@ -1,0 +1,12 @@
+! Touchstone file exported from HFSS 2023.1.0
+!        File:           D:/codex_workspace/hfss_ura16_quick_model/hfss_outputs/v130_fixed_reference_cps_transformer_20260806_run01/fixed_reference_cps_1x1/cps_w0p45_l2p4/v130_cps_w0p45_l2p4.aedt
+!        Generated:      12:02:05 %x4E0A%x5348  8%x6708 07, 2026
+!        Design:         V130_FixedReference_CPS
+!        Project:        v130_cps_w0p45_l2p4
+!        Setup:          Setup_10GHz
+!        Solution:       LastAdaptive
+!
+# GHz S MA R 50.000000
+! Terminal data exported
+! Port[1] = P_DIFF
+10                             0.792738124521165 36.7287754930409

@@ -839,3 +839,21 @@ The single local floating modal branch is stopped. Independent repeat,
 integrated 2x2, array expansion, labels, and critic training remain locked. The
 authoritative snapshot is
 `baselines/2026-08-04-v122-balanced-modal-branch-stop-gate/BASELINE.md`.
+
+## True-Balanced Vertical Differential Input v1.33
+
+The v1.28 mixed planar feed establishes a valid groundless differential port
+but fails matching at 1.13 dB. Moving the reference plane to the radiator gap
+in v1.29 identifies a physical dual-resonant fork at 43.73 - j0.51 ohm and
+23.47 dB RL. Fixed-reference planar CPS width/length control is physically
+observable in v1.30, but its best 10 GHz result is only 4.92 dB; changing the
+dual-resonant load behind that frozen CPS in v1.31 reaches only 6.33 dB, so the
+long planar branch stops.
+
+The v1.32 short vertical differential via/pad input passes 10 dB for all six
+physical candidates and 15 dB for three. The selected geometry reaches
+19.83 dB at 10 GHz. Frozen v1.33 solves at 9.96/10.00/10.04 GHz all pass, with
+minimum RL 18.87 dB and maximum final Delta S 0.002095. Radiation efficiency
+and independent repeat are next; 2x2, arrays, EEP, labels, and critic remain
+locked. See `docs/V133_VERTICAL_DIFFERENTIAL_THREE_FREQUENCY_20260807.md` and
+`baselines/2026-08-07-v133-vertical-differential-three-frequency/BASELINE.md`.

@@ -1,0 +1,8 @@
+{
+  "frequency_count": 3,
+  "frequency_gate_pass_count": 3,
+  "minimum_passive_rl_db": 18.868825815085277,
+  "preferred_15db_reserve": true,
+  "three_frequency_gate_pass": true,
+  "allow_efficiency_audit": true
+}

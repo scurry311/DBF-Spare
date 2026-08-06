@@ -1,0 +1,9 @@
+{
+  "candidate_count": 6,
+  "numerically_valid_count": 6,
+  "screen_gate_pass_count": 1,
+  "transformer_reachable_count": 6,
+  "selected_radiator_candidate": "direct_d1_both_short",
+  "best_passive_rl_db": 23.469507976761676,
+  "allow_fixed_reference_transformer": true
+}

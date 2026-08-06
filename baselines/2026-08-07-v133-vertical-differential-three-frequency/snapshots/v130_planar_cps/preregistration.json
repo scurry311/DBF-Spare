@@ -1,0 +1,124 @@
+{
+  "protocol": "v1.30-fixed-reference-three-section-cps-transformer",
+  "created_on": "2026-08-06",
+  "parent_commit": "9a1b171ea51d3eb022c92febcfec46fa8687cf68",
+  "parent_tag": "v1.27.0-aperture-radiator-stop-gate",
+  "ansys_executable": "D:/v231/Win64/ansysedt.exe",
+  "output_directory": "hfss_outputs/v130_fixed_reference_cps_transformer_20260806_run01",
+  "inputs": {
+    "radiator_screen_summary": "hfss_outputs/v129_true_balanced_radiator_screen_20260806_run01/stage_summary.json",
+    "required_selected_radiator_candidate": "direct_d1_both_short"
+  },
+  "frequency_ghz": 10.0,
+  "frozen_geometry": {
+    "board_x_mm": 15.0,
+    "board_y_mm": 15.0,
+    "substrate_thickness_mm": 0.787,
+    "relative_permittivity": 2.2,
+    "loss_tangent": 0.0009,
+    "copper_thickness_mm": 0.035,
+    "primary_inner_gap_mm": 0.6,
+    "primary_arm_length_mm": 5.2,
+    "primary_arm_width_mm": 0.8,
+    "secondary_arm_length_mm": 4.5,
+    "secondary_arm_width_mm": 0.55,
+    "secondary_arm_offset_y_mm": 1.0,
+    "secondary_neck_length_x_mm": 0.9,
+    "feed_pair_center_pitch_mm": 1.25,
+    "input_trace_width_mm": 0.45,
+    "post_trace_width_mm": 0.65,
+    "feed_y_start_mm": -3.5,
+    "feed_y_end_mm": 0.1,
+    "transformer_center_y_mm": -1.5,
+    "segment_overlap_mm": 0.15,
+    "port_y_mm": -3.0,
+    "port_sheet_margin_mm": 0.05,
+    "local_mesh_max_length_mm": 0.18,
+    "adaptive_refinement_percent": 8.0,
+    "maximum_passes": 16
+  },
+  "candidates": [
+    {
+      "candidate_id": "cps_w0p45_l0p8",
+      "transformer_width_mm": 0.45,
+      "transformer_length_mm": 0.8
+    },
+    {
+      "candidate_id": "cps_w0p45_l1p6",
+      "transformer_width_mm": 0.45,
+      "transformer_length_mm": 1.6
+    },
+    {
+      "candidate_id": "cps_w0p45_l2p4",
+      "transformer_width_mm": 0.45,
+      "transformer_length_mm": 2.4
+    },
+    {
+      "candidate_id": "cps_w0p80_l0p8",
+      "transformer_width_mm": 0.8,
+      "transformer_length_mm": 0.8
+    },
+    {
+      "candidate_id": "cps_w0p80_l1p6",
+      "transformer_width_mm": 0.8,
+      "transformer_length_mm": 1.6
+    },
+    {
+      "candidate_id": "cps_w0p80_l2p4",
+      "transformer_width_mm": 0.8,
+      "transformer_length_mm": 2.4
+    },
+    {
+      "candidate_id": "cps_w1p05_l0p8",
+      "transformer_width_mm": 1.05,
+      "transformer_length_mm": 0.8
+    },
+    {
+      "candidate_id": "cps_w1p05_l1p6",
+      "transformer_width_mm": 1.05,
+      "transformer_length_mm": 1.6
+    },
+    {
+      "candidate_id": "cps_w1p05_l2p4",
+      "transformer_width_mm": 1.05,
+      "transformer_length_mm": 2.4
+    }
+  ],
+  "gates": {
+    "maximum_final_delta_s": 0.05,
+    "minimum_screen_passive_rl_db": 10.0,
+    "preferred_passive_rl_db": 15.0,
+    "maximum_port_topology_warning_count": 0
+  },
+  "resources": {
+    "minimum_free_memory_before_1x1_gib": 8.0,
+    "abort_free_memory_during_solve_gib": 3.0,
+    "poll_interval_seconds": 5,
+    "memory_recovery_wait_seconds": 900,
+    "maximum_concurrent_aedt_instances": 1
+  },
+  "scope": {
+    "allow_fixed_reference_transformer_screen": true,
+    "allow_three_frequency_only_after_10ghz_gate": true,
+    "allow_2x2": false,
+    "allow_4x4": false,
+    "allow_16x16": false,
+    "allow_eep_export": false,
+    "allow_training_labels": false,
+    "allow_critic_training": false
+  },
+  "runtime_audit": {
+    "head_commit": "9a1b171ea51d3eb022c92febcfec46fa8687cf68",
+    "tag_commit": "9a1b171ea51d3eb022c92febcfec46fa8687cf68",
+    "free_memory_gib": 12.447921752929688,
+    "aedt_processes": []
+  },
+  "evidence_rules": {
+    "radiator_geometry_frozen_from_v129": true,
+    "port_reference_plane_fixed": true,
+    "total_feed_path_fixed": true,
+    "transformer_width_and_length_independent": true,
+    "all_nine_candidates_fixed_before_solve": true,
+    "array_and_learning_stages_locked": true
+  }
+}

@@ -90,3 +90,8 @@ Current checkpoints:
   numerical gates pass, but worst active RL is 5.08 dB. Even independent ideal
   per-port Sii load-pull cannot exceed a 9.49 dB worst-corner upper bound with
   physical coupling frozen, so bridge and feed-point-only tuning stop.
+- `2026-08-07-v133-vertical-differential-three-frequency`: a short groundless
+  vertical differential via/pad input replaces the stopped long planar CPS;
+  all six 10 GHz candidates pass 10 dB and the frozen best candidate passes
+  9.96/10.00/10.04 GHz with minimum RL 18.87 dB. Efficiency, independent
+  repeat, and physical 2x2 remain required before any array or learning work.

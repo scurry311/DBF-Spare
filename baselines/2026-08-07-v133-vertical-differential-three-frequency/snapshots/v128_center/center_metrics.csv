@@ -1,0 +1,2 @@
+case_id,pass_count,final_delta_s,converged,small_mesh_segment_count,peak_solver_memory_gb,maximum_tetrahedra,frequency_ghz,s11_real,s11_imag,s11_magnitude,passive_rl_db,input_resistance_ohm,input_reactance_ohm,radiation_efficiency,topology_warning_count,center_gate_pass
+balanced_fork_center_v1_port_axis,2,0.00213366,True,52,3.302532196044922,81741,10.0,0.871030360197072,-0.10796420997397921,0.8776959376802119,1.1331182344666932,405.893245203787,-381.6414012329668,,0,False

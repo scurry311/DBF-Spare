@@ -1,0 +1,12 @@
+! Touchstone file exported from HFSS 2023.1.0
+!        File:           D:/codex_workspace/hfss_ura16_quick_model/hfss_outputs/v129_true_balanced_radiator_screen_20260806_run01/direct_gap_1x1/direct_d5_primary_mid_secondary_long/v129_direct_d5_primary_mid_secondary_long.aedt
+!        Generated:      11:54:41 %x4E0B%x5348  8%x6708 06, 2026
+!        Design:         V129_TrueBalanced_DirectGap
+!        Project:        v129_direct_d5_primary_mid_secondary_long
+!        Setup:          Setup_10GHz
+!        Solution:       LastAdaptive
+!
+# GHz S MA R 50.000000
+! Terminal data exported
+! Port[1] = P_DIFF
+10                             0.332102929293613 42.3107818137767
