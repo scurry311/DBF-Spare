@@ -1,0 +1,8 @@
+{
+  "frequency_count": 3,
+  "minimum_passive_rl_db": 17.070403491788603,
+  "minimum_radiation_efficiency": 1.00131274088162,
+  "maximum_final_delta_s": 0.00266066,
+  "maximum_conductor_small_segment_count": 0,
+  "three_frequency_efficiency_gate_pass": true
+}

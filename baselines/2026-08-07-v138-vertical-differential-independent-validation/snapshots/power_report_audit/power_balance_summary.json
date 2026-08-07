@@ -1,0 +1,10 @@
+{
+  "frequency_count": 3,
+  "power_ratio_available_all_frequencies": true,
+  "minimum_reported_radiation_efficiency": 1.00131274088162,
+  "maximum_reported_radiation_efficiency": 1.00205440764811,
+  "maximum_efficiency_excess_above_unity": 0.002054407648109935,
+  "maximum_efficiency_vs_power_ratio_abs_error": 3.3306690738754696e-15,
+  "interpretation": "HFSS radiation efficiency is internally consistent with RadiatedPower/AcceptedPower; values slightly above unity are retained as numerical power-balance error, not physical gain.",
+  "efficiency_lower_bound_95_percent_supported": true
+}

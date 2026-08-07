@@ -865,3 +865,21 @@ square differential post reduce conductor messages to zero while preserving
 therefore fails and supersedes the earlier authorization for efficiency work.
 See `docs/V137_VERTICAL_DIFFERENTIAL_GEOMETRY_AUDIT_20260807.md` and
 `baselines/2026-08-07-v137-vertical-differential-geometry-audit/BASELINE.md`.
+
+## v1.38 Independent Solver And Efficiency Validation (2026-08-07)
+
+Three independently built 10 GHz projects (direct repeat A, direct repeat B,
+and DDM) reproduce the frozen v1.37 response with maximum absolute S difference
+`2.2123e-14`, minimum RL 18.044 dB, and identical 94,991-tetrahedron meshes.
+All residual messages remain confined to `AirRegion=48` and `Substrate=12`,
+with zero conductor messages. For this frozen geometry, the residual warnings
+are therefore classified as numerically benign.
+
+Independent 9.96/10.00/10.04 GHz solves reach minimum RL 17.070 dB and maximum
+final Delta S 0.002661. Conservative system efficiency is 98.17%-98.97%. Raw
+HFSS radiation efficiency exceeds unity by at most 0.205%, but closes against
+radiated/accepted power within `3.34e-15`; the excess is recorded as numerical
+power-balance error. Physical 2x2 is authorized, while larger arrays, EEP,
+labels, and critic training remain locked. See
+`docs/V138_VERTICAL_DIFFERENTIAL_INDEPENDENT_VALIDATION_20260807.md` and
+`baselines/2026-08-07-v138-vertical-differential-independent-validation/BASELINE.md`.

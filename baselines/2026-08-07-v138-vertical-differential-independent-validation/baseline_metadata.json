@@ -1,0 +1,16 @@
+{
+  "baseline_id": "2026-08-07-v138-vertical-differential-independent-validation",
+  "created_on": "2026-08-07",
+  "parent_commit": "e9b849979e9a38cdc8398f84fefd168f5644223f",
+  "evidence_level": "physical_hfss_1x1_independent_direct_ddm_three_frequency_power_audit",
+  "maximum_pairwise_abs_delta_s": 2.2122765190832296e-14,
+  "minimum_three_frequency_passive_rl_db": 17.070403491788603,
+  "maximum_final_delta_s": 0.00266066,
+  "minimum_system_efficiency": 0.981655190697319,
+  "maximum_raw_radiation_efficiency_excess_above_unity": 0.002054407648109935,
+  "maximum_conductor_small_segment_message_count": 0,
+  "residual_warning_benign_gate_pass": true,
+  "three_frequency_efficiency_gate_pass": true,
+  "physical_2x2_authorized": true,
+  "training_labels_authorized": false
+}

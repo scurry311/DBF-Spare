@@ -1,0 +1,12 @@
+! Touchstone file exported from HFSS 2023.1.0
+!        File:           D:/codex_workspace/hfss_ura16_quick_model/hfss_outputs/v138_vertical_differential_independent_validation_20260807_run01/independent_10ghz/direct_repeat_a/v138_direct_repeat_a.aedt
+!        Generated:      11:34:51 %x4E0A%x5348  8%x6708 07, 2026
+!        Design:         V132_VerticalDifferential
+!        Project:        v138_direct_repeat_a
+!        Setup:          Setup_10GHz
+!        Solution:       LastAdaptive
+!
+# GHz S MA R 50.000000
+! Terminal data exported
+! Port[1] = P_DIFF
+10                             0.125254437416955 -138.667587903836

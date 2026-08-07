@@ -1,0 +1,4 @@
+case_id,solver_type,build_return_code,solve_return_code,memory_aborted,free_memory_gib_before,minimum_free_memory_gib,touchstone_exists,efficiency_exists
+direct_f9p96,direct,0,0,False,12.441024780273438,6.879116058349609,True,True
+direct_f10p00,direct,0,0,False,12.409881591796875,6.828533172607422,True,True
+direct_f10p04,direct,0,0,False,12.395404815673828,7.574237823486328,True,True

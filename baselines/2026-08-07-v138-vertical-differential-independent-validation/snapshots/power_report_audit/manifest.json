@@ -1,0 +1,25 @@
+{
+  "cases": [
+    {
+      "case_id": "direct_f9p96",
+      "frequency_ghz": 9.96,
+      "project_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v138_vertical_differential_independent_validation_20260807_run01\\three_frequency_efficiency\\direct_f9p96\\v138_direct_f9p96.aedt",
+      "return_code": 0,
+      "output_directory": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v138_vertical_differential_independent_validation_20260807_run01\\power_report_audit\\direct_f9p96"
+    },
+    {
+      "case_id": "direct_f10p00",
+      "frequency_ghz": 10.0,
+      "project_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v138_vertical_differential_independent_validation_20260807_run01\\three_frequency_efficiency\\direct_f10p00\\v138_direct_f10p00.aedt",
+      "return_code": 0,
+      "output_directory": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v138_vertical_differential_independent_validation_20260807_run01\\power_report_audit\\direct_f10p00"
+    },
+    {
+      "case_id": "direct_f10p04",
+      "frequency_ghz": 10.04,
+      "project_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v138_vertical_differential_independent_validation_20260807_run01\\three_frequency_efficiency\\direct_f10p04\\v138_direct_f10p04.aedt",
+      "return_code": 0,
+      "output_directory": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v138_vertical_differential_independent_validation_20260807_run01\\power_report_audit\\direct_f10p04"
+    }
+  ]
+}

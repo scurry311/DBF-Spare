@@ -100,3 +100,8 @@ Current checkpoints:
   segments while retaining 18.04 dB RL; 60 dielectric/air messages keep the
   strict zero-total geometry gate, three-frequency rerun, and downstream work
   locked.
+- `2026-08-07-v138-vertical-differential-independent-validation`: independent
+  direct/direct/DDM projects agree to max absolute S difference `2.21e-14`;
+  three-frequency minimum RL is 17.07 dB and conservative system efficiency is
+  98.17%-98.97%. The fixed dielectric/air messages are numerically benign for
+  this geometry, so physical 2x2 is authorized while larger stages stay locked.

@@ -1,0 +1,13 @@
+{
+  "case_count": 3,
+  "minimum_passive_rl_db": 18.04413758680817,
+  "maximum_pairwise_abs_delta_s": 2.2122765190832296e-14,
+  "required_pairwise_gate_pass": true,
+  "benign_pairwise_gate_pass": true,
+  "passive_rl_span_db": 1.5276668818842154e-12,
+  "maximum_input_impedance_difference_ohm": 1.8482258797082714e-12,
+  "maximum_conductor_small_segment_count": 0,
+  "residual_messages_confined_to_allowed_bodies": true,
+  "physical_gate_pass": true,
+  "residual_warning_benign_gate_pass": true
+}

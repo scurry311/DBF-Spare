@@ -1,0 +1,4 @@
+left_case_id,right_case_id,abs_delta_s,passive_rl_delta_db,input_impedance_difference_ohm
+direct_repeat_a,direct_repeat_b,1.1297209734074606e-14,2.0961010704922955e-13,9.417577386302839e-13
+direct_repeat_a,ddm_repeat,2.0917735032248288e-14,1.3180567748349858e-12,1.7407871057791234e-12
+direct_repeat_b,ddm_repeat,2.2122765190832296e-14,1.5276668818842154e-12,1.8482258797082714e-12

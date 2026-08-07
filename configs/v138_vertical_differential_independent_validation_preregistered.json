@@ -1,0 +1,75 @@
+{
+  "protocol": "v1.38-vertical-differential-independent-mesh-direct-ddm-and-three-frequency-efficiency",
+  "created_on": "2026-08-07",
+  "parent_commit": "e9b849979e9a38cdc8398f84fefd168f5644223f",
+  "parent_tag": "v1.37.0-vertical-differential-geometry-audit",
+  "ansys_executable": "D:/v231/Win64/ansysedt.exe",
+  "output_directory": "hfss_outputs/v138_vertical_differential_independent_validation_20260807_run01",
+  "inputs": {
+    "v137_stage_decision": "hfss_outputs/v137_vertical_differential_mesh_audit_20260807/stage_decision.json"
+  },
+  "frequency_ghz": 10.0,
+  "frequencies_ghz": [9.96, 10.0, 10.04],
+  "independent_solver_cases": [
+    {"case_id": "direct_repeat_a", "solver_type": "direct"},
+    {"case_id": "direct_repeat_b", "solver_type": "direct"},
+    {"case_id": "ddm_repeat", "solver_type": "ddm"}
+  ],
+  "frozen_geometry": {
+    "board_x_mm": 15.0,
+    "board_y_mm": 15.0,
+    "substrate_thickness_mm": 0.787,
+    "relative_permittivity": 2.2,
+    "loss_tangent": 0.0009,
+    "copper_thickness_mm": 0.035,
+    "primary_inner_gap_mm": 0.6,
+    "primary_arm_length_mm": 5.2,
+    "primary_arm_width_mm": 0.8,
+    "secondary_arm_length_mm": 4.5,
+    "secondary_arm_width_mm": 0.55,
+    "secondary_arm_offset_y_mm": 1.0,
+    "secondary_neck_length_x_mm": 0.9,
+    "secondary_neck_overlap_mm": 0.20,
+    "planar_conductor_representation": "finite_conductivity_sheet",
+    "vertical_conductor_shape": "square_post",
+    "substrate_hole_representation": "partitioned_boxes",
+    "via_pair_pitch_mm": 1.10,
+    "via_radius_mm": 0.18,
+    "bottom_pad_width_mm": 0.50,
+    "bottom_pad_length_y_mm": 0.80,
+    "port_sheet_margin_mm": 0.04,
+    "local_mesh_max_length_mm": 0.10,
+    "adaptive_refinement_percent": 8.0,
+    "maximum_passes": 16
+  },
+  "gates": {
+    "maximum_final_delta_s": 0.05,
+    "minimum_passive_rl_db": 10.0,
+    "preferred_passive_rl_db": 15.0,
+    "maximum_conductor_small_segment_count": 0,
+    "allowed_residual_small_segment_bodies": ["Substrate", "AirRegion"],
+    "maximum_required_pairwise_abs_delta_s": 0.05,
+    "maximum_benign_pairwise_abs_delta_s": 0.02,
+    "maximum_passive_rl_span_db": 0.25,
+    "maximum_input_impedance_difference_ohm": 2.0,
+    "minimum_radiation_efficiency": 0.95,
+    "maximum_port_topology_warning_count": 0
+  },
+  "resources": {
+    "minimum_free_memory_before_1x1_gib": 8.0,
+    "abort_free_memory_during_solve_gib": 3.0,
+    "poll_interval_seconds": 5,
+    "memory_recovery_wait_seconds": 900,
+    "maximum_concurrent_aedt_instances": 1
+  },
+  "scope": {
+    "allow_independent_1x1_direct_ddm": true,
+    "allow_three_frequency_only_after_benign_residual_gate": true,
+    "allow_2x2_only_after_three_frequency_efficiency_gate": true,
+    "allow_4x4": false,
+    "allow_16x16": false,
+    "allow_eep_export": false,
+    "allow_training_labels": false,
+    "allow_critic_training": false
+  }
+}
