@@ -1,0 +1,74 @@
+{
+  "case_id": "direct01_repair03",
+  "frequency_ghz": 10.0,
+  "solver_type": "direct",
+  "geometry": {
+    "substrate_thickness_mm": 0.787,
+    "relative_permittivity": 2.2,
+    "loss_tangent": 0.0009,
+    "copper_thickness_mm": 0.035,
+    "primary_inner_gap_mm": 0.6,
+    "primary_arm_length_mm": 5.2,
+    "primary_arm_width_mm": 0.8,
+    "secondary_arm_length_mm": 4.5,
+    "secondary_arm_width_mm": 0.55,
+    "secondary_arm_offset_y_mm": 1.0,
+    "secondary_neck_length_x_mm": 0.9,
+    "secondary_neck_overlap_mm": 0.2,
+    "via_pair_pitch_mm": 1.1,
+    "via_radius_mm": 0.18,
+    "bottom_pad_width_mm": 0.5,
+    "bottom_pad_length_y_mm": 0.8,
+    "port_sheet_margin_mm": 0.04,
+    "local_mesh_max_length_mm": 0.18,
+    "adaptive_refinement_percent": 5.0,
+    "maximum_passes": 16
+  },
+  "numerical_amendment": {
+    "protocol": "v1.39-memory-safe-mesh-amendment01",
+    "created_on": "2026-08-08",
+    "base_config": "configs/v139_physical_2x2_differential_array_preregistered.json",
+    "base_config_sha256": "3fc3e4bfcddb06dc4de137e6b9e44dee78296c8d7228317b5df2ac97e55e7746",
+    "reason": "The frozen 0.10 mm primary-sheet mesh exhausted a 24 GiB workstation before adaptive pass 1 at 378897 tetrahedra. The physical geometry, ports, materials, direct solver, MaxDeltaS and engineering gates remain unchanged.",
+    "failed_case_evidence": [
+      "initial_10ghz/direct01_repair01/run_progress.csv",
+      "initial_10ghz/direct01_repair02/run_progress.csv"
+    ],
+    "geometry_overrides": {
+      "local_mesh_max_length_mm": 0.18,
+      "adaptive_refinement_percent": 5.0,
+      "maximum_passes": 16
+    },
+    "unchanged_controls": [
+      "2x2 element geometry",
+      "15 mm x/y spacing",
+      "P00/P10/P01/P11 differential port order",
+      "finite-conductivity model",
+      "direct solver",
+      "MaxDeltaS=0.05",
+      "all physical and engineering gates"
+    ],
+    "stop_condition": "If the amended direct solve still crosses the 3 GiB free-memory abort line before a valid adaptive pass, do not weaken physical gates or launch DDM/three-frequency cases.",
+    "amendment_sha256": "98f526e980aaf350cbbb37841efc89b2b80c3b8f1c521b812630f6708a069800"
+  },
+  "project_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v139_physical_2x2_differential_array_20260808_run01\\initial_10ghz\\direct01_repair03\\v139_direct01_repair03.aedt",
+  "touchstone_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v139_physical_2x2_differential_array_20260808_run01\\initial_10ghz\\direct01_repair03\\v139_direct01_repair03.s4p",
+  "builder_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v139_physical_2x2_differential_array_20260808_run01\\initial_10ghz\\direct01_repair03\\build.vbs",
+  "solver_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v139_physical_2x2_differential_array_20260808_run01\\initial_10ghz\\direct01_repair03\\solve_export.vbs",
+  "builder_sha256": "b888c6dda212174f9a911f8bb553dbad118d61cab1206ea0d7454b4615302b09",
+  "solver_sha256": "a376f908755139802282b004800ee06ce84d261a024eb485e7fb9ea4e4f34e9d",
+  "cad_audit": {
+    "differential_port_definition_count": 4,
+    "port_order": [
+      "P00",
+      "P10",
+      "P01",
+      "P11"
+    ],
+    "reference_ground_count": 0,
+    "finite_conductivity_sheet": true,
+    "partitioned_continuous_substrate": true,
+    "solver_option_count": 1,
+    "trusted_local_mesh_object_count": 8
+  }
+}

@@ -105,3 +105,9 @@ Current checkpoints:
   three-frequency minimum RL is 17.07 dB and conservative system efficiency is
   98.17%-98.97%. The fixed dielectric/air messages are numerically benign for
   this geometry, so physical 2x2 is authorized while larger stages stay locked.
+- `2026-08-08-v139-physical-2x2-active-rl-stop-gate`: the physical four-port
+  2x2 true-differential array converges with Delta S 0.004565, passive RL
+  17.16 dB, zero conductor warnings, and trustworthy S4 ordering. Frozen
+  coherent K=2/4/6 replay fails active matching at -6.03 dB worst active RL,
+  7.64 dB total RL, and 83.14% minimum system efficiency; DDM, three-frequency,
+  larger arrays, EEP, labels, and critic training remain locked.

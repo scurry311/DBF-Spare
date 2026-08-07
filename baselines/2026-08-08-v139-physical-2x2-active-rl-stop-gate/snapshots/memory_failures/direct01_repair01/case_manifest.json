@@ -1,0 +1,24 @@
+{
+  "case_id": "direct01_repair01",
+  "frequency_ghz": 10.0,
+  "solver_type": "direct",
+  "project_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v139_physical_2x2_differential_array_20260808_run01\\initial_10ghz\\direct01_repair01\\v139_direct01_repair01.aedt",
+  "touchstone_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v139_physical_2x2_differential_array_20260808_run01\\initial_10ghz\\direct01_repair01\\v139_direct01_repair01.s4p",
+  "builder_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v139_physical_2x2_differential_array_20260808_run01\\initial_10ghz\\direct01_repair01\\build.vbs",
+  "solver_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v139_physical_2x2_differential_array_20260808_run01\\initial_10ghz\\direct01_repair01\\solve_export.vbs",
+  "builder_sha256": "f80683b4723432f650f48aea4f8cc512c8939e3a6cc6b01ea629df6ed474e8f6",
+  "solver_sha256": "5a263d8ebfd11e6609aee2b789570644d78735fdf0850bb73bfc916fdc70526a",
+  "cad_audit": {
+    "differential_port_definition_count": 4,
+    "port_order": [
+      "P00",
+      "P10",
+      "P01",
+      "P11"
+    ],
+    "reference_ground_count": 0,
+    "finite_conductivity_sheet": true,
+    "partitioned_continuous_substrate": true,
+    "solver_option_count": 1
+  }
+}

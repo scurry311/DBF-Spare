@@ -883,3 +883,20 @@ power-balance error. Physical 2x2 is authorized, while larger arrays, EEP,
 labels, and critic training remain locked. See
 `docs/V138_VERTICAL_DIFFERENTIAL_INDEPENDENT_VALIDATION_20260807.md` and
 `baselines/2026-08-07-v138-vertical-differential-independent-validation/BASELINE.md`.
+
+## v1.39 Physical 2x2 Active-RL Stop Gate (2026-08-08)
+
+The first valid four-port physical 2x2 true-differential direct solve converges
+with final Delta S `0.004565`, reciprocity error `1.08e-16`, passivity sigma
+`0.4151`, minimum passive RL `17.162 dB`, and zero conductive-body warnings.
+The memory-safe numerical amendment changes only the primary-sheet local mesh
+from 0.10 mm to 0.18 mm and refinement from 8% to 5%; physical geometry,
+ports, solver, convergence gate, and engineering thresholds remain frozen.
+
+Frozen coherent replay exposes the limiting mechanism: K=2/K=4/K=6 minimum
+active RL is `3.286/-2.521/-6.032 dB`, minimum total RL is `7.637 dB`, and
+minimum system efficiency is `83.14%`. The y-neighbor path and even/x-odd
+modes dominate the failed active-RL Jacobian. DDM, three-frequency, larger
+arrays, EEP, labels, and critic training remain locked. See
+`docs/V139_PHYSICAL_2X2_ACTIVE_RL_STOP_GATE_20260808.md` and
+`baselines/2026-08-08-v139-physical-2x2-active-rl-stop-gate/BASELINE.md`.

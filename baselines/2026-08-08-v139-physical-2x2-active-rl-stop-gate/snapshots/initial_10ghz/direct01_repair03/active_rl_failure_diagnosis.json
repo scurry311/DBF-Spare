@@ -1,0 +1,95 @@
+{
+  "valid_10ghz_stimulus_count": 484,
+  "failure_below_10_count": 408,
+  "failure_below_10_rate": 0.8429752066115702,
+  "pass_11_count": 59,
+  "pass_11_rate": 0.12190082644628099,
+  "worst_case": {
+    "stimulus_index": 601,
+    "stimulus_family": "k6_supported_scene",
+    "sample_index": 421025,
+    "k_value": 6,
+    "ratio": 0.5,
+    "window_role": "corner",
+    "source_type": "combined",
+    "task_index": -1,
+    "worst_port": "P10",
+    "active_rl_db": -6.03168169436319,
+    "worst_gamma_magnitude": 2.002553302845709,
+    "source_port_magnitude": 0.12552909798424364,
+    "reflected_port_magnitude": 0.2513787097715899,
+    "required_b_reduction_for_10db": 0.21168292354592377,
+    "required_b_reduction_for_11db": 0.21599980305800834,
+    "stop_line_pass": false,
+    "design_line_pass": false
+  },
+  "coupling_relation_sensitivity": [
+    {
+      "coupling_relation": "self",
+      "failure_term_count": 408,
+      "mean_term_magnitude": 0.05980682728537964,
+      "mean_aligned_term_magnitude": 0.04178574205381518,
+      "mean_jacobian_magnitude": 17.911195601406558,
+      "maximum_jacobian_magnitude": 27.421789816418727
+    },
+    {
+      "coupling_relation": "x_neighbor",
+      "failure_term_count": 408,
+      "mean_term_magnitude": 0.07250133819405861,
+      "mean_aligned_term_magnitude": 0.055666136158096284,
+      "mean_jacobian_magnitude": 17.408668063626667,
+      "maximum_jacobian_magnitude": 62.58614512997586
+    },
+    {
+      "coupling_relation": "y_neighbor",
+      "failure_term_count": 408,
+      "mean_term_magnitude": 0.12729413695905084,
+      "mean_aligned_term_magnitude": 0.11777970218760588,
+      "mean_jacobian_magnitude": 24.113383710262283,
+      "maximum_jacobian_magnitude": 59.362535879564064
+    },
+    {
+      "coupling_relation": "diagonal",
+      "failure_term_count": 408,
+      "mean_term_magnitude": 0.02340622986269206,
+      "mean_aligned_term_magnitude": 0.006572926208151347,
+      "mean_jacobian_magnitude": 17.019031463813842,
+      "maximum_jacobian_magnitude": 91.62119643721923
+    }
+  ],
+  "modal_failure_summary": [
+    {
+      "mode": "even",
+      "mean_fraction_failed": 0.4297621424776231,
+      "mean_fraction_passed": 0.2252780582974074,
+      "dominant_failure_count": 236
+    },
+    {
+      "mode": "x_odd",
+      "mean_fraction_failed": 0.23112455043660898,
+      "mean_fraction_passed": 0.18496002805961487,
+      "dominant_failure_count": 76
+    },
+    {
+      "mode": "y_odd",
+      "mean_fraction_failed": 0.2309385942074736,
+      "mean_fraction_passed": 0.3431095666732206,
+      "dominant_failure_count": 77
+    },
+    {
+      "mode": "checker",
+      "mean_fraction_failed": 0.10817471287829432,
+      "mean_fraction_passed": 0.2466523469697572,
+      "dominant_failure_count": 19
+    }
+  ],
+  "diagnosis": "The valid passive S4 is not active-matched for the frozen coherent excitations. Y-neighbor coupling is strongest, while the x-odd/even modal RL values are below 10 dB; cancellation-sensitive task weights create active reflection larger than the incident wave at individual significant ports.",
+  "decision": {
+    "allow_independent_repeat": false,
+    "allow_ddm": false,
+    "allow_three_frequency": false,
+    "allow_larger_arrays": false,
+    "allow_eep_labels_or_critic": false,
+    "next_authorized_work": "S4-aware fixed-mask task-weight projection or a single local x/y modal feed correction evaluated against this frozen S4; do not launch more HFSS until the 10 GHz frozen-stimulus oracle has a nonempty >=11 dB reserve."
+  }
+}

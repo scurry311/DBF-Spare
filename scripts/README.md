@@ -239,3 +239,10 @@ powershell -ExecutionPolicy Bypass -File scripts\<name>.ps1
 | `analyze_v137_vertical_mesh_audit.py` | Attribute `.g3derr` small-segment messages to conductor versus dielectric/air bodies across the v1.32-v1.37 CAD repairs and enforce both gates. |
 | `run_v138_vertical_differential_independent_validation.py` | Build independent direct/direct/DDM 1x1 meshes for the frozen v1.37 geometry, audit residual warnings, and gate a three-frequency radiation-efficiency rerun. |
 | `audit_v138_antenna_power_reports.py` | Reopen completed v1.38 projects without resolving and compare `RadiationEfficiency` with exported radiated/accepted/incident/reflected antenna powers. |
+
+## v1.39 Physical 2x2 Differential Array
+
+| File | Purpose |
+|---|---|
+| `run_v139_physical_2x2_differential_array.py` | Preregister and build the physical four-port 2x2 array, freeze K=2/4/6 stimuli with audited port order, enforce serial memory gates, reconstruct a coherent radiated-power operator, and conditionally gate direct/DDM and three-frequency stages. |
+| `diagnose_v139_active_rl_failure.py` | Attribute failed frozen-stimulus active RL to physical ports, x/y/diagonal coupling paths, array modes, and complex-S sensitivity Jacobians. |

@@ -1,0 +1,22 @@
+{
+  "baseline_id": "2026-08-08-v139-physical-2x2-active-rl-stop-gate",
+  "created_on": "2026-08-08",
+  "parent_commit": "3a368e11cb729818ce4ebf6cd5d50cba425ca4e4",
+  "evidence_level": "physical_hfss_2x2_direct_s4_frozen_multitask_active_rl",
+  "frequency_ghz": 10.0,
+  "final_delta_s": 0.0045651,
+  "maximum_tetrahedra": 157557,
+  "peak_solver_memory_gib": 8.172645568847656,
+  "minimum_passive_rl_db": 17.16206116510115,
+  "minimum_active_rl_db": -6.031681864147414,
+  "minimum_total_rl_db": 7.63679386573254,
+  "minimum_system_efficiency": 0.8314026275316848,
+  "maximum_reciprocity_error": 1.0838898772828417e-16,
+  "maximum_passivity_sigma": 0.41512048176664595,
+  "active_rl_failure_count": 408,
+  "active_rl_stimulus_count": 484,
+  "numerical_physical_gate_pass": true,
+  "active_rl_stop_line_pass": false,
+  "training_labels_authorized": false
+}
+
