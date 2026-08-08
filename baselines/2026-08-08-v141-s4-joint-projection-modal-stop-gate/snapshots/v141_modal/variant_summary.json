@@ -1,0 +1,136 @@
+[
+  {
+    "variant": "active_upper_bound",
+    "parameters": [
+      -26.422474594692215,
+      15.277998538979688,
+      -7.812106711454692,
+      -0.029097540762345445,
+      0.007398049761229651,
+      0.006773947361644019
+    ],
+    "scene_count": 20,
+    "joint_pass_count": 3,
+    "active11_pass_count": 20,
+    "pattern_pass_count": 3,
+    "worst_active_rl_db": 11.4598144950222,
+    "worst_total_rl_db": 13.197580601732781,
+    "worst_pattern_margin_db": -4.584407806396484,
+    "network_efficiency_min": 0.9668021975447902,
+    "passive_rl_min_db": 13.483557452933852,
+    "reciprocity_error": 9.453208419344607e-16,
+    "passivity_sigma": 0.23217619194083988,
+    "modal_rl_db": [
+      13.280771184732007,
+      12.687177193284944,
+      14.46249126222892,
+      13.597677888124633
+    ],
+    "fast_upper_bound": {
+      "worst_active_gamma": 0.2673063496803988,
+      "worst_total_gamma": 0.22247486818180484,
+      "network_efficiency_min": 0.9668021975447891,
+      "command_map_distortion_max": 0.3919229978271798,
+      "passive_gamma_max": 0.21174937022832896
+    },
+    "components": {
+      "series_common_ohm": {
+        "implementation": "capacitive_series_gap",
+        "equivalent_pf": 0.6023468487840522
+      },
+      "series_x_graph_ohm": {
+        "implementation": "inductive_series_path",
+        "equivalent_nh": 0.24315689880293725
+      },
+      "series_y_graph_ohm": {
+        "implementation": "capacitive_series_gap",
+        "equivalent_pf": 2.0372858304473813
+      },
+      "shunt_common_s": {
+        "implementation": "inductive_shunt_or_bridge",
+        "equivalent_nh": 0.5469704274728765
+      },
+      "shunt_x_graph_s": {
+        "implementation": "capacitive_shunt_or_bridge",
+        "equivalent_pf": 0.11774361887395152
+      },
+      "shunt_y_graph_s": {
+        "implementation": "capacitive_shunt_or_bridge",
+        "equivalent_pf": 0.10781072068499485
+      }
+    },
+    "joint_pass_count_by_k": {
+      "2": 3,
+      "4": 0,
+      "6": 0
+    },
+    "multi_k_coverage_gate_pass": false
+  },
+  {
+    "variant": "pattern_guarded",
+    "parameters": [
+      -26.802654584069824,
+      7.8768184251890965,
+      -6.720908060719922,
+      -0.02199302460615157,
+      0.002290092005937862,
+      0.005309686987115311
+    ],
+    "scene_count": 20,
+    "joint_pass_count": 2,
+    "active11_pass_count": 2,
+    "pattern_pass_count": 12,
+    "worst_active_rl_db": 6.175478320354331,
+    "worst_total_rl_db": 14.135424987252094,
+    "worst_pattern_margin_db": -1.1530570983886719,
+    "network_efficiency_min": 0.9759288166411751,
+    "passive_rl_min_db": 15.324599421052213,
+    "reciprocity_error": 2.5476231888929306e-16,
+    "passivity_sigma": 0.3086229777586806,
+    "modal_rl_db": [
+      19.374855587338224,
+      11.313247472591257,
+      33.256259404031596,
+      10.212325943566752
+    ],
+    "fast_upper_bound": {
+      "worst_active_gamma": 0.4911634983300279,
+      "worst_total_gamma": 0.23050150461325472,
+      "network_efficiency_min": 0.9759288166411741,
+      "command_map_distortion_max": 0.17974984599742566,
+      "passive_gamma_max": 0.17130499595188386
+    },
+    "components": {
+      "series_common_ohm": {
+        "implementation": "capacitive_series_gap",
+        "equivalent_pf": 0.5938029108000713
+      },
+      "series_x_graph_ohm": {
+        "implementation": "inductive_series_path",
+        "equivalent_nh": 0.12536345882061634
+      },
+      "series_y_graph_ohm": {
+        "implementation": "capacitive_series_gap",
+        "equivalent_pf": 2.368057138321383
+      },
+      "shunt_common_s": {
+        "implementation": "inductive_shunt_or_bridge",
+        "equivalent_nh": 0.7236610058962915
+      },
+      "shunt_x_graph_s": {
+        "implementation": "capacitive_shunt_or_bridge",
+        "equivalent_pf": 0.03644794628802449
+      },
+      "shunt_y_graph_s": {
+        "implementation": "capacitive_shunt_or_bridge",
+        "equivalent_pf": 0.08450629302701146
+      }
+    },
+    "joint_pass_count_by_k": {
+      "2": 2,
+      "4": 0,
+      "6": 0
+    },
+    "multi_k_coverage_gate_pass": false
+  }
+]

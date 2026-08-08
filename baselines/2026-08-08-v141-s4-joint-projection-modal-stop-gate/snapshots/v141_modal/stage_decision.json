@@ -1,0 +1,9 @@
+{
+  "circuit_joint_gate_pass": false,
+  "eligible_variants": [],
+  "active_only_upper_bound_reaches_11db": true,
+  "authorize_physical_2x2_hfss": false,
+  "authorize_larger_array": false,
+  "authorize_labels_or_critic": false,
+  "conclusion": "The single block has an active-RL-only upper bound but cannot preserve the frozen task pattern. Keep physical HFSS locked; next test must jointly re-optimize task weights on the corrected S4 and mapped EEP before any CAD build."
+}

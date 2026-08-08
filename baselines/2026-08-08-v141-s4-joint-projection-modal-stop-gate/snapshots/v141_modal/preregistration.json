@@ -1,0 +1,108 @@
+{
+  "protocol": "v1.41-single-block-xy-even-odd-modal-correction",
+  "created_on": "2026-08-08",
+  "parent_protocol": "v1.40b-frozen-s4-task-weight-active-rl-active-set-projection",
+  "evidence_scope": "Finite-Q circuit and modal upper bound on the trusted 10 GHz HFSS S4. Not a physical HFSS feed-network result.",
+  "inputs": {
+    "physical_s4": "hfss_outputs/v139_physical_2x2_differential_array_20260808_run01/initial_10ghz/direct01_repair03/physical_operators.npz",
+    "projection_run": "hfss_outputs/v140b_frozen_s4_task_weight_projection_20260808_run02",
+    "frozen_scenes": "hfss_outputs/v21_frozen_v112_replay_20260729_run03/frozen_v112_replay_candidates.npz",
+    "pattern_operator": "hfss_outputs/fixed_mesh_eep256_20260723_run05/grounded_patch_eep_operator_256port.npz"
+  },
+  "topology": {
+    "name": "single_xy_even_odd_modal_block",
+    "description": "One finite-Q local block with common, x-odd and y-odd series modal reactance plus common, x-odd and y-odd shunt susceptance. No second cascade stage and no nonlocal connection.",
+    "mode_order": [
+      "even",
+      "x_odd",
+      "y_odd",
+      "checker"
+    ],
+    "physical_port_order": [
+      "P00",
+      "P10",
+      "P01",
+      "P11"
+    ],
+    "parameters": [
+      "series_common_ohm",
+      "series_x_graph_ohm",
+      "series_y_graph_ohm",
+      "shunt_common_s",
+      "shunt_x_graph_s",
+      "shunt_y_graph_s"
+    ],
+    "bounds": [
+      [
+        -150.0,
+        150.0
+      ],
+      [
+        -100.0,
+        100.0
+      ],
+      [
+        -100.0,
+        100.0
+      ],
+      [
+        -0.08,
+        0.08
+      ],
+      [
+        -0.08,
+        0.08
+      ],
+      [
+        -0.08,
+        0.08
+      ]
+    ],
+    "inductor_q": 60.0,
+    "capacitor_q": 200.0
+  },
+  "optimization": {
+    "seed": 20260808,
+    "population_size_multiplier": 12,
+    "maximum_iterations": 180,
+    "variants": [
+      "active_upper_bound",
+      "pattern_guarded"
+    ],
+    "pattern_map_distortion_limit": 0.08,
+    "active_design_target_db": 11.0,
+    "passive_target_db": 12.0
+  },
+  "gates": {
+    "active_rl_min_db": 11.0,
+    "total_rl_min_db": 11.0,
+    "passive_rl_min_db": 12.0,
+    "network_efficiency_min": 0.95,
+    "psll_max_db": 0.0,
+    "nearest_isolation_min_db": 25.0,
+    "local_5deg_isolation_min_db": 20.0,
+    "weakest_target_gain_drop_max_db": 0.5,
+    "target_peak_spread_max_db": 3.0,
+    "pointing_error_max_deg": 1.5
+  },
+  "coverage_gate": {
+    "minimum_joint_pass_per_k": 1,
+    "required_k_values": [
+      2,
+      4,
+      6
+    ],
+    "reason": "A multi-task physical smoke is not authorized by K=2-only feasibility."
+  },
+  "stop_policy": {
+    "physical_hfss_allowed_only_if_joint_circuit_gate_passes": true,
+    "larger_array_allowed": false,
+    "labels_or_critic_allowed": false
+  },
+  "config_sha256": "6f29be90692b28bfbb2836b667c3caa7414082ee9ca6407fa58ed409d614fb90",
+  "input_sha256": {
+    "physical_s4": "fd100bf2cd95ab0fc1adfa17406e0d82a82a7e4e5b92ce1c39e0103bd7d1875c",
+    "frozen_scenes": "754dfa94aaa76e717f0b579ff5f8960758bdf20a88175c7c8bbc9233180092e4",
+    "pattern_operator": "fb359a627b2d19438137188e13ed7fd40ba9b87f29cf82bf97b15afbed89dce6"
+  }
+}

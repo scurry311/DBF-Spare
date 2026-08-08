@@ -1,0 +1,19 @@
+{
+  "baseline_id": "2026-08-08-v141-s4-joint-projection-modal-stop-gate",
+  "created_on": "2026-08-08",
+  "parent_commit": "6c7b9ef49c36dba30641a50f31d81567c585dbac",
+  "evidence_level": "trusted_physical_s4_block_oracle_and_finite_q_modal_circuit_upper_bound",
+  "frequency_ghz": 10.0,
+  "frozen_scene_count": 20,
+  "k_distribution": {"2": 7, "4": 6, "6": 7},
+  "task_weight_engineering_oracle_count": 0,
+  "task_weight_reserve11_oracle_count": 0,
+  "task_weight_best_active_rl_db": 9.998293176956139,
+  "modal_active_upper_bound_worst_active_rl_db": 11.4598144950222,
+  "modal_active_upper_bound_efficiency_min": 0.9668021975447902,
+  "modal_active_upper_bound_passive_rl_min_db": 13.483557452933852,
+  "modal_joint_pass_by_k": {"2": 3, "4": 0, "6": 0},
+  "multi_k_coverage_gate_pass": false,
+  "physical_hfss_authorized": false,
+  "training_labels_authorized": false
+}

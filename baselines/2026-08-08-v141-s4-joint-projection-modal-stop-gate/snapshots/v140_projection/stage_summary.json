@@ -1,0 +1,23 @@
+{
+  "scope": "Frozen physical HFSS S4 tiled as 64 independent 2x2 blocks plus the frozen nominal 256-port EEP pattern operator. This is a fixed-mask algorithmic feasibility oracle, not integrated 16x16 HFSS evidence.",
+  "scene_count": 20,
+  "k_distribution": {
+    "2": 7,
+    "4": 6,
+    "6": 7
+  },
+  "s4_block_count": 64,
+  "engineering_strict_oracle_count": 0,
+  "reserve11_strict_oracle_count": 0,
+  "reserve11_strict_oracle_nonempty": false,
+  "best_active_rl_floor_db": 9.998293176956139,
+  "elapsed_seconds": 683.6880962848663,
+  "allow_hfss": false,
+  "allow_critic_training": false,
+  "next_action": "Design one local x/y even-odd modal correction block against the trusted physical S4. Do not add another cascade stage.",
+  "limitations": [
+    "The S256 matching operator is block diagonal and omits coupling between 2x2 cells.",
+    "The pattern operator is the frozen nominal EEP used by the scene package, not an EEP exported from the v1.39 differential geometry.",
+    "A solver_error is a failed search stage, not a mathematical proof of global infeasibility."
+  ]
+}

@@ -1,0 +1,7 @@
+﻿variant,k_value,joint_pass_count,minimum_required,coverage_gate_pass
+active_upper_bound,2,3,1,1
+active_upper_bound,4,0,1,0
+active_upper_bound,6,0,1,0
+pattern_guarded,2,2,1,1
+pattern_guarded,4,0,1,0
+pattern_guarded,6,0,1,0

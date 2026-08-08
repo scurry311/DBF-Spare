@@ -1,0 +1,81 @@
+{
+  "protocol": "v1.40b-frozen-s4-task-weight-active-rl-active-set-projection",
+  "created_on": "2026-08-08",
+  "parent_commit": "6c7b9ef49c36dba30641a50f31d81567c585dbac",
+  "parent_tag": "v1.39.0-physical-2x2-active-rl-stop-gate",
+  "seed": 20260808,
+  "evidence_scope": "Frozen physical HFSS S4 tiled as 64 independent 2x2 blocks plus the frozen nominal 256-port EEP pattern operator. This is a fixed-mask algorithmic feasibility oracle, not integrated 16x16 HFSS evidence.",
+  "inputs": {
+    "physical_s4": "hfss_outputs/v139_physical_2x2_differential_array_20260808_run01/initial_10ghz/direct01_repair03/physical_operators.npz",
+    "frozen_scenes": "hfss_outputs/v21_frozen_v112_replay_20260729_run03/frozen_v112_replay_candidates.npz",
+    "pattern_operator": "hfss_outputs/fixed_mesh_eep256_20260723_run05/grounded_patch_eep_operator_256port.npz",
+    "physical_s4_port_order": [
+      "P00",
+      "P10",
+      "P01",
+      "P11"
+    ],
+    "array_flattening": "port = ix*16 + iy",
+    "block_indices": "[x,y], [x+1,y], [x,y+1], [x+1,y+1] for even x,y"
+  },
+  "frozen_policy": {
+    "mask_changes_allowed": false,
+    "target_changes_allowed": false,
+    "ratio_changes_allowed": false,
+    "threshold_changes_allowed": false,
+    "hfss_allowed": false,
+    "critic_training_allowed": false
+  },
+  "gates": {
+    "psll_max_db": 0.0,
+    "nearest_isolation_min_db": 25.0,
+    "local_5deg_isolation_min_db": 20.0,
+    "weakest_target_gain_drop_max_db": 0.5,
+    "target_peak_spread_max_db": 3.0,
+    "pointing_error_max_deg": 1.5,
+    "engineering_active_rl_min_db": 10.0,
+    "design_active_rl_min_db": 11.0,
+    "combined_channel_dynamic_range_max_db": 20.0,
+    "combined_peak_to_rms_max_db": 12.0,
+    "power_increase_max_db": 1.0,
+    "normalized_wng_min_db": -10.0,
+    "target_equality_error_max": 0.02,
+    "dense_leakage_ratio_max": 1.05
+  },
+  "sequential_socp": {
+    "solver": "CLARABEL",
+    "cvxpy_version": "1.6.5",
+    "active_rl_stages_db": [
+      5.0,
+      8.0,
+      9.0,
+      10.0,
+      10.5,
+      11.0,
+      11.25
+    ],
+    "outer_iterations_per_stage": 2,
+    "task_significant_relative_db": -20.0,
+    "task_norm_growth_max_db": 0.5,
+    "combined_norm_growth_max_db": 0.5,
+    "local_region_radius_deg": 5.0,
+    "max_dense_rows_per_task_in_solver": 128,
+    "full_dense_rows_required_for_final_gate": true,
+    "proximal_to_initial_weight": 0.02,
+    "solver_max_iterations": 200,
+    "solver_time_limit_seconds": 30.0,
+    "solver_tolerance": 2e-07,
+    "accept_optimal_inaccurate_only_after_exact_verification": true
+  },
+  "decision": {
+    "nonempty_11db_oracle_action": "Freeze passing weights and keep modal correction locked pending a physical validation plan.",
+    "empty_11db_oracle_action": "Design one local x/y even-odd modal correction block against the trusted physical S4. Do not add another cascade stage."
+  },
+  "config_sha256": "455d95e0cdc4f36962f4829b677be5f2131c5dbd901be97f7ba6ee64ffaa3726",
+  "input_sha256": {
+    "physical_s4": "fd100bf2cd95ab0fc1adfa17406e0d82a82a7e4e5b92ce1c39e0103bd7d1875c",
+    "frozen_scenes": "754dfa94aaa76e717f0b579ff5f8960758bdf20a88175c7c8bbc9233180092e4",
+    "pattern_operator": "fb359a627b2d19438137188e13ed7fd40ba9b87f29cf82bf97b15afbed89dce6"
+  },
+  "cvxpy_runtime_version": "1.6.5"
+}

@@ -900,3 +900,19 @@ modes dominate the failed active-RL Jacobian. DDM, three-frequency, larger
 arrays, EEP, labels, and critic training remain locked. See
 `docs/V139_PHYSICAL_2X2_ACTIVE_RL_STOP_GATE_20260808.md` and
 `baselines/2026-08-08-v139-physical-2x2-active-rl-stop-gate/BASELINE.md`.
+
+## v1.40/v1.41 Frozen-S4 Projection And Modal Stop Gate (2026-08-08)
+
+Fixed-mask task-level sequential SOCP on the trusted physical S4 block
+operator produces no 10 dB engineering strict solution and no 11 dB reserve
+solution in 20 frozen K=2/K=4/K=6 scenes. The best exact active-RL floor is
+`9.9983 dB`.
+
+A single finite-Q x/y even-odd modal block proves a matching-only upper bound:
+worst active RL is `11.4598 dB`, worst total RL is `13.1976 dB`, passive RL is
+`13.4836 dB`, and minimum efficiency is `96.68%`. It requires `39.19%`
+command-map distortion. Exact joint passes are K=2/K=4/K=6 = `3/0/0`; the
+pattern-guarded variant reaches `2/0/0`. The multi-K coverage gate fails, so
+physical HFSS, larger arrays, labels, and critic training remain locked. See
+`docs/V140_V141_S4_PROJECTION_MODAL_STOP_GATE_20260808.md` and
+`baselines/2026-08-08-v141-s4-joint-projection-modal-stop-gate/BASELINE.md`.

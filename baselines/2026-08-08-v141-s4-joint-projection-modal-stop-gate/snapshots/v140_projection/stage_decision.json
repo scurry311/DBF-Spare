@@ -1,0 +1,8 @@
+{
+  "task_weight_projection_gate_pass": false,
+  "authorize_single_xy_modal_correction": true,
+  "authorize_hfss": false,
+  "authorize_larger_array": false,
+  "authorize_labels_or_critic": false,
+  "next_action": "Design one local x/y even-odd modal correction block against the trusted physical S4. Do not add another cascade stage."
+}
