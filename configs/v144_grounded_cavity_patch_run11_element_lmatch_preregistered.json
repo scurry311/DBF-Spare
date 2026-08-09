@@ -1,0 +1,91 @@
+{
+  "protocol": "v1.44-grounded-cavity-run11-element-series-lmatch",
+  "created_on": "2026-08-10",
+  "parent_commit": "0dd2b96d03ed50d4b9cc5e38bdb4bc5003efc2c5",
+  "parent_tag": "v1.43.0-mapped-eep-input-redesign-stop-gate",
+  "ansys_executable": "D:/v231/Win64/ansysedt.exe",
+  "output_directory": "hfss_outputs/v144_grounded_cavity_patch_20260810_run11",
+  "inputs": {
+    "frozen_stimuli_manifest": "hfss_outputs/v139_physical_2x2_differential_array_20260808_run01/stimuli/stimuli_manifest.csv",
+    "frozen_stimuli_vectors": "hfss_outputs/v139_physical_2x2_differential_array_20260808_run01/stimuli/stimuli_vectors.npz",
+    "target_s4": "hfss_outputs/v143_y_balanced_element_input_20260809_run02/target_synthesis/target_s4.npz",
+    "old_grounded_patch_1x1": "hfss_outputs/grounded_patch_final_1x1_20260717_run01/stage_summary.json",
+    "old_grounded_patch_4x4": "hfss_outputs/grounded_patch_final_4x4_20260717_run01/stage_summary.json",
+    "run10_metrics": "hfss_outputs/v144_grounded_cavity_patch_20260810_run10/one_by_one_prescreen/one_by_one_metrics.csv"
+  },
+  "frequency_ghz": 10.0,
+  "frequencies_ghz": [9.96, 10.0, 10.04],
+  "port_order": ["P00", "P10", "P01", "P11"],
+  "array": {"spacing_x_mm": 15.0, "spacing_y_mm": 15.0},
+  "run11_context": {
+    "purpose": "Establish a finite-Q element-level matching reference inside the physical HFSS feed before testing grounded-wall coupling suppression.",
+    "component": "0.533 nH series inductor, Q=50 at 10 GHz, placed in a 0.05 mm split in the feed post.",
+    "not_postprocessing": true,
+    "stop_condition": "Only a full-wave 1x1 pass opens 2x2. Component loss remains included in HFSS efficiency."
+  },
+  "fixed_geometry": {
+    "relative_permittivity": 2.2,
+    "loss_tangent": 0.0009,
+    "substrate_thickness_mm": 0.787,
+    "copper_thickness_mm": 0.035,
+    "cavity_wall_thickness_mm": 0.30,
+    "cavity_wall_height_above_patch_mm": 0.00,
+    "probe_radius_mm": 0.25,
+    "coax_inner_radius_mm": 0.60,
+    "coax_outer_radius_mm": 1.10,
+    "coax_drop_mm": 0.80,
+    "port_width_mm": 0.30,
+    "series_inductor_enabled": true,
+    "series_inductance_nh": 0.533,
+    "series_inductor_q": 50.0,
+    "series_component_gap_mm": 0.05,
+    "air_padding_mm": 12.0,
+    "local_mesh_max_length_mm": 0.18,
+    "adaptive_refinement_percent": 5.0,
+    "maximum_passes": 14
+  },
+  "one_by_one_candidates": [
+    {"candidate_id": "r11_c00_l0533_q50", "patch_width_x_mm": 11.80, "patch_length_y_mm": 9.35, "feed_offset_x_mm": 0.00, "feed_offset_y_mm": -3.50}
+  ],
+  "gates": {
+    "maximum_final_delta_s": 0.05,
+    "maximum_reciprocity_error": 0.0001,
+    "maximum_passivity_sigma": 1.001,
+    "minimum_1x1_passive_rl_db": 15.0,
+    "minimum_2x2_passive_rl_db": 12.0,
+    "minimum_active_rl_design_db": 11.0,
+    "active_rl_stop_line_db": 10.0,
+    "minimum_total_rl_db": 11.0,
+    "minimum_system_efficiency": 0.95,
+    "maximum_x_neighbor_coupling_db": -25.0,
+    "maximum_y_neighbor_coupling_db": -25.0,
+    "maximum_diagonal_coupling_db": -30.0,
+    "minimum_coupling_improvement_vs_old_patch_db": 8.0,
+    "maximum_port_topology_warning_count": 0,
+    "maximum_direct_ddm_abs_delta_s": 0.05
+  },
+  "references": {
+    "old_grounded_patch_nearest_coupling_db": -15.0,
+    "target_self_magnitude_db": -20.47,
+    "target_x_coupling_db": -27.93,
+    "target_y_coupling_db": -38.52,
+    "target_diagonal_coupling_db": -38.67
+  },
+  "resources": {
+    "minimum_free_memory_before_1x1_gib": 8.0,
+    "minimum_free_memory_before_2x2_gib": 13.0,
+    "abort_free_memory_during_solve_gib": 3.0,
+    "poll_interval_seconds": 5,
+    "maximum_concurrent_aedt_instances": 1
+  },
+  "scope": {
+    "allow_1x1_prescreen": true,
+    "allow_2x2_only_after_1x1_gate": true,
+    "allow_single_grounded_neutralization_layer_only_in_new_run": true,
+    "allow_4x4": false,
+    "allow_16x16": false,
+    "allow_eep_export": false,
+    "allow_training_labels": false,
+    "allow_critic_training": false
+  }
+}

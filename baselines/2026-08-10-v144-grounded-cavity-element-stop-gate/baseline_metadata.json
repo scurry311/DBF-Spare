@@ -1,0 +1,10 @@
+{
+  "baseline_id": "2026-08-10-v144-grounded-cavity-element-stop-gate",
+  "created_on": "2026-08-10",
+  "parent_commit": "0dd2b96d03ed50d4b9cc5e38bdb4bc5003efc2c5",
+  "evidence": "physical HFSS 1x1 only",
+  "result": "stop",
+  "best_new_physical_passive_rl_db": 8.097614680629096,
+  "two_by_two_authorized": false,
+  "training_authorized": false
+}

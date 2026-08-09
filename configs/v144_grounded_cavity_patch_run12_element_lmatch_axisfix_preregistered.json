@@ -1,0 +1,13 @@
+{
+  "extends": "configs/v144_grounded_cavity_patch_run11_element_lmatch_preregistered.json",
+  "protocol": "v1.44-grounded-cavity-run12-element-series-lmatch-axisfix",
+  "output_directory": "hfss_outputs/v144_grounded_cavity_patch_20260810_run12",
+  "inputs": {
+    "run11_build_audit": "hfss_outputs/v144_grounded_cavity_patch_20260810_run11/one_by_one_prescreen/r11_c00_l0533_q50/run_audit.json"
+  },
+  "run12_context": {
+    "source_run": "hfss_outputs/v144_grounded_cavity_patch_20260810_run11",
+    "build_only_correction": "Swap the Y-normal RLC sheet dimensions so its x extent is 2r and its z extent is the 0.05 mm component gap.",
+    "physical_parameters_changed": false
+  }
+}

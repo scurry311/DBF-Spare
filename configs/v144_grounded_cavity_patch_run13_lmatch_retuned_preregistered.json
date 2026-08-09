@@ -1,0 +1,17 @@
+{
+  "extends": "configs/v144_grounded_cavity_patch_run12_element_lmatch_axisfix_preregistered.json",
+  "protocol": "v1.44-grounded-cavity-run13-lmatch-radiator-retuned",
+  "output_directory": "hfss_outputs/v144_grounded_cavity_patch_20260810_run13",
+  "inputs": {
+    "run12_metrics": "hfss_outputs/v144_grounded_cavity_patch_20260810_run12/one_by_one_prescreen/one_by_one_metrics.csv"
+  },
+  "run13_context": {
+    "source_run": "hfss_outputs/v144_grounded_cavity_patch_20260810_run12",
+    "source_impedance_ohm": [92.06745, -40.91058],
+    "retune_basis": "Use the independent run08 physical patch-length Jacobian while freezing the 0.533 nH Q=50 component and grounded wall.",
+    "stop_condition": "Failure below 10 dB stops this element-level lumped-match reference."
+  },
+  "one_by_one_candidates": [
+    {"candidate_id": "r13_c00_l985_l0533", "patch_width_x_mm": 11.80, "patch_length_y_mm": 9.85, "feed_offset_x_mm": 0.00, "feed_offset_y_mm": -3.50}
+  ]
+}

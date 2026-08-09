@@ -931,3 +931,15 @@ isolation improves only `0.13 dB`, while even/x-odd modes worsen. This element
 topology is also stopped; EEP, labels, critic, and larger arrays remain locked.
 See `docs/V142_V143_MAPPED_EEP_INPUT_REDESIGN_STOP_GATE_20260809.md` and
 `baselines/2026-08-09-v143-mapped-eep-input-redesign-stop-gate/BASELINE.md`.
+
+## v1.44 Grounded-Cavity Element Stop Gate (2026-08-10)
+
+The grounded-patch branch evaluated high and flush cavity walls, direct-probe
+geometry retuning, ceramic coax transformation, inset feed tongues, and a
+finite-Q element-level series match.  All retained HFSS solves are numerical
+valid, but the best new physical 1x1 passive RL is only `8.0976 dB`; no
+candidate reaches the 10 dB stop line or 15 dB element gate.  The 2x2/S256/EEP
+and all label/critic work therefore remain locked.  The next element must use
+an aperture-coupled or true balanced input.  See
+`docs/V144_GROUNDED_CAVITY_ELEMENT_STOP_GATE_20260810.md` and
+`baselines/2026-08-10-v144-grounded-cavity-element-stop-gate/BASELINE.md`.

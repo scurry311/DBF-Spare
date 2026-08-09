@@ -1,0 +1,14 @@
+run_id,candidate_id,topology,passive_rl_db,input_resistance_ohm,input_reactance_ohm,radiation_efficiency,final_delta_s,one_by_one_gate_pass
+run01,c00_nominal,one_mm_shallow_cavity_direct_probe,6.390296,74.044929,-61.929794,0.979708,0.00857618,0
+run02,r02_c02_l1005_f425,one_mm_shallow_cavity_length_feed,4.040116,11.559783,-5.321420,0.969029,0.000670938,0
+run03,r03_c00_l1030_f480,one_mm_shallow_cavity_edge_probe,2.758186,7.931634,4.273326,0.963825,0.00299931,0
+run04,r04_c00_w480_l1030_f480,narrow_patch_high_wall,1.514557,10.079035,-56.895879,0.960934,0.0108732,0
+run05,r05_c00_x300_y000,orthogonal_probe_offset,0.339819,1.396445,32.699065,0.930862,0.000547192,0
+run06,r06_c00_z19p34_t104p96,ceramic_coax_transformer_19ohm,4.280274,20.170037,38.888498,0.958784,0.00490289,0
+run07,r07_c00_z6p73_t156p6,ceramic_coax_transformer_7ohm,2.520673,8.249713,18.815869,0.920426,0.0051952,0
+run08,r08_c00_l965,flush_ground_wall_best_rl,8.097615,26.043362,-19.526236,0.982350,0.00513387,0
+run08,r08_c02_l995,flush_ground_wall_resonant,4.628410,13.018205,-0.743797,0.979777,0.000568439,0
+run09,r09_c00_w480_l1105,narrow_patch_flush_wall,1.166430,3.575761,-12.880690,0.949146,0.00281586,0
+run10,r10_c01_d125,inset_high_z_feed_tongue,6.430161,71.325913,-61.207105,0.983754,0.00307563,0
+run12,r11_c00_l0533_q50,finite_q_element_series_inductor,8.026066,92.067454,-40.910578,0.967082,0.00437481,0
+run13,r13_c00_l985_l0533,finite_q_element_match_retuned,6.656404,27.231041,31.331225,0.930365,0.00997705,0

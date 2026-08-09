@@ -1,0 +1,24 @@
+{
+  "stage": "v1.44_grounded_cavity_element_stop_gate",
+  "physical_1x1_gate_pass": false,
+  "best_new_physical_passive_rl_db": 8.097614680629096,
+  "minimum_required_passive_rl_db": 15.0,
+  "active_rl_stop_line_db": 10.0,
+  "allow_2x2": false,
+  "allow_4x4": false,
+  "allow_16x16": false,
+  "allow_eep_export": false,
+  "allow_training_labels": false,
+  "allow_critic_training": false,
+  "stopped_topologies": [
+    "rectangular_direct_probe_grounded_patch",
+    "above_aperture_shallow_cavity",
+    "single_section_ceramic_coax_transformer",
+    "inset_high_impedance_feed_tongue",
+    "split_post_finite_q_lumped_match"
+  ],
+  "next_authorized_input_classes": [
+    "aperture_coupled_patch",
+    "true_balanced_differential_radiator_with_reflector"
+  ]
+}
