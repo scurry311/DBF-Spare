@@ -1,0 +1,9 @@
+{
+  "required_k_joint_gate_pass": false,
+  "stop_v141_network_topology": true,
+  "authorize_element_input_impedance_redesign": true,
+  "authorize_hfss": false,
+  "authorize_larger_array": false,
+  "authorize_labels_or_critic": false,
+  "next_action": "Stop the v1.41 correction-network topology and start a radiator/feed input-impedance redesign. Do not add another correction stage."
+}

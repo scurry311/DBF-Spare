@@ -1,0 +1,6 @@
+{
+  "allow_crosscheck_or_three_frequency": false,
+  "allow_4x4_or_16x16": false,
+  "allow_eep_labels_or_critic": false,
+  "next_authorized_branch": "Replace the free-standing differential radiator with a ground-backed/cavity-backed element or an element-level neutralization topology that can reduce x/y coupling by several dB while independently tuning self impedance. Do not continue tuning the mirrored secondary branch or add another external correction stage."
+}

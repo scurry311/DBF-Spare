@@ -1,0 +1,32 @@
+{
+  "scope": "The frozen v1.41 finite-Q corrected circuit S4 and its antenna-incident map are tiled over the 16x16 nominal EEP operator. This is a fixed-mask mapped-EEP/circuit feasibility oracle, not integrated 16x16 HFSS evidence.",
+  "scene_count": 20,
+  "network_parameters": [
+    -26.422474594692215,
+    15.277998538979688,
+    -7.812106711454692,
+    -0.029097540762345445,
+    0.007398049761229651,
+    0.006773947361644019
+  ],
+  "mapped_eep_build_seconds": 0.03874969482421875,
+  "engineering_strict_oracle_count": 5,
+  "reserve11_strict_oracle_count": 5,
+  "reserve11_counts_by_k": {
+    "2": 4,
+    "4": 1,
+    "6": 0
+  },
+  "required_k_joint_gate_pass": false,
+  "stop_v141_network_topology": true,
+  "authorize_element_input_impedance_redesign": true,
+  "authorize_hfss": false,
+  "authorize_labels_or_critic": false,
+  "elapsed_seconds": 3085.176538467407,
+  "next_action": "Stop the v1.41 correction-network topology and start a radiator/feed input-impedance redesign. Do not add another correction stage.",
+  "limitations": [
+    "The corrected S256 is 64 block-diagonal copies of a finite-Q circuit S4 and omits coupling between 2x2 cells.",
+    "The EEP is a mapped nominal operator, not an EEP export of an integrated corrected 16x16 structure.",
+    "Failure is a stop decision for this network topology under the preregistered search, not a proof that no unconstrained global solution exists."
+  ]
+}

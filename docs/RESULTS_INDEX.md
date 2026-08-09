@@ -916,3 +916,18 @@ pattern-guarded variant reaches `2/0/0`. The multi-K coverage gate fails, so
 physical HFSS, larger arrays, labels, and critic training remain locked. See
 `docs/V140_V141_S4_PROJECTION_MODAL_STOP_GATE_20260808.md` and
 `baselines/2026-08-08-v141-s4-joint-projection-modal-stop-gate/BASELINE.md`.
+
+## v1.42/v1.43 Mapped-EEP And Input-Redesign Stop Gate (2026-08-09)
+
+Joint task-weight optimization on the v1.41 corrected S4 and mapped EEP gives
+11 dB strict reserve counts K=2/K=4/K=6 = `4/1/0`; the K=6 gate is empty and
+the correction network is stopped.
+
+A y-balanced mirrored-secondary input passes the physical 1x1 impedance
+prescreen at `37.67-j7.97 ohm` and `15.56 dB` passive RL. Its memory-safe
+physical 2x2 S4 is numerically valid, but worst active RL is `-6.16 dB`, total
+RL is `6.94 dB`, and minimum system efficiency is `80.15%`. Y-neighbor
+isolation improves only `0.13 dB`, while even/x-odd modes worsen. This element
+topology is also stopped; EEP, labels, critic, and larger arrays remain locked.
+See `docs/V142_V143_MAPPED_EEP_INPUT_REDESIGN_STOP_GATE_20260809.md` and
+`baselines/2026-08-09-v143-mapped-eep-input-redesign-stop-gate/BASELINE.md`.

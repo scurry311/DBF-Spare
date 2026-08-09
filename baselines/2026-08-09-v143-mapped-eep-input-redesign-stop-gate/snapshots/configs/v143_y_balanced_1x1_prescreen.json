@@ -1,0 +1,61 @@
+{
+  "protocol": "v1.43-y-balanced-element-1x1-input-prescreen",
+  "created_on": "2026-08-09",
+  "parent_commit": "a5e72530e87ba2c0ff3d5c1f4a6e632f45271fce",
+  "parent_tag": "v1.41.0-s4-joint-projection-modal-stop-gate",
+  "ansys_executable": "D:/v231/Win64/ansysedt.exe",
+  "output_directory": "hfss_outputs/v143_y_balanced_element_1x1_20260809_run01",
+  "frequency_ghz": 10.0,
+  "geometry": {
+    "substrate_thickness_mm": 0.787,
+    "relative_permittivity": 2.2,
+    "loss_tangent": 0.0009,
+    "copper_thickness_mm": 0.035,
+    "primary_inner_gap_mm": 0.6,
+    "primary_arm_length_mm": 5.2,
+    "primary_arm_width_mm": 0.8,
+    "secondary_arm_length_mm": 4.15,
+    "secondary_arm_width_mm": 0.30,
+    "secondary_arm_offset_y_mm": 0.95,
+    "lower_secondary_arm_length_mm": 4.15,
+    "lower_secondary_arm_width_mm": 0.30,
+    "lower_secondary_arm_offset_y_mm": 0.95,
+    "secondary_neck_length_x_mm": 0.9,
+    "secondary_neck_overlap_mm": 0.20,
+    "via_pair_pitch_mm": 1.10,
+    "via_radius_mm": 0.18,
+    "bottom_pad_width_mm": 0.50,
+    "bottom_pad_length_y_mm": 0.80,
+    "port_sheet_margin_mm": 0.04,
+    "local_mesh_max_length_mm": 0.12,
+    "adaptive_refinement_percent": 5.0,
+    "maximum_passes": 16
+  },
+  "target": {
+    "input_resistance_ohm": 44.30937,
+    "input_reactance_ohm": -6.91845,
+    "maximum_complex_impedance_error_ohm": 15.0
+  },
+  "gates": {
+    "maximum_final_delta_s": 0.05,
+    "minimum_passive_rl_db": 15.0,
+    "minimum_radiation_efficiency": 0.95,
+    "maximum_conductor_small_segment_count": 0,
+    "maximum_topology_warning_count": 0
+  },
+  "resources": {
+    "minimum_free_memory_before_solve_gib": 8.0,
+    "abort_free_memory_during_solve_gib": 3.0,
+    "poll_interval_seconds": 5,
+    "maximum_concurrent_aedt_instances": 1
+  },
+  "scope": {
+    "allow_1x1_only": true,
+    "allow_2x2": false,
+    "allow_4x4": false,
+    "allow_16x16": false,
+    "allow_eep_export": false,
+    "allow_training_labels": false,
+    "allow_critic_training": false
+  }
+}

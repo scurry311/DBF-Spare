@@ -1,0 +1,13 @@
+{
+  "return_code": 0,
+  "project_exists": true,
+  "topology_warning_count": 0,
+  "build_gate_pass": true,
+  "cad_audit": {
+    "differential_port_count": 1,
+    "lower_branch_count": 4,
+    "reference_ground_count": 0,
+    "finite_conductivity": true,
+    "direct_solver_count": 1
+  }
+}

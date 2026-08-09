@@ -1,0 +1,26 @@
+{
+  "status": "optimal",
+  "stimulus_count": 1566,
+  "design_active_rl_db": 11.0,
+  "current_modal_offdiagonal_max_abs": 0.001348287004742409,
+  "modal_gamma_change_l2": 0.5221573649043065,
+  "target_modal_impedance_ohm": {
+    "even": [
+      45.74420093816859,
+      -8.142015984291454
+    ],
+    "x_odd": [
+      40.96560777204008,
+      -6.34758181757815
+    ],
+    "y_odd": [
+      49.55899163439428,
+      -9.142926891494357
+    ],
+    "checker": [
+      41.38196458591606,
+      -4.477232452600321
+    ]
+  },
+  "interpretation": "The target is a geometry/input-impedance specification. It is not HFSS evidence and does not authorize array scaling."
+}

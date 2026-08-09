@@ -1,0 +1,72 @@
+{
+  "protocol": "v1.42-corrected-s4-mapped-eep-joint-task-weight-oracle",
+  "created_on": "2026-08-09",
+  "parent_commit": "a5e72530e87ba2c0ff3d5c1f4a6e632f45271fce",
+  "parent_tag": "v1.41.0-s4-joint-projection-modal-stop-gate",
+  "seed": 20260809,
+  "evidence_scope": "The frozen v1.41 finite-Q corrected circuit S4 and its antenna-incident map are tiled over the 16x16 nominal EEP operator. This is a fixed-mask mapped-EEP/circuit feasibility oracle, not integrated 16x16 HFSS evidence.",
+  "inputs": {
+    "corrected_operator": "hfss_outputs/v141_xy_modal_correction_20260808_run02/active_upper_bound_circuit_operator.npz",
+    "projection_run": "hfss_outputs/v140b_frozen_s4_task_weight_projection_20260808_run02",
+    "frozen_scenes": "hfss_outputs/v21_frozen_v112_replay_20260729_run03/frozen_v112_replay_candidates.npz",
+    "pattern_operator": "hfss_outputs/fixed_mesh_eep256_20260723_run05/grounded_patch_eep_operator_256port.npz",
+    "physical_s4_port_order": ["P00", "P10", "P01", "P11"],
+    "array_flattening": "port = ix*16 + iy",
+    "block_indices": "[x,y], [x+1,y], [x,y+1], [x+1,y+1] for even x,y"
+  },
+  "frozen_policy": {
+    "mask_changes_allowed": false,
+    "target_changes_allowed": false,
+    "ratio_changes_allowed": false,
+    "threshold_changes_allowed": false,
+    "network_parameter_changes_allowed": false,
+    "hfss_allowed": false,
+    "critic_training_allowed": false
+  },
+  "seed_policy": {
+    "families": ["direct", "block_ls", "blend_ls_0.25", "blend_ls_0.50", "blend_ls_0.75"],
+    "maximum_optimized_seeds_per_scene": 2,
+    "selection": "Union of best exact mapped-pattern seed and best max-min(pattern margin, active-RL 11 dB margin) seed. Ties favor lower command change.",
+    "block_ls_rcond": 1e-8
+  },
+  "gates": {
+    "psll_max_db": 0.0,
+    "nearest_isolation_min_db": 25.0,
+    "local_5deg_isolation_min_db": 20.0,
+    "weakest_target_gain_drop_max_db": 0.5,
+    "target_peak_spread_max_db": 3.0,
+    "pointing_error_max_deg": 1.5,
+    "engineering_active_rl_min_db": 10.0,
+    "design_active_rl_min_db": 11.0,
+    "combined_channel_dynamic_range_max_db": 20.0,
+    "combined_peak_to_rms_max_db": 12.0,
+    "power_increase_max_db": 1.0,
+    "normalized_wng_min_db": -10.0,
+    "target_equality_error_max": 0.02,
+    "dense_leakage_ratio_max": 1.05
+  },
+  "sequential_socp": {
+    "solver": "CLARABEL",
+    "cvxpy_version": "1.6.5",
+    "active_rl_stages_db": [8.0, 9.5, 10.0, 10.5, 11.0, 11.25],
+    "outer_iterations_per_stage": 1,
+    "task_significant_relative_db": -20.0,
+    "task_norm_growth_max_db": 1.0,
+    "combined_norm_growth_max_db": 1.0,
+    "local_region_radius_deg": 5.0,
+    "max_dense_rows_per_task_in_solver": 128,
+    "full_dense_rows_required_for_final_gate": true,
+    "solver_leakage_slack_penalty": 25.0,
+    "proximal_to_initial_weight": 0.02,
+    "solver_max_iterations": 200,
+    "solver_time_limit_seconds": 30.0,
+    "solver_tolerance": 2e-7,
+    "accept_optimal_inaccurate_only_after_exact_verification": true
+  },
+  "decision": {
+    "required_k_values": [4, 6],
+    "minimum_reserve11_strict_count_per_required_k": 1,
+    "pass_action": "Freeze the feasible corrected-S4 mapped-EEP commands; physical HFSS remains locked pending an integrated validation plan.",
+    "fail_action": "Stop the v1.41 correction-network topology and start a radiator/feed input-impedance redesign. Do not add another correction stage."
+  }
+}

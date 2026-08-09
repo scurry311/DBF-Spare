@@ -1,0 +1,37 @@
+{
+  "v142": {
+    "scene_count": 20,
+    "engineering_strict_oracle_count": 5,
+    "reserve11_counts_by_k": {
+      "2": 4,
+      "4": 1,
+      "6": 0
+    },
+    "stop_v141_network_topology": true
+  },
+  "v143_1x1": {
+    "input_prescreen_gate_pass": true,
+    "input_impedance_ohm": [
+      37.67329860291161,
+      -7.97024774657632
+    ],
+    "target_impedance_error_ohm": 6.718907804618079,
+    "passive_rl_db": 15.559174249373086
+  },
+  "v143_2x2": {
+    "numerical_physical_gate_pass": true,
+    "strict_initial_gate_pass": false,
+    "minimum_active_rl_db": -6.160046073380347,
+    "minimum_total_rl_db": 6.935588401186511,
+    "minimum_system_efficiency": 0.8014788285703811,
+    "y_coupling_isolation_improvement_db": 0.13073972570767722,
+    "stop_y_balanced_dual_branch_topology": true
+  },
+  "decision": {
+    "allow_crosscheck_or_three_frequency": false,
+    "allow_4x4_or_16x16": false,
+    "allow_eep_labels_or_critic": false,
+    "next_authorized_branch": "Replace the free-standing differential radiator with a ground-backed/cavity-backed element or an element-level neutralization topology that can reduce x/y coupling by several dB while independently tuning self impedance. Do not continue tuning the mirrored secondary branch or add another external correction stage."
+  },
+  "evidence_scope": "v1.42 is corrected-S4/mapped-EEP circuit evidence; v1.43 1x1 and 2x2 values are physical 10 GHz HFSS evidence. No 16x16 or EEP claim is made."
+}

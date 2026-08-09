@@ -103,6 +103,9 @@ def element_text(g: dict[str, Any], suffix: str, cx: float, cy: float) -> tuple[
     secondary_l = float(g["secondary_arm_length_mm"])
     secondary_w = float(g["secondary_arm_width_mm"])
     secondary_y = float(g["secondary_arm_offset_y_mm"])
+    lower_secondary_l = g.get("lower_secondary_arm_length_mm")
+    lower_secondary_w = float(g.get("lower_secondary_arm_width_mm", secondary_w))
+    lower_secondary_y = float(g.get("lower_secondary_arm_offset_y_mm", secondary_y))
     neck_l = float(g["secondary_neck_length_x_mm"])
     overlap = float(g["secondary_neck_overlap_mm"])
     pitch = float(g["via_pair_pitch_mm"])
@@ -114,22 +117,43 @@ def element_text(g: dict[str, Any], suffix: str, cx: float, cy: float) -> tuple[
     primary_y = cy - primary_w / 2.0
     secondary_bottom = cy + secondary_y - secondary_w / 2.0
     neck_height = secondary_bottom - primary_y + overlap
+    lower_secondary_top = cy - lower_secondary_y + lower_secondary_w / 2.0
+    lower_neck_bottom = lower_secondary_top - overlap
+    lower_neck_height = primary_y + primary_w - lower_neck_bottom
     xn, xp = cx - pitch / 2.0, cx + pitch / 2.0
     pad_gap = pitch - pad_w
     names = [
         f"PrimaryN_{suffix}", f"PrimaryP_{suffix}", f"ViaN_{suffix}", f"ViaP_{suffix}",
         f"PadN_{suffix}", f"PadP_{suffix}",
     ]
+    lower_negative = ""
+    lower_positive = ""
+    lower_negative_names = ""
+    lower_positive_names = ""
+    if lower_secondary_l is not None:
+        lower_l = float(lower_secondary_l)
+        if lower_neck_height <= 0.0:
+            raise ValueError("Lower secondary branch does not overlap the primary arm")
+        lower_negative = f'''
+CreateMetalSheetZ oEditor, "SecondaryLowerN_{suffix}", {cx-gap/2-lower_l:.7f}, {cy-lower_secondary_y-lower_secondary_w/2:.7f}, 0, {lower_l:.7f}, {lower_secondary_w:.7f}
+CreateMetalSheetZ oEditor, "NeckLowerN_{suffix}", {cx-gap/2-neck_l:.7f}, {lower_neck_bottom:.7f}, 0, {neck_l:.7f}, {lower_neck_height:.7f}'''
+        lower_positive = f'''
+CreateMetalSheetZ oEditor, "SecondaryLowerP_{suffix}", {cx+gap/2:.7f}, {cy-lower_secondary_y-lower_secondary_w/2:.7f}, 0, {lower_l:.7f}, {lower_secondary_w:.7f}
+CreateMetalSheetZ oEditor, "NeckLowerP_{suffix}", {cx+gap/2:.7f}, {lower_neck_bottom:.7f}, 0, {neck_l:.7f}, {lower_neck_height:.7f}'''
+        lower_negative_names = f",SecondaryLowerN_{suffix},NeckLowerN_{suffix}"
+        lower_positive_names = f",SecondaryLowerP_{suffix},NeckLowerP_{suffix}"
     text = f'''
 ' Frozen v1.38 radiator {suffix} at ({cx:.3f},{cy:.3f}) mm.
 CreateMetalSheetZ oEditor, "PrimaryN_{suffix}", {cx-gap/2-primary_l:.7f}, {primary_y:.7f}, 0, {primary_l:.7f}, {primary_w:.7f}
 CreateMetalSheetZ oEditor, "SecondaryN_{suffix}", {cx-gap/2-secondary_l:.7f}, {secondary_bottom:.7f}, 0, {secondary_l:.7f}, {secondary_w:.7f}
 CreateMetalSheetZ oEditor, "NeckN_{suffix}", {cx-gap/2-neck_l:.7f}, {primary_y:.7f}, 0, {neck_l:.7f}, {neck_height:.7f}
-UniteSelection oEditor, "PrimaryN_{suffix},SecondaryN_{suffix},NeckN_{suffix}"
+{lower_negative}
+UniteSelection oEditor, "PrimaryN_{suffix},SecondaryN_{suffix},NeckN_{suffix}{lower_negative_names}"
 CreateMetalSheetZ oEditor, "PrimaryP_{suffix}", {cx+gap/2:.7f}, {primary_y:.7f}, 0, {primary_l:.7f}, {primary_w:.7f}
 CreateMetalSheetZ oEditor, "SecondaryP_{suffix}", {cx+gap/2:.7f}, {secondary_bottom:.7f}, 0, {secondary_l:.7f}, {secondary_w:.7f}
 CreateMetalSheetZ oEditor, "NeckP_{suffix}", {cx+gap/2:.7f}, {primary_y:.7f}, 0, {neck_l:.7f}, {neck_height:.7f}
-UniteSelection oEditor, "PrimaryP_{suffix},SecondaryP_{suffix},NeckP_{suffix}"
+{lower_positive}
+UniteSelection oEditor, "PrimaryP_{suffix},SecondaryP_{suffix},NeckP_{suffix}{lower_positive_names}"
 CreateBox oEditor, "ViaN_{suffix}", {xn-half:.7f}, {cy-half:.7f}, {bottom:.7f}, {2*half:.7f}, {2*half:.7f}, {h:.7f}, "copper", False
 CreateBox oEditor, "ViaP_{suffix}", {xp-half:.7f}, {cy-half:.7f}, {bottom:.7f}, {2*half:.7f}, {2*half:.7f}, {h:.7f}, "copper", False
 CreateMetalSheetZ oEditor, "PadN_{suffix}", {xn-pad_w/2:.7f}, {cy-pad_y/2:.7f}, {bottom:.7f}, {pad_w:.7f}, {pad_y:.7f}

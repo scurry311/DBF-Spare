@@ -1,0 +1,21 @@
+{
+  "baseline_id": "2026-08-09-v143-mapped-eep-input-redesign-stop-gate",
+  "created_on": "2026-08-09",
+  "parent_commit": "a5e72530e87ba2c0ff3d5c1f4a6e632f45271fce",
+  "evidence_level": "corrected_s4_mapped_eep_oracle_plus_physical_1x1_and_2x2_hfss",
+  "frequency_ghz": 10.0,
+  "v142_scene_count": 20,
+  "v142_engineering_strict_count": 5,
+  "v142_reserve11_by_k": {"2": 4, "4": 1, "6": 0},
+  "v141_network_stopped": true,
+  "v143_1x1_passive_rl_db": 15.559174249373086,
+  "v143_1x1_input_impedance_ohm": [37.67329860291161, -7.97024774657632],
+  "v143_2x2_final_delta_s": 0.00675393,
+  "v143_2x2_minimum_passive_rl_db": 15.004054231886116,
+  "v143_2x2_minimum_active_rl_db": -6.160046073380347,
+  "v143_2x2_minimum_total_rl_db": 6.935588401186511,
+  "v143_2x2_minimum_system_efficiency": 0.8014788285703811,
+  "v143_y_coupling_improvement_db": 0.13073972570767722,
+  "v143_topology_stopped": true,
+  "eep_labels_or_critic_authorized": false
+}

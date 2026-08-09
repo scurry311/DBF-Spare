@@ -1,0 +1,2 @@
+case_id,solve_return_code,memory_aborted,free_memory_gib_before,minimum_free_memory_gib,touchstone_exists
+direct01_repair02,0,False,15.639606475830078,6.412616729736328,True
