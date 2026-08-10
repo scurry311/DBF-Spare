@@ -1,0 +1,105 @@
+{
+  "version": "v1.47",
+  "created_date": "2026-08-10",
+  "output_directory": "hfss_outputs/v147_literature_10ghz_balun_dipole_20260810_run08",
+  "ansys_executable": "D:/v231/Win64/ansysedt.exe",
+  "design_name": "V147_Literature_10GHz_Balun_Dipole_1x1",
+  "provenance": {
+    "primary_reference": {
+      "title": "Suppression of Cross-Polarization of the Microstrip Integrated Balun-Fed Printed Dipole Antenna",
+      "authors": "Huang Jingjian, Zhang Xiaofa, Xie Shaoyi, Wu Weiwei, Yuan Naichang",
+      "journal": "International Journal of Antennas and Propagation",
+      "year": 2014,
+      "doi": "10.1155/2014/765891",
+      "url": "https://onlinelibrary.wiley.com/doi/10.1155/2014/765891",
+      "evidence": "Published 10 GHz geometry; measured improved unit reports more than 40 percent bandwidth and cross-polarization below -35 dB."
+    },
+    "topology_reference": {
+      "title": "Equivalent-Circuit Analysis of a Broadband Printed Dipole With Adjusted Integrated Balun and an Array for Base Station Applications",
+      "authors": "RongLin Li, Terence Wu, Bo Pan, Kyutae Lim, Joy Laskar, Manos M. Tentzeris",
+      "journal": "IEEE Transactions on Antennas and Propagation",
+      "year": 2009,
+      "doi": "10.1109/TAP.2009.2021967",
+      "url": "https://tentzeris.ece.gatech.edu/TAP2009_RL.pdf",
+      "evidence": "Author-hosted paper explicitly shows the backside slotline/dipole metallization and the front-side U-shaped microstrip feed plus open stub."
+    },
+    "array_corroboration_reference": {
+      "title": "Bendable Wideband 4 x 4 Dipole Array at X-Band With Adaptive Beamformer for Wide Angle Wireless Sensing",
+      "authors": "Gong Chen, Jiahao Wang, Koen Mouthaan",
+      "journal": "IEEE Sensors Letters",
+      "year": 2025,
+      "doi": "10.1109/LSENS.2025.3575781",
+      "url": "https://doi.org/10.1109/LSENS.2025.3575781",
+      "evidence": "Measured X-band 4 x 4 grounded printed-dipole array using printed baluns and parasitic dipoles."
+    },
+    "interpretation_limit": "The primary paper specifies the conventional 10 GHz dimensions but its public text does not tabulate the backside ground-panel width or every launch/reference-plane detail. The v1.47 reconstruction implements the published microstrip/slotline topology and freezes missing CAD quantities as explicitly reconstructed parameters. It does not claim to reproduce the later measured slotted-cavity improvement."
+  },
+  "geometry": {
+    "array_pitch_mm": 16.0,
+    "reflector_size_mm": 30.0,
+    "substrate_width_mm": 15.0,
+    "substrate_height_mm": 15.0,
+    "substrate_thickness_mm": 0.5,
+    "relative_permittivity": 2.2,
+    "loss_tangent": 0.0009,
+    "copper_thickness_mm": 0.017,
+    "dipole_total_length_mm": 13.0,
+    "dipole_arm_width_mm": 2.0,
+    "slotline_width_mm": 0.3,
+    "slotline_length_mm": 6.83,
+    "microstrip_a_width_mm": 0.87,
+    "microstrip_b_width_mm": 0.87,
+    "microstrip_leg_separation_mm": 1.8,
+    "back_slotline_ground_width_mm": 6.0,
+    "back_slotline_ground_width_basis": "Reconstructed from the published broad ground-panel topology; not a tabulated Huang et al. dimension.",
+    "balun_length_mm": 7.5,
+    "match_branch_length_mm": 5.0,
+    "radiator_center_height_mm": 6.83,
+    "ground_port_clearance_x_mm": 1.05,
+    "ground_port_clearance_y_mm": 0.8,
+    "port_reference_x_mm": -0.9,
+    "local_mesh_max_length_mm": 0.18,
+    "maximum_passes": 9,
+    "adaptive_refinement_percent": 5.0
+  },
+  "sweep": {
+    "adaptive_frequency_ghz": 10.0,
+    "broad_start_ghz": 8.0,
+    "broad_stop_ghz": 12.0,
+    "broad_count": 81,
+    "gate_frequencies_ghz": [9.96, 10.0, 10.04]
+  },
+  "cases": [
+    {"name": "nominal_direct", "solver_type": "direct", "role": "literature_geometry_frequency_sweep"},
+    {"name": "independent_direct", "solver_type": "direct", "role": "frozen_geometry_independent_rebuild"},
+    {"name": "independent_ddm", "solver_type": "ddm", "role": "frozen_geometry_independent_solver_crosscheck"}
+  ],
+  "gates": {
+    "maximum_final_delta_s": 0.05,
+    "preferred_final_delta_s": 0.02,
+    "minimum_gate3_passive_rl_db": 15.0,
+    "minimum_center_passive_rl_db": 15.0,
+    "minimum_contiguous_10db_bandwidth_ghz": 1.0,
+    "minimum_radiation_efficiency": 0.95,
+    "maximum_topology_warning_count": 0,
+    "maximum_direct_ddm_s_difference": 0.05,
+    "preferred_direct_ddm_s_difference": 0.02
+  },
+  "resources": {
+    "minimum_free_memory_before_solve_gib": 13.0,
+    "abort_free_memory_during_solve_gib": 3.0,
+    "poll_interval_seconds": 5.0,
+    "serial_hfss_only": true,
+    "number_of_processors": 4,
+    "cores_per_distributed_task": 4,
+    "maximum_concurrent_frequency_tasks": 1
+  },
+  "locks": {
+    "allow_2x2_before_1x1_gate": false,
+    "allow_4x4": false,
+    "allow_16x16": false,
+    "allow_eep_export": false,
+    "allow_training_labels": false,
+    "allow_critic_training": false
+  }
+}

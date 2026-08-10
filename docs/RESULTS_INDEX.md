@@ -961,3 +961,24 @@ and all label/critic work therefore remain locked.  The next element must use
 an aperture-coupled or true balanced input.  See
 `docs/V144_GROUNDED_CAVITY_ELEMENT_STOP_GATE_20260810.md` and
 `baselines/2026-08-10-v144-grounded-cavity-element-stop-gate/BASELINE.md`.
+
+## v1.45/v1.46 Aperture And Balanced Element Stop Gate (2026-08-10)
+
+Thirty-seven complete physical 10 GHz 1x1 cases test aperture-coupled and
+ground-backed true-differential element families. All numerical candidates are
+valid, but none reaches 10 dB passive RL; the best results are `3.200 dB` and
+`0.630 dB`, respectively. Physical 2x2, arrays, EEP, labels, and critic remain
+locked. See `docs/V145_V146_ELEMENT_TOPOLOGY_STOP_GATE_20260810.md`
+and `baselines/2026-08-10-v146-aperture-balanced-element-stop-gate/BASELINE.md`.
+
+## v1.47 Literature 10 GHz Balun-Dipole Stop Gate (2026-08-10)
+
+A literature-guided printed dipole and integrated microstrip/slotline balun is
+run through a memory-safe 8-12 GHz physical HFSS sweep. The solve converges at
+final Delta S `0.01105`, but the reconstructed unit has only `0.04443 dB`
+three-frequency worst passive RL, zero 10 dB bandwidth, and `2.02%` radiation
+efficiency. Missing complete Gerber/CAD and launch/reference-plane data prevent
+claiming an exact reproduction of the measured article unit. Independent
+direct/DDM, physical 2x2 active-RL, arrays, EEP, labels, and critic remain
+locked. See `docs/V147_LITERATURE_10GHZ_BALUN_DIPOLE_STOP_GATE_20260810.md`
+and `baselines/2026-08-10-v147-literature-balun-dipole-stop-gate/BASELINE.md`.

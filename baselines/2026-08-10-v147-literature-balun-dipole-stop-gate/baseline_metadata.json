@@ -1,0 +1,7 @@
+{
+  "baseline_id": "v1.47.0-literature-balun-dipole-stop-gate",
+  "created_on": "2026-08-10",
+  "parent_commit": "fe235255bb8cb05cb639adc399bf810ab5399606",
+  "evidence_level": "B_physical_8_12ghz_1x1_frequency_sweep_only",
+  "raw_output": "hfss_outputs/v147_literature_10ghz_balun_dipole_20260810_run08"
+}

@@ -1,0 +1,11 @@
+{
+  "case": "nominal_direct",
+  "return_code": 0,
+  "batch_solve_return_code": 0,
+  "export_return_code": 0,
+  "memory_aborted": false,
+  "free_memory_gib_before": 14.950313568115234,
+  "minimum_free_memory_gib": 7.162876129150391,
+  "broad_touchstone_exists": true,
+  "gate3_touchstone_exists": true
+}

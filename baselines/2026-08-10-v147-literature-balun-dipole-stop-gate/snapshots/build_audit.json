@@ -1,0 +1,14 @@
+{
+  "case": "nominal_direct",
+  "return_code": 0,
+  "project_exists": true,
+  "topology_warning_count": 0,
+  "cad_audit": {
+    "port_count": 1,
+    "broad_sweep_count": 1,
+    "gate3_sweep_count": 1,
+    "finite_conductivity": true,
+    "solver_type": "direct"
+  },
+  "build_gate_pass": true
+}

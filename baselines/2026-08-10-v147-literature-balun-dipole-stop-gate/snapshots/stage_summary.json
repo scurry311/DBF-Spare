@@ -1,0 +1,32 @@
+{
+  "case": "nominal_direct",
+  "solver_type": "direct",
+  "pass_count": 2,
+  "final_delta_s": 0.0110497,
+  "converged": true,
+  "small_mesh_segment_count": 90,
+  "peak_solver_memory_gb": 7.8803253173828125,
+  "maximum_tetrahedra": 138360,
+  "gate3_frequencies_ghz": [
+    9.96,
+    10.0,
+    10.04
+  ],
+  "gate3_passive_rl_db": [
+    0.04442927379453478,
+    0.04453959691415383,
+    0.04464990284266142
+  ],
+  "gate3_worst_passive_rl_db": 0.04442927379453478,
+  "center_passive_rl_db": 0.04453959691415383,
+  "center_s11_real": -0.8061907367358103,
+  "center_s11_imag": 0.5829693683006747,
+  "broad_minimum_rl_db": 0.038953361391723354,
+  "broad_maximum_rl_db": 0.05020578253737305,
+  "contiguous_10db_bandwidth_ghz": 0.0,
+  "contiguous_10db_band_low_ghz": 10.0,
+  "contiguous_10db_band_high_ghz": 10.0,
+  "radiation_efficiency": 0.0202337081116422,
+  "topology_warning_count": 0,
+  "one_by_one_case_gate_pass": false
+}

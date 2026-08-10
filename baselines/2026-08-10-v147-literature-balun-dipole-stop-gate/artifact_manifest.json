@@ -1,0 +1,32 @@
+[
+  {
+    "path": "BASELINE.md",
+    "sha256": "87a6680ca79dcd11af337f04650ba3ad0e1435eb20d149f97f65929ec06d776c",
+    "bytes": 1316
+  },
+  {
+    "path": "baseline_metadata.json",
+    "sha256": "d99f55c1b92e9ade4ccd1916ae4ac18d84ddfa078a5f36f33f3a9c85c92d8550",
+    "bytes": 307
+  },
+  {
+    "path": "snapshots/build_audit.json",
+    "sha256": "09a2fe410b75114127b1f7e60f14406ebeb120d794d3dd4eed25487e49aeee3b",
+    "bytes": 295
+  },
+  {
+    "path": "snapshots/run_progress.json",
+    "sha256": "69ac5a8585ebc4f587989ce7e570eb5d66926db19854fda65543c9f4dc349308",
+    "bytes": 303
+  },
+  {
+    "path": "snapshots/stage_decision.json",
+    "sha256": "1f8e52fd88cdb7c8fcefc67d7c10741e90875b44d3d083faf0aa1da78f291144",
+    "bytes": 445
+  },
+  {
+    "path": "snapshots/stage_summary.json",
+    "sha256": "dfb6b980da25ba768be9a42e85cdb092821a3073fa507fa28969573fe2a78b27",
+    "bytes": 922
+  }
+]
