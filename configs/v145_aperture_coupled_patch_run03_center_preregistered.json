@@ -1,0 +1,8 @@
+{
+  "extends": "configs/v145_aperture_coupled_patch_run02_sheet_preregistered.json",
+  "protocol": "v1.45-standard-aperture-coupled-patch-local-port-mesh-center",
+  "output_directory": "hfss_outputs/v145_aperture_coupled_patch_20260810_run03_center",
+  "one_by_one_candidates": [
+    {"candidate_id": "acp00_center", "patch_length_y_mm": 9.70, "aperture_length_x_mm": 9.50, "open_stub_length_mm": 4.80}
+  ]
+}

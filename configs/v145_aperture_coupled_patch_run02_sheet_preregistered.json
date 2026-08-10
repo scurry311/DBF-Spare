@@ -1,0 +1,9 @@
+{
+  "extends": "configs/v145_aperture_coupled_patch_preregistered.json",
+  "protocol": "v1.45-standard-aperture-coupled-patch-finite-sheet-screen",
+  "output_directory": "hfss_outputs/v145_aperture_coupled_patch_20260810_run02_sheet",
+  "fixed_geometry": {
+    "grounded_via_fence_enabled": false,
+    "air_padding_mm": 10.0
+  }
+}

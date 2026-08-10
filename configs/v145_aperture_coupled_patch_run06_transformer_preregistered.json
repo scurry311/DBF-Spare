@@ -1,0 +1,17 @@
+{
+  "extends": "configs/v145_aperture_coupled_patch_run02_sheet_preregistered.json",
+  "protocol": "v1.45-aperture-coupled-patch-single-section-transformer-doe",
+  "output_directory": "hfss_outputs/v145_aperture_coupled_patch_20260810_run06_transformer",
+  "fixed_geometry": {
+    "transformer_enabled": true
+  },
+  "one_by_one_candidates": [
+    {"candidate_id": "acp13_t8_l50", "patch_width_x_mm": 13.20, "patch_length_y_mm": 9.70, "aperture_length_x_mm": 13.00, "aperture_width_y_mm": 1.00, "open_stub_length_mm": 6.00, "transformer_width_mm": 8.00, "transformer_length_mm": 5.00},
+    {"candidate_id": "acp14_t10_l50", "patch_width_x_mm": 13.20, "patch_length_y_mm": 9.70, "aperture_length_x_mm": 13.00, "aperture_width_y_mm": 1.00, "open_stub_length_mm": 6.00, "transformer_width_mm": 10.00, "transformer_length_mm": 5.00},
+    {"candidate_id": "acp15_t12_l50", "patch_width_x_mm": 13.20, "patch_length_y_mm": 9.70, "aperture_length_x_mm": 13.00, "aperture_width_y_mm": 1.00, "open_stub_length_mm": 6.00, "transformer_width_mm": 12.00, "transformer_length_mm": 5.00},
+    {"candidate_id": "acp16_t10_l45", "patch_width_x_mm": 13.20, "patch_length_y_mm": 9.70, "aperture_length_x_mm": 13.00, "aperture_width_y_mm": 1.00, "open_stub_length_mm": 6.00, "transformer_width_mm": 10.00, "transformer_length_mm": 4.50},
+    {"candidate_id": "acp17_t10_l55", "patch_width_x_mm": 13.20, "patch_length_y_mm": 9.70, "aperture_length_x_mm": 13.00, "aperture_width_y_mm": 1.00, "open_stub_length_mm": 6.00, "transformer_width_mm": 10.00, "transformer_length_mm": 5.50},
+    {"candidate_id": "acp18_t10_l50_stub57", "patch_width_x_mm": 13.20, "patch_length_y_mm": 9.70, "aperture_length_x_mm": 13.00, "aperture_width_y_mm": 1.00, "open_stub_length_mm": 5.70, "transformer_width_mm": 10.00, "transformer_length_mm": 5.00},
+    {"candidate_id": "acp19_t10_l50_stub63", "patch_width_x_mm": 13.20, "patch_length_y_mm": 9.70, "aperture_length_x_mm": 13.00, "aperture_width_y_mm": 1.00, "open_stub_length_mm": 6.30, "transformer_width_mm": 10.00, "transformer_length_mm": 5.00}
+  ]
+}

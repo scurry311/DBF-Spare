@@ -1,0 +1,84 @@
+{
+  "protocol": "v1.46-ground-backed-true-differential-split-patch",
+  "created_on": "2026-08-10",
+  "parent_commit": "0a61925f1f5b314809fd7b30bdf83f8a4a3487b5",
+  "parent_tag": "v1.44.0-grounded-cavity-element-stop-gate",
+  "ansys_executable": "D:/v231/Win64/ansysedt.exe",
+  "output_directory": "hfss_outputs/v146_ground_backed_differential_patch_20260810_run01",
+  "inputs": {
+    "frozen_stimuli_manifest": "hfss_outputs/v139_physical_2x2_differential_array_20260808_run01/stimuli/stimuli_manifest.csv",
+    "frozen_stimuli_vectors": "hfss_outputs/v139_physical_2x2_differential_array_20260808_run01/stimuli/stimuli_vectors.npz",
+    "target_s4": "hfss_outputs/v143_y_balanced_element_input_20260809_run02/target_synthesis/target_s4.npz",
+    "old_grounded_patch_1x1": "hfss_outputs/grounded_patch_final_1x1_20260717_run01/stage_summary.json",
+    "old_grounded_patch_4x4": "hfss_outputs/grounded_patch_final_4x4_20260717_run01/stage_summary.json"
+  },
+  "frequency_ghz": 10.0,
+  "frequencies_ghz": [9.96, 10.0, 10.04],
+  "port_order": ["P00", "P10", "P01", "P11"],
+  "array": {"spacing_x_mm": 15.0, "spacing_y_mm": 15.0},
+  "fixed_geometry": {
+    "relative_permittivity": 2.2,
+    "loss_tangent": 0.0009,
+    "substrate_thickness_mm": 1.575,
+    "coax_drop_mm": 0.40,
+    "copper_thickness_mm": 0.035,
+    "patch_width_x_mm": 11.80,
+    "probe_radius_mm": 0.15,
+    "ground_clearance_radius_mm": 0.40,
+    "probe_drop_below_ground_mm": 0.40,
+    "bottom_pad_width_x_mm": 0.60,
+    "bottom_pad_length_y_mm": 0.40,
+    "air_padding_mm": 10.0,
+    "local_mesh_max_length_mm": 0.18,
+    "adaptive_refinement_percent": 5.0,
+    "maximum_passes": 14
+  },
+  "one_by_one_candidates": [
+    {"candidate_id": "gbd00_center", "patch_total_length_y_mm": 9.70, "split_gap_y_mm": 0.30, "differential_probe_spacing_y_mm": 1.10},
+    {"candidate_id": "gbd01_short", "patch_total_length_y_mm": 9.30, "split_gap_y_mm": 0.30, "differential_probe_spacing_y_mm": 1.10},
+    {"candidate_id": "gbd02_long", "patch_total_length_y_mm": 10.10, "split_gap_y_mm": 0.30, "differential_probe_spacing_y_mm": 1.10},
+    {"candidate_id": "gbd03_feed_wide", "patch_total_length_y_mm": 9.70, "split_gap_y_mm": 0.30, "differential_probe_spacing_y_mm": 1.50},
+    {"candidate_id": "gbd04_gap_narrow", "patch_total_length_y_mm": 9.70, "split_gap_y_mm": 0.20, "differential_probe_spacing_y_mm": 1.10},
+    {"candidate_id": "gbd05_gap_wide", "patch_total_length_y_mm": 9.70, "split_gap_y_mm": 0.50, "differential_probe_spacing_y_mm": 1.30}
+  ],
+  "gates": {
+    "maximum_final_delta_s": 0.05,
+    "maximum_reciprocity_error": 0.0001,
+    "maximum_passivity_sigma": 1.001,
+    "minimum_1x1_passive_rl_db": 15.0,
+    "minimum_2x2_passive_rl_db": 12.0,
+    "minimum_active_rl_design_db": 11.0,
+    "active_rl_stop_line_db": 10.0,
+    "minimum_total_rl_db": 11.0,
+    "minimum_system_efficiency": 0.95,
+    "maximum_x_neighbor_coupling_db": -25.0,
+    "maximum_y_neighbor_coupling_db": -25.0,
+    "maximum_diagonal_coupling_db": -30.0,
+    "minimum_coupling_improvement_vs_old_patch_db": 8.0,
+    "maximum_port_topology_warning_count": 0,
+    "maximum_direct_ddm_abs_delta_s": 0.05
+  },
+  "references": {
+    "old_grounded_patch_nearest_coupling_db": -15.0,
+    "target_self_magnitude_db": -20.47,
+    "target_x_coupling_db": -27.93,
+    "target_y_coupling_db": -38.52,
+    "target_diagonal_coupling_db": -38.67
+  },
+  "resources": {
+    "minimum_free_memory_before_1x1_gib": 8.0,
+    "minimum_free_memory_before_2x2_gib": 13.0,
+    "abort_free_memory_during_solve_gib": 3.0,
+    "poll_interval_seconds": 5,
+    "maximum_concurrent_aedt_instances": 1
+  },
+  "scope": {
+    "allow_1x1_prescreen": true,
+    "allow_2x2_only_after_1x1_gate": true,
+    "allow_4x4": false,
+    "allow_16x16": false,
+    "allow_eep_export": false,
+    "allow_training_labels": false,
+    "allow_critic_training": false
+  }
+}

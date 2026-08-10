@@ -1,0 +1,18 @@
+{
+  "extends": "configs/v146_ground_backed_differential_patch_preregistered.json",
+  "protocol": "v1.46-low-profile-ground-backed-differential-split-patch",
+  "output_directory": "hfss_outputs/v146_ground_backed_differential_patch_20260810_run02_low_profile",
+  "fixed_geometry": {
+    "substrate_thickness_mm": 0.508,
+    "coax_drop_mm": 0.25,
+    "probe_drop_below_ground_mm": 0.25,
+    "ground_clearance_radius_mm": 0.35,
+    "bottom_pad_length_y_mm": 0.30
+  },
+  "one_by_one_candidates": [
+    {"candidate_id": "gbd06_lp_l95", "patch_total_length_y_mm": 9.50, "split_gap_y_mm": 0.10, "differential_probe_spacing_y_mm": 0.90},
+    {"candidate_id": "gbd07_lp_l100", "patch_total_length_y_mm": 10.00, "split_gap_y_mm": 0.10, "differential_probe_spacing_y_mm": 0.90},
+    {"candidate_id": "gbd08_lp_l105", "patch_total_length_y_mm": 10.50, "split_gap_y_mm": 0.10, "differential_probe_spacing_y_mm": 0.90},
+    {"candidate_id": "gbd09_lp_gap20", "patch_total_length_y_mm": 10.00, "split_gap_y_mm": 0.20, "differential_probe_spacing_y_mm": 1.00}
+  ]
+}

@@ -1,0 +1,126 @@
+{
+  "stage": "v1.45_v1.46_element_topology_stop_gate",
+  "evidence_level": "B_physical_10ghz_1x1_only",
+  "complete_case_count": 37,
+  "branch_summary": {
+    "aperture_coupled": {
+      "complete_case_count": 13,
+      "numerical_gate_count": 13,
+      "efficiency_gate_count": 13,
+      "passive_rl_10db_count": 0,
+      "passive_rl_15db_count": 0,
+      "best_case_id": "acp11_l13_w10_stub35",
+      "best_passive_rl_db": 3.1995804599453463,
+      "best_input_resistance_ohm": 11.441201405060959,
+      "best_input_reactance_ohm": -24.78442740290193,
+      "best_radiation_efficiency": 0.994667845497119,
+      "best_final_delta_s": 0.0381255,
+      "minimum_observed_free_memory_gib": 13.653034210205078,
+      "maximum_tetrahedra": 9151
+    },
+    "aperture_coupled_transformer": {
+      "complete_case_count": 14,
+      "numerical_gate_count": 14,
+      "efficiency_gate_count": 0,
+      "passive_rl_10db_count": 0,
+      "passive_rl_15db_count": 0,
+      "best_case_id": "acp26_t6_l50_g20",
+      "best_passive_rl_db": 0.3792599350196504,
+      "best_input_resistance_ohm": 1.2153565653056548,
+      "best_input_reactance_ohm": 16.844179609202612,
+      "best_radiation_efficiency": 0.926059084930647,
+      "best_final_delta_s": 0.0202915,
+      "minimum_observed_free_memory_gib": 13.565208435058594,
+      "maximum_tetrahedra": 7748
+    },
+    "ground_backed_differential": {
+      "complete_case_count": 10,
+      "numerical_gate_count": 10,
+      "efficiency_gate_count": 4,
+      "passive_rl_10db_count": 0,
+      "passive_rl_15db_count": 0,
+      "best_case_id": "gbd04_gap_narrow",
+      "best_passive_rl_db": 0.6297945016681461,
+      "best_input_resistance_ohm": 23.688777399920795,
+      "best_input_reactance_ohm": 172.24038263404125,
+      "best_radiation_efficiency": 0.981649815269146,
+      "best_final_delta_s": 0.0400945,
+      "minimum_observed_free_memory_gib": 13.723426818847656,
+      "maximum_tetrahedra": 7677
+    }
+  },
+  "topology_summary": {
+    "aperture_family": {
+      "complete_case_count": 27,
+      "numerical_gate_count": 27,
+      "efficiency_gate_count": 13,
+      "passive_rl_10db_count": 0,
+      "passive_rl_15db_count": 0,
+      "best_case_id": "acp11_l13_w10_stub35",
+      "best_passive_rl_db": 3.1995804599453463,
+      "best_input_resistance_ohm": 11.441201405060959,
+      "best_input_reactance_ohm": -24.78442740290193,
+      "best_radiation_efficiency": 0.994667845497119,
+      "best_final_delta_s": 0.0381255,
+      "minimum_observed_free_memory_gib": 13.565208435058594,
+      "maximum_tetrahedra": 9151
+    },
+    "ground_backed_differential_family": {
+      "complete_case_count": 10,
+      "numerical_gate_count": 10,
+      "efficiency_gate_count": 4,
+      "passive_rl_10db_count": 0,
+      "passive_rl_15db_count": 0,
+      "best_case_id": "gbd04_gap_narrow",
+      "best_passive_rl_db": 0.6297945016681461,
+      "best_input_resistance_ohm": 23.688777399920795,
+      "best_input_reactance_ohm": 172.24038263404125,
+      "best_radiation_efficiency": 0.981649815269146,
+      "best_final_delta_s": 0.0400945,
+      "minimum_observed_free_memory_gib": 13.723426818847656,
+      "maximum_tetrahedra": 7677
+    }
+  },
+  "memory_abort_events": [
+    {
+      "source": "hfss_outputs/v145_aperture_coupled_patch_20260810_run01/one_by_one_prescreen/acp00_center/run_audit.json",
+      "case_id": "acp00_center",
+      "build_return_code": 0,
+      "solve_return_code": 99,
+      "memory_aborted": true,
+      "free_memory_gib_before": 14.355110168457031,
+      "minimum_free_memory_gib": 2.154338836669922,
+      "elapsed_seconds": 244.71391344070435,
+      "project_exists": true,
+      "touchstone_exists": false,
+      "topology_warning_count": 0
+    },
+    {
+      "source": "hfss_outputs/v145_aperture_coupled_patch_20260810_run02_sheet/one_by_one_prescreen/acp00_center/run_audit.json",
+      "case_id": "acp00_center",
+      "build_return_code": 0,
+      "solve_return_code": 99,
+      "memory_aborted": true,
+      "free_memory_gib_before": 14.673961639404297,
+      "minimum_free_memory_gib": 1.8907127380371094,
+      "elapsed_seconds": 121.70959711074829,
+      "project_exists": true,
+      "touchstone_exists": false,
+      "topology_warning_count": 0
+    }
+  ],
+  "gate": {
+    "minimum_1x1_passive_rl_db": 15.0,
+    "minimum_radiation_efficiency": 0.95,
+    "maximum_final_delta_s": 0.05,
+    "maximum_topology_warning_count": 0
+  },
+  "one_by_one_gate_pass_count": 0,
+  "allow_2x2": false,
+  "allow_4x4": false,
+  "allow_16x16": false,
+  "allow_eep_export": false,
+  "allow_training_labels": false,
+  "allow_critic_training": false,
+  "decision": "Stop both the standard aperture-coupled/single-transformer family and the ground-backed true-differential split-patch family before 2x2. Neither family forms a 15 dB physical 1x1 feasible set."
+}

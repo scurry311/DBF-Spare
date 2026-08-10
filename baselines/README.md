@@ -10,6 +10,10 @@ as an engineering label.
 
 Current checkpoints:
 
+- `2026-08-10-v146-aperture-balanced-element-stop-gate`: thirty-seven
+  complete physical 10 GHz 1x1 aperture-coupled and ground-backed true-
+  differential candidates all fail the 15 dB passive-RL gate; 2x2, array,
+  EEP, labels, and critic training remain locked.
 - `2026-08-06-v127-aperture-radiator-stop-gate`: eighteen converged physical
   10 GHz 1x1 joint dual-slot/tongue, aperture, and feed candidates all fail the
   10 dB passive-RL prerequisite; 2x2 coupling evidence and all downstream

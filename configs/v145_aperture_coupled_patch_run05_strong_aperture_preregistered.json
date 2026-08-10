@@ -1,0 +1,13 @@
+{
+  "extends": "configs/v145_aperture_coupled_patch_run02_sheet_preregistered.json",
+  "protocol": "v1.45-standard-aperture-coupled-patch-strong-aperture-doe",
+  "output_directory": "hfss_outputs/v145_aperture_coupled_patch_20260810_run05_strong_aperture",
+  "one_by_one_candidates": [
+    {"candidate_id": "acp07_l12_w08", "patch_width_x_mm": 12.60, "patch_length_y_mm": 9.70, "aperture_length_x_mm": 12.00, "aperture_width_y_mm": 0.80, "open_stub_length_mm": 4.80},
+    {"candidate_id": "acp08_l13_w10", "patch_width_x_mm": 13.20, "patch_length_y_mm": 9.70, "aperture_length_x_mm": 13.00, "aperture_width_y_mm": 1.00, "open_stub_length_mm": 4.80},
+    {"candidate_id": "acp09_l13_w15", "patch_width_x_mm": 13.20, "patch_length_y_mm": 9.70, "aperture_length_x_mm": 13.00, "aperture_width_y_mm": 1.50, "open_stub_length_mm": 4.80},
+    {"candidate_id": "acp10_l11_w10_stub35", "patch_width_x_mm": 12.60, "patch_length_y_mm": 9.70, "aperture_length_x_mm": 11.00, "aperture_width_y_mm": 1.00, "open_stub_length_mm": 3.50},
+    {"candidate_id": "acp11_l13_w10_stub35", "patch_width_x_mm": 13.20, "patch_length_y_mm": 9.70, "aperture_length_x_mm": 13.00, "aperture_width_y_mm": 1.00, "open_stub_length_mm": 3.50},
+    {"candidate_id": "acp12_l13_w10_stub60", "patch_width_x_mm": 13.20, "patch_length_y_mm": 9.70, "aperture_length_x_mm": 13.00, "aperture_width_y_mm": 1.00, "open_stub_length_mm": 6.00}
+  ]
+}

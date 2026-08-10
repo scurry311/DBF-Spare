@@ -1,0 +1,17 @@
+{
+  "extends": "configs/v145_aperture_coupled_patch_run02_sheet_preregistered.json",
+  "protocol": "v1.45-aperture-coupled-patch-isolated-single-section-transformer-doe",
+  "output_directory": "hfss_outputs/v145_aperture_coupled_patch_20260810_run07_isolated_transformer",
+  "fixed_geometry": {
+    "transformer_enabled": true
+  },
+  "one_by_one_candidates": [
+    {"candidate_id": "acp20_t8_l50_g20", "patch_width_x_mm": 13.20, "patch_length_y_mm": 9.70, "aperture_length_x_mm": 13.00, "aperture_width_y_mm": 1.00, "open_stub_length_mm": 6.00, "transformer_width_mm": 8.00, "transformer_length_mm": 5.00, "transformer_to_aperture_gap_mm": 2.00},
+    {"candidate_id": "acp21_t10_l50_g20", "patch_width_x_mm": 13.20, "patch_length_y_mm": 9.70, "aperture_length_x_mm": 13.00, "aperture_width_y_mm": 1.00, "open_stub_length_mm": 6.00, "transformer_width_mm": 10.00, "transformer_length_mm": 5.00, "transformer_to_aperture_gap_mm": 2.00},
+    {"candidate_id": "acp22_t12_l50_g20", "patch_width_x_mm": 13.20, "patch_length_y_mm": 9.70, "aperture_length_x_mm": 13.00, "aperture_width_y_mm": 1.00, "open_stub_length_mm": 6.00, "transformer_width_mm": 12.00, "transformer_length_mm": 5.00, "transformer_to_aperture_gap_mm": 2.00},
+    {"candidate_id": "acp23_t10_l45_g20", "patch_width_x_mm": 13.20, "patch_length_y_mm": 9.70, "aperture_length_x_mm": 13.00, "aperture_width_y_mm": 1.00, "open_stub_length_mm": 6.00, "transformer_width_mm": 10.00, "transformer_length_mm": 4.50, "transformer_to_aperture_gap_mm": 2.00},
+    {"candidate_id": "acp24_t10_l50_g15", "patch_width_x_mm": 13.20, "patch_length_y_mm": 9.70, "aperture_length_x_mm": 13.00, "aperture_width_y_mm": 1.00, "open_stub_length_mm": 6.00, "transformer_width_mm": 10.00, "transformer_length_mm": 5.00, "transformer_to_aperture_gap_mm": 1.50},
+    {"candidate_id": "acp25_t10_l45_g25", "patch_width_x_mm": 13.20, "patch_length_y_mm": 9.70, "aperture_length_x_mm": 13.00, "aperture_width_y_mm": 1.00, "open_stub_length_mm": 6.00, "transformer_width_mm": 10.00, "transformer_length_mm": 4.50, "transformer_to_aperture_gap_mm": 2.50},
+    {"candidate_id": "acp26_t6_l50_g20", "patch_width_x_mm": 13.20, "patch_length_y_mm": 9.70, "aperture_length_x_mm": 13.00, "aperture_width_y_mm": 1.00, "open_stub_length_mm": 6.00, "transformer_width_mm": 6.00, "transformer_length_mm": 5.00, "transformer_to_aperture_gap_mm": 2.00}
+  ]
+}

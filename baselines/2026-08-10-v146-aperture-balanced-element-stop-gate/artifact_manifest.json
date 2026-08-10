@@ -1,0 +1,22 @@
+[
+  {
+    "path": "BASELINE.md",
+    "sha256": "c63a502f1069b0119839e7032eb08932c623cc780a6be1be97edc538655d1577",
+    "bytes": 2225
+  },
+  {
+    "path": "baseline_metadata.json",
+    "sha256": "6da0ab0ca73c390728fab139206f402b2c8c223929e952b2a48250861176eeb4",
+    "bytes": 289
+  },
+  {
+    "path": "snapshots/complete_1x1_metrics.csv",
+    "sha256": "80131512ff0df432907a9af1a7a26fdd2d928a511e90098398acc4d84e2341cc",
+    "bytes": 18834
+  },
+  {
+    "path": "snapshots/stage_summary.json",
+    "sha256": "bab3ef8d8354f2362cec4fb18a80386edbb4e929cbecc8612bc03d638d440b40",
+    "bytes": 4944
+  }
+]

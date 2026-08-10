@@ -1,11 +1,29 @@
 # Result Index
 
-Current hardware-development baseline: `v1.27.0-aperture-radiator-stop-gate`,
-frozen on 2026-08-06. A new aperture-coupled dual-slot/tongue input moves the
-1x1 impedance over a broad range, but none of 18 converged physical candidates
-reaches the 10 dB passive-RL prerequisite. The branch stops before 2x2, so it
-provides no nearest-neighbor coupling evidence. The trusted 16x16
-field/operator baseline below remains unchanged.
+Current hardware-development baseline:
+`v1.46.0-aperture-balanced-element-stop-gate`, frozen on 2026-08-10.  The
+standard aperture-coupled and continuous-ground true-differential branches
+produce 37 complete physical 10 GHz 1x1 cases, but none reaches the 15 dB
+passive-RL gate.  The branches stop before 2x2 and provide no new array or
+training evidence.  The trusted 16x16 field/operator baseline below remains
+unchanged.
+
+## v1.45/v1.46 Element Topology Stop Gate
+
+| Result | Aperture family | Ground-backed differential |
+|---|---:|---:|
+| Complete physical 1x1 cases | 27 | 10 |
+| Numerical gate passed | 27/27 | 10/10 |
+| Passive RL >= 10 dB | 0/27 | 0/10 |
+| Best passive RL | 3.200 dB | 0.630 dB |
+| Best input impedance | 11.44-j24.78 ohm | 23.69+j172.24 ohm |
+| Physical 2x2 | Locked | Locked |
+
+The whole-conductor 0.18 mm mesh was first rejected by the memory guard.  A
+finite-conductivity-sheet model with 0.18 mm confined to the local port
+completed with at most 9,151 tetrahedra and at least 13.565 GiB free memory.
+This validates the lightweight modeling path, but not the two element
+topologies.  No S256/EEP, label generation, or critic retraining is authorized.
 
 ## v1.27 Radiator/Input Stop Gate
 

@@ -1,0 +1,7 @@
+{
+  "baseline_id": "v1.46.0-aperture-balanced-element-stop-gate",
+  "created_on": "2026-08-10",
+  "parent_commit": "0a61925f1f5b314809fd7b30bdf83f8a4a3487b5",
+  "evidence_level": "B_physical_10ghz_1x1_only",
+  "raw_output": "hfss_outputs/v146_element_topology_stop_gate_20260810"
+}
