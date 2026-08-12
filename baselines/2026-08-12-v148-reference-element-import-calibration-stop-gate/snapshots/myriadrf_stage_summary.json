@@ -1,0 +1,43 @@
+{
+  "version": "v1.48-myriadrf-vivaldi-calibration",
+  "pass_count": 4,
+  "final_delta_s": 0.0101665,
+  "converged": true,
+  "small_mesh_segment_count": 10,
+  "peak_solver_memory_gb": 0.31978607177734375,
+  "maximum_tetrahedra": 48856,
+  "topology_warning_count": 0,
+  "mesh_warning_audit": {
+    "record_count": 10,
+    "unique_bodies": [
+      "AirRegion"
+    ],
+    "conductor_or_port_warning": false,
+    "maximum_reported_cutoff_mhz": 4.2089835953054,
+    "classification": "numerically benign air-region sliver"
+  },
+  "gate_frequencies_ghz": [
+    9.96,
+    10.0,
+    10.04
+  ],
+  "gate_passive_rl_db": [
+    19.503953206476083,
+    20.473795691153406,
+    21.57574188396097
+  ],
+  "gate_worst_passive_rl_db": 19.503953206476083,
+  "center_passive_rl_db": 20.473795691153406,
+  "contiguous_10db_bandwidth_ghz": 9.9,
+  "contiguous_10db_band_low_ghz": 3.5,
+  "contiguous_10db_band_high_ghz": 13.4,
+  "radiation_efficiency": null,
+  "endfire_gain_10ghz_dbi": null,
+  "reported_simulated_gain_error_db": null,
+  "numerical_gate_pass": true,
+  "simulated_reference_consistency_gate_pass": false,
+  "measured_validation_gate_pass": false,
+  "engineering_label_allowed": false,
+  "training_label_allowed": false,
+  "evidence_reason": "The public report has a measured S11 plot but no raw Touchstone data; connector and reference-plane regression cannot be independently reproduced."
+}

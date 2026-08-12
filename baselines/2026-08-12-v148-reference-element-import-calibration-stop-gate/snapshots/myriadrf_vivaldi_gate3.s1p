@@ -1,0 +1,14 @@
+! Touchstone file exported from HFSS 2023.1.0
+!        File:           D:/codex_workspace/hfss_ura16_quick_model/hfss_outputs/v148_reference_element_import_20260812_run01/myriadrf_vivaldi_calibration_run03_port_mesh/nominal_direct/v148_myriadrf_vivaldi_nominal_direct.aedt
+!        Generated:      12:55:01 %x4E0B%x5348  8%x6708 12, 2026
+!        Design:         V148_MyriadRF_Vivaldi_Calibration_1x1
+!        Project:        v148_myriadrf_vivaldi_nominal_direct
+!        Setup:          Setup_10GHz
+!        Solution:       Sweep_Gate3
+!
+# GHz S MA R 50.000000
+! Terminal data exported
+! Port[1] = P1
+9.96                           0.105877173702305 27.9572965886662
+10                             0.094691329761266 24.2358526577292
+10.04                          0.0834089983448187 21.0258701459574

@@ -1,0 +1,24 @@
+{
+  "return_code": 0,
+  "project_exists": true,
+  "project_bytes": 171122,
+  "topology_warning_count": 0,
+  "static_cad_audit": {
+    "zone_count": 4,
+    "front_zone_count": 3,
+    "back_zone_count": 1,
+    "total_polygon_vertices": 180,
+    "plated_via_count": 2,
+    "port_count": 1,
+    "radiation_boundary_count": 1,
+    "finite_conductivity": true,
+    "broad_sweep_count": 1,
+    "gate_sweep_count": 1,
+    "deterministic_local_mesh_objects": [
+      "PortSheet"
+    ]
+  },
+  "build_smoke_gate_pass": true,
+  "free_memory_gib_after": 13.185367584228516,
+  "aedt_processes_after": []
+}

@@ -1,0 +1,12 @@
+{
+  "baseline_id": "v1.48.0-reference-element-import-calibration-stop-gate",
+  "created_on": "2026-08-12",
+  "parent_commit": "fea039e71cc89b6b1f3a4a5c88f56846a2977f3f",
+  "parent_tag": "v1.47.0-literature-balun-dipole-stop-gate",
+  "evidence_level": "Marlin static/compatibility audit plus MyriadRF PCB-derived S11 calibration HFSS",
+  "raw_output": "hfss_outputs/v148_reference_element_import_20260812_run01",
+  "physical_gate_pass": false,
+  "allow_16x16": false,
+  "allow_training_labels": false,
+  "allow_critic_training": false
+}

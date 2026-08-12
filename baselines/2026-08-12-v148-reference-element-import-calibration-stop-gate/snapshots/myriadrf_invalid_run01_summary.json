@@ -1,0 +1,12 @@
+{
+  "run_id": "v148-myriadrf-vivaldi-calibration-run01",
+  "valid_hfss_result": false,
+  "reason": "AEDT 2023.1 ignored excludeTypes=Frequencies and the distributed launch stalled after initial TAU mesh coarsening.",
+  "observed_initial_tetrahedra": 48856,
+  "observed_coarsened_tetrahedra": 3029,
+  "profile_progressed_to_matrix_solve": false,
+  "touchstone_exported": false,
+  "engineering_metrics_allowed": false,
+  "training_label_allowed": false,
+  "operator_action": "Terminated the exact run01 process tree and started a clean serial run02 without changing CAD, materials, port, mesh, frequencies, or engineering gates."
+}

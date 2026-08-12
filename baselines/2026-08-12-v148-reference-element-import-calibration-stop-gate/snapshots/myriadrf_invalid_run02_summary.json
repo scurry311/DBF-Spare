@@ -1,0 +1,15 @@
+{
+  "run_id": "v148-myriadrf-vivaldi-calibration-run02-serial",
+  "valid_hfss_result": false,
+  "reason": "The deterministic 0.18 mm local mesh was mistakenly applied to every copper polygon and exceeded the preregistered memory limit.",
+  "initial_tetrahedra": 48856,
+  "manual_refine_tetrahedra": 2136069,
+  "lambda_refine_tetrahedra": 2136361,
+  "port_refine_tetrahedra": 2136403,
+  "minimum_free_memory_gib": 0.5781059265136719,
+  "memory_guard_return_code": 99,
+  "touchstone_exported": false,
+  "engineering_metrics_allowed": false,
+  "training_label_allowed": false,
+  "run03_change_scope": "Restrict the unchanged 0.18 mm deterministic mesh to PortSheet only; all physical geometry, materials, port location, frequencies, and gates remain frozen."
+}

@@ -1,0 +1,76 @@
+{
+  "version": "v1.48-reference-element-import",
+  "parent_commit": "fea039e71cc89b6b1f3a4a5c88f56846a2977f3f",
+  "parent_tag": "v1.47.0-literature-balun-dipole-stop-gate",
+  "ansys_executable": "D:/v231/Win64/ansysedt.exe",
+  "output_directory": "hfss_outputs/v148_reference_element_import_20260812_run01",
+  "myriadrf_calibration_config": "configs/v148_myriadrf_vivaldi_calibration_preregistered.json",
+  "sources": {
+    "marlin_repository": "tmp/external/marlin-x-2x4-pcb",
+    "marlin_commit": "4528132363acc7b566b19a96e41b195ea3467c96",
+    "marlin_component": "tmp/external/marlin-x-2x4-pcb/hfss/u_slot_patch_antenna_ro4350b_4L_sma.a3dcomp",
+    "marlin_project": "tmp/external/marlin-x-2x4-pcb/hfss/MARLIN.aedt",
+    "marlin_fabrication_zip": "tmp/external/marlin-x-2x4-pcb/marlin-x-2x4-20260723.zip",
+    "vivaldi_repository": "tmp/external/vivaldi-antenna",
+    "vivaldi_commit": "fdeb99138e04a63137a0aea7820244ee39cc2398",
+    "vivaldi_board": "tmp/external/vivaldi-antenna/hardware/KiCAD/Vivaldi.kicad_pcb",
+    "vivaldi_report": "tmp/external/vivaldi-antenna/docs/Vivaldi Antenna.pdf"
+  },
+  "frequencies": {
+    "adaptive_ghz": 10.0,
+    "gate_ghz": [9.96, 10.0, 10.04],
+    "broad_start_ghz": 8.0,
+    "broad_stop_ghz": 12.0,
+    "broad_count": 161
+  },
+  "resources": {
+    "number_of_processors": 4,
+    "minimum_free_memory_before_solve_gib": 10.0,
+    "abort_free_memory_during_solve_gib": 3.0,
+    "poll_interval_seconds": 5.0,
+    "serial_only": true
+  },
+  "gates": {
+    "maximum_final_delta_s": 0.05,
+    "preferred_final_delta_s": 0.02,
+    "minimum_gate3_passive_rl_db": 15.0,
+    "minimum_radiation_efficiency": 0.95,
+    "minimum_contiguous_10db_bandwidth_ghz": 0.08,
+    "maximum_direct_ddm_s_difference": 0.05,
+    "maximum_nominal_repeat_s_difference": 0.05,
+    "minimum_2x2_passive_rl_db": 12.0,
+    "minimum_2x2_active_rl_db": 11.0,
+    "minimum_2x2_total_rl_db": 11.0,
+    "minimum_2x2_radiation_efficiency": 0.95,
+    "maximum_reciprocity_error": 0.0001,
+    "maximum_passivity_sigma": 1.001
+  },
+  "vivaldi_calibration": {
+    "substrate": "Rogers RO4350B",
+    "thickness_mm": 0.5,
+    "relative_permittivity": 3.6,
+    "loss_tangent": 0.0032,
+    "reported_dimensions_mm": [48.0, 38.0],
+    "reported_simulated_gain_10ghz_dbi": 7.7,
+    "reported_measured_boresight_gain_10ghz_dbi": [8.5, 8.6],
+    "measured_s11_raw_touchstone_available": false,
+    "allowed_use": "port-material-reference-plane calibration only",
+    "prohibited_use": "engineering label or exact measured-S11 regression target"
+  },
+  "compatibility_rescue": {
+    "enabled": true,
+    "source_version_text": "Version(2025, 2)",
+    "diagnostic_version_text": "Version(2023, 1)",
+    "scope": "import audit only",
+    "engineering_evidence_allowed": false
+  },
+  "locks": {
+    "allow_2x2_before_1x1_gate": false,
+    "allow_4x4": false,
+    "allow_16x16": false,
+    "allow_s256_export": false,
+    "allow_eep_export": false,
+    "allow_training_labels": false,
+    "allow_critic_training": false
+  }
+}

@@ -115,3 +115,8 @@ Current checkpoints:
   coherent K=2/4/6 replay fails active matching at -6.03 dB worst active RL,
   7.64 dB total RL, and 83.14% minimum system efficiency; DDM, three-frequency,
   larger arrays, EEP, labels, and critic training remain locked.
+- `2026-08-12-v148-reference-element-import-calibration-stop-gate`: the
+  Marlin AEDT 2025.2 component/full project cannot form a trustworthy 1x1 in
+  AEDT 2023.1. A PCB-derived MyriadRF Vivaldi S11 calibration solve converges
+  at Delta S 0.01017 and 19.50 dB three-frequency worst RL, but missing raw VNA
+  and radiation evidence keep 2x2, arrays, labels, and critic locked.

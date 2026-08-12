@@ -1,0 +1,65 @@
+{
+  "stage": "v148_final_stop_gate",
+  "version": "v1.48-reference-element-import",
+  "parent_commit": "fea039e71cc89b6b1f3a4a5c88f56846a2977f3f",
+  "parent_tag": "v1.47.0-literature-balun-dipole-stop-gate",
+  "marlin": {
+    "source_component_aedt_version": [
+      2025,
+      2
+    ],
+    "installed_aedt_version": [
+      2023,
+      1
+    ],
+    "original_component_import_gate_pass": false,
+    "header_only_diagnostic_import_compatible": true,
+    "header_only_diagnostic_engineering_ready": false,
+    "source_project_audit_gate_pass": false,
+    "source_project_encrypted_and_not_decryptable": true,
+    "trusted_1x1_available": false,
+    "nominal_sweep_completed": false,
+    "independent_direct_completed": false,
+    "independent_ddm_completed": false,
+    "direct_ddm_gate_pass": false,
+    "two_by_two_active_rl_completed": false,
+    "stop_reason": "AEDT 2023.1 cannot import the original 2025.2 component, the header-only diagnostic has no auditable top-level excitation/boundary, and the complete MARLIN project is encrypted and cannot be opened."
+  },
+  "myriadrf": {
+    "source_commit": "fdeb99138e04a63137a0aea7820244ee39cc2398",
+    "pcb_derived_hfss_solve_completed": true,
+    "numerical_gate_pass": true,
+    "final_delta_s": 0.0101665,
+    "gate3_worst_passive_rl_db": 19.503953206476083,
+    "center_passive_rl_db": 20.473795691153406,
+    "contiguous_10db_bandwidth_ghz": 9.9,
+    "contiguous_10db_band_low_ghz": 3.5,
+    "contiguous_10db_band_high_ghz": 13.4,
+    "mesh_warning_audit": {
+      "record_count": 10,
+      "unique_bodies": [
+        "AirRegion"
+      ],
+      "conductor_or_port_warning": false,
+      "maximum_reported_cutoff_mhz": 4.2089835953054,
+      "classification": "numerically benign air-region sliver"
+    },
+    "radiation_efficiency_observed": false,
+    "endfire_gain_observed": false,
+    "raw_measured_touchstone_available": false,
+    "simulated_reference_consistency_gate_pass": false,
+    "measured_validation_gate_pass": false,
+    "allowed_use": "qualitative S11 port/material/reference-plane calibration evidence only"
+  },
+  "physical_gate_pass": false,
+  "allow_marlin_1x1_solve": false,
+  "allow_independent_direct_ddm": false,
+  "allow_2x2": false,
+  "allow_4x4": false,
+  "allow_16x16": false,
+  "allow_s256_export": false,
+  "allow_eep_export": false,
+  "allow_training_labels": false,
+  "allow_critic_training": false,
+  "next_action": "Obtain AEDT 2025.2 or an unencrypted Marlin source project with dielectric, port, and boundary definitions; obtain raw MyriadRF VNA data if exact port/reference-plane regression is required."
+}

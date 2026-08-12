@@ -1,0 +1,169 @@
+{
+  "path": "D:\\codex_workspace\\hfss_ura16_quick_model\\tmp\\external\\marlin-x-2x4-pcb\\hfss\\u_slot_patch_antenna_ro4350b_4L_sma.a3dcomp",
+  "sha256": "adeb545a6b3665528039004636e2da2d8e35b989172812ff947b6cc3f6b6c867",
+  "size_bytes": 459678,
+  "component_name": "u_slot_patch_antenna_ro4350b_4L_sma",
+  "owner": "Titan Yuan",
+  "product": "HFSS",
+  "solution_type": "HFSS Modal Network",
+  "source_aedt_version": [
+    2025,
+    2
+  ],
+  "format_version": "11",
+  "component_meshing": "Volume",
+  "variable_count": 28,
+  "variables": {
+    "h_dielectric_antenna": "60mil",
+    "l_dielectric": "50mm",
+    "h_prepreg": "18mil",
+    "h_dielectric_microstrip": "10mil",
+    "w_patch": "12.0205594715588mm",
+    "l_patch": "7.25030140467481mm",
+    "l_microstrip": "y_feed",
+    "l_slot": "4.13811638197395mm",
+    "w_cpw_gap": "0.256mm",
+    "w_cpw_ground": "5mm",
+    "l_pad_trace": "5.54mm",
+    "w_pad_trace": "0.49mm",
+    "r_via_hole": "r_via-0.1mm",
+    "w_microstrip": "0.52725mm",
+    "l_chamfer": "0.8mm",
+    "t_slot": "0.583056643167441mm",
+    "w_pad_gap": "0.256mm",
+    "y_slot": "2.31828274869787mm",
+    "w_cpw": "0.49mm",
+    "y_pad_via": "2.21mm",
+    "r_via": "0.3mm",
+    "h_copper": "1copper_oz_per_ft2",
+    "y_via_offset": "-0.54mm",
+    "y_feed": "-0.709912493162731mm",
+    "l_cpw": "7mm",
+    "x_via_offset": "0.5mm",
+    "y_via": "1mm",
+    "w_slot": "5.09261287501339mm"
+  },
+  "part_count": 21,
+  "parts": [
+    {
+      "name": "Patch",
+      "material": "\"copper\"",
+      "first_operation_id": "117"
+    },
+    {
+      "name": "Microstrip",
+      "material": "\"copper\"",
+      "first_operation_id": "145"
+    },
+    {
+      "name": "Via",
+      "material": "\"copper\"",
+      "first_operation_id": "491"
+    },
+    {
+      "name": "Ground_1",
+      "material": "\"copper\"",
+      "first_operation_id": "5049"
+    },
+    {
+      "name": "PadTrace",
+      "material": "\"copper\"",
+      "first_operation_id": "5189"
+    },
+    {
+      "name": "PadGround1",
+      "material": "\"copper\"",
+      "first_operation_id": "5218"
+    },
+    {
+      "name": "PadGround1_1",
+      "material": "\"copper\"",
+      "first_operation_id": "5272"
+    },
+    {
+      "name": "Ground_1_1",
+      "material": "\"copper\"",
+      "first_operation_id": "11037"
+    },
+    {
+      "name": "PadVia",
+      "material": "\"copper\"",
+      "first_operation_id": "13923"
+    },
+    {
+      "name": "PadVia_1",
+      "material": "\"copper\"",
+      "first_operation_id": "13963"
+    },
+    {
+      "name": "Slot",
+      "material": "\"\"",
+      "first_operation_id": "242"
+    },
+    {
+      "name": "Slot_SweepFaceAlongNormal1",
+      "material": "\"\"",
+      "first_operation_id": "271"
+    },
+    {
+      "name": "Slot_SweepFaceAlongNormal2",
+      "material": "\"\"",
+      "first_operation_id": "272"
+    },
+    {
+      "name": "Slot_SweepFaceAlongNormal1_SweepFaceAlongNormal1",
+      "material": "\"\"",
+      "first_operation_id": "328"
+    },
+    {
+      "name": "Slot_SweepFaceAlongNormal2_SweepFaceAlongNormal1",
+      "material": "\"\"",
+      "first_operation_id": "357"
+    },
+    {
+      "name": "ViaHole",
+      "material": "\"\"",
+      "first_operation_id": "553"
+    },
+    {
+      "name": "Via1",
+      "material": "\"\"",
+      "first_operation_id": "5079"
+    },
+    {
+      "name": "Via2",
+      "material": "\"\"",
+      "first_operation_id": "13381"
+    },
+    {
+      "name": "901105121_SW0001",
+      "material": "\"\"",
+      "first_operation_id": "14140"
+    },
+    {
+      "name": "901105121_SW0001_4",
+      "material": "\"\"",
+      "first_operation_id": "16002"
+    },
+    {
+      "name": "901105121_SW0001_5",
+      "material": "\"\"",
+      "first_operation_id": "16455"
+    }
+  ],
+  "material_definitions": [
+    "copper",
+    "vacuum"
+  ],
+  "included_part_ids": "5050, 11038, 146, 5219, 5273, 5190, 13924, 13964, 118, 492",
+  "assigned_entity_ids": "174, 2238",
+  "contains_ro4350_text": true,
+  "contains_port_token": false,
+  "contains_boundary_token": false,
+  "static_risks": [
+    "Source component was exported by AEDT 2025.2 while the installed solver is AEDT 2023.1.",
+    "The component header exposes copper/vacuum definitions only; dielectric assignment must be verified after import.",
+    "Static text does not prove that a 50-ohm excitation and radiation boundary survive component insertion.",
+    "The upstream Marlin repository does not publish measured S11 or an explicit license file."
+  ]
+}

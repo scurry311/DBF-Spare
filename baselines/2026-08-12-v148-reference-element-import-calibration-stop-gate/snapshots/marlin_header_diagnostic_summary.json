@@ -1,0 +1,26 @@
+{
+  "return_code": 0,
+  "raw_audit": {
+    "insert_error_number": "0",
+    "insert_error_description": "",
+    "solids": "",
+    "sheets": "",
+    "lines": "",
+    "unclassified": "",
+    "component_instances": "",
+    "boundaries": "",
+    "excitations": "",
+    "audit_error_number": "0",
+    "audit_error_description": "",
+    "project_saved": "True"
+  },
+  "compatibility_gate_pass": true,
+  "object_gate_pass": false,
+  "excitation_present": false,
+  "boundary_present": false,
+  "diagnostic_import_gate_pass": false,
+  "engineering_model_ready": false,
+  "free_memory_gib_after": 10.799049377441406,
+  "aedt_processes_after": [],
+  "next_action": "Reject AEDT 2023.1 component import and rebuild from Gerber/PCB artwork or use AEDT 2025.2."
+}

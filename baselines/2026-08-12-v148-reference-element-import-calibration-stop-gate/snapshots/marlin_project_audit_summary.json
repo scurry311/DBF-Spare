@@ -1,0 +1,28 @@
+{
+  "return_code": 0,
+  "raw_audit": {
+    "open_error_number": "-2147024366",
+    "open_error_description": "",
+    "designs": "",
+    "set_design_error_number": "424",
+    "set_design_error_description": "\u0231\ufffd\u0676\ufffd\ufffd\ufffd",
+    "solids": "",
+    "sheets": "",
+    "boundaries": "",
+    "excitations": "",
+    "setups": "",
+    "audit_error_number": "0",
+    "audit_error_description": ""
+  },
+  "project_open_gate_pass": false,
+  "target_design_gate_pass": false,
+  "object_gate_pass": false,
+  "excitation_gate_pass": false,
+  "boundary_gate_pass": false,
+  "setup_gate_pass": false,
+  "project_audit_gate_pass": false,
+  "engineering_model_ready": false,
+  "free_memory_gib_after": 10.701488494873047,
+  "aedt_processes_after": [],
+  "next_action": "Stop the Marlin solve branch on AEDT 2023.1; rebuild from manufacturing artwork or install AEDT 2025.2."
+}

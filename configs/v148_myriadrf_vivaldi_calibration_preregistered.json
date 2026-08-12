@@ -1,0 +1,89 @@
+{
+  "version": "v1.48-myriadrf-vivaldi-calibration",
+  "created_date": "2026-08-12",
+  "parent_commit": "fea039e71cc89b6b1f3a4a5c88f56846a2977f3f",
+  "parent_tag": "v1.47.0-literature-balun-dipole-stop-gate",
+  "ansys_executable": "D:/v231/Win64/ansysedt.exe",
+  "output_directory": "hfss_outputs/v148_reference_element_import_20260812_run01/myriadrf_vivaldi_calibration_run03_port_mesh",
+  "source": {
+    "repository": "tmp/external/vivaldi-antenna",
+    "commit": "fdeb99138e04a63137a0aea7820244ee39cc2398",
+    "board": "tmp/external/vivaldi-antenna/hardware/KiCAD/Vivaldi.kicad_pcb",
+    "front_gerber": "tmp/external/vivaldi-antenna/hardware/Gerbers/Vivaldi-F_Cu.gtl",
+    "back_gerber": "tmp/external/vivaldi-antenna/hardware/Gerbers/Vivaldi-B_Cu.gbl",
+    "drill": "tmp/external/vivaldi-antenna/hardware/Gerbers/Vivaldi.drl",
+    "report": "tmp/external/vivaldi-antenna/docs/Vivaldi Antenna.pdf",
+    "license": "tmp/external/vivaldi-antenna/COPYING"
+  },
+  "design": {
+    "name": "V148_MyriadRF_Vivaldi_Calibration_1x1",
+    "substrate_thickness_mm": 0.5,
+    "relative_permittivity": 3.6,
+    "loss_tangent": 0.0032,
+    "copper_thickness_mm": 0.035,
+    "port_reference": "SMA center-pad inner board-edge plane",
+    "port_x_mm_from_board_edge": 0.065,
+    "port_center_y_mm_from_board_edge": 31.89558,
+    "port_width_mm": 0.6985,
+    "via_outer_diameter_mm": 0.97,
+    "via_drill_diameter_mm": 0.46,
+    "air_margin_input_mm": 8.0,
+    "air_margin_aperture_mm": 15.0,
+    "air_margin_lateral_mm": 8.0,
+    "air_margin_z_mm": 10.0,
+    "local_port_mesh_mm": 0.18,
+    "maximum_passes": 8,
+    "adaptive_refinement_percent": 8.0
+  },
+  "sweep": {
+    "adaptive_frequency_ghz": 10.0,
+    "broad_start_ghz": 3.5,
+    "broad_stop_ghz": 14.0,
+    "broad_count": 106,
+    "gate_frequencies_ghz": [9.96, 10.0, 10.04]
+  },
+  "cases": [
+    {
+      "name": "nominal_direct",
+      "solver_type": "direct",
+      "role": "PCB-derived material-port-reference-plane calibration"
+    }
+  ],
+  "gates": {
+    "maximum_final_delta_s": 0.05,
+    "preferred_final_delta_s": 0.02,
+    "minimum_gate3_passive_rl_db": 10.0,
+    "minimum_center_passive_rl_db": 10.0,
+    "minimum_contiguous_10db_bandwidth_ghz": 8.0,
+    "minimum_radiation_efficiency": 0.85,
+    "reported_simulated_gain_10ghz_dbi": 7.7,
+    "maximum_simulated_gain_error_db": 2.0,
+    "maximum_topology_warning_count": 0
+  },
+  "resources": {
+    "minimum_free_memory_before_solve_gib": 10.0,
+    "abort_free_memory_during_solve_gib": 3.0,
+    "poll_interval_seconds": 5.0,
+    "number_of_processors": 4,
+    "serial_hfss_only": true
+  },
+  "evidence_policy": {
+    "raw_measured_touchstone_available": false,
+    "measured_s11_plot_only": true,
+    "reported_calculated_10db_band_ghz": [3.5, 14.0],
+    "reported_connector_and_tolerance_s11_uncertainty_db": 2.0,
+    "reported_measured_boresight_gain_10ghz_dbi": [8.5, 8.6],
+    "allowed_claim": "qualitative port-material-reference-plane consistency calibration",
+    "prohibited_claim": "exact measured-S11 validation, Marlin validation, engineering label, or training label"
+  },
+  "locks": {
+    "allow_marlin_1x1": false,
+    "allow_2x2": false,
+    "allow_4x4": false,
+    "allow_16x16": false,
+    "allow_s256_export": false,
+    "allow_eep_export": false,
+    "allow_training_labels": false,
+    "allow_critic_training": false
+  }
+}

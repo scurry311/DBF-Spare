@@ -205,6 +205,13 @@ powershell -ExecutionPolicy Bypass -File scripts\<name>.ps1
 | `run_v120_sparse_graph_physical_front_gate.py` | Build, solve, and gate one single-stage coupled-line/local-loading HFSS S8 front gate without adding another decoupling section. |
 | `analyze_v120_sparse_graph_residual.py` | Compare both physical mappings and quantify how much S8 error remains on the existing diagonal and adjacent graph entries. |
 
+## v1.48 Reference Element Import And Calibration
+
+| File | Purpose |
+|---|---|
+| `run_v148_reference_element_import.py` | Audit the Marlin U-slot component/project, execute version-compatibility diagnostics, and enforce the combined downstream stop gate. |
+| `run_v148_myriadrf_vivaldi_calibration.py` | Rebuild the MyriadRF Vivaldi from frozen KiCad copper polygons, run a memory-guarded 1x1 S11 calibration solve, and preserve the measured-data evidence boundary. |
+
 ## v1.21 Parametric Feed/POST Calibration
 
 | File | Purpose |

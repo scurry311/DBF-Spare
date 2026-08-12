@@ -1,0 +1,12 @@
+{
+  "batch_solve_return_code": 0,
+  "export_return_code": 0,
+  "return_code": 0,
+  "memory_aborted": false,
+  "free_memory_gib_before": 13.280994415283203,
+  "minimum_free_memory_gib": 12.202049255371094,
+  "broad_touchstone_exists": true,
+  "gate_touchstone_exists": true,
+  "efficiency_exists": false,
+  "gain_exists": false
+}

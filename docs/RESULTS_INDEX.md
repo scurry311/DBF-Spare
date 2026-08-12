@@ -982,3 +982,22 @@ claiming an exact reproduction of the measured article unit. Independent
 direct/DDM, physical 2x2 active-RL, arrays, EEP, labels, and critic remain
 locked. See `docs/V147_LITERATURE_10GHZ_BALUN_DIPOLE_STOP_GATE_20260810.md`
 and `baselines/2026-08-10-v147-literature-balun-dipole-stop-gate/BASELINE.md`.
+
+## v1.48 Marlin Import And MyriadRF Calibration Stop Gate (2026-08-12)
+
+The Marlin standalone U-slot component is an AEDT 2025.2 encapsulated design
+and cannot be imported by the installed AEDT 2023.1. A header-only diagnostic
+copy inserts but exposes no auditable port or radiation boundary, while the
+complete `MARLIN.aedt` project is encrypted and cannot be decrypted. No
+trustworthy Marlin 1x1, direct/DDM, or 2x2 result is produced.
+
+An independent PCB-derived MyriadRF Vivaldi calibration fixture converges to
+Delta S `0.01017`; 9.96/10.00/10.04 GHz passive RL is
+`19.50/20.47/21.58 dB`, and the contiguous 10 dB band containing 10 GHz is
+`3.5-13.4 GHz`. This agrees qualitatively with the report's simulated
+3.5-14 GHz band, but raw measured Touchstone, efficiency, and gain evidence
+are unavailable. The result is calibration-only and cannot unlock array or
+learning stages. See
+`docs/V148_REFERENCE_ELEMENT_IMPORT_AND_CALIBRATION_STOP_GATE_20260812.md`
+and
+`baselines/2026-08-12-v148-reference-element-import-calibration-stop-gate/BASELINE.md`.
