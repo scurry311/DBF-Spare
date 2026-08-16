@@ -1,0 +1,21 @@
+{
+  "protocol": "v1.49-siw-cavity-stacked-patch",
+  "baseline_commit": "dc9c0ce1ddef4dc20dc50aef8d6f595d3346c0ee",
+  "head_commit": "d35890e16157718b834310b38b0f34c634ba66eb",
+  "branch": "codex/v149-siw-cavity-stacked-patch",
+  "working_tree_status": "M configs/v149_siw_cavity_stacked_patch_preregistered.json\n M docs/RESULTS_INDEX.md\n M scripts/run_v149_siw_cavity_stacked_patch.py\n M tests/test_v149_siw_cavity_stacked_patch.py\n?? baselines/2026-08-16-v149-periodic-cad-build-gate/\n?? references/\n?? tmp/",
+  "ansys_executable": "D:\\v231\\Win64\\ansysedt.exe",
+  "ansys_executable_sha256": "b6f0d3f0d1438313b41aa00cd243a1da0bbb15c4b4659c759c9ed0cdcbf8f8b7",
+  "input_sha256": {
+    "frozen_stimuli_manifest": "485a9623210092c4fcaf11cf7232ba48f08983a5b50ed9fb6138e9d751877b70",
+    "frozen_stimuli_vectors": "9afba6600723f443ab569ee08bb35618146a150512bed9da1b90a35e119cd0bc"
+  },
+  "frozen_inputs": {
+    "frozen_stimuli_manifest": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v149_siw_cavity_stacked_patch_20260816_run06\\frozen_inputs\\stimuli_manifest.csv",
+    "frozen_stimuli_vectors": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v149_siw_cavity_stacked_patch_20260816_run06\\frozen_inputs\\stimuli_vectors.npz"
+  },
+  "free_memory_gib": 8.402366638183594,
+  "aedt_processes": [],
+  "disk_free_gib": 34.89448165893555,
+  "preregistration_sha256": "26d65f24880eb574ce25311ac7ddaec76f1f6a9ff9116b3665f91523874352ac"
+}

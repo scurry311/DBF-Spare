@@ -1,0 +1,15 @@
+{
+  "stage": "A_periodic_build_gate_evaluated",
+  "allow_periodic_build_smoke": true,
+  "allow_periodic_nominal_solve": true,
+  "allow_periodic_doe_batch": false,
+  "allow_1x1": false,
+  "allow_2x2": false,
+  "allow_4x4": false,
+  "allow_16x16": false,
+  "allow_eep_export": false,
+  "allow_training_labels": false,
+  "allow_critic_training": false,
+  "reason": "Periodic native CAD build passed; only one nominal periodic full-wave solve may proceed after a fresh resource preflight.",
+  "periodic_build_smoke_passed": true
+}

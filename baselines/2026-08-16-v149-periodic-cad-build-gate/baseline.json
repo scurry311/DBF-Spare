@@ -1,0 +1,22 @@
+{
+  "protocol": "v1.49-siw-cavity-stacked-patch",
+  "checkpoint_type": "periodic_native_cad_build_gate",
+  "evidence_level": "B/C",
+  "source_run": "hfss_outputs/v149_siw_cavity_stacked_patch_20260816_run06",
+  "aedt_version": "2023.1",
+  "build_smoke_passed": true,
+  "build_return_code": 0,
+  "build_elapsed_seconds": 85.15223670005798,
+  "minimum_free_memory_gib_during_build": 7.515495300292969,
+  "saved_model_object_count": 67,
+  "saved_model_boundary_entry_count": 8,
+  "saved_model_excitation_mode_count": 3,
+  "periodic_physical_metrics_available": false,
+  "nominal_solve_started": false,
+  "nominal_solve_preflight_free_memory_gib": 8.310665130615234,
+  "minimum_free_memory_before_solve_gib": 13.0,
+  "periodic_doe_authorized": false,
+  "finite_array_stages_locked": true,
+  "training_stages_locked": true,
+  "decision": "CONTINUE_LATER_WITH_ONE_NOMINAL_PERIODIC_SOLVE"
+}

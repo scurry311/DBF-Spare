@@ -1,0 +1,23 @@
+{
+  "case_id": "periodic_nominal_broadside",
+  "model_scope": "periodic_unit_only",
+  "scan_state": {
+    "theta_deg": 0.0,
+    "phi_deg": 0.0,
+    "frequency_sweep_ghz": {
+      "start": 9.8,
+      "stop": 10.2,
+      "step": 0.01
+    }
+  },
+  "project_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v149_siw_cavity_stacked_patch_20260816_run06\\periodic\\nominal_solve\\v149_periodic_nominal_solve.aedt",
+  "project_sha256_before_solve": "8fc49ec88e4c34de424ff954892e868ba91eca2d067eb2c153ed4a2cfc8e917c",
+  "solver_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v149_siw_cavity_stacked_patch_20260816_run06\\periodic\\nominal_solve\\solve_export.vbs",
+  "solver_sha256": "62643b0b9de0da6a05945f85babe759b7dffeed50f06310c109f26219fc980f5",
+  "touchstone_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v149_siw_cavity_stacked_patch_20260816_run06\\periodic\\nominal_solve\\v149_periodic_nominal.s3p",
+  "source_names_path": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v149_siw_cavity_stacked_patch_20260816_run06\\periodic\\nominal_solve\\source_names.txt",
+  "solve_started": false,
+  "minimum_free_memory_before_solve_gib": 13.0,
+  "authorizes_doe_batch": false,
+  "authorizes_1x1": false
+}

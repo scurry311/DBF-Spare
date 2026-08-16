@@ -1,0 +1,54 @@
+{
+  "protocol": "v1.49-siw-cavity-stacked-patch",
+  "run_root": "D:\\codex_workspace\\hfss_ura16_quick_model\\hfss_outputs\\v149_siw_cavity_stacked_patch_20260816_run06",
+  "stage": "periodic_build_complete_nominal_solve_pending",
+  "periodic_build_smoke_passed": true,
+  "build_evidence_source": "HFSS_build_only",
+  "physical_hfss_metrics_available": false,
+  "periodic_physical_gate_evaluated": false,
+  "periodic_doe_sample_count": 16,
+  "periodic_doe_hfss_batch_authorized": false,
+  "nominal_solve_prepared": true,
+  "nominal_solve_started": false,
+  "latest_solve_preflight_block": {
+    "case_id": "periodic_nominal_broadside",
+    "started": false,
+    "blocked": true,
+    "preflight": {
+      "allowed": false,
+      "reason": "Available memory 8.31 GiB is below the 13.00 GiB full-wave solve threshold."
+    },
+    "free_memory_gib": 8.310665130615234,
+    "aedt_processes": []
+  },
+  "current_resource_status": {
+    "protocol": "v1.49-siw-cavity-stacked-patch",
+    "free_memory_gib": 8.308101654052734,
+    "aedt_process_count": 0,
+    "aedt_processes": [],
+    "solve_preflight_pass": false,
+    "locked_stages": [
+      "allow_periodic_doe_batch",
+      "allow_1x1",
+      "allow_2x2",
+      "allow_4x4",
+      "allow_16x16",
+      "allow_eep_export",
+      "allow_training_labels",
+      "allow_critic_training",
+      "allow_waim_branch"
+    ]
+  },
+  "locked_stages": {
+    "periodic_doe_batch": true,
+    "finite_1x1": true,
+    "finite_2x2": true,
+    "finite_4x4": true,
+    "array_16x16": true,
+    "eep_export": true,
+    "training_labels": true,
+    "critic_retraining": true
+  },
+  "decision": "CONTINUE_LATER_WITH_ONE_NOMINAL_PERIODIC_SOLVE",
+  "next_permitted_action": "When available RAM is at least 13 GiB and no AEDT process exists, run only the frozen broadside nominal periodic 9.8-10.2 GHz solve. Do not start DOE, 1x1, 2x2, 4x4, 16x16, labels, or critic."
+}

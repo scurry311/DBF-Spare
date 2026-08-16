@@ -1,5 +1,23 @@
 # Result Index
 
+## v1.49 SIW Stacked-Patch CAD Build Checkpoint
+
+The native AEDT 2023.1 periodic SIW cavity-backed stacked-patch cell now has a
+reproducible saved-model build gate. `run06` completed without critical log
+warnings and the AEDT inventory confirms 67 objects, the linked periodic
+boundaries, one feed mode, two Floquet modes, finite-conductivity copper, and
+three local mesh operations. This is build-only Evidence Level B/C.
+
+The frozen nominal broadside solve was not started because 8.311 GiB was free,
+below the preregistered 13 GiB launch gate. Consequently no v1.49 RL,
+efficiency, scan-gain, or convergence result exists, and DOE, 1x1, 2x2, 4x4,
+16x16, EEP, labels, and critic training remain locked. See
+`baselines/2026-08-16-v149-periodic-cad-build-gate/`.
+
+The current 45-state aggregation path is deliberately diagnostic-only. A new
+version must add independent AEDT reopen attestation before any periodic
+full-wave metric set can authorize the finite 1x1 stage.
+
 Current hardware-development baseline:
 `v1.46.0-aperture-balanced-element-stop-gate`, frozen on 2026-08-10.  The
 standard aperture-coupled and continuous-ground true-differential branches

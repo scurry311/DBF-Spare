@@ -1,0 +1,15 @@
+{
+  "case_id": "periodic_nominal_build_smoke",
+  "started": true,
+  "blocked": false,
+  "preflight": {
+    "allowed": true,
+    "reason": "Memory and serial-process gates pass."
+  },
+  "return_code": 0,
+  "memory_aborted": false,
+  "free_memory_gib_before": 8.341941833496094,
+  "minimum_free_memory_gib": 7.515495300292969,
+  "elapsed_seconds": 85.15223670005798,
+  "project_exists": true
+}

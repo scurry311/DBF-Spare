@@ -1,0 +1,11 @@
+{
+  "case_id": "periodic_nominal_broadside",
+  "started": false,
+  "blocked": true,
+  "preflight": {
+    "allowed": false,
+    "reason": "Available memory 8.31 GiB is below the 13.00 GiB full-wave solve threshold."
+  },
+  "free_memory_gib": 8.310665130615234,
+  "aedt_processes": []
+}

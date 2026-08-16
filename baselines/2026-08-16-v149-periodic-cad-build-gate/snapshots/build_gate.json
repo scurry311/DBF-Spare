@@ -1,0 +1,51 @@
+{
+  "evidence_source": "HFSS_build_only",
+  "build_smoke_passed": true,
+  "does_not_authorize_physical_metrics": true,
+  "run_audit": {
+    "case_id": "periodic_nominal_build_smoke",
+    "started": true,
+    "blocked": false,
+    "preflight": {
+      "allowed": true,
+      "reason": "Memory and serial-process gates pass."
+    },
+    "return_code": 0,
+    "memory_aborted": false,
+    "free_memory_gib_before": 8.341941833496094,
+    "minimum_free_memory_gib": 7.515495300292969,
+    "elapsed_seconds": 85.15223670005798,
+    "project_exists": true
+  },
+  "critical_warning_hits": {},
+  "named_feature_checks": {
+    "FeedPort": true,
+    "PrimaryX": true,
+    "SecondaryX": true,
+    "PrimaryY": true,
+    "SecondaryY": true,
+    "FloquetTop": true,
+    "Mesh_ProbeLaunch": true,
+    "Mesh_PatchEdges": true,
+    "Mesh_SIWVias": true
+  },
+  "model_inventory_verified": true,
+  "model_inventory": {
+    "verified": true,
+    "checks": {
+      "objects": true,
+      "boundaries": true,
+      "excitations": true,
+      "single_feed_mode": true,
+      "two_floquet_modes": true
+    },
+    "missing_objects": [],
+    "missing_boundaries": [],
+    "missing_excitations": [],
+    "object_count": 67,
+    "boundary_count": 8,
+    "excitation_mode_count": 3
+  },
+  "project_exists": true,
+  "project_sha256": "8fc49ec88e4c34de424ff954892e868ba91eca2d067eb2c153ed4a2cfc8e917c"
+}
