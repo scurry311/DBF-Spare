@@ -689,10 +689,18 @@ secondaryXStackFace = oEditor.GetFaceByPosition(Array("NAME:FaceParameters", "Bo
 primaryYStackFace = oEditor.GetFaceByPosition(Array("NAME:FaceParameters", "BodyName:=", "StackSpacer", "XPosition:=", Mm(0), "YPosition:=", Mm({-py/2:.7f}), "ZPosition:=", Mm({h_main+h_stack/2:.7f})))
 secondaryYStackFace = oEditor.GetFaceByPosition(Array("NAME:FaceParameters", "BodyName:=", "StackSpacer", "XPosition:=", Mm(0), "YPosition:=", Mm({py/2:.7f}), "ZPosition:=", Mm({h_main+h_stack/2:.7f})))
 floquetFace = oEditor.GetFaceByPosition(Array("NAME:FaceParameters", "BodyName:=", "AirCell", "XPosition:=", Mm(0), "YPosition:=", Mm(0), "ZPosition:=", Mm({top:.7f})))
-oBoundary.AssignPrimary Array("NAME:PrimaryX", Array("NAME:CoordSysVector", "Origin:=", Array(Mm({-px/2:.7f}), Mm({-py/2:.7f}), Mm({bottom:.7f})), "UPos:=", Array(Mm({-px/2:.7f}), Mm({py/2:.7f}), Mm({bottom:.7f}))), "ReverseV:=", False, "Faces:=", Array(CLng(primaryXMainFace), CLng(primaryXStackFace), CLng(primaryXFace)))
-oBoundary.AssignSecondary Array("NAME:SecondaryX", Array("NAME:CoordSysVector", "Origin:=", Array(Mm({px/2:.7f}), Mm({-py/2:.7f}), Mm({bottom:.7f})), "UPos:=", Array(Mm({px/2:.7f}), Mm({py/2:.7f}), Mm({bottom:.7f}))), "ReverseV:=", True, "Primary:=", "PrimaryX", "UseScanAngles:=", True, "Phi:=", "{phi:g}deg", "Theta:=", "{theta:g}deg", "Faces:=", Array(CLng(secondaryXMainFace), CLng(secondaryXStackFace), CLng(secondaryXFace)))
-oBoundary.AssignPrimary Array("NAME:PrimaryY", Array("NAME:CoordSysVector", "Origin:=", Array(Mm({-px/2:.7f}), Mm({-py/2:.7f}), Mm({bottom:.7f})), "UPos:=", Array(Mm({px/2:.7f}), Mm({-py/2:.7f}), Mm({bottom:.7f}))), "ReverseV:=", False, "Faces:=", Array(CLng(primaryYMainFace), CLng(primaryYStackFace), CLng(primaryYFace)))
-oBoundary.AssignSecondary Array("NAME:SecondaryY", Array("NAME:CoordSysVector", "Origin:=", Array(Mm({-px/2:.7f}), Mm({py/2:.7f}), Mm({bottom:.7f})), "UPos:=", Array(Mm({px/2:.7f}), Mm({py/2:.7f}), Mm({bottom:.7f}))), "ReverseV:=", True, "Primary:=", "PrimaryY", "UseScanAngles:=", True, "Phi:=", "{phi:g}deg", "Theta:=", "{theta:g}deg", "Faces:=", Array(CLng(secondaryYMainFace), CLng(secondaryYStackFace), CLng(secondaryYFace)))
+oBoundary.AssignPrimary Array("NAME:PrimaryX_Main", Array("NAME:CoordSysVector", "Origin:=", Array(Mm({-px/2:.7f}), Mm({-py/2:.7f}), Mm({bottom:.7f})), "UPos:=", Array(Mm({-px/2:.7f}), Mm({py/2:.7f}), Mm({bottom:.7f}))), "ReverseV:=", False, "Faces:=", Array(CLng(primaryXMainFace)))
+oBoundary.AssignSecondary Array("NAME:SecondaryX_Main", Array("NAME:CoordSysVector", "Origin:=", Array(Mm({px/2:.7f}), Mm({-py/2:.7f}), Mm({bottom:.7f})), "UPos:=", Array(Mm({px/2:.7f}), Mm({py/2:.7f}), Mm({bottom:.7f}))), "ReverseV:=", True, "Primary:=", "PrimaryX_Main", "UseScanAngles:=", True, "Phi:=", "{phi:g}deg", "Theta:=", "{theta:g}deg", "Faces:=", Array(CLng(secondaryXMainFace)))
+oBoundary.AssignPrimary Array("NAME:PrimaryX_Stack", Array("NAME:CoordSysVector", "Origin:=", Array(Mm({-px/2:.7f}), Mm({-py/2:.7f}), Mm({h_main:.7f})), "UPos:=", Array(Mm({-px/2:.7f}), Mm({py/2:.7f}), Mm({h_main:.7f}))), "ReverseV:=", False, "Faces:=", Array(CLng(primaryXStackFace)))
+oBoundary.AssignSecondary Array("NAME:SecondaryX_Stack", Array("NAME:CoordSysVector", "Origin:=", Array(Mm({px/2:.7f}), Mm({-py/2:.7f}), Mm({h_main:.7f})), "UPos:=", Array(Mm({px/2:.7f}), Mm({py/2:.7f}), Mm({h_main:.7f}))), "ReverseV:=", True, "Primary:=", "PrimaryX_Stack", "UseScanAngles:=", True, "Phi:=", "{phi:g}deg", "Theta:=", "{theta:g}deg", "Faces:=", Array(CLng(secondaryXStackFace)))
+oBoundary.AssignPrimary Array("NAME:PrimaryX", Array("NAME:CoordSysVector", "Origin:=", Array(Mm({-px/2:.7f}), Mm({-py/2:.7f}), Mm({h_total:.7f})), "UPos:=", Array(Mm({-px/2:.7f}), Mm({py/2:.7f}), Mm({h_total:.7f}))), "ReverseV:=", False, "Faces:=", Array(CLng(primaryXFace)))
+oBoundary.AssignSecondary Array("NAME:SecondaryX", Array("NAME:CoordSysVector", "Origin:=", Array(Mm({px/2:.7f}), Mm({-py/2:.7f}), Mm({h_total:.7f})), "UPos:=", Array(Mm({px/2:.7f}), Mm({py/2:.7f}), Mm({h_total:.7f}))), "ReverseV:=", True, "Primary:=", "PrimaryX", "UseScanAngles:=", True, "Phi:=", "{phi:g}deg", "Theta:=", "{theta:g}deg", "Faces:=", Array(CLng(secondaryXFace)))
+oBoundary.AssignPrimary Array("NAME:PrimaryY_Main", Array("NAME:CoordSysVector", "Origin:=", Array(Mm({-px/2:.7f}), Mm({-py/2:.7f}), Mm({bottom:.7f})), "UPos:=", Array(Mm({px/2:.7f}), Mm({-py/2:.7f}), Mm({bottom:.7f}))), "ReverseV:=", False, "Faces:=", Array(CLng(primaryYMainFace)))
+oBoundary.AssignSecondary Array("NAME:SecondaryY_Main", Array("NAME:CoordSysVector", "Origin:=", Array(Mm({-px/2:.7f}), Mm({py/2:.7f}), Mm({bottom:.7f})), "UPos:=", Array(Mm({px/2:.7f}), Mm({py/2:.7f}), Mm({bottom:.7f}))), "ReverseV:=", True, "Primary:=", "PrimaryY_Main", "UseScanAngles:=", True, "Phi:=", "{phi:g}deg", "Theta:=", "{theta:g}deg", "Faces:=", Array(CLng(secondaryYMainFace)))
+oBoundary.AssignPrimary Array("NAME:PrimaryY_Stack", Array("NAME:CoordSysVector", "Origin:=", Array(Mm({-px/2:.7f}), Mm({-py/2:.7f}), Mm({h_main:.7f})), "UPos:=", Array(Mm({px/2:.7f}), Mm({-py/2:.7f}), Mm({h_main:.7f}))), "ReverseV:=", False, "Faces:=", Array(CLng(primaryYStackFace)))
+oBoundary.AssignSecondary Array("NAME:SecondaryY_Stack", Array("NAME:CoordSysVector", "Origin:=", Array(Mm({-px/2:.7f}), Mm({py/2:.7f}), Mm({h_main:.7f})), "UPos:=", Array(Mm({px/2:.7f}), Mm({py/2:.7f}), Mm({h_main:.7f}))), "ReverseV:=", True, "Primary:=", "PrimaryY_Stack", "UseScanAngles:=", True, "Phi:=", "{phi:g}deg", "Theta:=", "{theta:g}deg", "Faces:=", Array(CLng(secondaryYStackFace)))
+oBoundary.AssignPrimary Array("NAME:PrimaryY", Array("NAME:CoordSysVector", "Origin:=", Array(Mm({-px/2:.7f}), Mm({-py/2:.7f}), Mm({h_total:.7f})), "UPos:=", Array(Mm({px/2:.7f}), Mm({-py/2:.7f}), Mm({h_total:.7f}))), "ReverseV:=", False, "Faces:=", Array(CLng(primaryYFace)))
+oBoundary.AssignSecondary Array("NAME:SecondaryY", Array("NAME:CoordSysVector", "Origin:=", Array(Mm({-px/2:.7f}), Mm({py/2:.7f}), Mm({h_total:.7f})), "UPos:=", Array(Mm({px/2:.7f}), Mm({py/2:.7f}), Mm({h_total:.7f}))), "ReverseV:=", True, "Primary:=", "PrimaryY", "UseScanAngles:=", True, "Phi:=", "{phi:g}deg", "Theta:=", "{theta:g}deg", "Faces:=", Array(CLng(secondaryYFace)))
 oBoundary.AssignFloquetPort Array("NAME:FloquetTop", "Faces:=", Array(CLng(floquetFace)), "NumModes:=", 2, "RenormalizeAllTerminals:=", True, "DoDeembed:=", False, Array("NAME:Modes", Array("NAME:Mode1", "ModeNum:=", 1, "UseIntLine:=", False), Array("NAME:Mode2", "ModeNum:=", 2, "UseIntLine:=", False)), "ShowReporterFilter:=", False, "UseScanAngles:=", True, "Phi:=", "{phi:g}deg", "Theta:=", "{theta:g}deg", Array("NAME:LatticeAVector", "Start:=", Array(Mm({-px/2:.7f}), Mm({-py/2:.7f}), Mm({top:.7f})), "End:=", Array(Mm({px/2:.7f}), Mm({-py/2:.7f}), Mm({top:.7f}))), Array("NAME:LatticeBVector", "Start:=", Array(Mm({-px/2:.7f}), Mm({-py/2:.7f}), Mm({top:.7f})), "End:=", Array(Mm({-px/2:.7f}), Mm({py/2:.7f}), Mm({top:.7f}))), Array("NAME:ModesCalculator", "Frequency:=", "{frequency:g}GHz", "FrequencyChanged:=", False, "PhiStart:=", "{phi:g}deg", "PhiStop:=", "{phi:g}deg", "PhiStep:=", "0deg", "ThetaStart:=", "{theta:g}deg", "ThetaStop:=", "{theta:g}deg", "ThetaStep:=", "0deg"), Array("NAME:ModesList", Array("NAME:Mode", "ModeNumber:=", 1, "IndexM:=", 0, "IndexN:=", 0, "KC2:=", 0, "PropagationState:=", "Propagating", "Attenuation:=", 0, "PolarizationState:=", "TE", "AffectsRefinement:=", False), Array("NAME:Mode", "ModeNumber:=", 2, "IndexM:=", 0, "IndexN:=", 0, "KC2:=", 0, "PropagationState:=", "Propagating", "Attenuation:=", 0, "PolarizationState:=", "TM", "AffectsRefinement:=", False)))
 '''
         + _mesh_and_setup_text(geometry, via_names, frequency, "direct")
@@ -1285,6 +1293,14 @@ def prepare_periodic_build_smoke(
             "SecondaryX",
             "PrimaryY",
             "SecondaryY",
+            "PrimaryX_Main",
+            "SecondaryX_Main",
+            "PrimaryX_Stack",
+            "SecondaryX_Stack",
+            "PrimaryY_Main",
+            "SecondaryY_Main",
+            "PrimaryY_Stack",
+            "SecondaryY_Stack",
             "FloquetTop",
             "Mesh_ProbeLaunch",
             "Mesh_PatchEdges",
@@ -1477,6 +1493,14 @@ def validate_model_inventory(
         "SecondaryX",
         "PrimaryY",
         "SecondaryY",
+        "PrimaryX_Main",
+        "SecondaryX_Main",
+        "PrimaryX_Stack",
+        "SecondaryX_Stack",
+        "PrimaryY_Main",
+        "SecondaryY_Main",
+        "PrimaryY_Stack",
+        "SecondaryY_Stack",
     }
     required_excitations = {"FeedPort", "FloquetTop"}
     excitation_bases = {

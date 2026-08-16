@@ -248,9 +248,27 @@ class V149CadGenerationTests(unittest.TestCase):
             for line in source.splitlines()
             if "AssignSecondary" in line
         ]
-        self.assertEqual(len(secondary_lines), 2)
+        self.assertEqual(len(secondary_lines), 6)
         self.assertTrue(
             all('"ReverseV:=", True' in line for line in secondary_lines)
+        )
+        self.assertTrue(
+            all(line.count("CLng(") == 1 for line in secondary_lines)
+        )
+        for boundary in (
+            "PrimaryX_Main",
+            "SecondaryX_Main",
+            "PrimaryX_Stack",
+            "SecondaryX_Stack",
+            "PrimaryY_Main",
+            "SecondaryY_Main",
+            "PrimaryY_Stack",
+            "SecondaryY_Stack",
+        ):
+            self.assertIn(boundary, source)
+        self.assertNotIn(
+            "Array(CLng(primaryXMainFace), CLng(primaryXStackFace)",
+            source,
         )
         self.assertNotIn(
             'UniteSelection oEditor, "DrivenPatch,FeedProbe"', source
@@ -302,6 +320,14 @@ class V149CadGenerationTests(unittest.TestCase):
             "BOUNDARY|SecondaryX",
             "BOUNDARY|PrimaryY",
             "BOUNDARY|SecondaryY",
+            "BOUNDARY|PrimaryX_Main",
+            "BOUNDARY|SecondaryX_Main",
+            "BOUNDARY|PrimaryX_Stack",
+            "BOUNDARY|SecondaryX_Stack",
+            "BOUNDARY|PrimaryY_Main",
+            "BOUNDARY|SecondaryY_Main",
+            "BOUNDARY|PrimaryY_Stack",
+            "BOUNDARY|SecondaryY_Stack",
             "EXCITATION|FeedPort:1|Lumped Port",
             "EXCITATION|FloquetTop:1|Floquet Port",
             "EXCITATION|FloquetTop:2|Floquet Port",
@@ -513,6 +539,14 @@ class V149CadGenerationTests(unittest.TestCase):
             "BOUNDARY|SecondaryX",
             "BOUNDARY|PrimaryY",
             "BOUNDARY|SecondaryY",
+            "BOUNDARY|PrimaryX_Main",
+            "BOUNDARY|SecondaryX_Main",
+            "BOUNDARY|PrimaryX_Stack",
+            "BOUNDARY|SecondaryX_Stack",
+            "BOUNDARY|PrimaryY_Main",
+            "BOUNDARY|SecondaryY_Main",
+            "BOUNDARY|PrimaryY_Stack",
+            "BOUNDARY|SecondaryY_Stack",
             "EXCITATION|FeedPort:1|Lumped Port",
             "EXCITATION|FloquetTop:1|Floquet Port",
             "EXCITATION|FloquetTop:2|Floquet Port",
