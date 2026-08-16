@@ -1,22 +1,26 @@
 # Result Index
 
-## v1.49 SIW Stacked-Patch CAD Build Checkpoint
+## v1.49 SIW Stacked-Patch Nominal Stop Gate
 
 The native AEDT 2023.1 periodic SIW cavity-backed stacked-patch cell now has a
-reproducible saved-model build gate. `run06` completed without critical log
-warnings and the AEDT inventory confirms 67 objects, the linked periodic
-boundaries, one feed mode, two Floquet modes, finite-conductivity copper, and
-three local mesh operations. This is build-only Evidence Level B/C.
+hash-bound build-to-continuation evidence chain. `run20` passed native CAD
+build and `ValidateDesign` with 67 objects, 16 boundaries, three excitation
+modes, and no critical build warning. `run21` copied the exact project under a
+single-use authorization and completed one nominal 9.8-10.2 GHz full-wave
+sweep without a memory abort or lumped-port conductor-count warning.
 
-The frozen nominal broadside solve was not started because 8.311 GiB was free,
-below the preregistered 13 GiB launch gate. Consequently no v1.49 RL,
-efficiency, scan-gain, or convergence result exists, and DOE, 1x1, 2x2, 4x4,
-16x16, EEP, labels, and critic training remain locked. See
-`baselines/2026-08-16-v149-periodic-cad-build-gate/`.
+The memory-safe mesh reached 66,881 solved tetrahedra; the profile parser's
+maximum adaptive count was 83,938, versus about 356,493 in `run11`. Peak solver
+memory was 6.402 GiB, minimum host free memory was 4.865 GiB, and final Delta S
+was 0.006485. The requested port-warning and resource gates therefore pass.
 
-The current 45-state aggregation path is deliberately diagnostic-only. A new
-version must add independent AEDT reopen attestation before any periodic
-full-wave metric set can authorize the finite 1x1 stage.
+The physical input gate fails decisively. At 9.96/10.00/10.04 GHz, passive RL
+is only 0.00617/0.00634/0.00658 dB and input impedance is approximately
+0.019+j11.2 ohm. The mesh report also retains 54 small-segment flags in the
+coax/feed region. This result does not authorize the 45-state periodic gate,
+DOE, 1x1, 2x2, 4x4, 16x16, EEP, labels, or critic training. See
+`docs/V149_NOMINAL_PERIODIC_CONTINUATION_20260816.md` and the immutable
+`hfss_outputs/v149_siw_cavity_stacked_patch_20260816_run21/` evidence.
 
 Current hardware-development baseline:
 `v1.46.0-aperture-balanced-element-stop-gate`, frozen on 2026-08-10.  The

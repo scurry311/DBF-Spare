@@ -51,3 +51,61 @@ Create a new immutable build run after both changes are preregistered:
 3. Run build plus `ValidateDesign` only. If valid, launch one new continuation
    solve. Do not reuse run11's consumed authorization.
 
+## Port And Mesh Repair Continuations
+
+The repair sequence was executed in new immutable runs; no failed result was
+overwritten:
+
+- `run13` reduced the manual mesh to 137,886 tetrahedra but still reached the
+  memory stop and retained the one-conductor port warning.
+- `run15` reduced the solved mesh to 66,525 tetrahedra and stayed above the
+  runtime memory floor. Its finite-overlap port removed the conductor-count
+  warning but introduced 108 duplicated small-segment hits and a near-short.
+- `run17` tested an annular port and was stopped after HFSS reported too many
+  touching conductors. `run18` and `run19` are build-only failures retained for
+  provenance; neither produced a physical result.
+- `run20` uses a radial model-sheet lumped port between the coax inner and
+  outer conductors. It passed `ValidateDesign` with zero critical build warning
+  and was sealed as the trusted source for one continuation.
+- `run21` is that single-use continuation. The first launch was blocked at
+  11.83 GiB without consuming authorization; the later launch began with
+  13.078 GiB and completed normally.
+
+## Run21 Verified Outcome
+
+| Metric | Result | Gate decision |
+|---|---:|---|
+| HFSS return code / memory abort | 0 / false | Passed |
+| Solved tetrahedra | 66,881 | Memory-safe |
+| Maximum adaptive tetrahedra | 83,938 | 76.5% below run11 |
+| Peak solver memory | 6.402 GiB | Diagnostic |
+| Minimum host free memory | 4.865 GiB | Passed 3 GiB stop |
+| Adaptive passes / final Delta S | 3 / 0.006485 | Passed 0.05 |
+| Port conductor-count warning | None | Passed |
+| Small-segment flags | 54 | Failed zero-warning gate |
+| Worst three-frequency passive RL | 0.00617 dB | Failed 15 dB |
+| 10 GHz input impedance | 0.0192+j11.2348 ohm | Near-short |
+| 10 GHz accepted power | 0.1458% | Failed physical intent |
+| Periodic DOE and downstream stages | Locked | Required |
+
+The 54 small-segment flags are localized to `CoaxDielectric` (38), `CoaxOuter`
+(15), and `FeedProbe` (1). Power accounting and convergence evidence are
+internally consistent, so the poor RL is not being reported as an incomplete
+solver export. It is a physical feed/input-topology failure in the present CAD.
+
+## Decision
+
+The immediate request is complete in the narrow numerical sense: the lumped
+port no longer produces a one- or multi-conductor contact warning, the mesh is
+well below the approximately 356k-tetrahedron attempt, the solve fits the host
+memory guard, and a new single-use continuation completed and was sealed.
+
+The antenna model has not passed its physical gate. The next branch must repair
+the coax/dielectric/ground intersection and input reference geometry, preferably
+with a clean truncated coax wave-port/reference face or an equivalently
+auditable transition, then retune the driven input. Additional mesh coarsening
+or continuation runs on this near-short geometry are not authorized.
+
+Run21 is finalized with 82 SHA-256 entries. Its stage decision is
+`STOP_AFTER_NOMINAL_DIAGNOSTIC_FAILURE`; periodic DOE, finite arrays, EEP,
+training labels, and critic retraining remain locked.
