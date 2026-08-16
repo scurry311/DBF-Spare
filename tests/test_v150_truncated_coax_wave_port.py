@@ -185,5 +185,152 @@ class V150CadGenerationTests(unittest.TestCase):
         self.assertFalse(audit["global_0p18mm_mesh_used"])
 
 
+class V150EvidenceGateTests(unittest.TestCase):
+    def setUp(self):
+        self.v150 = load_module()
+        self.config = self.v150.load_config(CONFIG)
+
+    def _inventory(self, feed_type: str = "Wave Port") -> list[str]:
+        geometry = self.config["nominal_geometry"]
+        lines = [
+            "OBJECT|MainSubstrate",
+            "OBJECT|StackSpacer",
+            "OBJECT|GroundOuterConductor",
+            "OBJECT|SIWCavityTop",
+            "OBJECT|DrivenPatch",
+            "OBJECT|StackedPatch",
+            "OBJECT|FeedProbe",
+            "OBJECT|CoaxDielectric",
+            "OBJECT|AirCell",
+            "BOUNDARY|CopperSheetFiniteConductivity",
+            "BOUNDARY|PrimaryX",
+            "BOUNDARY|SecondaryX",
+            "BOUNDARY|PrimaryY",
+            "BOUNDARY|SecondaryY",
+            "BOUNDARY|PrimaryX_Main",
+            "BOUNDARY|SecondaryX_Main",
+            "BOUNDARY|PrimaryX_Stack",
+            "BOUNDARY|SecondaryX_Stack",
+            "BOUNDARY|PrimaryY_Main",
+            "BOUNDARY|SecondaryY_Main",
+            "BOUNDARY|PrimaryY_Stack",
+            "BOUNDARY|SecondaryY_Stack",
+            f"EXCITATION|FeedPort:1|{feed_type}",
+            "EXCITATION|FloquetTop:1|Floquet Port",
+            "EXCITATION|FloquetTop:2|Floquet Port",
+        ]
+        lines.extend(
+            f"OBJECT|SIWVia_{index:03d}"
+            for index in range(len(self.v150.siw_via_centers(geometry)))
+        )
+        return lines
+
+    def _passing_analysis(self) -> dict:
+        return {
+            "nominal_export_evidence_complete": True,
+            "power_consistency_passed": True,
+            "convergence_evidence_complete": True,
+            "profile": {
+                "converged": True,
+                "final_delta_s": 0.02,
+                "maximum_tetrahedra": 100000,
+                "small_segment_count": 0,
+            },
+            "critical_warning_hits": {},
+            "rows": [
+                {
+                    "frequency_ghz": frequency,
+                    "active_rl_db": 16.0,
+                    "passive_rl_db": 16.0,
+                    "accepted_power_efficiency": 0.98,
+                    "input_impedance_real_ohm": 50.0,
+                    "input_impedance_imag_ohm": 0.0,
+                }
+                for frequency in self.config["frequencies_ghz"]
+            ],
+        }
+
+    def _passing_audit(self) -> dict:
+        return {
+            "return_code": 0,
+            "memory_aborted": False,
+            "minimum_free_memory_gib": 4.0,
+        }
+
+    def test_inventory_requires_wave_port_and_forbids_legacy_objects(self):
+        result = self.v150.validate_model_inventory(
+            self._inventory(), self.config, self.config["nominal_geometry"]
+        )
+        self.assertTrue(result["verified"])
+        self.assertTrue(result["checks"]["feed_is_wave_port"])
+        self.assertTrue(result["checks"]["legacy_port_objects_absent"])
+
+        lumped = self.v150.validate_model_inventory(
+            self._inventory("Lumped Port"),
+            self.config,
+            self.config["nominal_geometry"],
+        )
+        self.assertFalse(lumped["verified"])
+        self.assertFalse(lumped["checks"]["feed_is_wave_port"])
+
+        legacy = self._inventory() + ["OBJECT|PortSheet"]
+        result = self.v150.validate_model_inventory(
+            legacy, self.config, self.config["nominal_geometry"]
+        )
+        self.assertFalse(result["verified"])
+        self.assertFalse(result["checks"]["legacy_port_objects_absent"])
+
+    def test_nominal_gate_separates_numerical_and_physical_pass(self):
+        result = self.v150.evaluate_nominal_gates(
+            self._passing_analysis(), self._passing_audit(), self.config
+        )
+        self.assertTrue(result["numerical_gate_passed"])
+        self.assertTrue(result["physical_gate_passed"])
+        self.assertFalse(result["authorizes_periodic_doe_batch"])
+        self.assertTrue(all(result["locked_stages"].values()))
+
+    def test_nominal_gate_rejects_mesh_and_small_segments(self):
+        analysis = self._passing_analysis()
+        analysis["profile"]["maximum_tetrahedra"] = 120001
+        result = self.v150.evaluate_nominal_gates(
+            analysis, self._passing_audit(), self.config
+        )
+        self.assertFalse(result["numerical_gate_passed"])
+        self.assertIn("adaptive_tetrahedra", result["failed_numerical_checks"])
+
+        analysis = self._passing_analysis()
+        analysis["profile"]["small_segment_count"] = 1
+        result = self.v150.evaluate_nominal_gates(
+            analysis, self._passing_audit(), self.config
+        )
+        self.assertFalse(result["numerical_gate_passed"])
+        self.assertIn("no_small_segments", result["failed_numerical_checks"])
+
+    def test_nominal_gate_rejects_low_rl_or_efficiency(self):
+        analysis = self._passing_analysis()
+        analysis["rows"][0]["passive_rl_db"] = 14.9
+        result = self.v150.evaluate_nominal_gates(
+            analysis, self._passing_audit(), self.config
+        )
+        self.assertTrue(result["numerical_gate_passed"])
+        self.assertFalse(result["physical_gate_passed"])
+        self.assertIn("three_frequency_rl", result["failed_physical_checks"])
+
+        analysis = self._passing_analysis()
+        analysis["rows"][1]["accepted_power_efficiency"] = 0.969
+        result = self.v150.evaluate_nominal_gates(
+            analysis, self._passing_audit(), self.config
+        )
+        self.assertFalse(result["physical_gate_passed"])
+        self.assertIn("accepted_efficiency", result["failed_physical_checks"])
+
+    def test_wave_port_warning_terms_are_critical(self):
+        hits = self.v150.critical_log_hits(
+            "Wave port assignment failed\nToo many conductors touch wave port"
+        )
+        self.assertIn("wave port assignment failed", hits)
+        self.assertIn("conductors touch wave port", hits)
+
+
 if __name__ == "__main__":
     unittest.main()

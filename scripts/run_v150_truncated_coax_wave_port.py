@@ -453,9 +453,9 @@ def validate_geometry(
     if h_main + h_stack + copper > 3.5:
         raise ValueError("Physical stack exceeds 3.5 mm")
     if float(material["relative_permittivity"]) != 2.2:
-        raise ValueError("v1.49 material permittivity must remain 2.2")
+        raise ValueError("v1.50 material permittivity must remain 2.2")
     if float(material["loss_tangent"]) != 0.0009:
-        raise ValueError("v1.49 material loss tangent must remain 0.0009")
+        raise ValueError("v1.50 material loss tangent must remain 0.0009")
     if via_diameter <= 0.0 or via_pitch > 2.0 * via_diameter:
         raise ValueError("SIW via pitch must not exceed twice the diameter")
     if via_inset <= via_diameter / 2.0:
@@ -640,8 +640,8 @@ def _element_geometry_text(
     port_z = float(config["wave_port"]["reference_plane_z_mm"])
     via_radius = float(geometry["siw_via_diameter_mm"]) / 2.0
     lines = [
-        f'CreateBox oEditor, "MainSubstrate", {-px/2:.7f}, {-py/2:.7f}, 0, {px:.7f}, {py:.7f}, {h_main:.7f}, "RO5880_V149", True',
-        f'CreateBox oEditor, "StackSpacer", {-px/2:.7f}, {-py/2:.7f}, {h_main:.7f}, {px:.7f}, {py:.7f}, {h_stack:.7f}, "RO5880_V149", True',
+        f'CreateBox oEditor, "MainSubstrate", {-px/2:.7f}, {-py/2:.7f}, 0, {px:.7f}, {py:.7f}, {h_main:.7f}, "RO5880_V150", True',
+        f'CreateBox oEditor, "StackSpacer", {-px/2:.7f}, {-py/2:.7f}, {h_main:.7f}, {px:.7f}, {py:.7f}, {h_stack:.7f}, "RO5880_V150", True',
         f'CreateBox oEditor, "GroundOuterConductor", {-px/2:.7f}, {-py/2:.7f}, {-ground_thickness:.7f}, {px:.7f}, {py:.7f}, {ground_thickness:.7f}, "copper", False',
         f'CreateCylinderZExact oEditor, "GroundFeedCut", {feed_x:.7f}, {feed_y:.7f}, {-ground_thickness-0.01:.7f}, {coax_dielectric_outer:.7f}, {ground_thickness+0.02:.7f}, "vacuum", True',
         'SubtractObject oEditor, "GroundOuterConductor", "GroundFeedCut"',
@@ -696,7 +696,7 @@ Set oAnsoftApp = CreateObject("Ansoft.ElectronicsDesktop")
 Set oDesktop = oAnsoftApp.GetAppDesktop()
 oDesktop.NewProject
 Set oProject = oDesktop.GetActiveProject()
-oProject.GetDefinitionManager().AddMaterial Array("NAME:RO5880_V149", "CoordinateSystemType:=", "Cartesian", "BulkOrSurfaceType:=", 1, "permittivity:=", "{float(material['relative_permittivity']):g}", "dielectric_loss_tangent:=", "{float(material['loss_tangent']):g}")
+oProject.GetDefinitionManager().AddMaterial Array("NAME:RO5880_V150", "CoordinateSystemType:=", "Cartesian", "BulkOrSurfaceType:=", 1, "permittivity:=", "{float(material['relative_permittivity']):g}", "dielectric_loss_tangent:=", "{float(material['loss_tangent']):g}")
 oProject.InsertDesign "HFSS", "{design_name}", "DrivenModal", ""
 Set oDesign = oProject.SetActiveDesign("{design_name}")
 Set oEditor = oDesign.SetActiveEditor("3D Modeler")
@@ -758,7 +758,7 @@ def periodic_builder_text(
     inventory = project.parent / "model_inventory.txt"
     validation = project.parent / "design_validation.txt"
     return (
-        _project_header(config, "V149_PeriodicUnit")
+        _project_header(config, "V150_PeriodicUnit")
         + body
         + f'''
 CreateBox oEditor, "AirCell", {-px/2:.7f}, {-py/2:.7f}, {h_total:.7f}, {px:.7f}, {py:.7f}, {air_height:.7f}, "vacuum", True
@@ -836,7 +836,7 @@ def finite_one_by_one_builder_text(
         float(geometry["air_below_mm"]),
     )
     return (
-        _project_header(config, "V149_Finite1x1")
+        _project_header(config, "V150_Finite1x1")
         + body
         + f'''
 oEditor.CreateRegion Array("NAME:RegionParameters", "+XPaddingType:=", "Absolute Offset", "+XPadding:=", "{padding:g}mm", "-XPaddingType:=", "Absolute Offset", "-XPadding:=", "{padding:g}mm", "+YPaddingType:=", "Absolute Offset", "+YPadding:=", "{padding:g}mm", "-YPaddingType:=", "Absolute Offset", "-YPadding:=", "{padding:g}mm", "+ZPaddingType:=", "Absolute Offset", "+ZPadding:=", "{padding:g}mm", "-ZPaddingType:=", "Absolute Offset", "-ZPadding:=", "{padding:g}mm"), Array("NAME:Attributes", "Name:=", "AirRegion", "Flags:=", "Wireframe#", "Color:=", "(128 128 255)", "Transparency:=", 0.9, "PartCoordinateSystem:=", "Global", "MaterialValue:=", """air""", "SolveInside:=", True)
@@ -901,7 +901,7 @@ Set oAnsoftApp = CreateObject("Ansoft.ElectronicsDesktop")
 Set oDesktop = oAnsoftApp.GetAppDesktop()
 oDesktop.OpenProject "{_vp(project)}"
 Set oProject = oDesktop.SetActiveProject("{project.stem}")
-Set oDesign = oProject.SetActiveDesign("V149_PeriodicUnit")
+Set oDesign = oProject.SetActiveDesign("V150_PeriodicUnit")
 Set oAnalysis = oDesign.GetModule("AnalysisSetup")
 On Error Resume Next
 {_frequency_sweep_text(config).strip()}
@@ -933,7 +933,7 @@ def allocate_output_root(config: dict[str, Any]) -> Path:
         if not candidate.exists():
             candidate.mkdir(parents=True)
             return candidate
-    raise RuntimeError("No free v1.49 run index remains")
+    raise RuntimeError("No free v1.50 run index remains")
 
 
 def preregister(config: dict[str, Any]) -> dict[str, Any]:
@@ -950,11 +950,11 @@ def preregister(config: dict[str, Any]) -> dict[str, Any]:
         check=False,
     )
     if ancestor.returncode != 0:
-        raise RuntimeError("Frozen v1.49 baseline is not an ancestor of HEAD")
+        raise RuntimeError("Frozen v1.50 baseline is not an ancestor of HEAD")
     inputs = {name: resolve(path) for name, path in config["inputs"].items()}
     missing = [str(path) for path in inputs.values() if not path.exists()]
     if missing:
-        raise FileNotFoundError(f"Missing frozen v1.49 input(s): {missing}")
+        raise FileNotFoundError(f"Missing frozen v1.50 input(s): {missing}")
     root = allocate_output_root(config)
     (root / "logs").mkdir()
     (root / "manifests").mkdir()
@@ -1005,7 +1005,7 @@ def preregister(config: dict[str, Any]) -> dict[str, Any]:
         "allow_training_labels": False,
         "allow_critic_training": False,
         "reason": (
-            "v1.49 is preregistered. Only native periodic CAD generation and "
+            "v1.50 is preregistered. Only native periodic CAD generation and "
             "a build-only smoke are authorized."
         ),
     }
@@ -1090,7 +1090,7 @@ def seal_nominal_authorization(
     if sha256(snapshot) != provenance["sha256"]:
         raise RuntimeError("Control-script snapshot hash mismatch")
     authorization = {
-        "schema": "v149_nominal_solve_authorization_v1",
+        "schema": "v150_nominal_solve_authorization_v1",
         "authorization_kind": authorization_kind,
         "issued_for_run": str(run_root),
         "issued_at": time.strftime("%Y-%m-%d %H:%M:%S"),
@@ -1285,7 +1285,7 @@ def create_nominal_continuation(source_run_root: Path) -> dict[str, Any]:
         },
     )
     continuation_audit = {
-        "schema": "v149_nominal_continuation_audit_v1",
+        "schema": "v150_nominal_continuation_audit_v1",
         "source_run": str(source_run_root),
         "output_root": str(root.resolve()),
         "source_manifest": source_manifest_audit,
@@ -1349,7 +1349,7 @@ def prepare_periodic_build_smoke(
     if folder.exists():
         raise FileExistsError(f"Refusing to overwrite build smoke: {folder}")
     folder.mkdir(parents=True)
-    project = folder / "v149_periodic_build_smoke.aedt"
+    project = folder / "v150_periodic_build_smoke.aedt"
     builder = folder / "build.vbs"
     inventory = folder / "model_inventory.txt"
     validation = folder / "design_validation.txt"
@@ -1391,8 +1391,7 @@ def prepare_periodic_build_smoke(
             "PrimaryY_Stack",
             "SecondaryY_Stack",
             "FloquetTop",
-            "Mesh_ProbeLaunch",
-            "Mesh_PortSheet",
+            "Mesh_CoaxLaunch",
             "Mesh_PatchEdges",
             "Mesh_SIWVias",
         ],
@@ -1548,7 +1547,6 @@ def validate_model_inventory(
     config: dict[str, Any],
     geometry: dict[str, Any],
 ) -> dict[str, Any]:
-    del config
     objects: set[str] = set()
     boundaries: set[str] = set()
     excitations: list[tuple[str, str]] = []
@@ -1563,14 +1561,12 @@ def validate_model_inventory(
     required_objects = {
         "MainSubstrate",
         "StackSpacer",
-        "Ground",
+        "GroundOuterConductor",
         "SIWCavityTop",
         "DrivenPatch",
         "StackedPatch",
         "FeedProbe",
-        "CoaxOuter",
         "CoaxDielectric",
-        "PortSheet",
         "AirCell",
         *{
             f"SIWVia_{index:03d}"
@@ -1596,10 +1592,21 @@ def validate_model_inventory(
     excitation_bases = {
         name.split(":", 1)[0] for name, _ in excitations
     }
+    feed_types = {
+        excitation_type
+        for name, excitation_type in excitations
+        if name.split(":", 1)[0] == "FeedPort"
+    }
+    forbidden_objects = {"PortSheet", "Ground", "CoaxOuter"}
     checks = {
         "objects": required_objects.issubset(objects),
         "boundaries": required_boundaries.issubset(boundaries),
         "excitations": required_excitations.issubset(excitation_bases),
+        "feed_is_wave_port": feed_types == {"Wave Port"},
+        "legacy_port_objects_absent": not (objects & forbidden_objects),
+        "configured_wave_port": (
+            config.get("wave_port") == FROZEN_WAVE_PORT
+        ),
         "single_feed_mode": sum(
             name.split(":", 1)[0] == "FeedPort"
             for name, _ in excitations
@@ -1619,6 +1626,8 @@ def validate_model_inventory(
         "missing_excitations": sorted(
             required_excitations - excitation_bases
         ),
+        "forbidden_objects_present": sorted(objects & forbidden_objects),
+        "feed_excitation_types": sorted(feed_types),
         "object_count": len(objects),
         "boundary_count": len(boundaries),
         "excitation_mode_count": len(excitations),
@@ -1631,11 +1640,13 @@ def critical_log_hits(text: str) -> dict[str, int]:
         "[error]",
         "script error",
         "small segment",
+        "wave port assignment failed",
         "port assignment failed",
         "boundary assignment failed",
         "geometry error",
         "body could not be created",
         "conductors touch lumped port",
+        "conductors touch wave port",
         "intersect",
     )
     return {term: lowered.count(term) for term in terms if term in lowered}
@@ -1759,9 +1770,9 @@ def _prepare_nominal_from_project(
             f"Refusing to overwrite nominal solve preparation: {folder}"
         )
     folder.mkdir(parents=True)
-    project = folder / "v149_periodic_nominal_solve.aedt"
+    project = folder / "v150_periodic_nominal_solve.aedt"
     shutil.copy2(source_project, project)
-    touchstone = folder / "v149_periodic_nominal.s3p"
+    touchstone = folder / "v150_periodic_nominal.s3p"
     source_names = folder / "source_names.txt"
     solver = folder / "solve_export.vbs"
     solver.write_text(
@@ -1837,7 +1848,7 @@ def validate_nominal_authorization(
     authorization = json.loads(
         authorization_path.read_text(encoding="utf-8")
     )
-    if authorization.get("schema") != "v149_nominal_solve_authorization_v1":
+    if authorization.get("schema") != "v150_nominal_solve_authorization_v1":
         raise RuntimeError("Nominal solve authorization schema is invalid")
     if authorization.get("issued_for_run") != str(run_root):
         raise RuntimeError("Nominal solve authorization targets another run")
@@ -1986,7 +1997,7 @@ def consume_nominal_launch_authorization(
 ) -> Path:
     path = run_root / "periodic" / "nominal_solve" / "launch_intent.json"
     payload = {
-        "schema": "v149_nominal_launch_intent_v1",
+        "schema": "v150_nominal_launch_intent_v1",
         "case_id": manifest["case_id"],
         "authorization_sha256": authorization["authorization_sha256"],
         "consumed_at": time.strftime("%Y-%m-%d %H:%M:%S"),
@@ -2065,7 +2076,7 @@ def run_nominal_periodic_solve(
             float(config["resources"]["poll_interval_seconds"]),
         )
     audit = {
-        "schema": "v149_nominal_periodic_run_audit_v1",
+        "schema": "v150_nominal_periodic_run_audit_v1",
         "aedt_version": "2023.1",
         "ansys_executable_sha256": sha256(
             resolve(config["ansys_executable"])
@@ -2316,6 +2327,95 @@ def verify_convergence_artifacts(
     )
 
 
+def evaluate_nominal_gates(
+    analysis: dict[str, Any],
+    audit: dict[str, Any],
+    config: dict[str, Any],
+) -> dict[str, Any]:
+    profile = analysis.get("profile", {})
+    rows = analysis.get("rows", [])
+    numerical_checks = {
+        "completed_run": (
+            audit.get("return_code") == 0
+            and audit.get("memory_aborted") is False
+        ),
+        "runtime_memory": float(
+            audit.get("minimum_free_memory_gib", -math.inf)
+        )
+        >= float(config["resources"]["abort_free_memory_during_solve_gib"]),
+        "export_evidence": (
+            analysis.get("nominal_export_evidence_complete") is True
+        ),
+        "power_consistency": (
+            analysis.get("power_consistency_passed") is True
+        ),
+        "convergence": (
+            analysis.get("convergence_evidence_complete") is True
+            and profile.get("converged") is True
+            and isinstance(profile.get("final_delta_s"), (int, float))
+            and float(profile["final_delta_s"])
+            <= float(config["gates"]["maximum_final_delta_s"])
+        ),
+        "adaptive_tetrahedra": (
+            0 < int(profile.get("maximum_tetrahedra", 0))
+            <= int(config["nominal_geometry"]["maximum_adaptive_tetrahedra"])
+        ),
+        "no_small_segments": int(profile.get("small_segment_count", -1)) == 0,
+        "no_critical_warnings": not analysis.get("critical_warning_hits"),
+        "three_frequency_rows": len(rows) == len(config["frequencies_ghz"]),
+    }
+    rl_threshold = max(
+        float(config["gates"]["minimum_periodic_active_rl_db"]),
+        float(config["gates"]["minimum_broadside_passive_rl_db"]),
+    )
+    physical_checks = {
+        "three_frequency_rl": bool(rows)
+        and all(
+            float(row.get("active_rl_db", -math.inf)) >= rl_threshold
+            and float(row.get("passive_rl_db", -math.inf)) >= rl_threshold
+            for row in rows
+        ),
+        "accepted_efficiency": bool(rows)
+        and all(
+            float(row.get("accepted_power_efficiency", -math.inf))
+            >= float(config["gates"]["minimum_periodic_efficiency"])
+            for row in rows
+        ),
+        "finite_input_impedance": bool(rows)
+        and all(
+            math.isfinite(float(row.get("input_impedance_real_ohm", math.nan)))
+            and math.isfinite(float(row.get("input_impedance_imag_ohm", math.nan)))
+            and float(row.get("input_impedance_real_ohm", -math.inf)) > 0.0
+            for row in rows
+        ),
+    }
+    return {
+        "nominal_numerical_checks": numerical_checks,
+        "nominal_physical_checks": physical_checks,
+        "numerical_gate_passed": all(numerical_checks.values()),
+        "physical_gate_passed": (
+            all(numerical_checks.values()) and all(physical_checks.values())
+        ),
+        "failed_numerical_checks": [
+            name for name, passed in numerical_checks.items() if not passed
+        ],
+        "failed_physical_checks": [
+            name for name, passed in physical_checks.items() if not passed
+        ],
+        "authorizes_periodic_doe_batch": False,
+        "locked_stages": {
+            "periodic_doe_batch": True,
+            "finite_1x1": True,
+            "finite_2x2": True,
+            "finite_4x4": True,
+            "array_16x16": True,
+            "eep_export": True,
+            "training_labels": True,
+            "critic_retraining": True,
+        },
+    }
+
+
 def analyze_nominal_periodic_exports(
     manifest: dict[str, Any],
     audit: dict[str, Any],
@@ -2332,7 +2432,7 @@ def analyze_nominal_periodic_exports(
         raise RuntimeError("Nominal HFSS solve did not complete successfully")
     ansys_executable = resolve(config["ansys_executable"])
     if not (
-        audit.get("schema") == "v149_nominal_periodic_run_audit_v1"
+        audit.get("schema") == "v150_nominal_periodic_run_audit_v1"
         and audit.get("aedt_version") == "2023.1"
         and ansys_executable.is_file()
         and audit.get("ansys_executable_sha256")
@@ -2475,7 +2575,7 @@ def analyze_nominal_periodic_exports(
         and not log_hits
         and profile["small_segment_count"] == 0
     )
-    return {
+    result = {
         "case_id": manifest["case_id"],
         "evidence_source": "HFSS_periodic_nominal_broadside",
         "nominal_export_evidence_complete": evidence_complete,
@@ -2495,6 +2595,8 @@ def analyze_nominal_periodic_exports(
         "critical_warning_hits": log_hits,
         "rows": rows,
     }
+    result.update(evaluate_nominal_gates(result, audit, config))
+    return result
 
 
 def analyze_nominal_periodic_solve(
@@ -2658,7 +2760,7 @@ def select_pareto_candidates(
     rows: list[dict[str, Any]], maximum_count: int
 ) -> list[dict[str, Any]]:
     if not 3 <= maximum_count <= 5:
-        raise ValueError("v1.49 Pareto selection is limited to 3-5 candidates")
+        raise ValueError("v1.50 Pareto selection is limited to 3-5 candidates")
     selected: list[dict[str, Any]] = []
     remaining = list(rows)
     rank = 0
@@ -2764,7 +2866,7 @@ def validate_aedt_project_container(
     if len(models) != 1:
         return False
     model = models[0]
-    if "Name='V149_PeriodicUnit'" not in model:
+    if "Name='V150_PeriodicUnit'" not in model:
         return False
     boundaries = _aedt_named_blocks(model, "Boundaries")
     setups = _aedt_named_blocks(model, "Setup_10GHz")
@@ -2776,7 +2878,7 @@ def validate_aedt_project_container(
         ("SecondaryX", "Secondary"),
         ("PrimaryY", "Primary"),
         ("SecondaryY", "Secondary"),
-        ("FeedPort", "Lumped Port"),
+        ("FeedPort", "Wave Port"),
         ("FloquetTop", "Floquet Port"),
     ):
         blocks = _aedt_named_blocks(boundaries[0], name)
@@ -3061,7 +3163,7 @@ def _verify_periodic_state_provenance(
             artifact_paths["run_audit"].read_text(encoding="utf-8")
         )
         if not (
-            run_audit.get("schema") == "v149_periodic_state_run_audit_v1"
+            run_audit.get("schema") == "v150_periodic_state_run_audit_v1"
             and run_audit.get("aedt_version") == "2023.1"
             and run_audit.get("ansys_executable_sha256")
             == ansys_executable_sha256
@@ -3228,7 +3330,7 @@ def aggregate_periodic_scan(
             if len(set(values)) != len(expected):
                 provenance_complete = False
                 break
-    # v1.49 stage A intentionally has no AEDT-reopen batch attestor yet.
+    # v1.50 stage A intentionally has no AEDT-reopen batch attestor yet.
     # Keep aggregation diagnostic-only until a separately versioned workflow
     # opens every solved project in AEDT and verifies its saved solution.
     physical_attestation_complete = False
@@ -3299,7 +3401,7 @@ def aggregate_periodic_scan(
         "physical_attestation_complete": physical_attestation_complete,
         "physical_gate_armed": False,
         "physical_gate_lock_reason": (
-            "v1.49 stage A lacks an independent AEDT reopen attestor; "
+            "v1.50 stage A lacks an independent AEDT reopen attestor; "
             "aggregated metrics are diagnostic only."
         ),
         "scan_state_count": len(complete_rows),
@@ -3479,7 +3581,7 @@ def finalize_stage_summary(
     }
     write_json(run_root / "stage_summary.json", summary)
     lines = [
-        "# v1.49 Stage Summary",
+        "# v1.50 Stage Summary",
         "",
         "## Measured Evidence",
         "",
