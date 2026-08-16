@@ -1036,3 +1036,18 @@ authorization, so run07 is retired and cannot be retried or backfilled. A new
 continuation must be allocated from sealed run06 using committed control code.
 Local diagnostic evidence remains in
 `hfss_outputs/v149_siw_cavity_stacked_patch_20260816_run07`.
+
+## v1.49 Validated Build And Nominal Solve Stop Gate (2026-08-16)
+
+Run08 exposed three solid intersections hidden by the earlier build-only gate.
+Run09 removed the overlaps but showed that AEDT 2023.1 requires one face per
+Primary/Secondary assignment. Run10 then passed native CAD build and HFSS
+`ValidateDesign`: 67 objects, 16 boundaries, 3 excitation modes, no critical
+log hits, and project SHA-256 `1aa8dd8a...42d0bc`.
+
+The single-use run11 nominal sweep started with 13.479 GiB free memory, reached
+about 356,493 tetrahedra, and was stopped by the memory guard after 320.838 s
+when free memory fell to 2.802 GiB. No Touchstone or physical antenna metric was
+produced. The log also reports that only one conductor touches the lumped port.
+All downstream stages remain locked. See
+`docs/V149_NOMINAL_PERIODIC_CONTINUATION_20260816.md`.
