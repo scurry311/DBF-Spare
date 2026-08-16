@@ -211,6 +211,7 @@ class V149CadGenerationTests(unittest.TestCase):
             "AssignSecondary",
             "AssignFloquetPort",
             "Mesh_ProbeLaunch",
+            "Mesh_PortSheet",
             "Mesh_PatchEdges",
             "Mesh_SIWVias",
         ]
@@ -296,17 +297,27 @@ class V149CadGenerationTests(unittest.TestCase):
             {"frequency_ghz": 10.0, "theta_deg": 0.0, "phi_deg": 0.0},
         )
         self.assertEqual(
-            self.config["port_definition"]["contact_overlap_mm"], 0.03
+            self.config["port_definition"]["contact_overlap_mm"], 0.0
         )
         self.assertEqual(
             self.config["port_definition"]["reference_plane_offset_mm"],
             0.05,
         )
         self.assertIn(
-            'CreateSheetZ oEditor, "PortSheet", 0.2200000, -2.5500000, '
-            '-0.9500000, 0.5100000, 0.20',
+            'CreateCircleZ oEditor, "PortSheet", 0.0000000, -2.4500000, '
+            '-0.9500000, 0.7000000',
             source,
         )
+        self.assertIn(
+            'CreateCircleZ oEditor, "PortSheetInnerCut", 0.0000000, '
+            '-2.4500000, -0.9500000, 0.2500000',
+            source,
+        )
+        self.assertIn(
+            'SubtractObject oEditor, "PortSheet", "PortSheetInnerCut"',
+            source,
+        )
+        self.assertNotIn('CreateSheetZ oEditor, "PortSheet"', source)
         self.assertIn(
             'AssignPort oBoundary, "FeedPort", "PortSheet", 0.2500000, '
             '-2.4500000, -0.9500000, 0.7000000, -2.4500000, -0.9500000',
@@ -314,7 +325,8 @@ class V149CadGenerationTests(unittest.TestCase):
         )
         audit = self.v149.geometry_audit(self.config, self.geometry)
         self.assertTrue(audit["port_two_conductor_contact_intended"])
-        self.assertEqual(audit["port_contact_overlap_mm"], 0.03)
+        self.assertEqual(audit["port_contact_overlap_mm"], 0.0)
+        self.assertTrue(audit["annular_coax_port"])
 
     def test_local_mesh_is_memory_reduced_and_surface_only(self):
         self.assertEqual(self.geometry["local_mesh_probe_mm"], 0.30)
@@ -330,13 +342,22 @@ class V149CadGenerationTests(unittest.TestCase):
             name: next(
                 line for line in source.splitlines() if f'NAME:{name}' in line
             )
-            for name in ("Mesh_ProbeLaunch", "Mesh_PatchEdges", "Mesh_SIWVias")
+            for name in (
+                "Mesh_ProbeLaunch",
+                "Mesh_PortSheet",
+                "Mesh_PatchEdges",
+                "Mesh_SIWVias",
+            )
         }
         self.assertIn(
             '"RefineInside:=", False', mesh_lines["Mesh_ProbeLaunch"]
         )
         self.assertIn(
             '"MaxLength:=", "0.3000000mm"', mesh_lines["Mesh_ProbeLaunch"]
+        )
+        self.assertIn('"RefineInside:=", True', mesh_lines["Mesh_PortSheet"])
+        self.assertIn(
+            '"MaxLength:=", "0.2000000mm"', mesh_lines["Mesh_PortSheet"]
         )
         self.assertIn('"RefineInside:=", False', mesh_lines["Mesh_PatchEdges"])
         self.assertIn(
@@ -912,6 +933,46 @@ class V149DoeAndAnalysisTests(unittest.TestCase):
         self.assertEqual(metrics["significant_port_count"], 1)
         self.assertEqual(metrics["all_nonzero_port_count"], 2)
 
+    def test_hfss_source_bases_bind_to_three_touchstone_modes(self):
+        binding = self.v149.bind_exported_port_modes(
+            ["FeedPort", "FloquetTop"],
+            ["FeedPort", "FloquetTop:1", "FloquetTop:2"],
+        )
+        self.assertEqual(binding["feed_indices"], [0])
+        self.assertEqual(binding["floquet_indices"], [1, 2])
+        with self.assertRaises(RuntimeError):
+            self.v149.bind_exported_port_modes(
+                ["FeedPort", "UnexpectedBoundary"],
+                ["FeedPort", "FloquetTop:1", "FloquetTop:2"],
+            )
+
+    def test_hfss_2023_profile_metrics_do_not_treat_memory_as_tetrahedra(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            folder = Path(temporary)
+            (folder / "solve.profile").write_text(
+                "$begin 'Profile'\n"
+                "HFSS Version 2023.1.0\n"
+                "HFSSCOMENGINE.exe\n"
+                "ProfileItem('Matrix Assembly', 8, 0, 8, 0, 625344, "
+                "'I(1, 2, \\'Tetrahedra\\', 66525, false)')\n"
+                "ProfileItem('Matrix Solve', 49, 0, 48, 0, 2233964, "
+                "'I(1, 2, \\'Tetrahedra\\', 66525, false)')\n"
+                "Max Mag. Delta S', 0.002\n"
+                "Adaptive Passes converged\n"
+                "Status\\', \\'Normal Completion\n"
+                "$end 'Profile'\n",
+                encoding="ascii",
+            )
+            (folder / "solve.g3derr").write_text(
+                "26 Small mesh segment detected on body : FeedProbe\n"
+                " Small mesh segment detected on body : FeedProbe\n",
+                encoding="ascii",
+            )
+            metrics = self.v149.convergence_profile_metrics(folder)
+            self.assertTrue(metrics["converged"])
+            self.assertEqual(metrics["maximum_tetrahedra"], 66525)
+            self.assertEqual(metrics["small_segment_count"], 1)
+
     def test_touchstone_parser_and_nominal_periodic_analysis_are_physical(self):
         with tempfile.TemporaryDirectory() as temporary:
             folder = Path(temporary)
@@ -928,7 +989,7 @@ class V149DoeAndAnalysisTests(unittest.TestCase):
             solver.write_text("frozen-solver", encoding="ascii")
             solver_log.write_text("HFSS completed", encoding="ascii")
             source_names.write_text(
-                "FeedPort:1\nFloquetTop:1\nFloquetTop:2\n",
+                "FeedPort\nFloquetTop\n",
                 encoding="ascii",
             )
             # Touchstone ordering is column-major: S11,S21,S31,S12,...

@@ -425,10 +425,8 @@ def validate_geometry(
         raise ValueError("SIW top aperture does not clear the via fence")
     if not (0.0 < probe < coax_inner < coax_outer):
         raise ValueError("Probe/coax radii are not physically nested")
-    if not (0.0 < port_overlap < probe):
-        raise ValueError("Port contact overlap must fit inside the probe radius")
-    if port_overlap >= coax_outer - coax_inner:
-        raise ValueError("Port contact overlap exceeds the outer-conductor wall")
+    if port_overlap != 0.0:
+        raise ValueError("Annular coax port must not overlap either conductor")
     if not (0.0 < port_plane_offset < coax_drop):
         raise ValueError("Port reference plane must lie inside the coax launch")
     if abs(feed_x) + coax_outer >= fence_x:
@@ -495,7 +493,8 @@ def geometry_audit(
         "feed_port_count": 1,
         "port_contact_overlap_mm": port_overlap,
         "port_reference_plane_offset_mm": port_plane_offset,
-        "port_two_conductor_contact_intended": port_overlap > 0.0,
+        "port_two_conductor_contact_intended": True,
+        "annular_coax_port": True,
         "driven_patch_count": 1,
         "stacked_patch_count": 1,
         "siw_via_count": len(siw_via_centers(geometry)),
@@ -527,6 +526,9 @@ Sub CreateCylinderZ(editor, objName, x, y, z, radius, height, material, solveIns
 End Sub
 Sub CreateSheetZ(editor, objName, x, y, z, width, height)
     editor.CreateRectangle Array("NAME:RectangleParameters", "IsCovered:=", True, "XStart:=", Mm(x), "YStart:=", Mm(y), "ZStart:=", Mm(z), "Width:=", Mm(width), "Height:=", Mm(height), "WhichAxis:=", "Z"), Array("NAME:Attributes", "Name:=", objName, "Flags:=", "", "Color:=", "(235 150 35)", "Transparency:=", 0, "PartCoordinateSystem:=", "Global", "MaterialValue:=", """vacuum""", "SolveInside:=", True)
+End Sub
+Sub CreateCircleZ(editor, objName, x, y, z, radius)
+    editor.CreateCircle Array("NAME:CircleParameters", "IsCovered:=", True, "XCenter:=", Mm(x), "YCenter:=", Mm(y), "ZCenter:=", Mm(z), "Radius:=", Mm(radius), "WhichAxis:=", "Z", "NumSegments:=", "0"), Array("NAME:Attributes", "Name:=", objName, "Flags:=", "", "Color:=", "(235 150 35)", "Transparency:=", 0, "PartCoordinateSystem:=", "Global", "MaterialValue:=", """vacuum""", "SolveInside:=", True)
 End Sub
 Sub CreateSheetX(editor, objName, x, y, z, width, height)
     editor.CreateRectangle Array("NAME:RectangleParameters", "IsCovered:=", True, "XStart:=", Mm(x), "YStart:=", Mm(y), "ZStart:=", Mm(z), "Width:=", Mm(width), "Height:=", Mm(height), "WhichAxis:=", "X"), Array("NAME:Attributes", "Name:=", objName, "Flags:=", "NonModel#", "Color:=", "(80 120 255)", "Transparency:=", 0.8, "PartCoordinateSystem:=", "Global", "MaterialValue:=", """vacuum""", "SolveInside:=", True)
@@ -567,7 +569,6 @@ def _element_geometry_text(
     coax_inner = float(geometry["coax_inner_radius_mm"])
     coax_outer = float(geometry["coax_outer_radius_mm"])
     coax_drop = float(geometry["coax_drop_mm"])
-    port_overlap = float(config["port_definition"]["contact_overlap_mm"])
     port_z = -coax_drop + float(
         config["port_definition"]["reference_plane_offset_mm"]
     )
@@ -594,7 +595,9 @@ def _element_geometry_text(
         'oEditor.Intersect Array("NAME:Selections", "Selections:=", "CoaxDielectric,CoaxDielectricTrim"), Array("NAME:IntersectParameters", "KeepOriginals:=", False)',
         f'CreateCylinderZ oEditor, "CoaxProbeCut", {feed_x:.7f}, {feed_y:.7f}, {-coax_drop-0.01:.7f}, {probe:.7f}, {coax_drop+0.02:.7f}, "vacuum", True',
         'SubtractObject oEditor, "CoaxDielectric", "CoaxProbeCut"',
-        f'CreateSheetZ oEditor, "PortSheet", {feed_x+probe-port_overlap:.7f}, {feed_y-0.10:.7f}, {port_z:.7f}, {coax_inner-probe+2*port_overlap:.7f}, 0.20',
+        f'CreateCircleZ oEditor, "PortSheet", {feed_x:.7f}, {feed_y:.7f}, {port_z:.7f}, {coax_inner:.7f}',
+        f'CreateCircleZ oEditor, "PortSheetInnerCut", {feed_x:.7f}, {feed_y:.7f}, {port_z:.7f}, {probe:.7f}',
+        'SubtractObject oEditor, "PortSheet", "PortSheetInnerCut"',
         f'AssignPort oBoundary, "FeedPort", "PortSheet", {feed_x+probe:.7f}, {feed_y:.7f}, {port_z:.7f}, {feed_x+coax_inner:.7f}, {feed_y:.7f}, {port_z:.7f}',
     ]
     via_names = []
@@ -644,6 +647,7 @@ Set oMesh = oDesign.GetModule("MeshSetup")
 
 
 def _mesh_and_setup_text(
+    config: dict[str, Any],
     geometry: dict[str, Any],
     via_names: list[str],
     frequency_ghz: float,
@@ -654,7 +658,8 @@ def _mesh_and_setup_text(
     )
     via_array = ", ".join(f'"{name}"' for name in via_names)
     return f'''
-oMesh.AssignLengthOp Array("NAME:Mesh_ProbeLaunch", "RefineInside:=", False, "Enabled:=", True, "Objects:=", Array("FeedProbe", "CoaxOuter", "PortSheet"), "RestrictElem:=", False, "NumMaxElem:=", "1000", "RestrictLength:=", True, "MaxLength:=", "{float(geometry['local_mesh_probe_mm']):.7f}mm", "UseAdvSizing:=", False)
+oMesh.AssignLengthOp Array("NAME:Mesh_ProbeLaunch", "RefineInside:=", False, "Enabled:=", True, "Objects:=", Array("FeedProbe", "CoaxOuter"), "RestrictElem:=", False, "NumMaxElem:=", "1000", "RestrictLength:=", True, "MaxLength:=", "{float(geometry['local_mesh_probe_mm']):.7f}mm", "UseAdvSizing:=", False)
+oMesh.AssignLengthOp Array("NAME:Mesh_PortSheet", "RefineInside:=", True, "Enabled:=", True, "Objects:=", Array("PortSheet"), "RestrictElem:=", False, "NumMaxElem:=", "1000", "RestrictLength:=", True, "MaxLength:=", "{float(config['port_definition']['local_mesh_mm']):.7f}mm", "UseAdvSizing:=", False)
 oMesh.AssignLengthOp Array("NAME:Mesh_PatchEdges", "RefineInside:=", False, "Enabled:=", True, "Objects:=", Array("DrivenPatch", "StackedPatch"), "RestrictElem:=", False, "NumMaxElem:=", "1000", "RestrictLength:=", True, "MaxLength:=", "{float(geometry['local_mesh_patch_edge_mm']):.7f}mm", "UseAdvSizing:=", False)
 oMesh.AssignLengthOp Array("NAME:Mesh_SIWVias", "RefineInside:=", False, "Enabled:=", True, "Objects:=", Array({via_array}), "RestrictElem:=", False, "NumMaxElem:=", "1000", "RestrictLength:=", True, "MaxLength:=", "{float(geometry['local_mesh_via_mm']):.7f}mm", "UseAdvSizing:=", False)
 oAnalysis.InsertSetup "HfssDriven", Array("NAME:Setup_10GHz", "SolveType:=", "Single", "Frequency:=", "{frequency_ghz:g}GHz", "MaxDeltaS:=", 0.05, "MaximumPasses:=", {int(geometry['maximum_passes'])}, "MinimumPasses:=", 2, "MinimumConvergedPasses:=", 2, "PercentRefinement:=", {float(geometry['adaptive_refinement_percent']):.7f}, "BasisOrder:=", 1, "DoLambdaRefine:=", True, "DoMaterialLambda:=", True, "SetLambdaTarget:=", False, "UseMaxTetIncrease:=", False, "PortAccuracy:=", 2, "UseABCOnPort:=", False, "SetPortMinMaxTri:=", False, "DrivenSolverType:=", "{solver}")
@@ -725,7 +730,9 @@ oBoundary.AssignPrimary Array("NAME:PrimaryY", Array("NAME:CoordSysVector", "Ori
 oBoundary.AssignSecondary Array("NAME:SecondaryY", Array("NAME:CoordSysVector", "Origin:=", Array(Mm({-px/2:.7f}), Mm({py/2:.7f}), Mm({h_total:.7f})), "UPos:=", Array(Mm({px/2:.7f}), Mm({py/2:.7f}), Mm({h_total:.7f}))), "ReverseV:=", True, "Primary:=", "PrimaryY", "UseScanAngles:=", True, "Phi:=", "{phi:g}deg", "Theta:=", "{theta:g}deg", "Faces:=", Array(CLng(secondaryYFace)))
 oBoundary.AssignFloquetPort Array("NAME:FloquetTop", "Faces:=", Array(CLng(floquetFace)), "NumModes:=", 2, "RenormalizeAllTerminals:=", True, "DoDeembed:=", False, Array("NAME:Modes", Array("NAME:Mode1", "ModeNum:=", 1, "UseIntLine:=", False), Array("NAME:Mode2", "ModeNum:=", 2, "UseIntLine:=", False)), "ShowReporterFilter:=", False, "UseScanAngles:=", True, "Phi:=", "{phi:g}deg", "Theta:=", "{theta:g}deg", Array("NAME:LatticeAVector", "Start:=", Array(Mm({-px/2:.7f}), Mm({-py/2:.7f}), Mm({top:.7f})), "End:=", Array(Mm({px/2:.7f}), Mm({-py/2:.7f}), Mm({top:.7f}))), Array("NAME:LatticeBVector", "Start:=", Array(Mm({-px/2:.7f}), Mm({-py/2:.7f}), Mm({top:.7f})), "End:=", Array(Mm({-px/2:.7f}), Mm({py/2:.7f}), Mm({top:.7f}))), Array("NAME:ModesCalculator", "Frequency:=", "{frequency:g}GHz", "FrequencyChanged:=", False, "PhiStart:=", "{phi:g}deg", "PhiStop:=", "{phi:g}deg", "PhiStep:=", "0deg", "ThetaStart:=", "{theta:g}deg", "ThetaStop:=", "{theta:g}deg", "ThetaStep:=", "0deg"), Array("NAME:ModesList", Array("NAME:Mode", "ModeNumber:=", 1, "IndexM:=", 0, "IndexN:=", 0, "KC2:=", 0, "PropagationState:=", "Propagating", "Attenuation:=", 0, "PolarizationState:=", "TE", "AffectsRefinement:=", False), Array("NAME:Mode", "ModeNumber:=", 2, "IndexM:=", 0, "IndexN:=", 0, "KC2:=", 0, "PropagationState:=", "Propagating", "Attenuation:=", 0, "PolarizationState:=", "TM", "AffectsRefinement:=", False)))
 '''
-        + _mesh_and_setup_text(geometry, via_names, frequency, "direct")
+        + _mesh_and_setup_text(
+            config, geometry, via_names, frequency, "direct"
+        )
         + _frequency_sweep_text(config)
         + f'''
 validationPassed = oDesign.ValidateDesign()
@@ -776,7 +783,7 @@ oEditor.CreateRegion Array("NAME:RegionParameters", "+XPaddingType:=", "Absolute
 oBoundary.AssignRadiation Array("NAME:Radiation_AirRegion", "Objects:=", Array("AirRegion"))
 '''
         + _mesh_and_setup_text(
-            geometry, via_names, frequency, solver_type
+            config, geometry, via_names, frequency, solver_type
         )
         + _frequency_sweep_text(config)
         + f'''
@@ -1325,6 +1332,7 @@ def prepare_periodic_build_smoke(
             "SecondaryY_Stack",
             "FloquetTop",
             "Mesh_ProbeLaunch",
+            "Mesh_PortSheet",
             "Mesh_PatchEdges",
             "Mesh_SIWVias",
         ],
@@ -2106,6 +2114,42 @@ def parse_touchstone(
     return frequencies_ghz, matrices, reference_ohm, port_names
 
 
+def bind_exported_port_modes(
+    source_names: list[str], touchstone_ports: list[str]
+) -> dict[str, list[int]]:
+    """Bind HFSS boundary sources to modal Touchstone ports."""
+    source_bases = {name.split(":", 1)[0] for name in source_names}
+    touchstone_bases = {
+        name.split(":", 1)[0] for name in touchstone_ports
+    }
+    if source_bases != touchstone_bases:
+        raise RuntimeError(
+            "Touchstone modal ports do not match GetAllSources() boundaries"
+        )
+    feed_indices = [
+        index
+        for index, name in enumerate(touchstone_ports)
+        if name.split(":", 1)[0] == "FeedPort"
+    ]
+    floquet_indices = [
+        index
+        for index, name in enumerate(touchstone_ports)
+        if name.split(":", 1)[0] == "FloquetTop"
+    ]
+    if (
+        len(touchstone_ports) != 3
+        or len(feed_indices) != 1
+        or len(floquet_indices) != 2
+    ):
+        raise RuntimeError(
+            "Expected exactly one feed mode and two Floquet modes in S3P"
+        )
+    return {
+        "feed_indices": feed_indices,
+        "floquet_indices": floquet_indices,
+    }
+
+
 def convergence_profile_metrics(folder: Path) -> dict[str, Any]:
     values: list[float] = []
     maximum_tetrahedra = 0
@@ -2114,13 +2158,19 @@ def convergence_profile_metrics(folder: Path) -> dict[str, Any]:
     small_segment_count = 0
     for path in folder.rglob("*.profile"):
         text = path.read_text(encoding="utf-8", errors="ignore")
-        authentic = all(
+        matrix_sections_present = (
+            "Matrix Assembly/Solve" in text
+            or (
+                "ProfileItem('Matrix Assembly'" in text
+                and "ProfileItem('Matrix Solve'" in text
+            )
+        )
+        authentic = matrix_sections_present and all(
             token in text
             for token in (
                 "$begin 'Profile'",
                 "HFSS Version 2023.1.0",
                 "HFSSCOMENGINE.exe",
-                "Matrix Assembly/Solve",
                 "Max Mag. Delta S",
                 "Status\\', \\'Normal Completion",
             )
@@ -2135,7 +2185,9 @@ def convergence_profile_metrics(folder: Path) -> dict[str, Any]:
                 if match:
                     values.append(float(match.group(1)))
             if "Tetrahedra" in line and "ProfileItem" in line:
-                matches = re.findall(r"\b(\d{3,})\b", line)
+                matches = re.findall(
+                    r"Tetrahedra\\?',\s*(\d+)", line
+                )
                 if matches:
                     maximum_tetrahedra = max(
                         maximum_tetrahedra, max(map(int, matches))
@@ -2148,7 +2200,11 @@ def convergence_profile_metrics(folder: Path) -> dict[str, Any]:
                     )
     for path in folder.rglob("*.g3derr"):
         text = path.read_text(encoding="utf-8", errors="ignore").lower()
-        small_segment_count += text.count("small mesh segment")
+        small_segment_count += len(
+            re.findall(
+                r"^\s*26\s+small mesh segment detected", text, re.MULTILINE
+            )
+        )
     return {
         "pass_count": len(values),
         "final_delta_s": values[-1] if values else None,
@@ -2274,28 +2330,13 @@ def analyze_nominal_periodic_exports(
         if line.strip()
     ]
     frequencies, matrices, reference_ohm, touchstone_ports = parse_touchstone(
-        paths["touchstone"], len(source_names)
+        paths["touchstone"], 3
     )
-    if not touchstone_ports or set(touchstone_ports) != set(source_names):
-        raise RuntimeError(
-            "Touchstone Port[n] comments do not bind the exported S order "
-            "to GetAllSources()"
-        )
-    feed_indices = [
-        index
-        for index, name in enumerate(touchstone_ports)
-        if name.split(":", 1)[0] == "FeedPort"
-    ]
-    floquet_indices = [
-        index
-        for index, name in enumerate(touchstone_ports)
-        if name.split(":", 1)[0] == "FloquetTop"
-    ]
-    if len(touchstone_ports) != 3 or len(feed_indices) != 1 or len(floquet_indices) != 2:
-        raise RuntimeError(
-            "Expected exactly one feed mode and two Floquet modes in S3P"
-        )
-    feed = feed_indices[0]
+    if not touchstone_ports:
+        raise RuntimeError("Touchstone export lacks Port[n] mode comments")
+    binding = bind_exported_port_modes(source_names, touchstone_ports)
+    feed = binding["feed_indices"][0]
+    floquet_indices = binding["floquet_indices"]
     rows: list[dict[str, Any]] = []
     tolerance_ghz = 5.0e-5
     for requested in map(float, config["frequencies_ghz"]):
