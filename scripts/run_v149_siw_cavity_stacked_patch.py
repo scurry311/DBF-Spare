@@ -537,8 +537,8 @@ End Sub
 Sub CreateSheetX(editor, objName, x, y, z, width, height)
     editor.CreateRectangle Array("NAME:RectangleParameters", "IsCovered:=", True, "XStart:=", Mm(x), "YStart:=", Mm(y), "ZStart:=", Mm(z), "Width:=", Mm(width), "Height:=", Mm(height), "WhichAxis:=", "X"), Array("NAME:Attributes", "Name:=", objName, "Flags:=", "NonModel#", "Color:=", "(80 120 255)", "Transparency:=", 0.8, "PartCoordinateSystem:=", "Global", "MaterialValue:=", """vacuum""", "SolveInside:=", True)
 End Sub
-Sub CreateSheetY(editor, objName, x, y, z, width, height)
-    editor.CreateRectangle Array("NAME:RectangleParameters", "IsCovered:=", True, "XStart:=", Mm(x), "YStart:=", Mm(y), "ZStart:=", Mm(z), "Width:=", Mm(width), "Height:=", Mm(height), "WhichAxis:=", "Y"), Array("NAME:Attributes", "Name:=", objName, "Flags:=", "NonModel#", "Color:=", "(80 120 255)", "Transparency:=", 0.8, "PartCoordinateSystem:=", "Global", "MaterialValue:=", """vacuum""", "SolveInside:=", True)
+Sub CreateModelSheetY(editor, objName, x, y, z, width, height)
+    editor.CreateRectangle Array("NAME:RectangleParameters", "IsCovered:=", True, "XStart:=", Mm(x), "YStart:=", Mm(y), "ZStart:=", Mm(z), "Width:=", Mm(width), "Height:=", Mm(height), "WhichAxis:=", "Y"), Array("NAME:Attributes", "Name:=", objName, "Flags:=", "", "Color:=", "(235 150 35)", "Transparency:=", 0, "PartCoordinateSystem:=", "Global", "MaterialValue:=", """vacuum""", "SolveInside:=", True)
 End Sub
 Sub SubtractObject(editor, blanks, toolName)
     editor.Subtract Array("NAME:Selections", "Blank Parts:=", blanks, "Tool Parts:=", toolName), Array("NAME:SubtractParameters", "KeepOriginals:=", False)
@@ -601,7 +601,7 @@ def _element_geometry_text(
         'oEditor.Intersect Array("NAME:Selections", "Selections:=", "CoaxDielectric,CoaxDielectricTrim"), Array("NAME:IntersectParameters", "KeepOriginals:=", False)',
         f'CreateCylinderZ oEditor, "CoaxProbeCut", {feed_x:.7f}, {feed_y:.7f}, {-coax_drop-0.01:.7f}, {probe:.7f}, {coax_drop+0.02:.7f}, "vacuum", True',
         'SubtractObject oEditor, "CoaxDielectric", "CoaxProbeCut"',
-        f'CreateSheetY oEditor, "PortSheet", {feed_x+probe:.7f}, {feed_y:.7f}, {port_z:.7f}, {coax_inner-probe:.7f}, {port_height:.7f}',
+        f'CreateModelSheetY oEditor, "PortSheet", {feed_x+probe:.7f}, {feed_y:.7f}, {port_z:.7f}, {coax_inner-probe:.7f}, {port_height:.7f}',
         f'AssignPort oBoundary, "FeedPort", "PortSheet", {feed_x+probe:.7f}, {feed_y:.7f}, {port_line_z:.7f}, {feed_x+coax_inner:.7f}, {feed_y:.7f}, {port_line_z:.7f}',
     ]
     via_names = []

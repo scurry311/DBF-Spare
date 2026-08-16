@@ -307,7 +307,7 @@ class V149CadGenerationTests(unittest.TestCase):
             self.config["port_definition"]["axial_height_mm"], 0.10
         )
         self.assertIn(
-            'CreateSheetY oEditor, "PortSheet", 0.2500000, -2.4500000, '
+            'CreateModelSheetY oEditor, "PortSheet", 0.2500000, -2.4500000, '
             '-0.9500000, 0.4500000, 0.1000000',
             source,
         )
