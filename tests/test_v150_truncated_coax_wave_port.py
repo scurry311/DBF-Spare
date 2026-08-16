@@ -92,6 +92,56 @@ class V150ConfigurationTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "frozen v1.49 geometry"):
             self.v150.validate_config(changed)
 
+    def test_v150_rejects_any_preregistered_control_mutation(self):
+        mutations = (
+            (
+                "air domain",
+                lambda item: item["nominal_geometry"].__setitem__(
+                    "air_above_mm", 11.0
+                ),
+            ),
+            (
+                "material",
+                lambda item: item["material"].__setitem__(
+                    "copper_conductivity_s_per_m", 5.7e7
+                ),
+            ),
+            (
+                "input",
+                lambda item: item["inputs"].__setitem__(
+                    "frozen_stimuli_manifest", "changed.csv"
+                ),
+            ),
+            (
+                "baseline",
+                lambda item: item.__setitem__(
+                    "baseline_commit", "0" * 40
+                ),
+            ),
+        )
+        for label, mutate in mutations:
+            with self.subTest(label=label):
+                changed = copy.deepcopy(self.config)
+                mutate(changed)
+                with self.assertRaisesRegex(ValueError, "config contract"):
+                    self.v150.validate_config(changed)
+
+    def test_v150_allows_only_registered_run_metadata(self):
+        registered = copy.deepcopy(self.config)
+        registered.update(
+            {
+                "allocated_output_root": "D:/immutable/run01",
+                "preregistered_at": "2026-08-17 00:00:00",
+                "continuation_source_run": "D:/immutable/source",
+                "continuation_scope": "one_nominal_periodic_sweep",
+            }
+        )
+        self.v150.validate_config(registered)
+
+        registered["unexpected_runtime_field"] = True
+        with self.assertRaisesRegex(ValueError, "config contract"):
+            self.v150.validate_config(registered)
+
     def test_v150_rejects_legacy_lumped_port_fields(self):
         changed = copy.deepcopy(self.config)
         changed["port_definition"] = {
@@ -185,8 +235,35 @@ class V150CadGenerationTests(unittest.TestCase):
         self.assertEqual(audit["coax_analytic_impedance_ohm"], 49.97)
         self.assertTrue(audit["ground_outer_conductor_united"])
         self.assertTrue(audit["analytic_circular_coax"])
+        self.assertTrue(audit["annular_coax_port"])
         self.assertFalse(audit["radial_vertical_lumped_port"])
         self.assertFalse(audit["global_0p18mm_mesh_used"])
+
+    def test_manifest_artifact_hash_rejects_build_script_mutation(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            builder = Path(temporary) / "build.vbs"
+            builder.write_text("frozen", encoding="ascii")
+            manifest = {
+                "builder_path": str(builder),
+                "builder_sha256": self.v150.sha256(builder),
+            }
+            self.assertEqual(
+                self.v150.verify_manifest_artifact(
+                    manifest,
+                    "builder_path",
+                    "builder_sha256",
+                    "Build script",
+                ),
+                builder,
+            )
+            builder.write_text("mutated", encoding="ascii")
+            with self.assertRaisesRegex(RuntimeError, "hash mismatch"):
+                self.v150.verify_manifest_artifact(
+                    manifest,
+                    "builder_path",
+                    "builder_sha256",
+                    "Build script",
+                )
 
 
 class V150EvidenceGateTests(unittest.TestCase):
@@ -233,6 +310,7 @@ class V150EvidenceGateTests(unittest.TestCase):
         return {
             "nominal_export_evidence_complete": True,
             "power_consistency_passed": True,
+            "s_matrix_integrity_passed": True,
             "convergence_evidence_complete": True,
             "profile": {
                 "converged": True,
@@ -310,6 +388,17 @@ class V150EvidenceGateTests(unittest.TestCase):
         self.assertFalse(result["numerical_gate_passed"])
         self.assertIn("no_small_segments", result["failed_numerical_checks"])
 
+    def test_nominal_gate_rejects_failed_s_matrix_integrity(self):
+        analysis = self._passing_analysis()
+        analysis["s_matrix_integrity_passed"] = False
+        result = self.v150.evaluate_nominal_gates(
+            analysis, self._passing_audit(), self.config
+        )
+        self.assertFalse(result["numerical_gate_passed"])
+        self.assertIn(
+            "s_matrix_integrity", result["failed_numerical_checks"]
+        )
+
     def test_nominal_gate_rejects_low_rl_or_efficiency(self):
         analysis = self._passing_analysis()
         analysis["rows"][0]["passive_rl_db"] = 14.9
@@ -347,6 +436,25 @@ class V150EvidenceGateTests(unittest.TestCase):
                 }
             )
         )
+
+    def test_nominal_summary_does_not_claim_full_periodic_evaluation(self):
+        scope = self.v150.stage_evaluation_scope({"rows": [{"x": 1}]})
+        self.assertTrue(scope["nominal_physical_gate_evaluated"])
+        self.assertFalse(scope["periodic_physical_gate_evaluated"])
+
+    def test_s_matrix_integrity_checks_reciprocity_and_passivity(self):
+        reciprocal = self.v150.np.eye(3, dtype=complex)[None, ...] * 0.1
+        result = self.v150.s_matrix_integrity_metrics(reciprocal)
+        self.assertTrue(result["passed"])
+
+        nonreciprocal = reciprocal.copy()
+        nonreciprocal[0, 0, 1] = 0.2
+        result = self.v150.s_matrix_integrity_metrics(nonreciprocal)
+        self.assertFalse(result["reciprocity_passed"])
+
+        active = self.v150.np.eye(3, dtype=complex)[None, ...] * 1.01
+        result = self.v150.s_matrix_integrity_metrics(active)
+        self.assertFalse(result["passivity_passed"])
 
     def test_wave_port_warning_terms_are_critical(self):
         hits = self.v150.critical_log_hits(

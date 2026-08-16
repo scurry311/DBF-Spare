@@ -1,5 +1,28 @@
 # Result Index
 
+## v1.50 Truncated-Coax Wave-Port Stop Gate
+
+Scheme A replaced the near-short lumped-port region with a clean external
+truncated-coax TEM wave port and finite ground transition while freezing the
+v1.49 radiator, SIW fence, and feed location. `run03` passed the native-CAD
+build gate. A TDD repair confined the 0.30 mm launch mesh to the feed probe and
+coax dielectric; the sealed `run04` continuation then completed with final
+Delta S 0.0177504, 113,872 maximum tetrahedra, and 3.666 GiB minimum free host
+memory. The resource sub-gate passed, but the complete numerical gate failed
+because 104 substrate/SIW-via small-segment records remain.
+
+The physical gate fails. Passive RL at 9.96/10.00/10.04 GHz is only
+0.937/1.110/1.328 dB and accepted-power efficiency is
+55.30%/52.46%/49.47%. The mesh report also contains 104 small-segment records
+on the frozen substrate/SIW-via geometry. Thus only the CAD/build and runtime
+resource gates pass; the complete numerical and physical gates fail. The
+frozen antenna input is strongly reactive and requires a genuine
+impedance-transforming feed/radiator change. DOE, finite arrays, EEP, labels,
+and critic training remain locked. See
+`docs/V150_TRUNCATED_COAX_WAVE_PORT_20260817.md` and the immutable
+`hfss_outputs/v150_truncated_coax_wave_port_20260817_run03/` and `run04/`
+evidence.
+
 ## v1.49 SIW Stacked-Patch Nominal Stop Gate
 
 The native AEDT 2023.1 periodic SIW cavity-backed stacked-patch cell now has a

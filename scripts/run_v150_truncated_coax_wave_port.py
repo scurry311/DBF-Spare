@@ -96,6 +96,17 @@ FROZEN_WAVE_PORT = {
     "renormalization_ohm": 50.0,
     "deembed": False,
 }
+FROZEN_CONFIG_CONTRACT_SHA256 = (
+    "fe56db5369fe2d16a9e3acd1d0516a9a8f630faec3bbcbf7922ed40e5a59c511"
+)
+MAXIMUM_RECIPROCITY_ERROR = 1.0e-4
+MAXIMUM_PASSIVITY_SIGMA = 1.001
+ALLOWED_RUN_METADATA_FIELDS = {
+    "allocated_output_root",
+    "preregistered_at",
+    "continuation_source_run",
+    "continuation_scope",
+}
 
 
 def resolve(path: str | Path) -> Path:
@@ -152,6 +163,38 @@ def sha256(path: Path) -> str:
         for chunk in iter(lambda: handle.read(1024 * 1024), b""):
             digest.update(chunk)
     return digest.hexdigest()
+
+
+def config_contract_sha256(config: dict[str, Any]) -> str:
+    contract = {
+        key: value
+        for key, value in config.items()
+        if key not in ALLOWED_RUN_METADATA_FIELDS
+    }
+    payload = json.dumps(
+        contract,
+        sort_keys=True,
+        separators=(",", ":"),
+        ensure_ascii=True,
+    ).encode("ascii")
+    return hashlib.sha256(payload).hexdigest()
+
+
+def verify_manifest_artifact(
+    manifest: dict[str, Any],
+    path_key: str,
+    hash_key: str,
+    label: str,
+) -> Path:
+    path = Path(manifest.get(path_key, ""))
+    expected = manifest.get(hash_key)
+    if (
+        not path.is_file()
+        or not _valid_sha256(expected)
+        or sha256(path) != expected
+    ):
+        raise RuntimeError(f"{label} hash mismatch")
+    return path
 
 
 def git(*args: str, check: bool = True) -> str:
@@ -245,6 +288,8 @@ def validate_config(config: dict[str, Any]) -> None:
     ):
         if config["scope"].get(forbidden):
             raise ValueError(f"Preregistered scope must lock {forbidden}")
+    if config_contract_sha256(config) != FROZEN_CONFIG_CONTRACT_SHA256:
+        raise ValueError("v1.50 preregistered config contract changed")
 
 
 def analytic_vacuum_coax_impedance_ohm(geometry: dict[str, Any]) -> float:
@@ -558,7 +603,7 @@ def geometry_audit(
         "coax_analytic_impedance_ohm": round(
             analytic_vacuum_coax_impedance_ohm(geometry), 2
         ),
-        "annular_coax_port": False,
+        "annular_coax_port": True,
         "radial_vertical_lumped_port": False,
         "transverse_external_wave_port": True,
         "ground_outer_conductor_united": True,
@@ -1490,6 +1535,12 @@ def run_periodic_build_smoke(
     manifest = json.loads(
         (folder / "case_manifest.json").read_text(encoding="utf-8")
     )
+    builder_path = verify_manifest_artifact(
+        manifest,
+        "builder_path",
+        "builder_sha256",
+        "Build script",
+    )
     audit_path = folder / "run_audit.json"
     if audit_path.exists():
         raise FileExistsError(f"Refusing to overwrite build audit: {audit_path}")
@@ -1520,7 +1571,7 @@ def run_periodic_build_smoke(
             [
                 str(resolve(config["ansys_executable"])),
                 "-RunScriptAndExit",
-                manifest["builder_path"],
+                str(builder_path),
             ],
             log_path,
             float(config["resources"]["abort_free_memory_during_solve_gib"]),
@@ -1662,6 +1713,12 @@ def audit_periodic_build_smoke(
     manifest = json.loads(
         (folder / "case_manifest.json").read_text(encoding="utf-8")
     )
+    builder_path = verify_manifest_artifact(
+        manifest,
+        "builder_path",
+        "builder_sha256",
+        "Build script",
+    )
     run_path = folder / "run_audit.json"
     run = (
         json.loads(run_path.read_text(encoding="utf-8"))
@@ -1675,7 +1732,7 @@ def audit_periodic_build_smoke(
         else ""
     )
     warning_hits = critical_log_hits(log_text)
-    source = Path(manifest["builder_path"]).read_text(encoding="ascii")
+    source = builder_path.read_text(encoding="ascii")
     named_feature_checks = {
         name: name in source
         for name in manifest["expected_named_features"]
@@ -2221,6 +2278,28 @@ def bind_exported_port_modes(
     }
 
 
+def s_matrix_integrity_metrics(matrices: np.ndarray) -> dict[str, Any]:
+    values = np.asarray(matrices, dtype=complex)
+    if values.ndim != 3 or values.shape[1] != values.shape[2]:
+        raise ValueError("S matrices must have shape (frequency, port, port)")
+    reciprocity_error = max(
+        float(np.max(np.abs(matrix - matrix.T))) for matrix in values
+    )
+    passivity_sigma = max(
+        float(np.linalg.svd(matrix, compute_uv=False)[0])
+        for matrix in values
+    )
+    reciprocity_passed = reciprocity_error <= MAXIMUM_RECIPROCITY_ERROR
+    passivity_passed = passivity_sigma <= MAXIMUM_PASSIVITY_SIGMA
+    return {
+        "maximum_reciprocity_error": reciprocity_error,
+        "maximum_passivity_sigma": passivity_sigma,
+        "reciprocity_passed": reciprocity_passed,
+        "passivity_passed": passivity_passed,
+        "passed": reciprocity_passed and passivity_passed,
+    }
+
+
 def convergence_profile_metrics(folder: Path) -> dict[str, Any]:
     values: list[float] = []
     maximum_tetrahedra = 0
@@ -2348,6 +2427,9 @@ def evaluate_nominal_gates(
         ),
         "power_consistency": (
             analysis.get("power_consistency_passed") is True
+        ),
+        "s_matrix_integrity": (
+            analysis.get("s_matrix_integrity_passed") is True
         ),
         "convergence": (
             analysis.get("convergence_evidence_complete") is True
@@ -2498,6 +2580,7 @@ def analyze_nominal_periodic_exports(
     feed = binding["feed_indices"][0]
     floquet_indices = binding["floquet_indices"]
     rows: list[dict[str, Any]] = []
+    selected_matrices: list[np.ndarray] = []
     tolerance_ghz = 5.0e-5
     for requested in map(float, config["frequencies_ghz"]):
         index = int(np.argmin(np.abs(frequencies - requested)))
@@ -2507,6 +2590,7 @@ def analyze_nominal_periodic_exports(
                 f"Touchstone lacks required frequency {requested:.5f} GHz"
             )
         matrix = matrices[index]
+        selected_matrices.append(matrix)
         gamma = complex(matrix[feed, feed])
         magnitude = abs(gamma)
         denominator = 1.0 - gamma
@@ -2562,6 +2646,9 @@ def analyze_nominal_periodic_exports(
         and float(row["accepted_power_efficiency"]) <= 1.001
         for row in rows
     )
+    s_matrix_integrity = s_matrix_integrity_metrics(
+        np.asarray(selected_matrices)
+    )
     convergence_complete = bool(
         profile["converged"]
         and isinstance(profile["final_delta_s"], (int, float))
@@ -2571,6 +2658,7 @@ def analyze_nominal_periodic_exports(
     )
     evidence_complete = bool(
         power_consistent
+        and s_matrix_integrity["passed"]
         and convergence_complete
         and not log_hits
         and profile["small_segment_count"] == 0
@@ -2580,6 +2668,8 @@ def analyze_nominal_periodic_exports(
         "evidence_source": "HFSS_periodic_nominal_broadside",
         "nominal_export_evidence_complete": evidence_complete,
         "power_consistency_passed": power_consistent,
+        "s_matrix_integrity_passed": s_matrix_integrity["passed"],
+        "s_matrix_integrity": s_matrix_integrity,
         "convergence_evidence_complete": convergence_complete,
         "authorizes_periodic_gate": False,
         "authorizes_doe_batch": False,
@@ -3471,6 +3561,15 @@ def nominal_analysis_passes_summary_gate(
     )
 
 
+def stage_evaluation_scope(
+    nominal_analysis: dict[str, Any] | None,
+) -> dict[str, bool]:
+    return {
+        "nominal_physical_gate_evaluated": bool(nominal_analysis),
+        "periodic_physical_gate_evaluated": False,
+    }
+
+
 def finalize_stage_summary(
     run_root: Path, config: dict[str, Any]
 ) -> dict[str, Any]:
@@ -3518,7 +3617,7 @@ def finalize_stage_summary(
         "build_gate_sha256": sha256(build_gate_path),
         "build_evidence_source": build_gate.get("evidence_source"),
         "physical_hfss_metrics_available": bool(nominal_rows),
-        "periodic_physical_gate_evaluated": bool(nominal_analysis),
+        **stage_evaluation_scope(nominal_analysis),
         "nominal_diagnostic_passed": nominal_diagnostic_passed,
         "nominal_analysis_path": (
             str(nominal_analysis_path.resolve()) if nominal_analysis else None
