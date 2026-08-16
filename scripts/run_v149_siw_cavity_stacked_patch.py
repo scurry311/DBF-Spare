@@ -601,7 +601,7 @@ def _element_geometry_text(
         'oEditor.Intersect Array("NAME:Selections", "Selections:=", "CoaxDielectric,CoaxDielectricTrim"), Array("NAME:IntersectParameters", "KeepOriginals:=", False)',
         f'CreateCylinderZ oEditor, "CoaxProbeCut", {feed_x:.7f}, {feed_y:.7f}, {-coax_drop-0.01:.7f}, {probe:.7f}, {coax_drop+0.02:.7f}, "vacuum", True',
         'SubtractObject oEditor, "CoaxDielectric", "CoaxProbeCut"',
-        f'CreateModelSheetY oEditor, "PortSheet", {feed_x+probe:.7f}, {feed_y:.7f}, {port_z:.7f}, {coax_inner-probe:.7f}, {port_height:.7f}',
+        f'CreateModelSheetY oEditor, "PortSheet", {feed_x+probe:.7f}, {feed_y:.7f}, {port_z:.7f}, {port_height:.7f}, {coax_inner-probe:.7f}',
         f'AssignPort oBoundary, "FeedPort", "PortSheet", {feed_x+probe:.7f}, {feed_y:.7f}, {port_line_z:.7f}, {feed_x+coax_inner:.7f}, {feed_y:.7f}, {port_line_z:.7f}',
     ]
     via_names = []

@@ -308,7 +308,7 @@ class V149CadGenerationTests(unittest.TestCase):
         )
         self.assertIn(
             'CreateModelSheetY oEditor, "PortSheet", 0.2500000, -2.4500000, '
-            '-0.9500000, 0.4500000, 0.1000000',
+            '-0.9500000, 0.1000000, 0.4500000',
             source,
         )
         self.assertNotIn('CreateCircleZ oEditor, "PortSheet"', source)
