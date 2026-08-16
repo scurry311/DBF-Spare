@@ -3272,6 +3272,36 @@ def aggregate_periodic_scan(
     }
 
 
+def resolve_build_gate_path(run_root: Path) -> Path:
+    run_root = run_root.resolve()
+    local_gate = run_root / "periodic" / "build_smoke" / "build_gate.json"
+    if local_gate.is_file():
+        return local_gate.resolve()
+
+    continuation_path = run_root / "continuation_audit.json"
+    authorization_path = run_root / "solve_authorization.json"
+    if not continuation_path.is_file() or not authorization_path.is_file():
+        raise FileNotFoundError(local_gate)
+    continuation = json.loads(continuation_path.read_text(encoding="utf-8"))
+    authorization = json.loads(
+        authorization_path.read_text(encoding="utf-8")
+    )
+    source_run = Path(continuation.get("source_run", "")).resolve()
+    source_evidence = authorization.get("source_evidence", {})
+    authorized_source = Path(source_evidence.get("source_run", "")).resolve()
+    if source_run != authorized_source:
+        raise RuntimeError("Continuation source run does not match authorization")
+    source_gate = (
+        source_run / "periodic" / "build_smoke" / "build_gate.json"
+    ).resolve()
+    if not source_gate.is_file():
+        raise FileNotFoundError(source_gate)
+    expected_hash = source_evidence.get("source_build_gate_sha256")
+    if not _valid_sha256(expected_hash) or sha256(source_gate) != expected_hash:
+        raise RuntimeError("Continuation source build gate hash mismatch")
+    return source_gate
+
+
 def finalize_stage_summary(
     run_root: Path, config: dict[str, Any]
 ) -> dict[str, Any]:
@@ -3284,11 +3314,30 @@ def finalize_stage_summary(
             raise FileExistsError(
                 f"Refusing to overwrite finalized evidence: {immutable}"
             )
-    build_gate_path = (
-        run_root / "periodic" / "build_smoke" / "build_gate.json"
-    )
+    build_gate_path = resolve_build_gate_path(run_root)
     build_gate = json.loads(build_gate_path.read_text(encoding="utf-8"))
     solve_folder = run_root / "periodic" / "nominal_solve"
+    nominal_analysis_path = solve_folder / "nominal_analysis.json"
+    nominal_analysis = (
+        json.loads(nominal_analysis_path.read_text(encoding="utf-8"))
+        if nominal_analysis_path.is_file()
+        else None
+    )
+    nominal_rows = nominal_analysis.get("rows", []) if nominal_analysis else []
+    nominal_diagnostic_passed = bool(
+        nominal_analysis
+        and nominal_analysis.get("nominal_export_evidence_complete") is True
+        and len(nominal_rows) == len(config["frequencies_ghz"])
+        and all(
+            float(row["active_rl_db"])
+            >= float(config["gates"]["minimum_periodic_active_rl_db"])
+            and float(row["passive_rl_db"])
+            >= float(config["gates"]["minimum_broadside_passive_rl_db"])
+            and float(row["accepted_power_efficiency"])
+            >= float(config["gates"]["minimum_periodic_efficiency"])
+            for row in nominal_rows
+        )
+    )
     blocked_files = sorted(solve_folder.glob("preflight_block_*.json"))
     latest_block = (
         json.loads(blocked_files[-1].read_text(encoding="utf-8"))
@@ -3299,13 +3348,24 @@ def finalize_stage_summary(
     summary = {
         "protocol": config["protocol"],
         "run_root": str(run_root.resolve()),
-        "stage": "periodic_build_complete_nominal_solve_pending",
+        "stage": (
+            "periodic_nominal_solve_analyzed"
+            if nominal_analysis
+            else "periodic_build_complete_nominal_solve_pending"
+        ),
         "periodic_build_smoke_passed": bool(
             build_gate.get("build_smoke_passed")
         ),
+        "build_gate_path": str(build_gate_path),
+        "build_gate_sha256": sha256(build_gate_path),
         "build_evidence_source": build_gate.get("evidence_source"),
-        "physical_hfss_metrics_available": False,
+        "physical_hfss_metrics_available": bool(nominal_rows),
         "periodic_physical_gate_evaluated": False,
+        "nominal_diagnostic_passed": nominal_diagnostic_passed,
+        "nominal_analysis_path": (
+            str(nominal_analysis_path.resolve()) if nominal_analysis else None
+        ),
+        "nominal_analysis": nominal_analysis,
         "periodic_doe_sample_count": len(generate_periodic_doe(config)),
         "periodic_doe_hfss_batch_authorized": False,
         "nominal_solve_prepared": (
@@ -3327,21 +3387,37 @@ def finalize_stage_summary(
             "critic_retraining": True,
         },
         "decision": (
-            "CONTINUE_LATER_WITH_ONE_NOMINAL_PERIODIC_SOLVE"
-            if build_gate.get("build_smoke_passed")
-            else "STOP_AND_REPAIR_PERIODIC_CAD"
+            "STOP_AFTER_NOMINAL_DIAGNOSTIC_FAILURE"
+            if nominal_analysis and not nominal_diagnostic_passed
+            else (
+                "REVIEW_NOMINAL_BEFORE_PERIODIC_DOE"
+                if nominal_diagnostic_passed
+                else (
+                    "CONTINUE_LATER_WITH_ONE_NOMINAL_PERIODIC_SOLVE"
+                    if build_gate.get("build_smoke_passed")
+                    else "STOP_AND_REPAIR_PERIODIC_CAD"
+                )
+            )
         ),
         "next_permitted_action": (
-            (
+            "Repair the periodic feed/input geometry in a new immutable run; "
+            "do not start DOE or downstream array stages."
+            if nominal_analysis and not nominal_diagnostic_passed
+            else (
+                "Review the nominal diagnostic evidence before explicitly "
+                "authorizing any periodic DOE batch."
+                if nominal_diagnostic_passed
+                else (
                 "When available RAM is at least 13 GiB and no AEDT process "
                 "exists, run only the frozen broadside nominal periodic "
                 "9.8-10.2 GHz solve. Do not start DOE, 1x1, 2x2, 4x4, "
                 "16x16, labels, or critic."
-            )
-            if build_gate.get("build_smoke_passed")
-            else (
-                "Repair and repeat the periodic native-CAD build smoke in a "
-                "new immutable run. No physical solve is authorized."
+                if build_gate.get("build_smoke_passed")
+                else (
+                    "Repair and repeat the periodic native-CAD build smoke "
+                    "in a new immutable run. No physical solve is authorized."
+                )
+                )
             )
         ),
     }
@@ -3352,7 +3428,12 @@ def finalize_stage_summary(
         "## Measured Evidence",
         "",
         f"- Periodic native CAD build gate: {'PASS' if summary['periodic_build_smoke_passed'] else 'FAIL'}.",
-        "- Evidence scope: HFSS build/import only; no mesh solution or antenna metric is claimed.",
+        (
+            "- Evidence scope: completed HFSS nominal broadside diagnostic; "
+            "the 45-state periodic physical gate is not evaluated."
+            if nominal_analysis
+            else "- Evidence scope: HFSS build/import only; no mesh solution or antenna metric is claimed."
+        ),
         f"- DOE manifest: {summary['periodic_doe_sample_count']} frozen geometry candidates; HFSS batch remains unauthorized.",
         f"- Current free memory: {float(current_status['free_memory_gib']):.2f} GiB.",
         f"- Nominal solve preflight: {'PASS' if current_status['solve_preflight_pass'] else 'BLOCKED'} (requires 13 GiB and zero AEDT instances).",
@@ -3360,12 +3441,17 @@ def finalize_stage_summary(
         "## Gate Decision",
         "",
         "- Periodic physical gate has not been evaluated.",
+        f"- Nominal diagnostic gate: {'PASS' if nominal_diagnostic_passed else 'FAIL' if nominal_analysis else 'NOT RUN'}.",
         "- Finite 1x1, 2x2, 4x4, 16x16, EEP export, training labels, and critic retraining remain locked.",
-        "- The current block is a host-memory preflight block, not an antenna-performance failure.",
+        (
+            "- The completed run is blocked by a nominal antenna/input diagnostic failure."
+            if nominal_analysis and not nominal_diagnostic_passed
+            else "- No nominal antenna-performance failure has been established."
+        ),
         "",
         "## Next Permitted Action",
         "",
-        "Run one frozen broadside nominal periodic sweep at 9.8-10.2 GHz only after at least 13 GiB RAM is available. Analyze 9.96/10.00/10.04 GHz before authorizing any DOE batch.",
+        summary["next_permitted_action"],
     ]
     (run_root / "stage_summary.md").write_text(
         "\n".join(lines) + "\n", encoding="ascii"

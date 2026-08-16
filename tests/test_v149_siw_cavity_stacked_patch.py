@@ -744,6 +744,130 @@ class V149CadGenerationTests(unittest.TestCase):
                 },
             )
 
+    def test_continuation_resolves_hash_bound_source_build_gate(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source = self._make_finalized_build_run(root)
+            provenance = {
+                "path": str(self.v149.Path(self.v149.__file__).resolve()),
+                "sha256": self.v149.sha256(
+                    self.v149.Path(self.v149.__file__).resolve()
+                ),
+                "head_sha256": self.v149.sha256(
+                    self.v149.Path(self.v149.__file__).resolve()
+                ),
+                "tracked_at_head": True,
+            }
+            with mock.patch.object(
+                self.v149,
+                "control_script_provenance",
+                return_value=provenance,
+            ):
+                result = self.v149.create_nominal_continuation(source)
+            resolved = self.v149.resolve_build_gate_path(
+                Path(result["output_root"])
+            )
+            self.assertEqual(
+                resolved,
+                (source / "periodic" / "build_smoke" / "build_gate.json").resolve(),
+            )
+
+    def test_continuation_rejects_changed_source_build_gate_at_finalize(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source = self._make_finalized_build_run(root)
+            provenance = {
+                "path": str(self.v149.Path(self.v149.__file__).resolve()),
+                "sha256": self.v149.sha256(
+                    self.v149.Path(self.v149.__file__).resolve()
+                ),
+                "head_sha256": self.v149.sha256(
+                    self.v149.Path(self.v149.__file__).resolve()
+                ),
+                "tracked_at_head": True,
+            }
+            with mock.patch.object(
+                self.v149,
+                "control_script_provenance",
+                return_value=provenance,
+            ):
+                result = self.v149.create_nominal_continuation(source)
+            gate = source / "periodic" / "build_smoke" / "build_gate.json"
+            gate.write_text("{}", encoding="ascii")
+            with self.assertRaisesRegex(RuntimeError, "build gate hash"):
+                self.v149.resolve_build_gate_path(Path(result["output_root"]))
+
+    def test_finalized_continuation_reports_completed_nominal_failure(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source = self._make_finalized_build_run(root)
+            provenance = {
+                "path": str(self.v149.Path(self.v149.__file__).resolve()),
+                "sha256": self.v149.sha256(
+                    self.v149.Path(self.v149.__file__).resolve()
+                ),
+                "head_sha256": self.v149.sha256(
+                    self.v149.Path(self.v149.__file__).resolve()
+                ),
+                "tracked_at_head": True,
+            }
+            with mock.patch.object(
+                self.v149,
+                "control_script_provenance",
+                return_value=provenance,
+            ):
+                continuation = self.v149.create_nominal_continuation(source)
+            destination = Path(continuation["output_root"])
+            solve = destination / "periodic" / "nominal_solve"
+            (solve / "run_audit.json").write_text("{}", encoding="ascii")
+            self.v149.write_json(
+                solve / "nominal_analysis.json",
+                {
+                    "nominal_export_evidence_complete": False,
+                    "power_consistency_passed": True,
+                    "convergence_evidence_complete": True,
+                    "profile": {
+                        "final_delta_s": 0.0065,
+                        "maximum_tetrahedra": 83938,
+                        "small_segment_count": 54,
+                    },
+                    "critical_warning_hits": [],
+                    "rows": [
+                        {
+                            "frequency_ghz": 10.0,
+                            "active_rl_db": 0.0063,
+                            "passive_rl_db": 0.0063,
+                            "accepted_power_efficiency": 0.06,
+                        }
+                    ],
+                },
+            )
+            frozen_status = {
+                "free_memory_gib": 12.0,
+                "aedt_process_count": 0,
+                "aedt_processes": [],
+                "solve_preflight_pass": False,
+                "locked_stages": [],
+            }
+            with mock.patch.object(
+                self.v149, "status", return_value=frozen_status
+            ):
+                summary = self.v149.finalize_stage_summary(
+                    destination, self.v149.load_run_config(destination)
+                )
+            self.assertEqual(summary["stage"], "periodic_nominal_solve_analyzed")
+            self.assertTrue(summary["physical_hfss_metrics_available"])
+            self.assertFalse(summary["nominal_diagnostic_passed"])
+            self.assertEqual(
+                summary["decision"], "STOP_AFTER_NOMINAL_DIAGNOSTIC_FAILURE"
+            )
+            self.assertTrue(all(summary["locked_stages"].values()))
+            summary_markdown = (destination / "stage_summary.md").read_text(
+                encoding="ascii"
+            )
+            self.assertIn("nominal antenna/input diagnostic failure", summary_markdown)
+            self.assertNotIn("host-memory preflight block", summary_markdown)
+
     def test_continuation_rejects_tampered_finalized_source(self):
         with tempfile.TemporaryDirectory() as temporary:
             source = self._make_finalized_build_run(Path(temporary))
