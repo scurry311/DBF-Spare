@@ -1,6 +1,7 @@
 import copy
 import importlib.util
 import json
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -115,6 +116,73 @@ class V150ConfigurationTests(unittest.TestCase):
             "allow_critic_training",
         ):
             self.assertFalse(self.config["scope"][name], name)
+
+
+class V150CadGenerationTests(unittest.TestCase):
+    def setUp(self):
+        self.v150 = load_module()
+        self.config = self.v150.load_config(CONFIG)
+        self.geometry = copy.deepcopy(self.config["nominal_geometry"])
+
+    def _builder_text(self, root: Path) -> str:
+        return self.v150.periodic_builder_text(
+            root / "v150_periodic_build_smoke.aedt",
+            self.config,
+            self.geometry,
+            {"frequency_ghz": 10.0, "theta_deg": 0.0, "phi_deg": 0.0},
+        )
+
+    def test_builder_uses_exact_coax_and_continuous_ground_union(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            source = self._builder_text(Path(temporary))
+        self.assertIn('CreateBox oEditor, "GroundOuterConductor"', source)
+        self.assertIn('CreateCylinderZExact oEditor, "FeedProbe"', source)
+        self.assertIn('CreateCylinderZExact oEditor, "CoaxOuter"', source)
+        self.assertIn('CreateCylinderZExact oEditor, "CoaxDielectric"', source)
+        self.assertIn('"NumSides:=", "0"', source)
+        self.assertIn(
+            'UniteSelection oEditor, "GroundOuterConductor,CoaxOuter"',
+            source,
+        )
+        self.assertIn('SubtractObject oEditor, "GroundOuterConductor"', source)
+
+    def test_builder_assigns_one_transverse_external_wave_port(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            source = self._builder_text(Path(temporary))
+        self.assertIn("coaxPortFace = oEditor.GetFaceByPosition", source)
+        self.assertIn('"ZPosition:=", Mm(-1)', source)
+        self.assertIn(
+            'AssignCoaxWavePort oBoundary, "FeedPort", CLng(coaxPortFace)',
+            source,
+        )
+        self.assertIn('"NumModes:=", 1', source)
+        self.assertIn('"DoDeembed:=", False', source)
+        self.assertIn('"DoRenorm:=", True', source)
+        self.assertIn('"RenormValue:=", "50ohm"', source)
+        self.assertNotIn("AssignLumpedPort", source)
+        self.assertNotIn("PortSheet", source)
+
+    def test_builder_uses_memory_safe_object_mesh_without_port_sheet(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            source = self._builder_text(Path(temporary))
+        self.assertIn('"NAME:Mesh_CoaxLaunch"', source)
+        self.assertIn(
+            '"Objects:=", Array("FeedProbe", "GroundOuterConductor", "CoaxDielectric")',
+            source,
+        )
+        self.assertIn('"MaxLength:=", "0.3000000mm"', source)
+        self.assertNotIn("Mesh_PortSheet", source)
+        self.assertNotIn('"RefineInside:=", True', source)
+
+    def test_geometry_audit_identifies_wave_port_and_frozen_radiator(self):
+        audit = self.v150.geometry_audit(self.config, self.geometry)
+        self.assertEqual(audit["feed_port_type"], "coaxial_modal_wave_port")
+        self.assertEqual(audit["wave_port_reference_plane_z_mm"], -1.0)
+        self.assertEqual(audit["coax_analytic_impedance_ohm"], 49.97)
+        self.assertTrue(audit["ground_outer_conductor_united"])
+        self.assertTrue(audit["analytic_circular_coax"])
+        self.assertFalse(audit["radial_vertical_lumped_port"])
+        self.assertFalse(audit["global_0p18mm_mesh_used"])
 
 
 if __name__ == "__main__":

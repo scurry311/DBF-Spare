@@ -439,14 +439,13 @@ def validate_geometry(
     via_inset = float(geometry["siw_via_inset_mm"])
     top_clearance = float(geometry["siw_top_aperture_clearance_mm"])
     probe = float(geometry["probe_radius_mm"])
-    coax_inner = float(geometry["coax_inner_radius_mm"])
-    coax_outer = float(geometry["coax_outer_radius_mm"])
-    port_overlap = float(config["port_definition"]["contact_overlap_mm"])
-    port_plane_offset = float(
-        config["port_definition"]["reference_plane_offset_mm"]
+    coax_dielectric_outer = float(
+        geometry["coax_dielectric_outer_radius_mm"]
     )
-    port_axial_height = float(config["port_definition"]["axial_height_mm"])
+    coax_outer = float(geometry["coax_outer_radius_mm"])
     coax_drop = float(geometry["coax_drop_mm"])
+    ground_thickness = float(geometry["ground_thickness_mm"])
+    port_plane_z = float(config["wave_port"]["reference_plane_z_mm"])
     feed_x = float(geometry["feed_offset_x_mm"])
     feed_y = float(geometry["feed_offset_y_mm"])
     if px != 15.0 or py != 15.0:
@@ -486,17 +485,12 @@ def validate_geometry(
         or patch_specs[0][1] / 2.0 + top_clearance + clearance >= fence_y
     ):
         raise ValueError("SIW top aperture does not clear the via fence")
-    if not (0.0 < probe < coax_inner < coax_outer):
+    if not (0.0 < probe < coax_dielectric_outer < coax_outer):
         raise ValueError("Probe/coax radii are not physically nested")
-    if port_overlap != 0.0:
-        raise ValueError("Annular coax port must not overlap either conductor")
-    if not (
-        0.0 < port_plane_offset
-        and port_plane_offset + port_axial_height < coax_drop
-    ):
-        raise ValueError("Port reference plane must lie inside the coax launch")
-    if port_axial_height <= 0.0:
-        raise ValueError("Lumped-port axial height must be positive")
+    if port_plane_z != -coax_drop:
+        raise ValueError("Wave-port reference plane must terminate the coax")
+    if ground_thickness != copper:
+        raise ValueError("Ground solid must use the frozen copper thickness")
     if abs(feed_x) + coax_outer >= fence_x:
         raise ValueError("Coax launch does not clear the x SIW fence")
     if abs(feed_y) + coax_outer >= fence_y:
@@ -553,17 +547,22 @@ def geometry_audit(
         + float(geometry["stack_spacer_thickness_mm"])
         + float(geometry["copper_thickness_mm"])
     )
-    port_overlap = float(config["port_definition"]["contact_overlap_mm"])
-    port_plane_offset = float(
-        config["port_definition"]["reference_plane_offset_mm"]
-    )
     return {
         "feed_port_count": 1,
-        "port_contact_overlap_mm": port_overlap,
-        "port_reference_plane_offset_mm": port_plane_offset,
-        "port_two_conductor_contact_intended": True,
+        "feed_port_type": config["wave_port"]["type"],
+        "wave_port_reference_plane_z_mm": float(
+            config["wave_port"]["reference_plane_z_mm"]
+        ),
+        "wave_port_deembed": bool(config["wave_port"]["deembed"]),
+        "wave_port_mode_count": int(config["wave_port"]["mode_count"]),
+        "coax_analytic_impedance_ohm": round(
+            analytic_vacuum_coax_impedance_ohm(geometry), 2
+        ),
         "annular_coax_port": False,
-        "radial_vertical_lumped_port": True,
+        "radial_vertical_lumped_port": False,
+        "transverse_external_wave_port": True,
+        "ground_outer_conductor_united": True,
+        "analytic_circular_coax": True,
         "driven_patch_count": 1,
         "stacked_patch_count": 1,
         "siw_via_count": len(siw_via_centers(geometry)),
@@ -593,14 +592,14 @@ End Sub
 Sub CreateCylinderZ(editor, objName, x, y, z, radius, height, material, solveInside)
     editor.CreateCylinder Array("NAME:CylinderParameters", "XCenter:=", Mm(x), "YCenter:=", Mm(y), "ZCenter:=", Mm(z), "Radius:=", Mm(radius), "Height:=", Mm(height), "WhichAxis:=", "Z", "NumSides:=", "24"), Array("NAME:Attributes", "Name:=", objName, "Flags:=", "", "Color:=", "(220 140 35)", "Transparency:=", 0, "PartCoordinateSystem:=", "Global", "MaterialValue:=", """" & material & """", "SolveInside:=", solveInside)
 End Sub
+Sub CreateCylinderZExact(editor, objName, x, y, z, radius, height, material, solveInside)
+    editor.CreateCylinder Array("NAME:CylinderParameters", "XCenter:=", Mm(x), "YCenter:=", Mm(y), "ZCenter:=", Mm(z), "Radius:=", Mm(radius), "Height:=", Mm(height), "WhichAxis:=", "Z", "NumSides:=", "0"), Array("NAME:Attributes", "Name:=", objName, "Flags:=", "", "Color:=", "(220 140 35)", "Transparency:=", 0, "PartCoordinateSystem:=", "Global", "MaterialValue:=", """" & material & """", "SolveInside:=", solveInside)
+End Sub
 Sub CreateSheetZ(editor, objName, x, y, z, width, height)
     editor.CreateRectangle Array("NAME:RectangleParameters", "IsCovered:=", True, "XStart:=", Mm(x), "YStart:=", Mm(y), "ZStart:=", Mm(z), "Width:=", Mm(width), "Height:=", Mm(height), "WhichAxis:=", "Z"), Array("NAME:Attributes", "Name:=", objName, "Flags:=", "", "Color:=", "(235 150 35)", "Transparency:=", 0, "PartCoordinateSystem:=", "Global", "MaterialValue:=", """vacuum""", "SolveInside:=", True)
 End Sub
 Sub CreateSheetX(editor, objName, x, y, z, width, height)
     editor.CreateRectangle Array("NAME:RectangleParameters", "IsCovered:=", True, "XStart:=", Mm(x), "YStart:=", Mm(y), "ZStart:=", Mm(z), "Width:=", Mm(width), "Height:=", Mm(height), "WhichAxis:=", "X"), Array("NAME:Attributes", "Name:=", objName, "Flags:=", "NonModel#", "Color:=", "(80 120 255)", "Transparency:=", 0.8, "PartCoordinateSystem:=", "Global", "MaterialValue:=", """vacuum""", "SolveInside:=", True)
-End Sub
-Sub CreateModelSheetY(editor, objName, x, y, z, width, height)
-    editor.CreateRectangle Array("NAME:RectangleParameters", "IsCovered:=", True, "XStart:=", Mm(x), "YStart:=", Mm(y), "ZStart:=", Mm(z), "Width:=", Mm(width), "Height:=", Mm(height), "WhichAxis:=", "Y"), Array("NAME:Attributes", "Name:=", objName, "Flags:=", "", "Color:=", "(235 150 35)", "Transparency:=", 0, "PartCoordinateSystem:=", "Global", "MaterialValue:=", """vacuum""", "SolveInside:=", True)
 End Sub
 Sub SubtractObject(editor, blanks, toolName)
     editor.Subtract Array("NAME:Selections", "Blank Parts:=", blanks, "Tool Parts:=", toolName), Array("NAME:SubtractParameters", "KeepOriginals:=", False)
@@ -608,8 +607,8 @@ End Sub
 Sub UniteSelection(editor, names)
     editor.Unite Array("NAME:Selections", "Selections:=", names), Array("NAME:UniteParameters", "KeepOriginals:=", False)
 End Sub
-Sub AssignPort(boundary, portName, sheetName, x1, y1, z1, x2, y2, z2)
-    boundary.AssignLumpedPort Array("NAME:" & portName, "Objects:=", Array(sheetName), "DoDeembed:=", False, "RenormalizeAllTerminals:=", True, Array("NAME:Modes", Array("NAME:Mode1", "ModeNum:=", 1, "UseIntLine:=", True, Array("NAME:IntLine", "Coordinate System:=", "Global", "Start:=", Array(Mm(x1), Mm(y1), Mm(z1)), "End:=", Array(Mm(x2), Mm(y2), Mm(z2))), "AlignmentGroup:=", 0, "CharImp:=", "Zpi", "RenormImp:=", "50ohm")), "ShowReporterFilter:=", False, "ReporterFilter:=", Array(True), "Impedance:=", "50ohm")
+Sub AssignCoaxWavePort(boundary, portName, faceId, x1, y1, z1, x2, y2, z2)
+    boundary.AssignWavePort Array("NAME:" & portName, "NumModes:=", 1, "PolarizeEField:=", False, "DoDeembed:=", False, "DeembedDist:=", "0mm", "DoRenorm:=", True, "RenormValue:=", "50ohm", Array("NAME:Modes", Array("NAME:Mode1", "ModeNum:=", 1, "UseIntLine:=", True, Array("NAME:IntLine", "Coordinate System:=", "Global", "Start:=", Array(Mm(x1), Mm(y1), Mm(z1)), "End:=", Array(Mm(x2), Mm(y2), Mm(z2))), "CharImp:=", "Zpi")), "Faces:=", Array(faceId))
 End Sub
 '''
 
@@ -632,39 +631,37 @@ def _element_geometry_text(
     feed_x = float(geometry["feed_offset_x_mm"])
     feed_y = float(geometry["feed_offset_y_mm"])
     probe = float(geometry["probe_radius_mm"])
-    coax_inner = float(geometry["coax_inner_radius_mm"])
+    coax_dielectric_outer = float(
+        geometry["coax_dielectric_outer_radius_mm"]
+    )
     coax_outer = float(geometry["coax_outer_radius_mm"])
     coax_drop = float(geometry["coax_drop_mm"])
-    port_z = -coax_drop + float(
-        config["port_definition"]["reference_plane_offset_mm"]
-    )
-    port_height = float(config["port_definition"]["axial_height_mm"])
-    port_line_z = port_z + port_height / 2.0
+    ground_thickness = float(geometry["ground_thickness_mm"])
+    port_z = float(config["wave_port"]["reference_plane_z_mm"])
     via_radius = float(geometry["siw_via_diameter_mm"]) / 2.0
     lines = [
         f'CreateBox oEditor, "MainSubstrate", {-px/2:.7f}, {-py/2:.7f}, 0, {px:.7f}, {py:.7f}, {h_main:.7f}, "RO5880_V149", True',
         f'CreateBox oEditor, "StackSpacer", {-px/2:.7f}, {-py/2:.7f}, {h_main:.7f}, {px:.7f}, {py:.7f}, {h_stack:.7f}, "RO5880_V149", True',
-        f'CreateSheetZ oEditor, "Ground", {-px/2:.7f}, {-py/2:.7f}, 0, {px:.7f}, {py:.7f}',
-        f'CreateCylinderZ oEditor, "GroundFeedCut", {feed_x:.7f}, {feed_y:.7f}, {-copper:.7f}, {coax_inner:.7f}, {2*copper:.7f}, "vacuum", True',
-        'SubtractObject oEditor, "Ground", "GroundFeedCut"',
-        f'CreateCylinderZ oEditor, "ProbeCut", {feed_x:.7f}, {feed_y:.7f}, -0.01, {probe+0.01:.7f}, {h_main+0.02:.7f}, "vacuum", True',
+        f'CreateBox oEditor, "GroundOuterConductor", {-px/2:.7f}, {-py/2:.7f}, {-ground_thickness:.7f}, {px:.7f}, {py:.7f}, {ground_thickness:.7f}, "copper", False',
+        f'CreateCylinderZExact oEditor, "GroundFeedCut", {feed_x:.7f}, {feed_y:.7f}, {-ground_thickness-0.01:.7f}, {coax_dielectric_outer:.7f}, {ground_thickness+0.02:.7f}, "vacuum", True',
+        'SubtractObject oEditor, "GroundOuterConductor", "GroundFeedCut"',
+        f'CreateCylinderZExact oEditor, "ProbeCut", {feed_x:.7f}, {feed_y:.7f}, -0.01, {probe+0.01:.7f}, {h_main+0.02:.7f}, "vacuum", True',
         'SubtractObject oEditor, "MainSubstrate", "ProbeCut"',
         f'CreateSheetZ oEditor, "SIWCavityTop", {-px/2:.7f}, {-py/2:.7f}, {h_main:.7f}, {px:.7f}, {py:.7f}',
         f'CreateSheetZ oEditor, "CavityPatchAperture", {-driven_w/2-top_clearance:.7f}, {-driven_l/2-top_clearance:.7f}, {h_main:.7f}, {driven_w+2*top_clearance:.7f}, {driven_l+2*top_clearance:.7f}',
         'SubtractObject oEditor, "SIWCavityTop", "CavityPatchAperture"',
         f'CreateSheetZ oEditor, "DrivenPatch", {-driven_w/2:.7f}, {-driven_l/2:.7f}, {h_main:.7f}, {driven_w:.7f}, {driven_l:.7f}',
         f'CreateSheetZ oEditor, "StackedPatch", {-stacked_w/2:.7f}, {-stacked_l/2:.7f}, {h_total:.7f}, {stacked_w:.7f}, {stacked_l:.7f}',
-        f'CreateCylinderZ oEditor, "FeedProbe", {feed_x:.7f}, {feed_y:.7f}, {-coax_drop:.7f}, {probe:.7f}, {coax_drop+h_main:.7f}, "copper", False',
-        f'CreateCylinderZ oEditor, "CoaxOuter", {feed_x:.7f}, {feed_y:.7f}, {-coax_drop:.7f}, {coax_outer:.7f}, {coax_drop:.7f}, "copper", False',
-        f'CreateCylinderZ oEditor, "CoaxOuterCut", {feed_x:.7f}, {feed_y:.7f}, {-coax_drop-0.01:.7f}, {coax_inner:.7f}, {coax_drop+0.02:.7f}, "vacuum", True',
+        f'CreateCylinderZExact oEditor, "FeedProbe", {feed_x:.7f}, {feed_y:.7f}, {-coax_drop:.7f}, {probe:.7f}, {coax_drop+h_main:.7f}, "copper", False',
+        f'CreateCylinderZExact oEditor, "CoaxOuter", {feed_x:.7f}, {feed_y:.7f}, {-coax_drop:.7f}, {coax_outer:.7f}, {coax_drop:.7f}, "copper", False',
+        f'CreateCylinderZExact oEditor, "CoaxOuterCut", {feed_x:.7f}, {feed_y:.7f}, {-coax_drop-0.01:.7f}, {coax_dielectric_outer:.7f}, {coax_drop+0.02:.7f}, "vacuum", True',
         'SubtractObject oEditor, "CoaxOuter", "CoaxOuterCut"',
-        f'CreateBox oEditor, "CoaxDielectric", {feed_x-coax_inner:.7f}, {feed_y-coax_inner:.7f}, {-coax_drop:.7f}, {2*coax_inner:.7f}, {2*coax_inner:.7f}, {coax_drop:.7f}, "vacuum", True',
-        f'CreateCylinderZ oEditor, "CoaxDielectricTrim", {feed_x:.7f}, {feed_y:.7f}, {-coax_drop-0.01:.7f}, {coax_inner:.7f}, {coax_drop+0.02:.7f}, "vacuum", True',
-        'oEditor.Intersect Array("NAME:Selections", "Selections:=", "CoaxDielectric,CoaxDielectricTrim"), Array("NAME:IntersectParameters", "KeepOriginals:=", False)',
-        f'CreateCylinderZ oEditor, "CoaxProbeCut", {feed_x:.7f}, {feed_y:.7f}, {-coax_drop-0.01:.7f}, {probe:.7f}, {coax_drop+0.02:.7f}, "vacuum", True',
+        f'CreateCylinderZExact oEditor, "CoaxDielectric", {feed_x:.7f}, {feed_y:.7f}, {-coax_drop:.7f}, {coax_dielectric_outer:.7f}, {coax_drop:.7f}, "vacuum", True',
+        f'CreateCylinderZExact oEditor, "CoaxProbeCut", {feed_x:.7f}, {feed_y:.7f}, {-coax_drop-0.01:.7f}, {probe:.7f}, {coax_drop+0.02:.7f}, "vacuum", True',
         'SubtractObject oEditor, "CoaxDielectric", "CoaxProbeCut"',
-        f'CreateModelSheetY oEditor, "PortSheet", {feed_x+probe:.7f}, {feed_y:.7f}, {port_z:.7f}, {port_height:.7f}, {coax_inner-probe:.7f}',
-        f'AssignPort oBoundary, "FeedPort", "PortSheet", {feed_x+probe:.7f}, {feed_y:.7f}, {port_line_z:.7f}, {feed_x+coax_inner:.7f}, {feed_y:.7f}, {port_line_z:.7f}',
+        'UniteSelection oEditor, "GroundOuterConductor,CoaxOuter"',
+        f'coaxPortFace = oEditor.GetFaceByPosition(Array("NAME:FaceParameters", "BodyName:=", "CoaxDielectric", "XPosition:=", Mm({feed_x+(probe+coax_dielectric_outer)/2.0:.7f}), "YPosition:=", Mm({feed_y:.7f}), "ZPosition:=", Mm({port_z:g})))',
+        f'AssignCoaxWavePort oBoundary, "FeedPort", CLng(coaxPortFace), {feed_x+probe:.7f}, {feed_y:.7f}, {port_z:.7f}, {feed_x+coax_dielectric_outer:.7f}, {feed_y:.7f}, {port_z:.7f}',
     ]
     via_names = []
     for index, (x, y) in enumerate(siw_via_centers(geometry)):
@@ -678,9 +675,7 @@ def _element_geometry_text(
                 f'CreateCylinderZ oEditor, "{name}", {x:.7f}, {y:.7f}, 0, {via_radius:.7f}, {h_main:.7f}, "copper", False',
             ]
         )
-    finite_objects = (
-        '"Ground", "SIWCavityTop", "DrivenPatch", "StackedPatch"'
-    )
+    finite_objects = '"SIWCavityTop", "DrivenPatch", "StackedPatch"'
     lines.append(
         'oBoundary.AssignFiniteCond Array("NAME:CopperSheetFiniteConductivity", '
         f'"Objects:=", Array({finite_objects}), "UseMaterial:=", True, '
@@ -696,7 +691,7 @@ def _project_header(config: dict[str, Any], design_name: str) -> str:
     material = config["material"]
     return f'''Option Explicit
 Dim oAnsoftApp, oDesktop, oProject, oDesign, oEditor, oBoundary, oAnalysis, oMesh
-Dim fso, auditFile, validationFile, validationPassed, objectNames, boundaryNames, excitationNames, i
+Dim fso, auditFile, validationFile, validationPassed, objectNames, boundaryNames, excitationNames, coaxPortFace, i
 Set oAnsoftApp = CreateObject("Ansoft.ElectronicsDesktop")
 Set oDesktop = oAnsoftApp.GetAppDesktop()
 oDesktop.NewProject
@@ -724,8 +719,7 @@ def _mesh_and_setup_text(
     )
     via_array = ", ".join(f'"{name}"' for name in via_names)
     return f'''
-oMesh.AssignLengthOp Array("NAME:Mesh_ProbeLaunch", "RefineInside:=", False, "Enabled:=", True, "Objects:=", Array("FeedProbe", "CoaxOuter"), "RestrictElem:=", False, "NumMaxElem:=", "1000", "RestrictLength:=", True, "MaxLength:=", "{float(geometry['local_mesh_probe_mm']):.7f}mm", "UseAdvSizing:=", False)
-oMesh.AssignLengthOp Array("NAME:Mesh_PortSheet", "RefineInside:=", True, "Enabled:=", True, "Objects:=", Array("PortSheet"), "RestrictElem:=", False, "NumMaxElem:=", "1000", "RestrictLength:=", True, "MaxLength:=", "{float(config['port_definition']['local_mesh_mm']):.7f}mm", "UseAdvSizing:=", False)
+oMesh.AssignLengthOp Array("NAME:Mesh_CoaxLaunch", "RefineInside:=", False, "Enabled:=", True, "Objects:=", Array("FeedProbe", "GroundOuterConductor", "CoaxDielectric"), "RestrictElem:=", False, "NumMaxElem:=", "1000", "RestrictLength:=", True, "MaxLength:=", "{float(geometry['local_mesh_probe_mm']):.7f}mm", "UseAdvSizing:=", False)
 oMesh.AssignLengthOp Array("NAME:Mesh_PatchEdges", "RefineInside:=", False, "Enabled:=", True, "Objects:=", Array("DrivenPatch", "StackedPatch"), "RestrictElem:=", False, "NumMaxElem:=", "1000", "RestrictLength:=", True, "MaxLength:=", "{float(geometry['local_mesh_patch_edge_mm']):.7f}mm", "UseAdvSizing:=", False)
 oMesh.AssignLengthOp Array("NAME:Mesh_SIWVias", "RefineInside:=", False, "Enabled:=", True, "Objects:=", Array({via_array}), "RestrictElem:=", False, "NumMaxElem:=", "1000", "RestrictLength:=", True, "MaxLength:=", "{float(geometry['local_mesh_via_mm']):.7f}mm", "UseAdvSizing:=", False)
 oAnalysis.InsertSetup "HfssDriven", Array("NAME:Setup_10GHz", "SolveType:=", "Single", "Frequency:=", "{frequency_ghz:g}GHz", "MaxDeltaS:=", 0.05, "MaximumPasses:=", {int(geometry['maximum_passes'])}, "MinimumPasses:=", 2, "MinimumConvergedPasses:=", 2, "PercentRefinement:=", {float(geometry['adaptive_refinement_percent']):.7f}, "BasisOrder:=", 1, "DoLambdaRefine:=", True, "DoMaterialLambda:=", True, "SetLambdaTarget:=", False, "UseMaxTetIncrease:=", False, "PortAccuracy:=", 2, "UseABCOnPort:=", False, "SetPortMinMaxTri:=", False, "DrivenSolverType:=", "{solver}")
