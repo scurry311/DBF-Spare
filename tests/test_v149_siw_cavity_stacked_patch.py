@@ -303,30 +303,25 @@ class V149CadGenerationTests(unittest.TestCase):
             self.config["port_definition"]["reference_plane_offset_mm"],
             0.05,
         )
-        self.assertIn(
-            'CreateCircleZ oEditor, "PortSheet", 0.0000000, -2.4500000, '
-            '-0.9500000, 0.7000000',
-            source,
+        self.assertEqual(
+            self.config["port_definition"]["axial_height_mm"], 0.10
         )
         self.assertIn(
-            'CreateCircleZ oEditor, "PortSheetInnerCut", 0.0000000, '
-            '-2.4500000, -0.9500000, 0.2500000',
+            'CreateSheetY oEditor, "PortSheet", 0.2500000, -2.4500000, '
+            '-0.9500000, 0.4500000, 0.1000000',
             source,
         )
-        self.assertIn(
-            'SubtractObject oEditor, "PortSheet", "PortSheetInnerCut"',
-            source,
-        )
-        self.assertNotIn('CreateSheetZ oEditor, "PortSheet"', source)
+        self.assertNotIn('CreateCircleZ oEditor, "PortSheet"', source)
         self.assertIn(
             'AssignPort oBoundary, "FeedPort", "PortSheet", 0.2500000, '
-            '-2.4500000, -0.9500000, 0.7000000, -2.4500000, -0.9500000',
+            '-2.4500000, -0.9000000, 0.7000000, -2.4500000, -0.9000000',
             source,
         )
         audit = self.v149.geometry_audit(self.config, self.geometry)
         self.assertTrue(audit["port_two_conductor_contact_intended"])
         self.assertEqual(audit["port_contact_overlap_mm"], 0.0)
-        self.assertTrue(audit["annular_coax_port"])
+        self.assertFalse(audit["annular_coax_port"])
+        self.assertTrue(audit["radial_vertical_lumped_port"])
 
     def test_local_mesh_is_memory_reduced_and_surface_only(self):
         self.assertEqual(self.geometry["local_mesh_probe_mm"], 0.30)
@@ -357,7 +352,7 @@ class V149CadGenerationTests(unittest.TestCase):
         )
         self.assertIn('"RefineInside:=", True', mesh_lines["Mesh_PortSheet"])
         self.assertIn(
-            '"MaxLength:=", "0.2000000mm"', mesh_lines["Mesh_PortSheet"]
+            '"MaxLength:=", "0.1000000mm"', mesh_lines["Mesh_PortSheet"]
         )
         self.assertIn('"RefineInside:=", False', mesh_lines["Mesh_PatchEdges"])
         self.assertIn(

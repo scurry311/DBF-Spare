@@ -28,7 +28,8 @@
   "port_definition": {
     "contact_overlap_mm": 0.0,
     "reference_plane_offset_mm": 0.05,
-    "local_mesh_mm": 0.20
+    "axial_height_mm": 0.10,
+    "local_mesh_mm": 0.10
   },
   "nominal_geometry": {
     "period_x_mm": 15.0,

@@ -383,6 +383,7 @@ def validate_geometry(
     port_plane_offset = float(
         config["port_definition"]["reference_plane_offset_mm"]
     )
+    port_axial_height = float(config["port_definition"]["axial_height_mm"])
     coax_drop = float(geometry["coax_drop_mm"])
     feed_x = float(geometry["feed_offset_x_mm"])
     feed_y = float(geometry["feed_offset_y_mm"])
@@ -427,8 +428,13 @@ def validate_geometry(
         raise ValueError("Probe/coax radii are not physically nested")
     if port_overlap != 0.0:
         raise ValueError("Annular coax port must not overlap either conductor")
-    if not (0.0 < port_plane_offset < coax_drop):
+    if not (
+        0.0 < port_plane_offset
+        and port_plane_offset + port_axial_height < coax_drop
+    ):
         raise ValueError("Port reference plane must lie inside the coax launch")
+    if port_axial_height <= 0.0:
+        raise ValueError("Lumped-port axial height must be positive")
     if abs(feed_x) + coax_outer >= fence_x:
         raise ValueError("Coax launch does not clear the x SIW fence")
     if abs(feed_y) + coax_outer >= fence_y:
@@ -494,7 +500,8 @@ def geometry_audit(
         "port_contact_overlap_mm": port_overlap,
         "port_reference_plane_offset_mm": port_plane_offset,
         "port_two_conductor_contact_intended": True,
-        "annular_coax_port": True,
+        "annular_coax_port": False,
+        "radial_vertical_lumped_port": True,
         "driven_patch_count": 1,
         "stacked_patch_count": 1,
         "siw_via_count": len(siw_via_centers(geometry)),
@@ -526,9 +533,6 @@ Sub CreateCylinderZ(editor, objName, x, y, z, radius, height, material, solveIns
 End Sub
 Sub CreateSheetZ(editor, objName, x, y, z, width, height)
     editor.CreateRectangle Array("NAME:RectangleParameters", "IsCovered:=", True, "XStart:=", Mm(x), "YStart:=", Mm(y), "ZStart:=", Mm(z), "Width:=", Mm(width), "Height:=", Mm(height), "WhichAxis:=", "Z"), Array("NAME:Attributes", "Name:=", objName, "Flags:=", "", "Color:=", "(235 150 35)", "Transparency:=", 0, "PartCoordinateSystem:=", "Global", "MaterialValue:=", """vacuum""", "SolveInside:=", True)
-End Sub
-Sub CreateCircleZ(editor, objName, x, y, z, radius)
-    editor.CreateCircle Array("NAME:CircleParameters", "IsCovered:=", True, "XCenter:=", Mm(x), "YCenter:=", Mm(y), "ZCenter:=", Mm(z), "Radius:=", Mm(radius), "WhichAxis:=", "Z", "NumSegments:=", "0"), Array("NAME:Attributes", "Name:=", objName, "Flags:=", "", "Color:=", "(235 150 35)", "Transparency:=", 0, "PartCoordinateSystem:=", "Global", "MaterialValue:=", """vacuum""", "SolveInside:=", True)
 End Sub
 Sub CreateSheetX(editor, objName, x, y, z, width, height)
     editor.CreateRectangle Array("NAME:RectangleParameters", "IsCovered:=", True, "XStart:=", Mm(x), "YStart:=", Mm(y), "ZStart:=", Mm(z), "Width:=", Mm(width), "Height:=", Mm(height), "WhichAxis:=", "X"), Array("NAME:Attributes", "Name:=", objName, "Flags:=", "NonModel#", "Color:=", "(80 120 255)", "Transparency:=", 0.8, "PartCoordinateSystem:=", "Global", "MaterialValue:=", """vacuum""", "SolveInside:=", True)
@@ -572,6 +576,8 @@ def _element_geometry_text(
     port_z = -coax_drop + float(
         config["port_definition"]["reference_plane_offset_mm"]
     )
+    port_height = float(config["port_definition"]["axial_height_mm"])
+    port_line_z = port_z + port_height / 2.0
     via_radius = float(geometry["siw_via_diameter_mm"]) / 2.0
     lines = [
         f'CreateBox oEditor, "MainSubstrate", {-px/2:.7f}, {-py/2:.7f}, 0, {px:.7f}, {py:.7f}, {h_main:.7f}, "RO5880_V149", True',
@@ -595,10 +601,8 @@ def _element_geometry_text(
         'oEditor.Intersect Array("NAME:Selections", "Selections:=", "CoaxDielectric,CoaxDielectricTrim"), Array("NAME:IntersectParameters", "KeepOriginals:=", False)',
         f'CreateCylinderZ oEditor, "CoaxProbeCut", {feed_x:.7f}, {feed_y:.7f}, {-coax_drop-0.01:.7f}, {probe:.7f}, {coax_drop+0.02:.7f}, "vacuum", True',
         'SubtractObject oEditor, "CoaxDielectric", "CoaxProbeCut"',
-        f'CreateCircleZ oEditor, "PortSheet", {feed_x:.7f}, {feed_y:.7f}, {port_z:.7f}, {coax_inner:.7f}',
-        f'CreateCircleZ oEditor, "PortSheetInnerCut", {feed_x:.7f}, {feed_y:.7f}, {port_z:.7f}, {probe:.7f}',
-        'SubtractObject oEditor, "PortSheet", "PortSheetInnerCut"',
-        f'AssignPort oBoundary, "FeedPort", "PortSheet", {feed_x+probe:.7f}, {feed_y:.7f}, {port_z:.7f}, {feed_x+coax_inner:.7f}, {feed_y:.7f}, {port_z:.7f}',
+        f'CreateSheetY oEditor, "PortSheet", {feed_x+probe:.7f}, {feed_y:.7f}, {port_z:.7f}, {coax_inner-probe:.7f}, {port_height:.7f}',
+        f'AssignPort oBoundary, "FeedPort", "PortSheet", {feed_x+probe:.7f}, {feed_y:.7f}, {port_line_z:.7f}, {feed_x+coax_inner:.7f}, {feed_y:.7f}, {port_line_z:.7f}',
     ]
     via_names = []
     for index, (x, y) in enumerate(siw_via_centers(geometry)):
