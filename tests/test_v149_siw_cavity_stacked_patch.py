@@ -298,14 +298,18 @@ class V149CadGenerationTests(unittest.TestCase):
         self.assertEqual(
             self.config["port_definition"]["contact_overlap_mm"], 0.03
         )
+        self.assertEqual(
+            self.config["port_definition"]["reference_plane_offset_mm"],
+            0.05,
+        )
         self.assertIn(
             'CreateSheetZ oEditor, "PortSheet", 0.2200000, -2.5500000, '
-            '-1.0000000, 0.5100000, 0.20',
+            '-0.9500000, 0.5100000, 0.20',
             source,
         )
         self.assertIn(
             'AssignPort oBoundary, "FeedPort", "PortSheet", 0.2500000, '
-            '-2.4500000, -1.0000000, 0.7000000, -2.4500000, -1.0000000',
+            '-2.4500000, -0.9500000, 0.7000000, -2.4500000, -0.9500000',
             source,
         )
         audit = self.v149.geometry_audit(self.config, self.geometry)
@@ -313,9 +317,9 @@ class V149CadGenerationTests(unittest.TestCase):
         self.assertEqual(audit["port_contact_overlap_mm"], 0.03)
 
     def test_local_mesh_is_memory_reduced_and_surface_only(self):
-        self.assertEqual(self.geometry["local_mesh_probe_mm"], 0.20)
-        self.assertEqual(self.geometry["local_mesh_patch_edge_mm"], 0.40)
-        self.assertEqual(self.geometry["local_mesh_via_mm"], 0.32)
+        self.assertEqual(self.geometry["local_mesh_probe_mm"], 0.30)
+        self.assertEqual(self.geometry["local_mesh_patch_edge_mm"], 0.55)
+        self.assertEqual(self.geometry["local_mesh_via_mm"], 0.50)
         source = self.v149.periodic_builder_text(
             Path("D:/scratch/v149_periodic.aedt"),
             self.config,
@@ -332,15 +336,15 @@ class V149CadGenerationTests(unittest.TestCase):
             '"RefineInside:=", False', mesh_lines["Mesh_ProbeLaunch"]
         )
         self.assertIn(
-            '"MaxLength:=", "0.2000000mm"', mesh_lines["Mesh_ProbeLaunch"]
+            '"MaxLength:=", "0.3000000mm"', mesh_lines["Mesh_ProbeLaunch"]
         )
         self.assertIn('"RefineInside:=", False', mesh_lines["Mesh_PatchEdges"])
         self.assertIn(
-            '"MaxLength:=", "0.4000000mm"', mesh_lines["Mesh_PatchEdges"]
+            '"MaxLength:=", "0.5500000mm"', mesh_lines["Mesh_PatchEdges"]
         )
         self.assertIn('"RefineInside:=", False', mesh_lines["Mesh_SIWVias"])
         self.assertIn(
-            '"MaxLength:=", "0.3200000mm"', mesh_lines["Mesh_SIWVias"]
+            '"MaxLength:=", "0.5000000mm"', mesh_lines["Mesh_SIWVias"]
         )
 
     def test_geometry_intersection_is_a_critical_build_log_error(self):
@@ -348,6 +352,15 @@ class V149CadGenerationTests(unittest.TestCase):
             'Parts "MainSubstrate" and "CoaxOuter" intersect.'
         )
         self.assertGreater(hits.get("intersect", 0), 0)
+
+    def test_single_conductor_lumped_port_warning_is_critical(self):
+        hits = self.v149.critical_log_hits(
+            "'1' conductors touch lumped port 'FeedPort', typically a "
+            "lumped port contains 2 conductors."
+        )
+        self.assertGreater(
+            hits.get("conductors touch lumped port", 0), 0
+        )
 
     def test_saved_model_inventory_must_contain_real_objects_and_boundaries(self):
         lines = [

@@ -380,6 +380,10 @@ def validate_geometry(
     coax_inner = float(geometry["coax_inner_radius_mm"])
     coax_outer = float(geometry["coax_outer_radius_mm"])
     port_overlap = float(config["port_definition"]["contact_overlap_mm"])
+    port_plane_offset = float(
+        config["port_definition"]["reference_plane_offset_mm"]
+    )
+    coax_drop = float(geometry["coax_drop_mm"])
     feed_x = float(geometry["feed_offset_x_mm"])
     feed_y = float(geometry["feed_offset_y_mm"])
     if px != 15.0 or py != 15.0:
@@ -425,6 +429,8 @@ def validate_geometry(
         raise ValueError("Port contact overlap must fit inside the probe radius")
     if port_overlap >= coax_outer - coax_inner:
         raise ValueError("Port contact overlap exceeds the outer-conductor wall")
+    if not (0.0 < port_plane_offset < coax_drop):
+        raise ValueError("Port reference plane must lie inside the coax launch")
     if abs(feed_x) + coax_outer >= fence_x:
         raise ValueError("Coax launch does not clear the x SIW fence")
     if abs(feed_y) + coax_outer >= fence_y:
@@ -482,9 +488,13 @@ def geometry_audit(
         + float(geometry["copper_thickness_mm"])
     )
     port_overlap = float(config["port_definition"]["contact_overlap_mm"])
+    port_plane_offset = float(
+        config["port_definition"]["reference_plane_offset_mm"]
+    )
     return {
         "feed_port_count": 1,
         "port_contact_overlap_mm": port_overlap,
+        "port_reference_plane_offset_mm": port_plane_offset,
         "port_two_conductor_contact_intended": port_overlap > 0.0,
         "driven_patch_count": 1,
         "stacked_patch_count": 1,
@@ -558,6 +568,9 @@ def _element_geometry_text(
     coax_outer = float(geometry["coax_outer_radius_mm"])
     coax_drop = float(geometry["coax_drop_mm"])
     port_overlap = float(config["port_definition"]["contact_overlap_mm"])
+    port_z = -coax_drop + float(
+        config["port_definition"]["reference_plane_offset_mm"]
+    )
     via_radius = float(geometry["siw_via_diameter_mm"]) / 2.0
     lines = [
         f'CreateBox oEditor, "MainSubstrate", {-px/2:.7f}, {-py/2:.7f}, 0, {px:.7f}, {py:.7f}, {h_main:.7f}, "RO5880_V149", True',
@@ -581,8 +594,8 @@ def _element_geometry_text(
         'oEditor.Intersect Array("NAME:Selections", "Selections:=", "CoaxDielectric,CoaxDielectricTrim"), Array("NAME:IntersectParameters", "KeepOriginals:=", False)',
         f'CreateCylinderZ oEditor, "CoaxProbeCut", {feed_x:.7f}, {feed_y:.7f}, {-coax_drop-0.01:.7f}, {probe:.7f}, {coax_drop+0.02:.7f}, "vacuum", True',
         'SubtractObject oEditor, "CoaxDielectric", "CoaxProbeCut"',
-        f'CreateSheetZ oEditor, "PortSheet", {feed_x+probe-port_overlap:.7f}, {feed_y-0.10:.7f}, {-coax_drop:.7f}, {coax_inner-probe+2*port_overlap:.7f}, 0.20',
-        f'AssignPort oBoundary, "FeedPort", "PortSheet", {feed_x+probe:.7f}, {feed_y:.7f}, {-coax_drop:.7f}, {feed_x+coax_inner:.7f}, {feed_y:.7f}, {-coax_drop:.7f}',
+        f'CreateSheetZ oEditor, "PortSheet", {feed_x+probe-port_overlap:.7f}, {feed_y-0.10:.7f}, {port_z:.7f}, {coax_inner-probe+2*port_overlap:.7f}, 0.20',
+        f'AssignPort oBoundary, "FeedPort", "PortSheet", {feed_x+probe:.7f}, {feed_y:.7f}, {port_z:.7f}, {feed_x+coax_inner:.7f}, {feed_y:.7f}, {port_z:.7f}',
     ]
     via_names = []
     for index, (x, y) in enumerate(siw_via_centers(geometry)):
@@ -1554,6 +1567,7 @@ def critical_log_hits(text: str) -> dict[str, int]:
         "boundary assignment failed",
         "geometry error",
         "body could not be created",
+        "conductors touch lumped port",
         "intersect",
     )
     return {term: lowered.count(term) for term in terms if term in lowered}
