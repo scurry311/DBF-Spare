@@ -1019,3 +1019,20 @@ learning stages. See
 `docs/V148_REFERENCE_ELEMENT_IMPORT_AND_CALIBRATION_STOP_GATE_20260812.md`
 and
 `baselines/2026-08-12-v148-reference-element-import-calibration-stop-gate/BASELINE.md`.
+
+## v1.49 Nominal Periodic Continuation Run07 (2026-08-16)
+
+The finalized run06 build project was copied into a new continuation run after
+all 33 source evidence files passed SHA-256 verification. The source and copied
+AEDT project hashes are identical (`8fc49ec8...8e917c`). Run07 authorizes only
+one nominal 9.8-10.2 GHz periodic sweep; DOE, finite arrays, EEP, labels, and
+critic training remain locked.
+
+The first full-wave launch attempt was blocked before AEDT startup because
+available memory was `12.871 GiB`, below the frozen `13.000 GiB` threshold.
+No Touchstone, solve log, or physical antenna metric was produced. A subsequent
+control-plane review found that run07 predates the hardened single-use solve
+authorization, so run07 is retired and cannot be retried or backfilled. A new
+continuation must be allocated from sealed run06 using committed control code.
+Local diagnostic evidence remains in
+`hfss_outputs/v149_siw_cavity_stacked_patch_20260816_run07`.

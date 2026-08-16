@@ -4,6 +4,7 @@ import math
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 import numpy as np
 
@@ -85,6 +86,33 @@ class V149ControlPlaneTests(unittest.TestCase):
                 self.config, free_memory_gib=24.0, aedt_instance_count=1
             )
         )
+
+    def test_aedt_process_detection_includes_comengine_and_fails_closed(self):
+        completed = mock.Mock(
+            returncode=0,
+            stdout='"HFSSCOMENGINE.exe","4242","Console","1","1 K"\n',
+            stderr="",
+        )
+        with mock.patch.object(
+            self.v149.subprocess, "run", return_value=completed
+        ):
+            self.assertEqual(len(self.v149.aedt_processes()), 1)
+        failed = mock.Mock(returncode=1, stdout="", stderr="denied")
+        with mock.patch.object(
+            self.v149.subprocess, "run", return_value=failed
+        ):
+            with self.assertRaisesRegex(RuntimeError, "tasklist"):
+                self.v149.aedt_processes()
+
+    def test_control_script_uses_git_diff_semantics_for_crlf_checkout(self):
+        show = mock.Mock(returncode=0, stdout=b"line-one\n", stderr=b"")
+        unchanged = mock.Mock(returncode=0, stdout=b"", stderr=b"")
+        with mock.patch.object(
+            self.v149.subprocess, "run", side_effect=[show, unchanged]
+        ):
+            result = self.v149.control_script_provenance()
+        self.assertTrue(result["tracked_at_head"])
+        self.assertNotEqual(result["head_sha256"], "missing")
 
     def test_periodic_gate_requires_complete_real_hfss_evidence(self):
         metrics = {
@@ -428,6 +456,266 @@ class V149CadGenerationTests(unittest.TestCase):
             (root / "stage_summary.json").write_text("{}", encoding="ascii")
             with self.assertRaisesRegex(RuntimeError, "finalized and immutable"):
                 self.v149.run_nominal_periodic_solve(root, self.config)
+
+    def _make_finalized_build_run(self, root: Path) -> Path:
+        source = root / "source_run"
+        build = source / "periodic" / "build_smoke"
+        frozen = source / "frozen_inputs"
+        build.mkdir(parents=True)
+        frozen.mkdir(parents=True)
+        config = json.loads(json.dumps(self.config))
+        config["output_prefix"] = str(root / "continuation_run")
+        config["allocated_output_root"] = str(source)
+        executable = root / "ansysedt.exe"
+        executable.write_bytes(b"trusted-aedt-executable")
+        config["ansys_executable"] = str(executable)
+        preregistration = source / "preregistration.json"
+        self.v149.write_json(preregistration, config)
+        for original in config["inputs"].values():
+            (frozen / Path(original).name).write_bytes(b"frozen-input")
+        project = build / "trusted_build.aedt"
+        project.write_bytes(b"trusted-aedt-project")
+        inventory = build / "model_inventory.txt"
+        inventory_lines = [
+            "OBJECT|MainSubstrate",
+            "OBJECT|StackSpacer",
+            "OBJECT|Ground",
+            "OBJECT|SIWCavityTop",
+            "OBJECT|DrivenPatch",
+            "OBJECT|StackedPatch",
+            "OBJECT|FeedProbe",
+            "OBJECT|CoaxOuter",
+            "OBJECT|CoaxDielectric",
+            "OBJECT|PortSheet",
+            "OBJECT|AirCell",
+            "BOUNDARY|CopperSheetFiniteConductivity",
+            "BOUNDARY|PrimaryX",
+            "BOUNDARY|SecondaryX",
+            "BOUNDARY|PrimaryY",
+            "BOUNDARY|SecondaryY",
+            "EXCITATION|FeedPort:1|Lumped Port",
+            "EXCITATION|FloquetTop:1|Floquet Port",
+            "EXCITATION|FloquetTop:2|Floquet Port",
+        ]
+        inventory_lines.extend(
+            f"OBJECT|SIWVia_{index:03d}"
+            for index in range(
+                len(self.v149.siw_via_centers(config["nominal_geometry"]))
+            )
+        )
+        inventory.write_text("\n".join(inventory_lines) + "\n", encoding="ascii")
+        self.v149.write_json(
+            build / "case_manifest.json",
+            {
+                "project_path": str(project.resolve()),
+                "model_inventory_path": str(inventory.resolve()),
+            },
+        )
+        self.v149.write_json(
+            build / "build_gate.json",
+            {
+                "build_smoke_passed": True,
+                "model_inventory_verified": True,
+                "project_sha256": self.v149.sha256(project),
+            },
+        )
+        input_hashes = {
+            name: self.v149.sha256(frozen / Path(path).name)
+            for name, path in config["inputs"].items()
+        }
+        self.v149.write_json(
+            source / "baseline_audit.json",
+            {
+                "preregistration_sha256": self.v149.sha256(preregistration),
+                "input_sha256": input_hashes,
+            },
+        )
+        self.v149.write_json(
+            source / "stage_summary.json",
+            {"periodic_build_smoke_passed": True},
+        )
+        rows = []
+        manifest = source / "sha256_manifest.csv"
+        for path in sorted(source.rglob("*")):
+            if path.is_file() and path != manifest:
+                rows.append(
+                    {
+                        "relative_path": path.relative_to(source).as_posix(),
+                        "bytes": path.stat().st_size,
+                        "sha256": self.v149.sha256(path),
+                    }
+                )
+        self.v149.write_csv(manifest, rows)
+        return source
+
+    def test_continuation_copies_verified_build_without_mutating_source(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source = self._make_finalized_build_run(root)
+            source_hashes = {
+                path.relative_to(source).as_posix(): self.v149.sha256(path)
+                for path in source.rglob("*")
+                if path.is_file()
+            }
+            provenance = {
+                "path": str(self.v149.Path(self.v149.__file__).resolve()),
+                "sha256": self.v149.sha256(
+                    self.v149.Path(self.v149.__file__).resolve()
+                ),
+                "head_sha256": self.v149.sha256(
+                    self.v149.Path(self.v149.__file__).resolve()
+                ),
+                "tracked_at_head": True,
+            }
+            with mock.patch.object(
+                self.v149,
+                "control_script_provenance",
+                return_value=provenance,
+            ):
+                result = self.v149.create_nominal_continuation(source)
+            destination = Path(result["output_root"])
+            manifest = json.loads(
+                (destination / "periodic" / "nominal_solve" / "case_manifest.json").read_text(
+                    encoding="utf-8"
+                )
+            )
+            self.assertNotEqual(destination.resolve(), source.resolve())
+            self.assertEqual(
+                manifest["source_build_project_sha256"],
+                manifest["project_sha256_before_solve"],
+            )
+            self.assertFalse(manifest["solve_started"])
+            self.assertFalse((destination / "stage_summary.json").exists())
+            self.assertFalse((destination / "sha256_manifest.csv").exists())
+            self.assertTrue(
+                (destination / "solve_authorization.json").exists()
+            )
+            authorization = self.v149.validate_nominal_authorization(
+                destination, manifest
+            )
+            self.assertEqual(
+                authorization["authorization_kind"],
+                "finalized_build_continuation",
+            )
+            self.assertEqual(
+                source_hashes,
+                {
+                    path.relative_to(source).as_posix(): self.v149.sha256(path)
+                    for path in source.rglob("*")
+                    if path.is_file()
+                },
+            )
+
+    def test_continuation_rejects_tampered_finalized_source(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            source = self._make_finalized_build_run(Path(temporary))
+            project = source / "periodic" / "build_smoke" / "trusted_build.aedt"
+            project.write_bytes(b"tampered-project")
+            with self.assertRaisesRegex(RuntimeError, "SHA-256 manifest"):
+                self.v149.create_nominal_continuation(source)
+
+    def test_continuation_requires_independently_validated_inventory(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            source = self._make_finalized_build_run(Path(temporary))
+            inventory = source / "periodic" / "build_smoke" / "model_inventory.txt"
+            inventory.write_text("OBJECT|MainSubstrate\n", encoding="ascii")
+            rows = []
+            manifest = source / "sha256_manifest.csv"
+            for path in sorted(source.rglob("*")):
+                if path.is_file() and path != manifest:
+                    rows.append(
+                        {
+                            "relative_path": path.relative_to(source).as_posix(),
+                            "bytes": path.stat().st_size,
+                            "sha256": self.v149.sha256(path),
+                        }
+                    )
+            self.v149.write_csv(manifest, rows)
+            with self.assertRaisesRegex(RuntimeError, "inventory"):
+                self.v149.create_nominal_continuation(source)
+
+    def test_nominal_authorization_rejects_mutated_stage_decision(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            source = self._make_finalized_build_run(Path(temporary))
+            provenance = {
+                "path": str(self.v149.Path(self.v149.__file__).resolve()),
+                "sha256": self.v149.sha256(
+                    self.v149.Path(self.v149.__file__).resolve()
+                ),
+                "head_sha256": self.v149.sha256(
+                    self.v149.Path(self.v149.__file__).resolve()
+                ),
+                "tracked_at_head": True,
+            }
+            with mock.patch.object(
+                self.v149,
+                "control_script_provenance",
+                return_value=provenance,
+            ):
+                result = self.v149.create_nominal_continuation(source)
+            destination = Path(result["output_root"])
+            manifest = json.loads(
+                (destination / "periodic" / "nominal_solve" / "case_manifest.json").read_text(
+                    encoding="utf-8"
+                )
+            )
+            decision = destination / "stage_decision.json"
+            decision.write_text(
+                json.dumps({"allow_periodic_nominal_solve": False}),
+                encoding="ascii",
+            )
+            with self.assertRaisesRegex(RuntimeError, "authorization"):
+                self.v149.validate_nominal_authorization(
+                    destination, manifest
+                )
+
+    def test_nominal_launch_intent_is_consumed_once(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            first = self.v149.consume_nominal_launch_authorization(
+                root,
+                {"case_id": "periodic_nominal_broadside"},
+                {"authorization_sha256": "abc"},
+            )
+            self.assertTrue(first.exists())
+            with self.assertRaisesRegex(RuntimeError, "already consumed"):
+                self.v149.consume_nominal_launch_authorization(
+                    root,
+                    {"case_id": "periodic_nominal_broadside"},
+                    {"authorization_sha256": "abc"},
+                )
+
+    def test_nominal_authorization_rejects_changed_aedt_executable(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            source = self._make_finalized_build_run(Path(temporary))
+            provenance = {
+                "path": str(self.v149.Path(self.v149.__file__).resolve()),
+                "sha256": self.v149.sha256(
+                    self.v149.Path(self.v149.__file__).resolve()
+                ),
+                "head_sha256": self.v149.sha256(
+                    self.v149.Path(self.v149.__file__).resolve()
+                ),
+                "tracked_at_head": True,
+            }
+            with mock.patch.object(
+                self.v149,
+                "control_script_provenance",
+                return_value=provenance,
+            ):
+                result = self.v149.create_nominal_continuation(source)
+            destination = Path(result["output_root"])
+            config = self.v149.load_run_config(destination)
+            Path(config["ansys_executable"]).write_bytes(b"changed-executable")
+            manifest = json.loads(
+                (destination / "periodic" / "nominal_solve" / "case_manifest.json").read_text(
+                    encoding="utf-8"
+                )
+            )
+            with self.assertRaisesRegex(RuntimeError, "AEDT executable"):
+                self.v149.validate_nominal_authorization(
+                    destination, manifest
+                )
 
     def test_run_config_hash_detects_post_preregistration_mutation(self):
         with tempfile.TemporaryDirectory() as temporary:

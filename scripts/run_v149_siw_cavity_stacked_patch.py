@@ -223,7 +223,16 @@ def aedt_processes() -> list[str]:
         text=True,
         check=False,
     )
-    names = ("ansysedt.exe", "hfss.exe", "ansysedtsv.exe")
+    if result.returncode != 0:
+        raise RuntimeError(
+            "tasklist failed; refusing to assume that no AEDT/HFSS process exists"
+        )
+    names = (
+        "ansysedt.exe",
+        "hfss.exe",
+        "ansysedtsv.exe",
+        "hfsscomengine.exe",
+    )
     return [
         line
         for line in result.stdout.splitlines()
@@ -901,6 +910,330 @@ def preregister(config: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def control_script_provenance() -> dict[str, Any]:
+    script = Path(__file__).resolve()
+    relative = script.relative_to(ROOT).as_posix()
+    result = subprocess.run(
+        ["git", "show", f"HEAD:{relative}"],
+        cwd=ROOT,
+        capture_output=True,
+        check=False,
+    )
+    head_sha256 = (
+        hashlib.sha256(result.stdout).hexdigest()
+        if result.returncode == 0
+        else None
+    )
+    diff = subprocess.run(
+        ["git", "diff", "--quiet", "HEAD", "--", relative],
+        cwd=ROOT,
+        capture_output=True,
+        check=False,
+    )
+    current_sha256 = sha256(script)
+    return {
+        "path": str(script),
+        "sha256": current_sha256,
+        "head_sha256": head_sha256,
+        "git_diff_returncode": diff.returncode,
+        "tracked_at_head": result.returncode == 0 and diff.returncode == 0,
+    }
+
+
+def _path_within(path: Path, root: Path, label: str) -> Path:
+    resolved = path.resolve()
+    try:
+        resolved.relative_to(root.resolve())
+    except ValueError as error:
+        raise RuntimeError(f"{label} is outside its authorized root") from error
+    return resolved
+
+
+def seal_nominal_authorization(
+    run_root: Path,
+    manifest_path: Path,
+    authorization_kind: str,
+    source_evidence: dict[str, Any],
+) -> dict[str, Any]:
+    run_root = run_root.resolve()
+    provenance = control_script_provenance()
+    if provenance.get("tracked_at_head") is not True:
+        raise RuntimeError(
+            "Continuation control script must be committed at HEAD before "
+            "an executable run is allocated"
+        )
+    decision_path = run_root / "stage_decision.json"
+    baseline_path = run_root / "baseline_audit.json"
+    preregistration_path = run_root / "preregistration.json"
+    continuation_path = run_root / "continuation_audit.json"
+    for required in (
+        manifest_path,
+        decision_path,
+        baseline_path,
+        preregistration_path,
+    ):
+        if not required.is_file():
+            raise RuntimeError(
+                f"Cannot seal nominal authorization without {required.name}"
+            )
+    snapshot_folder = run_root / "control_snapshot"
+    snapshot_folder.mkdir(exist_ok=False)
+    snapshot = snapshot_folder / Path(provenance["path"]).name
+    shutil.copy2(Path(provenance["path"]), snapshot)
+    if sha256(snapshot) != provenance["sha256"]:
+        raise RuntimeError("Control-script snapshot hash mismatch")
+    authorization = {
+        "schema": "v149_nominal_solve_authorization_v1",
+        "authorization_kind": authorization_kind,
+        "issued_for_run": str(run_root),
+        "issued_at": time.strftime("%Y-%m-%d %H:%M:%S"),
+        "head_commit": git("rev-parse", "HEAD"),
+        "control_snapshot_path": str(snapshot.resolve()),
+        "control_snapshot_sha256": sha256(snapshot),
+        "control_script_head_sha256": provenance["head_sha256"],
+        "case_manifest_sha256": sha256(manifest_path),
+        "stage_decision_sha256": sha256(decision_path),
+        "baseline_audit_sha256": sha256(baseline_path),
+        "preregistration_sha256": sha256(preregistration_path),
+        "continuation_audit_sha256": (
+            sha256(continuation_path) if continuation_path.is_file() else None
+        ),
+        "source_evidence": source_evidence,
+        "single_use": True,
+    }
+    authorization_path = run_root / "solve_authorization.json"
+    if authorization_path.exists():
+        raise FileExistsError(
+            f"Refusing to overwrite solve authorization: {authorization_path}"
+        )
+    write_json(authorization_path, authorization)
+    authorization["authorization_path"] = str(authorization_path.resolve())
+    authorization["authorization_sha256"] = sha256(authorization_path)
+    return authorization
+
+
+def verify_finalized_run_manifest(run_root: Path) -> dict[str, Any]:
+    run_root = run_root.resolve()
+    summary = run_root / "stage_summary.json"
+    manifest = run_root / "sha256_manifest.csv"
+    if not summary.exists() or not manifest.exists():
+        raise RuntimeError(
+            "Continuation source must be a finalized run with stage summary "
+            "and SHA-256 manifest"
+        )
+    checked: list[str] = []
+    seen: set[str] = set()
+    with manifest.open(newline="", encoding="utf-8") as handle:
+        for row in csv.DictReader(handle):
+            relative = row.get("relative_path", "")
+            if not relative or relative in seen:
+                raise RuntimeError("Invalid finalized source SHA-256 manifest")
+            seen.add(relative)
+            path = (run_root / relative).resolve()
+            try:
+                path.relative_to(run_root)
+            except ValueError as error:
+                raise RuntimeError(
+                    "Finalized source SHA-256 manifest escapes the run root"
+                ) from error
+            if not path.is_file():
+                raise RuntimeError(
+                    f"Finalized source SHA-256 manifest file is missing: {relative}"
+                )
+            if int(row.get("bytes", -1)) != path.stat().st_size or row.get(
+                "sha256"
+            ) != sha256(path):
+                raise RuntimeError(
+                    f"Finalized source SHA-256 manifest mismatch: {relative}"
+                )
+            checked.append(relative)
+    if not checked:
+        raise RuntimeError("Finalized source SHA-256 manifest is empty")
+    return {
+        "manifest_path": str(manifest),
+        "manifest_sha256": sha256(manifest),
+        "verified_file_count": len(checked),
+    }
+
+
+def create_nominal_continuation(source_run_root: Path) -> dict[str, Any]:
+    source_run_root = source_run_root.resolve()
+    source_manifest_audit = verify_finalized_run_manifest(source_run_root)
+    config = load_run_config(source_run_root)
+    build_folder = source_run_root / "periodic" / "build_smoke"
+    build_gate_path = build_folder / "build_gate.json"
+    build_manifest_path = build_folder / "case_manifest.json"
+    if not build_gate_path.exists() or not build_manifest_path.exists():
+        raise RuntimeError("Finalized source is missing build-gate evidence")
+    build_gate = json.loads(build_gate_path.read_text(encoding="utf-8"))
+    if build_gate.get("build_smoke_passed") is not True:
+        raise RuntimeError("Continuation source build smoke did not pass")
+    if build_gate.get("model_inventory_verified") is not True:
+        raise RuntimeError("Continuation source model inventory is unverified")
+    build_manifest = json.loads(
+        build_manifest_path.read_text(encoding="utf-8")
+    )
+    source_project = Path(build_manifest["project_path"]).resolve()
+    _path_within(
+        source_project, source_run_root, "Continuation source project"
+    )
+    if not source_project.is_file():
+        raise FileNotFoundError(source_project)
+    source_project_sha256 = sha256(source_project)
+    if build_gate.get("project_sha256") != source_project_sha256:
+        raise RuntimeError("Continuation source build project hash mismatch")
+    inventory_path = _path_within(
+        Path(build_manifest.get("model_inventory_path", "")),
+        source_run_root,
+        "Continuation model inventory",
+    )
+    if not inventory_path.is_file():
+        raise RuntimeError("Continuation source model inventory is missing")
+    inventory = validate_model_inventory(
+        inventory_path.read_text(
+            encoding="utf-8", errors="ignore"
+        ).splitlines(),
+        config,
+        config["nominal_geometry"],
+    )
+    if inventory.get("verified") is not True:
+        raise RuntimeError(
+            "Continuation source model inventory failed independent validation"
+        )
+    inventory_sha256 = sha256(inventory_path)
+    if control_script_provenance().get("tracked_at_head") is not True:
+        raise RuntimeError(
+            "Continuation control script must be committed at HEAD before "
+            "allocating a new run"
+        )
+
+    root = allocate_output_root(config)
+    (root / "logs").mkdir()
+    (root / "manifests").mkdir()
+    frozen = root / "frozen_inputs"
+    frozen.mkdir()
+    copied: dict[str, str] = {}
+    input_hashes: dict[str, str] = {}
+    source_audit = json.loads(
+        (source_run_root / "baseline_audit.json").read_text(encoding="utf-8")
+    )
+    expected_input_hashes = source_audit.get("input_sha256", {})
+    for name, original in config["inputs"].items():
+        source = source_run_root / "frozen_inputs" / Path(original).name
+        if not source.is_file():
+            raise FileNotFoundError(source)
+        source_hash = sha256(source)
+        if expected_input_hashes.get(name) != source_hash:
+            raise RuntimeError(f"Frozen continuation input mismatch: {name}")
+        destination = frozen / source.name
+        shutil.copy2(source, destination)
+        if sha256(destination) != source_hash:
+            raise RuntimeError(f"Copied continuation input mismatch: {name}")
+        input_hashes[name] = source_hash
+        copied[name] = str(destination.resolve())
+
+    preregistration = dict(config)
+    preregistration["allocated_output_root"] = str(root.resolve())
+    preregistration["preregistered_at"] = time.strftime(
+        "%Y-%m-%d %H:%M:%S"
+    )
+    preregistration["continuation_source_run"] = str(source_run_root)
+    preregistration["continuation_scope"] = "one_nominal_periodic_sweep"
+    preregistration_path = root / "preregistration.json"
+    write_json(preregistration_path, preregistration)
+    baseline_audit = {
+        "protocol": config["protocol"],
+        "continuation": True,
+        "source_run": str(source_run_root),
+        "source_manifest_sha256": source_manifest_audit["manifest_sha256"],
+        "source_build_gate_sha256": sha256(build_gate_path),
+        "source_build_project_sha256": source_project_sha256,
+        "baseline_commit": config["baseline_commit"],
+        "head_commit": git("rev-parse", "HEAD"),
+        "branch": git("branch", "--show-current"),
+        "working_tree_status": git("status", "--short", check=False),
+        "ansys_executable": str(resolve(config["ansys_executable"]).resolve()),
+        "ansys_executable_sha256": sha256(
+            resolve(config["ansys_executable"])
+        ),
+        "input_sha256": input_hashes,
+        "frozen_inputs": copied,
+        "free_memory_gib": memory_available_gib(),
+        "aedt_processes": aedt_processes(),
+        "disk_free_gib": shutil.disk_usage(root).free / (1024.0**3),
+        "preregistration_sha256": sha256(preregistration_path),
+    }
+    write_json(root / "baseline_audit.json", baseline_audit)
+    preparation = _prepare_nominal_from_project(
+        root,
+        preregistration,
+        source_project,
+        {
+            "source_run": str(source_run_root),
+            "source_manifest_sha256": source_manifest_audit[
+                "manifest_sha256"
+            ],
+            "source_build_gate_sha256": sha256(build_gate_path),
+            "source_build_project_sha256": source_project_sha256,
+        },
+    )
+    continuation_audit = {
+        "schema": "v149_nominal_continuation_audit_v1",
+        "source_run": str(source_run_root),
+        "output_root": str(root.resolve()),
+        "source_manifest": source_manifest_audit,
+        "source_build_project_sha256": source_project_sha256,
+        "source_model_inventory_sha256": inventory_sha256,
+        "source_model_inventory": inventory,
+        "copied_project_sha256": sha256(Path(preparation["project_path"])),
+        "source_run_unchanged": True,
+        "solve_started": False,
+        "state_scope": "continuation_creation_time",
+    }
+    write_json(root / "continuation_audit.json", continuation_audit)
+    decision = {
+        "stage": "A_nominal_periodic_continuation_prepared",
+        "allow_periodic_build_smoke": False,
+        "allow_periodic_nominal_solve": True,
+        "allow_periodic_doe_batch": False,
+        "allow_1x1": False,
+        "allow_2x2": False,
+        "allow_4x4": False,
+        "allow_16x16": False,
+        "allow_eep_export": False,
+        "allow_training_labels": False,
+        "allow_critic_training": False,
+        "reason": (
+            "A verified finalized build project was copied into a new run. "
+            "Only one nominal periodic sweep is authorized after resource "
+            "preflight."
+        ),
+    }
+    write_json(root / "stage_decision.json", decision)
+    authorization = seal_nominal_authorization(
+        root,
+        Path(preparation["manifest_path"]),
+        "finalized_build_continuation",
+        {
+            "source_run": str(source_run_root),
+            "source_manifest_sha256": source_manifest_audit[
+                "manifest_sha256"
+            ],
+            "source_build_gate_sha256": sha256(build_gate_path),
+            "source_build_project_sha256": source_project_sha256,
+            "source_model_inventory_sha256": inventory_sha256,
+        },
+    )
+    return {
+        "output_root": str(root.resolve()),
+        "source_run": str(source_run_root),
+        "continuation_audit": continuation_audit,
+        "preparation": preparation,
+        "authorization": authorization,
+        "decision": decision,
+    }
+
+
 def prepare_periodic_build_smoke(
     run_root: Path, config: dict[str, Any]
 ) -> dict[str, Any]:
@@ -1274,27 +1607,12 @@ def audit_periodic_build_smoke(
     return result
 
 
-def prepare_nominal_periodic_solve(
-    run_root: Path, config: dict[str, Any]
+def _prepare_nominal_from_project(
+    run_root: Path,
+    config: dict[str, Any],
+    source_project: Path,
+    provenance: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
-    build_folder = run_root / "periodic" / "build_smoke"
-    build_gate = json.loads(
-        (build_folder / "build_gate.json").read_text(encoding="utf-8")
-    )
-    if build_gate.get("build_smoke_passed") is not True:
-        raise RuntimeError(
-            "Nominal solve remains locked until the HFSS build smoke passes"
-        )
-    if build_gate.get("model_inventory_verified") is not True:
-        raise RuntimeError("Saved AEDT model inventory was not verified")
-    build_manifest = json.loads(
-        (build_folder / "case_manifest.json").read_text(encoding="utf-8")
-    )
-    source_project = Path(build_manifest["project_path"])
-    if not source_project.exists():
-        raise FileNotFoundError(source_project)
-    if build_gate.get("project_sha256") != sha256(source_project):
-        raise RuntimeError("Built AEDT project hash changed after audit")
     folder = run_root / "periodic" / "nominal_solve"
     if folder.exists():
         raise FileExistsError(
@@ -1333,6 +1651,8 @@ def prepare_nominal_periodic_solve(
         "authorizes_doe_batch": False,
         "authorizes_1x1": False,
     }
+    if provenance:
+        manifest.update(provenance)
     write_json(folder / "case_manifest.json", manifest)
     return {
         "folder": str(folder.resolve()),
@@ -1341,6 +1661,207 @@ def prepare_nominal_periodic_solve(
         "manifest_path": str((folder / "case_manifest.json").resolve()),
         "solve_started": False,
     }
+
+
+def prepare_nominal_periodic_solve(
+    run_root: Path, config: dict[str, Any]
+) -> dict[str, Any]:
+    build_folder = run_root / "periodic" / "build_smoke"
+    build_gate = json.loads(
+        (build_folder / "build_gate.json").read_text(encoding="utf-8")
+    )
+    if build_gate.get("build_smoke_passed") is not True:
+        raise RuntimeError(
+            "Nominal solve remains locked until the HFSS build smoke passes"
+        )
+    if build_gate.get("model_inventory_verified") is not True:
+        raise RuntimeError("Saved AEDT model inventory was not verified")
+    build_manifest = json.loads(
+        (build_folder / "case_manifest.json").read_text(encoding="utf-8")
+    )
+    source_project = Path(build_manifest["project_path"])
+    if not source_project.exists():
+        raise FileNotFoundError(source_project)
+    if build_gate.get("project_sha256") != sha256(source_project):
+        raise RuntimeError("Built AEDT project hash changed after audit")
+    return _prepare_nominal_from_project(run_root, config, source_project)
+
+
+def validate_nominal_authorization(
+    run_root: Path, manifest: dict[str, Any]
+) -> dict[str, Any]:
+    run_root = run_root.resolve()
+    authorization_path = run_root / "solve_authorization.json"
+    if not authorization_path.is_file():
+        raise RuntimeError("Nominal solve authorization is missing")
+    authorization = json.loads(
+        authorization_path.read_text(encoding="utf-8")
+    )
+    if authorization.get("schema") != "v149_nominal_solve_authorization_v1":
+        raise RuntimeError("Nominal solve authorization schema is invalid")
+    if authorization.get("issued_for_run") != str(run_root):
+        raise RuntimeError("Nominal solve authorization targets another run")
+    static_files = {
+        "case_manifest_sha256": (
+            run_root / "periodic" / "nominal_solve" / "case_manifest.json"
+        ),
+        "stage_decision_sha256": run_root / "stage_decision.json",
+        "baseline_audit_sha256": run_root / "baseline_audit.json",
+        "preregistration_sha256": run_root / "preregistration.json",
+    }
+    continuation_path = run_root / "continuation_audit.json"
+    if authorization.get("continuation_audit_sha256") is not None:
+        static_files["continuation_audit_sha256"] = continuation_path
+    for field, path in static_files.items():
+        if not path.is_file() or sha256(path) != authorization.get(field):
+            raise RuntimeError(
+                f"Nominal solve authorization hash mismatch: {path.name}"
+            )
+
+    decision = json.loads(
+        (run_root / "stage_decision.json").read_text(encoding="utf-8")
+    )
+    forbidden = (
+        "allow_periodic_build_smoke",
+        "allow_periodic_doe_batch",
+        "allow_1x1",
+        "allow_2x2",
+        "allow_4x4",
+        "allow_16x16",
+        "allow_eep_export",
+        "allow_training_labels",
+        "allow_critic_training",
+    )
+    if decision.get("allow_periodic_nominal_solve") is not True or any(
+        decision.get(name) is not False for name in forbidden
+    ):
+        raise RuntimeError("Nominal solve authorization stage lock is invalid")
+
+    snapshot = _path_within(
+        Path(authorization["control_snapshot_path"]),
+        run_root,
+        "Control-script snapshot",
+    )
+    snapshot_hash = sha256(snapshot) if snapshot.is_file() else None
+    if snapshot_hash != authorization.get("control_snapshot_sha256"):
+        raise RuntimeError("Nominal solve authorization snapshot mismatch")
+    if snapshot_hash != sha256(Path(__file__).resolve()):
+        raise RuntimeError(
+            "Current orchestration script differs from the authorized snapshot"
+        )
+
+    nominal_root = run_root / "periodic" / "nominal_solve"
+    project = _path_within(
+        Path(manifest["project_path"]), nominal_root, "Nominal project"
+    )
+    solver = _path_within(
+        Path(manifest["solver_path"]), nominal_root, "Nominal solver"
+    )
+    touchstone = _path_within(
+        Path(manifest["touchstone_path"]), nominal_root, "Touchstone output"
+    )
+    source_names = _path_within(
+        Path(manifest["source_names_path"]), nominal_root, "Source-name output"
+    )
+    if not project.is_file() or not solver.is_file():
+        raise RuntimeError("Nominal solve authorization input is missing")
+    if sha256(project) != manifest.get("project_sha256_before_solve"):
+        raise RuntimeError("Nominal solve authorization project mismatch")
+    if sha256(solver) != manifest.get("solver_sha256"):
+        raise RuntimeError("Nominal solve authorization solver mismatch")
+    config = load_run_config(run_root)
+    baseline = json.loads(
+        (run_root / "baseline_audit.json").read_text(encoding="utf-8")
+    )
+    executable = resolve(config["ansys_executable"])
+    if not executable.is_file() or sha256(executable) != baseline.get(
+        "ansys_executable_sha256"
+    ):
+        raise RuntimeError(
+            "Authorized AEDT executable is missing or its SHA-256 changed"
+        )
+    expected_solver = periodic_solver_text(
+        project, touchstone, source_names, config
+    )
+    if solver.read_text(encoding="ascii") != expected_solver:
+        raise RuntimeError(
+            "Nominal solve script is not the deterministic frozen generator output"
+        )
+
+    if authorization.get("authorization_kind") == "finalized_build_continuation":
+        source = Path(
+            authorization["source_evidence"]["source_run"]
+        ).resolve()
+        source_manifest = verify_finalized_run_manifest(source)
+        evidence = authorization["source_evidence"]
+        if source_manifest["manifest_sha256"] != evidence.get(
+            "source_manifest_sha256"
+        ):
+            raise RuntimeError("Nominal solve source manifest changed")
+        build = source / "periodic" / "build_smoke"
+        build_gate_path = build / "build_gate.json"
+        build_manifest = json.loads(
+            (build / "case_manifest.json").read_text(encoding="utf-8")
+        )
+        source_project = _path_within(
+            Path(build_manifest["project_path"]),
+            source,
+            "Authorized source project",
+        )
+        source_inventory = _path_within(
+            Path(build_manifest["model_inventory_path"]),
+            source,
+            "Authorized model inventory",
+        )
+        if sha256(build_gate_path) != evidence.get("source_build_gate_sha256"):
+            raise RuntimeError("Nominal solve source build gate changed")
+        if sha256(source_project) != evidence.get(
+            "source_build_project_sha256"
+        ) or sha256(project) != sha256(source_project):
+            raise RuntimeError("Nominal solve source project changed")
+        inventory = validate_model_inventory(
+            source_inventory.read_text(
+                encoding="utf-8", errors="ignore"
+            ).splitlines(),
+            config,
+            config["nominal_geometry"],
+        )
+        if inventory.get("verified") is not True or sha256(
+            source_inventory
+        ) != evidence.get("source_model_inventory_sha256"):
+            raise RuntimeError("Nominal solve source inventory changed")
+    else:
+        raise RuntimeError("Unsupported nominal solve authorization kind")
+    return {
+        "authorization_path": str(authorization_path.resolve()),
+        "authorization_sha256": sha256(authorization_path),
+        "authorization_kind": authorization["authorization_kind"],
+    }
+
+
+def consume_nominal_launch_authorization(
+    run_root: Path,
+    manifest: dict[str, Any],
+    authorization: dict[str, Any],
+) -> Path:
+    path = run_root / "periodic" / "nominal_solve" / "launch_intent.json"
+    payload = {
+        "schema": "v149_nominal_launch_intent_v1",
+        "case_id": manifest["case_id"],
+        "authorization_sha256": authorization["authorization_sha256"],
+        "consumed_at": time.strftime("%Y-%m-%d %H:%M:%S"),
+        "pid": os.getpid(),
+    }
+    path.parent.mkdir(parents=True, exist_ok=True)
+    try:
+        with path.open("x", encoding="ascii") as handle:
+            json.dump(payload, handle, indent=2, ensure_ascii=True)
+            handle.write("\n")
+    except FileExistsError as error:
+        raise RuntimeError(
+            "Nominal solve authorization was already consumed"
+        ) from error
+    return path
 
 
 def run_nominal_periodic_solve(
@@ -1356,6 +1877,7 @@ def run_nominal_periodic_solve(
     folder = run_root / "periodic" / "nominal_solve"
     manifest_path = folder / "case_manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    authorization = validate_nominal_authorization(run_root, manifest)
     audit_path = folder / "run_audit.json"
     if audit_path.exists():
         raise FileExistsError(
@@ -1363,6 +1885,8 @@ def run_nominal_periodic_solve(
         )
     if (folder / "solve_export.log").exists():
         raise FileExistsError("Nominal solve log already exists")
+    if (folder / "launch_intent.json").exists():
+        raise RuntimeError("Nominal solve authorization was already consumed")
     project_path = Path(manifest["project_path"])
     solver_path = Path(manifest["solver_path"])
     if sha256(project_path) != manifest.get("project_sha256_before_solve"):
@@ -1385,6 +1909,9 @@ def run_nominal_periodic_solve(
             timestamp = time.strftime("%Y%m%d_%H%M%S")
             write_json(folder / f"preflight_block_{timestamp}.json", blocked)
             return blocked
+        launch_intent = consume_nominal_launch_authorization(
+            run_root, manifest, authorization
+        )
         started = time.time()
         return_code, aborted, minimum = _run_with_memory_guard(
             [
@@ -1431,6 +1958,8 @@ def run_nominal_periodic_solve(
         ),
         "solver_sha256_executed": sha256(solver_path),
         "solver_log_sha256": sha256(folder / "solve_export.log"),
+        "authorization_sha256": authorization["authorization_sha256"],
+        "launch_intent_sha256": sha256(launch_intent),
         "convergence_artifacts": convergence_artifact_manifest(folder),
         "result_directory": str(folder.resolve()),
     }
@@ -2769,6 +3298,7 @@ def main() -> None:
             "validate-config",
             "status",
             "preregister",
+            "create-continuation",
             "prepare-build-smoke",
             "run-build-smoke",
             "audit-build-smoke",
@@ -2781,6 +3311,7 @@ def main() -> None:
     )
     parser.add_argument("--config", type=Path, default=DEFAULT_CONFIG)
     parser.add_argument("--run-root", type=Path)
+    parser.add_argument("--source-run-root", type=Path)
     args = parser.parse_args()
     config = load_config(args.config)
     validate_config(config)
@@ -2790,6 +3321,10 @@ def main() -> None:
         result = status(config)
     elif args.command == "preregister":
         result = preregister(config)
+    elif args.command == "create-continuation":
+        if args.source_run_root is None:
+            parser.error("create-continuation requires --source-run-root")
+        result = create_nominal_continuation(resolve(args.source_run_root))
     else:
         if args.run_root is None:
             parser.error(f"{args.command} requires --run-root")
