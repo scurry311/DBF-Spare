@@ -1346,6 +1346,13 @@ def prepare_nominal_periodic_solve(
 def run_nominal_periodic_solve(
     run_root: Path, config: dict[str, Any]
 ) -> dict[str, Any]:
+    if (run_root / "stage_summary.json").exists() or (
+        run_root / "sha256_manifest.csv"
+    ).exists():
+        raise RuntimeError(
+            "Run is finalized and immutable; allocate a continuation run "
+            "before executing the nominal solve"
+        )
     folder = run_root / "periodic" / "nominal_solve"
     manifest_path = folder / "case_manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))

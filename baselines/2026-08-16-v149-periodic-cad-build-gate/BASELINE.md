@@ -29,10 +29,11 @@ Delta-S performance claim is available yet.
 
 ## Decision
 
-Continue only with the single frozen nominal periodic solve after available
-RAM is at least 13 GiB and no AEDT/HFSS process exists. The 45-state periodic
-DOE, finite 1x1/2x2/4x4, 16x16, EEP export, label generation, and critic
-retraining remain locked.
+After available RAM is at least 13 GiB and no AEDT/HFSS process exists, create
+a new immutable continuation run that references this audited build and run
+only one nominal periodic solve. `run06` itself is finalized and must not be
+mutated. The 45-state periodic DOE, finite 1x1/2x2/4x4, 16x16, EEP export,
+label generation, and critic retraining remain locked.
 
 The next physical gate requires all 45 preregistered
 frequency/theta/phi states, traceable HFSS exports, finite metrics, and scan

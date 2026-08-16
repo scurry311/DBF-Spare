@@ -422,6 +422,13 @@ class V149CadGenerationTests(unittest.TestCase):
             with self.assertRaises(RuntimeError):
                 self.v149.run_nominal_periodic_solve(root, self.config)
 
+    def test_finalized_run_cannot_be_mutated_by_nominal_solve(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            (root / "stage_summary.json").write_text("{}", encoding="ascii")
+            with self.assertRaisesRegex(RuntimeError, "finalized and immutable"):
+                self.v149.run_nominal_periodic_solve(root, self.config)
+
     def test_run_config_hash_detects_post_preregistration_mutation(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
