@@ -379,6 +379,7 @@ def validate_geometry(
     probe = float(geometry["probe_radius_mm"])
     coax_inner = float(geometry["coax_inner_radius_mm"])
     coax_outer = float(geometry["coax_outer_radius_mm"])
+    port_overlap = float(config["port_definition"]["contact_overlap_mm"])
     feed_x = float(geometry["feed_offset_x_mm"])
     feed_y = float(geometry["feed_offset_y_mm"])
     if px != 15.0 or py != 15.0:
@@ -420,6 +421,10 @@ def validate_geometry(
         raise ValueError("SIW top aperture does not clear the via fence")
     if not (0.0 < probe < coax_inner < coax_outer):
         raise ValueError("Probe/coax radii are not physically nested")
+    if not (0.0 < port_overlap < probe):
+        raise ValueError("Port contact overlap must fit inside the probe radius")
+    if port_overlap >= coax_outer - coax_inner:
+        raise ValueError("Port contact overlap exceeds the outer-conductor wall")
     if abs(feed_x) + coax_outer >= fence_x:
         raise ValueError("Coax launch does not clear the x SIW fence")
     if abs(feed_y) + coax_outer >= fence_y:
@@ -476,8 +481,11 @@ def geometry_audit(
         + float(geometry["stack_spacer_thickness_mm"])
         + float(geometry["copper_thickness_mm"])
     )
+    port_overlap = float(config["port_definition"]["contact_overlap_mm"])
     return {
         "feed_port_count": 1,
+        "port_contact_overlap_mm": port_overlap,
+        "port_two_conductor_contact_intended": port_overlap > 0.0,
         "driven_patch_count": 1,
         "stacked_patch_count": 1,
         "siw_via_count": len(siw_via_centers(geometry)),
@@ -549,6 +557,7 @@ def _element_geometry_text(
     coax_inner = float(geometry["coax_inner_radius_mm"])
     coax_outer = float(geometry["coax_outer_radius_mm"])
     coax_drop = float(geometry["coax_drop_mm"])
+    port_overlap = float(config["port_definition"]["contact_overlap_mm"])
     via_radius = float(geometry["siw_via_diameter_mm"]) / 2.0
     lines = [
         f'CreateBox oEditor, "MainSubstrate", {-px/2:.7f}, {-py/2:.7f}, 0, {px:.7f}, {py:.7f}, {h_main:.7f}, "RO5880_V149", True',
@@ -572,7 +581,7 @@ def _element_geometry_text(
         'oEditor.Intersect Array("NAME:Selections", "Selections:=", "CoaxDielectric,CoaxDielectricTrim"), Array("NAME:IntersectParameters", "KeepOriginals:=", False)',
         f'CreateCylinderZ oEditor, "CoaxProbeCut", {feed_x:.7f}, {feed_y:.7f}, {-coax_drop-0.01:.7f}, {probe:.7f}, {coax_drop+0.02:.7f}, "vacuum", True',
         'SubtractObject oEditor, "CoaxDielectric", "CoaxProbeCut"',
-        f'CreateSheetZ oEditor, "PortSheet", {feed_x+probe:.7f}, {feed_y-0.10:.7f}, {-coax_drop:.7f}, {coax_inner-probe:.7f}, 0.20',
+        f'CreateSheetZ oEditor, "PortSheet", {feed_x+probe-port_overlap:.7f}, {feed_y-0.10:.7f}, {-coax_drop:.7f}, {coax_inner-probe+2*port_overlap:.7f}, 0.20',
         f'AssignPort oBoundary, "FeedPort", "PortSheet", {feed_x+probe:.7f}, {feed_y:.7f}, {-coax_drop:.7f}, {feed_x+coax_inner:.7f}, {feed_y:.7f}, {-coax_drop:.7f}',
     ]
     via_names = []
@@ -632,9 +641,9 @@ def _mesh_and_setup_text(
     )
     via_array = ", ".join(f'"{name}"' for name in via_names)
     return f'''
-oMesh.AssignLengthOp Array("NAME:Mesh_ProbeLaunch", "RefineInside:=", True, "Enabled:=", True, "Objects:=", Array("FeedProbe", "CoaxOuter", "PortSheet"), "RestrictElem:=", False, "NumMaxElem:=", "1000", "RestrictLength:=", True, "MaxLength:=", "{float(geometry['local_mesh_probe_mm']):.7f}mm", "UseAdvSizing:=", False)
+oMesh.AssignLengthOp Array("NAME:Mesh_ProbeLaunch", "RefineInside:=", False, "Enabled:=", True, "Objects:=", Array("FeedProbe", "CoaxOuter", "PortSheet"), "RestrictElem:=", False, "NumMaxElem:=", "1000", "RestrictLength:=", True, "MaxLength:=", "{float(geometry['local_mesh_probe_mm']):.7f}mm", "UseAdvSizing:=", False)
 oMesh.AssignLengthOp Array("NAME:Mesh_PatchEdges", "RefineInside:=", False, "Enabled:=", True, "Objects:=", Array("DrivenPatch", "StackedPatch"), "RestrictElem:=", False, "NumMaxElem:=", "1000", "RestrictLength:=", True, "MaxLength:=", "{float(geometry['local_mesh_patch_edge_mm']):.7f}mm", "UseAdvSizing:=", False)
-oMesh.AssignLengthOp Array("NAME:Mesh_SIWVias", "RefineInside:=", True, "Enabled:=", True, "Objects:=", Array({via_array}), "RestrictElem:=", False, "NumMaxElem:=", "1000", "RestrictLength:=", True, "MaxLength:=", "{float(geometry['local_mesh_via_mm']):.7f}mm", "UseAdvSizing:=", False)
+oMesh.AssignLengthOp Array("NAME:Mesh_SIWVias", "RefineInside:=", False, "Enabled:=", True, "Objects:=", Array({via_array}), "RestrictElem:=", False, "NumMaxElem:=", "1000", "RestrictLength:=", True, "MaxLength:=", "{float(geometry['local_mesh_via_mm']):.7f}mm", "UseAdvSizing:=", False)
 oAnalysis.InsertSetup "HfssDriven", Array("NAME:Setup_10GHz", "SolveType:=", "Single", "Frequency:=", "{frequency_ghz:g}GHz", "MaxDeltaS:=", 0.05, "MaximumPasses:=", {int(geometry['maximum_passes'])}, "MinimumPasses:=", 2, "MinimumConvergedPasses:=", 2, "PercentRefinement:=", {float(geometry['adaptive_refinement_percent']):.7f}, "BasisOrder:=", 1, "DoLambdaRefine:=", True, "DoMaterialLambda:=", True, "SetLambdaTarget:=", False, "UseMaxTetIncrease:=", False, "PortAccuracy:=", 2, "UseABCOnPort:=", False, "SetPortMinMaxTri:=", False, "DrivenSolverType:=", "{solver}")
 '''
 

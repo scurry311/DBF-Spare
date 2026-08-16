@@ -25,6 +25,9 @@
     "copper_conductivity_s_per_m": 58000000.0,
     "copper_thickness_mm": 0.035
   },
+  "port_definition": {
+    "contact_overlap_mm": 0.03
+  },
   "nominal_geometry": {
     "period_x_mm": 15.0,
     "period_y_mm": 15.0,
@@ -46,9 +49,9 @@
     "siw_top_aperture_clearance_mm": 0.35,
     "air_above_mm": 10.0,
     "air_below_mm": 4.0,
-    "local_mesh_probe_mm": 0.12,
-    "local_mesh_patch_edge_mm": 0.25,
-    "local_mesh_via_mm": 0.18,
+    "local_mesh_probe_mm": 0.20,
+    "local_mesh_patch_edge_mm": 0.40,
+    "local_mesh_via_mm": 0.32,
     "adaptive_refinement_percent": 5.0,
     "maximum_passes": 14,
     "copper_thickness_mm": 0.035
