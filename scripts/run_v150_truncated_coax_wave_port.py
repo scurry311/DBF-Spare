@@ -719,7 +719,7 @@ def _mesh_and_setup_text(
     )
     via_array = ", ".join(f'"{name}"' for name in via_names)
     return f'''
-oMesh.AssignLengthOp Array("NAME:Mesh_CoaxLaunch", "RefineInside:=", False, "Enabled:=", True, "Objects:=", Array("FeedProbe", "GroundOuterConductor", "CoaxDielectric"), "RestrictElem:=", False, "NumMaxElem:=", "1000", "RestrictLength:=", True, "MaxLength:=", "{float(geometry['local_mesh_probe_mm']):.7f}mm", "UseAdvSizing:=", False)
+oMesh.AssignLengthOp Array("NAME:Mesh_CoaxLaunch", "RefineInside:=", False, "Enabled:=", True, "Objects:=", Array("FeedProbe", "CoaxDielectric"), "RestrictElem:=", False, "NumMaxElem:=", "1000", "RestrictLength:=", True, "MaxLength:=", "{float(geometry['local_mesh_probe_mm']):.7f}mm", "UseAdvSizing:=", False)
 oMesh.AssignLengthOp Array("NAME:Mesh_PatchEdges", "RefineInside:=", False, "Enabled:=", True, "Objects:=", Array("DrivenPatch", "StackedPatch"), "RestrictElem:=", False, "NumMaxElem:=", "1000", "RestrictLength:=", True, "MaxLength:=", "{float(geometry['local_mesh_patch_edge_mm']):.7f}mm", "UseAdvSizing:=", False)
 oMesh.AssignLengthOp Array("NAME:Mesh_SIWVias", "RefineInside:=", False, "Enabled:=", True, "Objects:=", Array({via_array}), "RestrictElem:=", False, "NumMaxElem:=", "1000", "RestrictLength:=", True, "MaxLength:=", "{float(geometry['local_mesh_via_mm']):.7f}mm", "UseAdvSizing:=", False)
 oAnalysis.InsertSetup "HfssDriven", Array("NAME:Setup_10GHz", "SolveType:=", "Single", "Frequency:=", "{frequency_ghz:g}GHz", "MaxDeltaS:=", 0.05, "MaximumPasses:=", {int(geometry['maximum_passes'])}, "MinimumPasses:=", 2, "MinimumConvergedPasses:=", 2, "PercentRefinement:=", {float(geometry['adaptive_refinement_percent']):.7f}, "BasisOrder:=", 1, "DoLambdaRefine:=", True, "DoMaterialLambda:=", True, "SetLambdaTarget:=", False, "UseMaxTetIncrease:=", False, "PortAccuracy:=", 2, "UseABCOnPort:=", False, "SetPortMinMaxTri:=", False, "DrivenSolverType:=", "{solver}")
@@ -3460,6 +3460,17 @@ def resolve_build_gate_path(run_root: Path) -> Path:
     return source_gate
 
 
+def nominal_analysis_passes_summary_gate(
+    nominal_analysis: dict[str, Any] | None,
+) -> bool:
+    return bool(
+        nominal_analysis
+        and nominal_analysis.get("nominal_export_evidence_complete") is True
+        and nominal_analysis.get("numerical_gate_passed") is True
+        and nominal_analysis.get("physical_gate_passed") is True
+    )
+
+
 def finalize_stage_summary(
     run_root: Path, config: dict[str, Any]
 ) -> dict[str, Any]:
@@ -3482,19 +3493,8 @@ def finalize_stage_summary(
         else None
     )
     nominal_rows = nominal_analysis.get("rows", []) if nominal_analysis else []
-    nominal_diagnostic_passed = bool(
+    nominal_diagnostic_passed = nominal_analysis_passes_summary_gate(
         nominal_analysis
-        and nominal_analysis.get("nominal_export_evidence_complete") is True
-        and len(nominal_rows) == len(config["frequencies_ghz"])
-        and all(
-            float(row["active_rl_db"])
-            >= float(config["gates"]["minimum_periodic_active_rl_db"])
-            and float(row["passive_rl_db"])
-            >= float(config["gates"]["minimum_broadside_passive_rl_db"])
-            and float(row["accepted_power_efficiency"])
-            >= float(config["gates"]["minimum_periodic_efficiency"])
-            for row in nominal_rows
-        )
     )
     blocked_files = sorted(solve_folder.glob("preflight_block_*.json"))
     latest_block = (
@@ -3518,7 +3518,7 @@ def finalize_stage_summary(
         "build_gate_sha256": sha256(build_gate_path),
         "build_evidence_source": build_gate.get("evidence_source"),
         "physical_hfss_metrics_available": bool(nominal_rows),
-        "periodic_physical_gate_evaluated": False,
+        "periodic_physical_gate_evaluated": bool(nominal_analysis),
         "nominal_diagnostic_passed": nominal_diagnostic_passed,
         "nominal_analysis_path": (
             str(nominal_analysis_path.resolve()) if nominal_analysis else None

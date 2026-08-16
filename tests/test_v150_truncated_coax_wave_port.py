@@ -167,6 +167,10 @@ class V150CadGenerationTests(unittest.TestCase):
             source = self._builder_text(Path(temporary))
         self.assertIn('"NAME:Mesh_CoaxLaunch"', source)
         self.assertIn(
+            '"Objects:=", Array("FeedProbe", "CoaxDielectric")',
+            source,
+        )
+        self.assertNotIn(
             '"Objects:=", Array("FeedProbe", "GroundOuterConductor", "CoaxDielectric")',
             source,
         )
@@ -323,6 +327,26 @@ class V150EvidenceGateTests(unittest.TestCase):
         )
         self.assertFalse(result["physical_gate_passed"])
         self.assertIn("accepted_efficiency", result["failed_physical_checks"])
+
+    def test_stage_summary_gate_requires_numerical_and_physical_pass(self):
+        self.assertTrue(
+            self.v150.nominal_analysis_passes_summary_gate(
+                {
+                    "nominal_export_evidence_complete": True,
+                    "numerical_gate_passed": True,
+                    "physical_gate_passed": True,
+                }
+            )
+        )
+        self.assertFalse(
+            self.v150.nominal_analysis_passes_summary_gate(
+                {
+                    "nominal_export_evidence_complete": True,
+                    "numerical_gate_passed": False,
+                    "physical_gate_passed": True,
+                }
+            )
+        )
 
     def test_wave_port_warning_terms_are_critical(self):
         hits = self.v150.critical_log_hits(
