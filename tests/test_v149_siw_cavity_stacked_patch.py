@@ -221,6 +221,20 @@ class V149CadGenerationTests(unittest.TestCase):
         self.assertIn("GetMatchedObjectName", source)
         self.assertIn("GetBoundaries", source)
         self.assertIn("GetExcitations", source)
+        self.assertIn("ValidateDesign", source)
+        self.assertIn("design_validation.txt", source)
+        self.assertIn("primaryXMainFace", source)
+        self.assertIn("primaryXStackFace", source)
+        self.assertIn(
+            'CreateBox oEditor, "AirCell", -7.5000000, -7.5000000, '
+            '1.7870000, 15.0000000, 15.0000000, 10.0000000',
+            source,
+        )
+        self.assertIn(
+            'CreateCylinderZ oEditor, "CoaxOuter", 0.0000000, '
+            '-2.4500000, -1.0000000, 1.0500000, 1.0000000',
+            source,
+        )
         self.assertIn(
             '"NAME:SecondaryX", Array("NAME:CoordSysVector"',
             source,
@@ -255,6 +269,12 @@ class V149CadGenerationTests(unittest.TestCase):
         )
         self.assertNotIn("Global0p18mm", source)
         self.assertNotIn("a3dcomp", source.lower())
+
+    def test_geometry_intersection_is_a_critical_build_log_error(self):
+        hits = self.v149.critical_log_hits(
+            'Parts "MainSubstrate" and "CoaxOuter" intersect.'
+        )
+        self.assertGreater(hits.get("intersect", 0), 0)
 
     def test_saved_model_inventory_must_contain_real_objects_and_boundaries(self):
         lines = [

@@ -564,8 +564,8 @@ def _element_geometry_text(
         f'CreateSheetZ oEditor, "DrivenPatch", {-driven_w/2:.7f}, {-driven_l/2:.7f}, {h_main:.7f}, {driven_w:.7f}, {driven_l:.7f}',
         f'CreateSheetZ oEditor, "StackedPatch", {-stacked_w/2:.7f}, {-stacked_l/2:.7f}, {h_total:.7f}, {stacked_w:.7f}, {stacked_l:.7f}',
         f'CreateCylinderZ oEditor, "FeedProbe", {feed_x:.7f}, {feed_y:.7f}, {-coax_drop:.7f}, {probe:.7f}, {coax_drop+h_main:.7f}, "copper", False',
-        f'CreateCylinderZ oEditor, "CoaxOuter", {feed_x:.7f}, {feed_y:.7f}, {-coax_drop:.7f}, {coax_outer:.7f}, {coax_drop+copper:.7f}, "copper", False',
-        f'CreateCylinderZ oEditor, "CoaxOuterCut", {feed_x:.7f}, {feed_y:.7f}, {-coax_drop-0.01:.7f}, {coax_inner:.7f}, {coax_drop+copper+0.02:.7f}, "vacuum", True',
+        f'CreateCylinderZ oEditor, "CoaxOuter", {feed_x:.7f}, {feed_y:.7f}, {-coax_drop:.7f}, {coax_outer:.7f}, {coax_drop:.7f}, "copper", False',
+        f'CreateCylinderZ oEditor, "CoaxOuterCut", {feed_x:.7f}, {feed_y:.7f}, {-coax_drop-0.01:.7f}, {coax_inner:.7f}, {coax_drop+0.02:.7f}, "vacuum", True',
         'SubtractObject oEditor, "CoaxOuter", "CoaxOuterCut"',
         f'CreateBox oEditor, "CoaxDielectric", {feed_x-coax_inner:.7f}, {feed_y-coax_inner:.7f}, {-coax_drop:.7f}, {2*coax_inner:.7f}, {2*coax_inner:.7f}, {coax_drop:.7f}, "vacuum", True',
         f'CreateCylinderZ oEditor, "CoaxDielectricTrim", {feed_x:.7f}, {feed_y:.7f}, {-coax_drop-0.01:.7f}, {coax_inner:.7f}, {coax_drop+0.02:.7f}, "vacuum", True',
@@ -605,7 +605,7 @@ def _project_header(config: dict[str, Any], design_name: str) -> str:
     material = config["material"]
     return f'''Option Explicit
 Dim oAnsoftApp, oDesktop, oProject, oDesign, oEditor, oBoundary, oAnalysis, oMesh
-Dim fso, auditFile, objectNames, boundaryNames, excitationNames, i
+Dim fso, auditFile, validationFile, validationPassed, objectNames, boundaryNames, excitationNames, i
 Set oAnsoftApp = CreateObject("Ansoft.ElectronicsDesktop")
 Set oDesktop = oAnsoftApp.GetAppDesktop()
 oDesktop.NewProject
@@ -655,48 +655,58 @@ def periodic_builder_text(
     body, via_names = _element_geometry_text(config, geometry)
     px = float(geometry["period_x_mm"])
     py = float(geometry["period_y_mm"])
-    coax_drop = float(geometry["coax_drop_mm"])
+    h_main = float(geometry["main_substrate_thickness_mm"])
+    h_stack = float(geometry["stack_spacer_thickness_mm"])
+    h_total = h_main + h_stack
+    air_height = float(geometry["air_above_mm"])
     top = (
-        float(geometry["main_substrate_thickness_mm"])
-        + float(geometry["stack_spacer_thickness_mm"])
-        + float(geometry["air_above_mm"])
+        h_total
+        + air_height
     )
     bottom = 0.0
-    height = top
-    sample_z = (
-        float(geometry["main_substrate_thickness_mm"])
-        + float(geometry["stack_spacer_thickness_mm"])
-        + float(geometry["air_above_mm"]) / 2.0
-    )
+    sample_z = h_total + air_height / 2.0
     theta = float(state["theta_deg"])
     phi = float(state["phi_deg"])
     frequency = float(state["frequency_ghz"])
     inventory = project.parent / "model_inventory.txt"
+    validation = project.parent / "design_validation.txt"
     return (
         _project_header(config, "V149_PeriodicUnit")
         + body
         + f'''
-CreateBox oEditor, "AirCell", {-px/2:.7f}, {-py/2:.7f}, {bottom:.7f}, {px:.7f}, {py:.7f}, {height:.7f}, "vacuum", True
-Dim primaryXFace, secondaryXFace, primaryYFace, secondaryYFace, floquetFace
+CreateBox oEditor, "AirCell", {-px/2:.7f}, {-py/2:.7f}, {h_total:.7f}, {px:.7f}, {py:.7f}, {air_height:.7f}, "vacuum", True
+Dim primaryXFace, secondaryXFace, primaryYFace, secondaryYFace, primaryXMainFace, secondaryXMainFace, primaryYMainFace, secondaryYMainFace, primaryXStackFace, secondaryXStackFace, primaryYStackFace, secondaryYStackFace, floquetFace
 primaryXFace = oEditor.GetFaceByPosition(Array("NAME:FaceParameters", "BodyName:=", "AirCell", "XPosition:=", Mm({-px/2:.7f}), "YPosition:=", Mm(0), "ZPosition:=", Mm({sample_z:.7f})))
 secondaryXFace = oEditor.GetFaceByPosition(Array("NAME:FaceParameters", "BodyName:=", "AirCell", "XPosition:=", Mm({px/2:.7f}), "YPosition:=", Mm(0), "ZPosition:=", Mm({sample_z:.7f})))
 primaryYFace = oEditor.GetFaceByPosition(Array("NAME:FaceParameters", "BodyName:=", "AirCell", "XPosition:=", Mm(0), "YPosition:=", Mm({-py/2:.7f}), "ZPosition:=", Mm({sample_z:.7f})))
 secondaryYFace = oEditor.GetFaceByPosition(Array("NAME:FaceParameters", "BodyName:=", "AirCell", "XPosition:=", Mm(0), "YPosition:=", Mm({py/2:.7f}), "ZPosition:=", Mm({sample_z:.7f})))
+primaryXMainFace = oEditor.GetFaceByPosition(Array("NAME:FaceParameters", "BodyName:=", "MainSubstrate", "XPosition:=", Mm({-px/2:.7f}), "YPosition:=", Mm(0), "ZPosition:=", Mm({h_main/2:.7f})))
+secondaryXMainFace = oEditor.GetFaceByPosition(Array("NAME:FaceParameters", "BodyName:=", "MainSubstrate", "XPosition:=", Mm({px/2:.7f}), "YPosition:=", Mm(0), "ZPosition:=", Mm({h_main/2:.7f})))
+primaryYMainFace = oEditor.GetFaceByPosition(Array("NAME:FaceParameters", "BodyName:=", "MainSubstrate", "XPosition:=", Mm(0), "YPosition:=", Mm({-py/2:.7f}), "ZPosition:=", Mm({h_main/2:.7f})))
+secondaryYMainFace = oEditor.GetFaceByPosition(Array("NAME:FaceParameters", "BodyName:=", "MainSubstrate", "XPosition:=", Mm(0), "YPosition:=", Mm({py/2:.7f}), "ZPosition:=", Mm({h_main/2:.7f})))
+primaryXStackFace = oEditor.GetFaceByPosition(Array("NAME:FaceParameters", "BodyName:=", "StackSpacer", "XPosition:=", Mm({-px/2:.7f}), "YPosition:=", Mm(0), "ZPosition:=", Mm({h_main+h_stack/2:.7f})))
+secondaryXStackFace = oEditor.GetFaceByPosition(Array("NAME:FaceParameters", "BodyName:=", "StackSpacer", "XPosition:=", Mm({px/2:.7f}), "YPosition:=", Mm(0), "ZPosition:=", Mm({h_main+h_stack/2:.7f})))
+primaryYStackFace = oEditor.GetFaceByPosition(Array("NAME:FaceParameters", "BodyName:=", "StackSpacer", "XPosition:=", Mm(0), "YPosition:=", Mm({-py/2:.7f}), "ZPosition:=", Mm({h_main+h_stack/2:.7f})))
+secondaryYStackFace = oEditor.GetFaceByPosition(Array("NAME:FaceParameters", "BodyName:=", "StackSpacer", "XPosition:=", Mm(0), "YPosition:=", Mm({py/2:.7f}), "ZPosition:=", Mm({h_main+h_stack/2:.7f})))
 floquetFace = oEditor.GetFaceByPosition(Array("NAME:FaceParameters", "BodyName:=", "AirCell", "XPosition:=", Mm(0), "YPosition:=", Mm(0), "ZPosition:=", Mm({top:.7f})))
-oBoundary.AssignPrimary Array("NAME:PrimaryX", Array("NAME:CoordSysVector", "Origin:=", Array(Mm({-px/2:.7f}), Mm({-py/2:.7f}), Mm({bottom:.7f})), "UPos:=", Array(Mm({-px/2:.7f}), Mm({py/2:.7f}), Mm({bottom:.7f}))), "ReverseV:=", False, "Faces:=", Array(CLng(primaryXFace)))
-oBoundary.AssignSecondary Array("NAME:SecondaryX", Array("NAME:CoordSysVector", "Origin:=", Array(Mm({px/2:.7f}), Mm({-py/2:.7f}), Mm({bottom:.7f})), "UPos:=", Array(Mm({px/2:.7f}), Mm({py/2:.7f}), Mm({bottom:.7f}))), "ReverseV:=", True, "Primary:=", "PrimaryX", "UseScanAngles:=", True, "Phi:=", "{phi:g}deg", "Theta:=", "{theta:g}deg", "Faces:=", Array(CLng(secondaryXFace)))
-oBoundary.AssignPrimary Array("NAME:PrimaryY", Array("NAME:CoordSysVector", "Origin:=", Array(Mm({-px/2:.7f}), Mm({-py/2:.7f}), Mm({bottom:.7f})), "UPos:=", Array(Mm({px/2:.7f}), Mm({-py/2:.7f}), Mm({bottom:.7f}))), "ReverseV:=", False, "Faces:=", Array(CLng(primaryYFace)))
-oBoundary.AssignSecondary Array("NAME:SecondaryY", Array("NAME:CoordSysVector", "Origin:=", Array(Mm({-px/2:.7f}), Mm({py/2:.7f}), Mm({bottom:.7f})), "UPos:=", Array(Mm({px/2:.7f}), Mm({py/2:.7f}), Mm({bottom:.7f}))), "ReverseV:=", True, "Primary:=", "PrimaryY", "UseScanAngles:=", True, "Phi:=", "{phi:g}deg", "Theta:=", "{theta:g}deg", "Faces:=", Array(CLng(secondaryYFace)))
+oBoundary.AssignPrimary Array("NAME:PrimaryX", Array("NAME:CoordSysVector", "Origin:=", Array(Mm({-px/2:.7f}), Mm({-py/2:.7f}), Mm({bottom:.7f})), "UPos:=", Array(Mm({-px/2:.7f}), Mm({py/2:.7f}), Mm({bottom:.7f}))), "ReverseV:=", False, "Faces:=", Array(CLng(primaryXMainFace), CLng(primaryXStackFace), CLng(primaryXFace)))
+oBoundary.AssignSecondary Array("NAME:SecondaryX", Array("NAME:CoordSysVector", "Origin:=", Array(Mm({px/2:.7f}), Mm({-py/2:.7f}), Mm({bottom:.7f})), "UPos:=", Array(Mm({px/2:.7f}), Mm({py/2:.7f}), Mm({bottom:.7f}))), "ReverseV:=", True, "Primary:=", "PrimaryX", "UseScanAngles:=", True, "Phi:=", "{phi:g}deg", "Theta:=", "{theta:g}deg", "Faces:=", Array(CLng(secondaryXMainFace), CLng(secondaryXStackFace), CLng(secondaryXFace)))
+oBoundary.AssignPrimary Array("NAME:PrimaryY", Array("NAME:CoordSysVector", "Origin:=", Array(Mm({-px/2:.7f}), Mm({-py/2:.7f}), Mm({bottom:.7f})), "UPos:=", Array(Mm({px/2:.7f}), Mm({-py/2:.7f}), Mm({bottom:.7f}))), "ReverseV:=", False, "Faces:=", Array(CLng(primaryYMainFace), CLng(primaryYStackFace), CLng(primaryYFace)))
+oBoundary.AssignSecondary Array("NAME:SecondaryY", Array("NAME:CoordSysVector", "Origin:=", Array(Mm({-px/2:.7f}), Mm({py/2:.7f}), Mm({bottom:.7f})), "UPos:=", Array(Mm({px/2:.7f}), Mm({py/2:.7f}), Mm({bottom:.7f}))), "ReverseV:=", True, "Primary:=", "PrimaryY", "UseScanAngles:=", True, "Phi:=", "{phi:g}deg", "Theta:=", "{theta:g}deg", "Faces:=", Array(CLng(secondaryYMainFace), CLng(secondaryYStackFace), CLng(secondaryYFace)))
 oBoundary.AssignFloquetPort Array("NAME:FloquetTop", "Faces:=", Array(CLng(floquetFace)), "NumModes:=", 2, "RenormalizeAllTerminals:=", True, "DoDeembed:=", False, Array("NAME:Modes", Array("NAME:Mode1", "ModeNum:=", 1, "UseIntLine:=", False), Array("NAME:Mode2", "ModeNum:=", 2, "UseIntLine:=", False)), "ShowReporterFilter:=", False, "UseScanAngles:=", True, "Phi:=", "{phi:g}deg", "Theta:=", "{theta:g}deg", Array("NAME:LatticeAVector", "Start:=", Array(Mm({-px/2:.7f}), Mm({-py/2:.7f}), Mm({top:.7f})), "End:=", Array(Mm({px/2:.7f}), Mm({-py/2:.7f}), Mm({top:.7f}))), Array("NAME:LatticeBVector", "Start:=", Array(Mm({-px/2:.7f}), Mm({-py/2:.7f}), Mm({top:.7f})), "End:=", Array(Mm({-px/2:.7f}), Mm({py/2:.7f}), Mm({top:.7f}))), Array("NAME:ModesCalculator", "Frequency:=", "{frequency:g}GHz", "FrequencyChanged:=", False, "PhiStart:=", "{phi:g}deg", "PhiStop:=", "{phi:g}deg", "PhiStep:=", "0deg", "ThetaStart:=", "{theta:g}deg", "ThetaStop:=", "{theta:g}deg", "ThetaStep:=", "0deg"), Array("NAME:ModesList", Array("NAME:Mode", "ModeNumber:=", 1, "IndexM:=", 0, "IndexN:=", 0, "KC2:=", 0, "PropagationState:=", "Propagating", "Attenuation:=", 0, "PolarizationState:=", "TE", "AffectsRefinement:=", False), Array("NAME:Mode", "ModeNumber:=", 2, "IndexM:=", 0, "IndexN:=", 0, "KC2:=", 0, "PropagationState:=", "Propagating", "Attenuation:=", 0, "PolarizationState:=", "TM", "AffectsRefinement:=", False)))
 '''
         + _mesh_and_setup_text(geometry, via_names, frequency, "direct")
         + _frequency_sweep_text(config)
         + f'''
+validationPassed = oDesign.ValidateDesign()
+Set fso = CreateObject("Scripting.FileSystemObject")
+Set validationFile = fso.CreateTextFile("{_vp(validation)}", True)
+validationFile.WriteLine "VALIDATION|" & CStr(validationPassed)
+validationFile.Close
 oProject.SaveAs "{_vp(project)}", True
 objectNames = oEditor.GetMatchedObjectName("*")
 boundaryNames = oBoundary.GetBoundaries()
 excitationNames = oBoundary.GetExcitations()
-Set fso = CreateObject("Scripting.FileSystemObject")
 Set auditFile = fso.CreateTextFile("{_vp(inventory)}", True)
 For i = LBound(objectNames) To UBound(objectNames)
     auditFile.WriteLine "OBJECT|" & CStr(objectNames(i))
@@ -1245,6 +1255,7 @@ def prepare_periodic_build_smoke(
     project = folder / "v149_periodic_build_smoke.aedt"
     builder = folder / "build.vbs"
     inventory = folder / "model_inventory.txt"
+    validation = folder / "design_validation.txt"
     state = {
         "frequency_ghz": 10.0,
         "theta_deg": 0.0,
@@ -1260,6 +1271,7 @@ def prepare_periodic_build_smoke(
         "authorizes_real_solve": False,
         "project_path": str(project.resolve()),
         "model_inventory_path": str(inventory.resolve()),
+        "design_validation_path": str(validation.resolve()),
         "builder_path": str(builder.resolve()),
         "builder_sha256": sha256(builder),
         "scan_state": state,
@@ -1509,6 +1521,7 @@ def critical_log_hits(text: str) -> dict[str, int]:
         "boundary assignment failed",
         "geometry error",
         "body could not be created",
+        "intersect",
     )
     return {term: lowered.count(term) for term in terms if term in lowered}
 
@@ -1559,6 +1572,15 @@ def audit_periodic_build_smoke(
             "missing_excitations": [],
         }
     )
+    validation_path = Path(manifest.get("design_validation_path", ""))
+    validation_text = (
+        validation_path.read_text(
+            encoding="utf-8", errors="ignore"
+        ).strip()
+        if validation_path.is_file()
+        else ""
+    )
+    design_validation_passed = validation_text == "VALIDATION|1"
     passed = bool(
         run.get("started")
         and not run.get("blocked")
@@ -1568,6 +1590,7 @@ def audit_periodic_build_smoke(
         and not warning_hits
         and all(named_feature_checks.values())
         and inventory["verified"]
+        and design_validation_passed
     )
     result = {
         "evidence_source": "HFSS_build_only",
@@ -1578,6 +1601,8 @@ def audit_periodic_build_smoke(
         "named_feature_checks": named_feature_checks,
         "model_inventory_verified": inventory["verified"],
         "model_inventory": inventory,
+        "design_validation_passed": design_validation_passed,
+        "design_validation_text": validation_text,
         "project_exists": Path(manifest["project_path"]).exists(),
         "project_sha256": (
             sha256(Path(manifest["project_path"]))
